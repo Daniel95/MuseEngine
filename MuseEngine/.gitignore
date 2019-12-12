@@ -1,0 +1,23 @@
+#Oat ignore
+
+#Directories
+#Everything inside these directories will be ignored for server operations
+bin/*
+obj/*
+.vs/*
+build/*
+
+#Files
+#All files with these extension will be ignored for server operations
+*.bin
+*.log
+*.exe
+*.pdb
+*.tlog
+*.ipdb
+*.iobj
+*.idb
+*.pch
+*.ilk
+*.vcxproj.user
+imgui.ini
