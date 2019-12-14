@@ -5,18 +5,18 @@
 #include "Core/System/ResourceSystem.h"
 #include "Core/System/SceneSystem.h"
 #include "Core/System/SoundSystem.h"
-#include "Core/Gameplay/GameObject.h"
-#include "Core/Gameplay/Component/BoxCollider2D.h"
 #include "Core/System/Manager/SystemManager.h"
-#include "Core/System/Scene/Scene.h"
 #include "Core/Utilities/Log.h"
-#include "Core/System/EventSystem.h"
-#include "Core/System/Event/ApplicationEvent.h"
 
 namespace Muse
 {
     Application::Application()
     {
+        window = std::unique_ptr<Window>(Window::Create());
+
+
+
+
         systemManager = new SystemManager();
 
         systemManager->CreateSystem<ResourceSystem>();
@@ -26,6 +26,7 @@ namespace Muse
 
     Application::~Application()
     {
+        delete systemManager;
     }
 
     SystemManager* Application::GetSystemManager()
@@ -38,10 +39,11 @@ namespace Muse
         OnStart();
 
         //EventDispatcher dispatcher(AppUpdateEvent);
-        //dispatcher.Dispatch<WindowCloseEvent>(HZ_BIND_EVENT_FN(Application::OnWindowClose));
+        //dispatcher.Dispatch<WindowCloseEvent>(MUSE_BIND_EVENT_FN(Application::OnWindowClose));
 
         while (true)
         {
+
             Update();
             FixedUpdate();
             Render();
@@ -50,6 +52,9 @@ namespace Muse
 
 	void Application::Update()
 	{
+        window->OnUpdate();
+
+
         systemManager->UpdateSystems(0);
         OnUpdate(0.016f);
 	}

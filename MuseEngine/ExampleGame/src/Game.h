@@ -1,12 +1,14 @@
 #pragma once
 
 #include "Core/Application.h"
+#include "Core/Utilities/Log.h"
+
 
 class Game : public Muse::Application
 {
 public:
-    Game() = default;
-    ~Game() = default;
+    Game();
+    virtual ~Game();
 
 protected:
     virtual void OnStart() override;

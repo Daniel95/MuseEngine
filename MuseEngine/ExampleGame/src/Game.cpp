@@ -7,6 +7,14 @@ Muse::Application* Muse::CreateApplication()
 	return new Game();
 }
 
+Game::Game()
+{
+}
+
+Game::~Game()
+{
+}
+
 void Game::OnStart()
 {
 }

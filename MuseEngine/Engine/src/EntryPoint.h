@@ -3,10 +3,6 @@
 #include "Core/Application.h"
 #include "Core/Utilities/Log.h"
 
-#include "Examples/RTTRExample.h"
-
-#include <cstdint>
-
 extern Muse::Application* Muse::CreateApplication();
 
 int main()

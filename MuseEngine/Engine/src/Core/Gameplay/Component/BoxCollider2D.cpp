@@ -29,7 +29,6 @@ namespace Muse
     void BoxCollider2D::Update(float a_DeltaTime)
     {
         _ASSERT(m_CollisionType != CollisionType::NONE);
-
     }
 
     void BoxCollider2D::FixedUpdate(float a_TimeStep)

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "OatPCH.h"
+#include "Core/Utilities/Defines.h"
 
 namespace Muse
 {

@@ -45,10 +45,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)\build\$(ProjectName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <IncludePath>D:\Dev\MuseEngine\MuseEngine\Include\glfw\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Dev\MuseEngine\MuseEngine\Include\glfw\lib-vc2019;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)\build\$(ProjectName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <IncludePath>D:\Dev\MuseEngine\MuseEngine\Include\glfw\include;$(IncludePath)</IncludePath>
+    <LibraryPath>D:\Dev\MuseEngine\MuseEngine\Include\glfw\lib-vc2019;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -57,15 +61,16 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(SolutionDir)Include\rapidjson\include;$(SolutionDir)Include\rttr\include;$(SolutionDir)Include\spdlog\include;$(ProjectDir)src;$(SolutionDir)Include\glm;$(SolutionDir)Include\glfw\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(SolutionDir)Include\rapidjson\include;$(SolutionDir)Include\rttr\include;$(SolutionDir)Include\spdlog\include;$(SolutionDir)Include\glm;$(SolutionDir)Include\glfw\include;%(AdditionalDependencies)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PreprocessorDefinitions>MUSE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
     </Link>
     <Lib>
-      <AdditionalDependencies>librttr_core_d.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Include\rttr\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>librttr_core_d.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Include\rttr\lib;D:\Dev\MuseEngine\MuseEngine\Include\glfw\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -77,7 +82,7 @@
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
-      <AdditionalIncludeDirectories>$(SolutionDir)Include\rapidjson\include;$(SolutionDir)Include\rttr\include;$(SolutionDir)Include\spdlog\include;$(ProjectDir)src;$(SolutionDir)Include\glm;$(SolutionDir)Include\glfw\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(SolutionDir)Include\rapidjson\include;$(SolutionDir)Include\rttr\include;$(SolutionDir)Include\spdlog\include;$(SolutionDir)Include\glm;$(SolutionDir)Include\glfw\include;%(AdditionalDependencies)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
@@ -86,8 +91,8 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>librttr_core_d.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)Include\rttr\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>librttr_core_d.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Include\rttr\lib;D:\Dev\MuseEngine\MuseEngine\Include\glfw\lib-vc2019;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -97,6 +102,7 @@
     <ClCompile Include="src\Core\Gameplay\Component\TestComponent.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\Transform.cpp" />
     <ClCompile Include="src\Core\Gameplay\GameObject.cpp" />
+    <ClCompile Include="src\Core\Platform\WindowsWindow.cpp" />
     <ClCompile Include="src\Core\System\Manager\ISystem.cpp" />
     <ClCompile Include="src\Core\System\Manager\SystemManager.cpp" />
     <ClCompile Include="src\Core\System\ResourceSystem.cpp" />
@@ -118,6 +124,8 @@
     <ClInclude Include="src\Core\Gameplay\Component\TestComponent.h" />
     <ClInclude Include="src\Core\Gameplay\Component\Transform.h" />
     <ClInclude Include="src\Core\Gameplay\GameObject.h" />
+    <ClInclude Include="src\Core\Platform\WindowsWindow.h" />
+    <ClInclude Include="src\Core\Window.h" />
     <ClInclude Include="src\Core\System\EventSystem.h" />
     <ClInclude Include="src\Core\System\Event\ApplicationEvent.h" />
     <ClInclude Include="src\Core\System\Event\KeyEvent.h" />

@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <chrono>
+#include "Window.h"
 
 namespace sf 
 {
@@ -31,9 +32,11 @@ namespace Muse
         virtual void OnFixedUpdate() = 0;
         virtual void OnRender() = 0;
 
-
     private:
         SystemManager* systemManager;
+        std::unique_ptr<Window> window;
+        bool running = true;
+
 	};
 
 	// To be defined in client.
