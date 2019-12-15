@@ -11,7 +11,7 @@
 #include "Core/System/Event/ApplicationEvent.h"
 #include "Core/Layer.h"
 
-#include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 namespace Muse
 {
