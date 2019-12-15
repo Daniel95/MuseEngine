@@ -4,13 +4,9 @@
 #include <chrono>
 #include "Window.h"
 
-namespace sf 
-{
-	class RenderWindow;
-}
-
 namespace Muse
 {
+    class WindowCloseEvent;
     class GameWindow;
     class SceneSystem;
     class SystemManager;
@@ -20,12 +16,14 @@ namespace Muse
 	public:
 		Application();
 		virtual ~Application();
-        SystemManager* GetSystemManager();
+        SystemManager* GetSystemManager() const;
 
         void Start();
         void Update();
         void FixedUpdate();
         void Render();
+
+        void OnEvent(Event& event);
     protected:
         virtual void OnStart() = 0;
         virtual void OnUpdate(float deltaTime) = 0;
@@ -33,10 +31,11 @@ namespace Muse
         virtual void OnRender() = 0;
 
     private:
-        SystemManager* systemManager;
-        std::unique_ptr<Window> window;
         bool running = true;
+        std::unique_ptr<Window> window;
+        SystemManager* systemManager;
 
+        bool OnWindowClose(WindowCloseEvent& windowCloseEvent);
 	};
 
 	// To be defined in client.

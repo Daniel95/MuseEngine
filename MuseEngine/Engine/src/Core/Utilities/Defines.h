@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Core/Utilities/Log.h"
+
 #include <string>
 
 #define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
@@ -9,14 +11,15 @@
 #endif
 
 #ifdef MUSE_ENABLE_ASSERTS
-#define ASSERT(x, ...) { if(!(x)) { MUSE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-#define ASSERT_ENGINE(x, ...) { if(!(x)) { MUSE_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+#define ASSERT(x, ...) { if(!(x)) { LOG_ENGINE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+#define ASSERT_ENGINE(x, ...) { if(!(x)) { LOG_ENGINE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
 #else
 #define ASSERT(x, ...)
 #define ASSERT_ENGINE(x, ...)
 #endif
 
 #define BIT(x) (1 << x)
+#define BIND_EVENT_FN(x) std::bind(&x, this, std::placeholders::_1)
 
 const std::string ASSETS_PATH = "../Assets/";
 

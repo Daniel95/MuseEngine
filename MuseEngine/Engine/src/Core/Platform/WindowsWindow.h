@@ -16,7 +16,7 @@ namespace Muse
         inline unsigned int GetWidth() const override { return data.Width;  }
         inline unsigned int GetHeight() const override { return data.Height; }
 
-        inline void SetEventCallback(const EventCallbackFn& callback) override { data.EventCallbackFn = callback; }
+        inline void SetEventCallback(const EventCallbackFn& callback) override { data.EventCallback = callback; }
         void SetVSync(bool enabled) override;
         bool IsVSync() const override;
 
@@ -27,7 +27,7 @@ namespace Muse
             unsigned int Width, Height;
             bool VSync;
 
-            EventCallbackFn EventCallbackFn;
+            EventCallbackFn EventCallback;
         };
 
         WindowData data;
