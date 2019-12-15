@@ -1,11 +1,11 @@
 #pragma once
 
-#include <vector>
-#include <chrono>
 #include "Window.h"
+#include "LayerStack.h"
 
 namespace Muse
 {
+    class Layer;
     class WindowCloseEvent;
     class GameWindow;
     class SceneSystem;
@@ -24,6 +24,9 @@ namespace Muse
         void Render();
 
         void OnEvent(Event& event);
+
+        void PushLayer(Layer* layer);
+        void PushOverlay(Layer* layer);
     protected:
         virtual void OnStart() = 0;
         virtual void OnUpdate(float deltaTime) = 0;
@@ -34,6 +37,7 @@ namespace Muse
         bool running = true;
         std::unique_ptr<Window> window;
         SystemManager* systemManager;
+        LayerStack layerStack;
 
         bool OnWindowClose(WindowCloseEvent& windowCloseEvent);
 	};

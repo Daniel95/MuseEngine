@@ -102,6 +102,8 @@
     <ClCompile Include="src\Core\Gameplay\Component\TestComponent.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\Transform.cpp" />
     <ClCompile Include="src\Core\Gameplay\GameObject.cpp" />
+    <ClCompile Include="src\Core\Layer.cpp" />
+    <ClCompile Include="src\Core\LayerStack.cpp" />
     <ClCompile Include="src\Core\Platform\WindowsWindow.cpp" />
     <ClCompile Include="src\Core\System\Manager\ISystem.cpp" />
     <ClCompile Include="src\Core\System\Manager\SystemManager.cpp" />
@@ -114,7 +116,7 @@
     <ClCompile Include="src\Core\Utilities\json\to_json.cpp" />
     <ClCompile Include="src\Core\Utilities\Log.cpp" />
     <ClCompile Include="src\Core\Utilities\Utilities.cpp" />
-    <ClCompile Include="src\OatPCH.cpp" />
+    <ClCompile Include="src\MusePCH.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Application.h" />
@@ -124,7 +126,10 @@
     <ClInclude Include="src\Core\Gameplay\Component\TestComponent.h" />
     <ClInclude Include="src\Core\Gameplay\Component\Transform.h" />
     <ClInclude Include="src\Core\Gameplay\GameObject.h" />
+    <ClInclude Include="src\Core\Layer.h" />
+    <ClInclude Include="src\Core\LayerStack.h" />
     <ClInclude Include="src\Core\Platform\WindowsWindow.h" />
+    <ClInclude Include="src\Core\Timestep.h" />
     <ClInclude Include="src\Core\Window.h" />
     <ClInclude Include="src\Core\System\EventSystem.h" />
     <ClInclude Include="src\Core\System\Event\ApplicationEvent.h" />
@@ -145,7 +150,7 @@
     <ClInclude Include="src\Core\Utilities\Utilities.h" />
     <ClInclude Include="src\EntryPoint.h" />
     <ClInclude Include="src\Examples\RTTRExample.h" />
-    <ClInclude Include="src\OatPCH.h" />
+    <ClInclude Include="src\MusePCH.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

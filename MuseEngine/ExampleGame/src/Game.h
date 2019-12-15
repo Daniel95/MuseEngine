@@ -7,8 +7,8 @@
 class Game : public Muse::Application
 {
 public:
-    Game();
-    virtual ~Game();
+    Game() = default;
+    virtual ~Game() = default;
 
 protected:
     virtual void OnStart() override;

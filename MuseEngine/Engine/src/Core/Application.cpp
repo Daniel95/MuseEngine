@@ -1,4 +1,4 @@
-#include "OatPCH.h"
+#include "MusePCH.h"
 
 #include "Core/Application.h"
 
@@ -9,6 +9,7 @@
 #include "Core/Utilities/Log.h"
 #include "Core/Utilities/Defines.h"
 #include "Core/System/Event/ApplicationEvent.h"
+#include "Core/Layer.h"
 
 #include <GLFW/glfw3.h>
 
@@ -44,6 +45,11 @@ namespace Muse
 
         while (running)
         {
+            for (Layer* layer : layerStack)
+            {
+                layer->OnUpdate(0.16f);
+            }
+
             Update();
             FixedUpdate();
             Render();
@@ -77,6 +83,25 @@ namespace Muse
         EventDispatcher eventDispatcher(event);
 
         eventDispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN_TEMP(OnWindowClose));
+
+        for (auto it = layerStack.end(); it != layerStack.begin();)
+        {
+            (*--it)->OnEvent(event);
+            if(event.Handled)
+            {
+                break;
+            }
+        }
+    }
+
+    void Application::PushLayer(Layer* layer)
+    {
+        layerStack.PushLayer(layer);
+    }
+
+    void Application::PushOverlay(Layer* layer)
+    {
+        layerStack.PushOverlay(layer);
     }
 
     bool Application::OnWindowClose(WindowCloseEvent& windowCloseEvent)
