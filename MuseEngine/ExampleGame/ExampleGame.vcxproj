@@ -102,7 +102,7 @@
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(SolutionDir)Engine\src;$(SolutionDir)Include\glfw\include;$(SolutionDir)Include\rttr\include;$(SolutionDir)Include\spdlog\include;$(SolutionDir)Include\glm;%(AdditionalDependencies)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(SolutionDir)Engine\src;$(SolutionDir)Include\glfw\include;$(SolutionDir)Include\rttr\include;$(SolutionDir)Include\spdlog\include;$(SolutionDir)Include\glm;$(SolutionDir)Include\glad\include;%(AdditionalDependencies)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>MUSE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -136,7 +136,7 @@
       <ConformanceMode>true</ConformanceMode>
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <AdditionalIncludeDirectories>$(ProjectDir)src;$(SolutionDir)Engine\src;$(SolutionDir)Include\glfw\include;$(SolutionDir)Include\rttr\include;$(SolutionDir)Include\spdlog\include;$(SolutionDir)Include\glm;%(AdditionalDependencies)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)src;$(SolutionDir)Engine\src;$(SolutionDir)Include\glfw\include;$(SolutionDir)Include\rttr\include;$(SolutionDir)Include\spdlog\include;$(SolutionDir)Include\glm;$(SolutionDir)Include\glad\include;%(AdditionalDependencies)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>

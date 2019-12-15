@@ -1,7 +1,8 @@
 #pragma once
 
-#include <GLFW/glfw3.h>
 #include "Core/Window.h"
+
+struct GLFWwindow;
 
 namespace Muse
 {

@@ -78,6 +78,9 @@
     <ClCompile Include="src\MusePCH.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\ThirdParty\glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Gameplay\Component\BoxCollider2D.h">

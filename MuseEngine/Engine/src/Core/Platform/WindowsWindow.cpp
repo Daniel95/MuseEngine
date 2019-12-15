@@ -7,6 +7,9 @@
 #include "Core/System/Event/KeyEvent.h"
 #include "Core/System/Event/MouseEvent.h"
 
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 namespace Muse
 {
     static bool GLFWInitialized = false;
@@ -51,6 +54,10 @@ namespace Muse
 
         window = glfwCreateWindow(static_cast<int>(properties.Width), static_cast<int>(properties.Height), data.Title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(window);
+        const int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+
+        ASSERT_ENGINE(status, "Failed to initialize Glad!");
+
         glfwSetWindowUserPointer(window, &data);
         SetVSync(true);
 
