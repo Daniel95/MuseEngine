@@ -70,14 +70,14 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>$(SolutionDir)build\$(ProjectName)\bin\</OutDir>
+    <OutDir>$(SolutionDir)\build\$(ProjectName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\obj\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName) $(Configuration)</TargetName>
     <IncludePath>$(IncludePath)</IncludePath>
     <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>$(SolutionDir)build\$(ProjectName)\bin\</OutDir>
+    <OutDir>$(SolutionDir)\build\$(ProjectName)\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\obj\$(ProjectName)\$(Configuration)\</IntDir>
     <TargetName>$(ProjectName) $(Configuration)</TargetName>
     <IncludePath>$(IncludePath)</IncludePath>
@@ -137,6 +137,7 @@
       <TreatWarningAsError>true</TreatWarningAsError>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <AdditionalIncludeDirectories>$(ProjectDir)src;$(SolutionDir)Engine\src;$(SolutionDir)Include\glfw\include;$(SolutionDir)Include\rttr\include;$(SolutionDir)Include\spdlog\include;$(SolutionDir)Include\glm;%(AdditionalDependencies)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

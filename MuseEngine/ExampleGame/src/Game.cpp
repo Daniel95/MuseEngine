@@ -29,6 +29,7 @@ Muse::Application* Muse::CreateApplication()
 
 void Game::OnStart()
 {
+	PushLayer(new ExampleLayer());
 }
 
 void Game::OnUpdate(float deltaTime)

@@ -37,7 +37,6 @@ namespace Muse
         data.Width = properties.Width;
         data.Height = properties.Height;
 
-        LOG_ENGINE_ERROR("Creating window {0}, ({1}, {2})", properties.Title, properties.Width, properties.Height);
 
         if(!GLFWInitialized)
         {
@@ -54,6 +53,8 @@ namespace Muse
         glfwMakeContextCurrent(window);
         glfwSetWindowUserPointer(window, &data);
         SetVSync(true);
+
+        LOG_ENGINE_ERROR("Created window {0}, ({1}, {2})", properties.Title, properties.Width, properties.Height);
 
         //Set GLFW callbacks
         glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)

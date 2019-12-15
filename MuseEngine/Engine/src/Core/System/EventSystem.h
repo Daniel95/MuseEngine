@@ -14,7 +14,6 @@ namespace Muse
 		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled
 	};
 
-
 	enum EventCategory
 	{
 		None = 0,
