@@ -26,6 +26,9 @@ IncludeDir["stb_image"] = "Muse/vendor/stb_image"
 IncludeDir["rapidjson"] = "Muse/vendor/rapidjson/include"
 IncludeDir["rttr"] = "Muse/vendor/rttr/include"
 
+IncludeLibDir = {}
+IncludeLibDir["rttr"] = "Muse/vendor/rttr/lib/"
+
 group "Dependencies"
 	include "Muse/vendor/GLFW"
 	include "Muse/vendor/Glad"
@@ -73,6 +76,11 @@ project "Muse"
 		"%{IncludeDir.rttr}"
 	}
 
+	libdirs 
+	{
+		"%{IncludeLibDir.rttr}"
+	}
+
 	links 
 	{ 
 		"GLFW",
@@ -94,16 +102,19 @@ project "Muse"
 		defines "MUSE_DEBUG"
 		runtime "Debug"
 		symbols "on"
+		links "librttr_core_d.lib"
 
 	filter "configurations:Release"
 		defines "MUSE_RELEASE"
 		runtime "Release"
 		optimize "on"
+		links "librttr_core.lib"
 
 	filter "configurations:Dist"
 		defines "MUSE_DIST"
 		runtime "Release"
 		optimize "on"
+		links "librttr_core.lib"
 
 project "TestGame"
 	location "TestGame"
