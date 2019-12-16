@@ -2,11 +2,16 @@
 
 #Directories
 #Everything inside these directories will be ignored for server operations
-obj/*
-bin/*
-bin-int/*
-.vs/*
-build/*
+**/bin/
+!vendor/bin/premake/
+bin-int/
+
+# Visual Studio files and folder
+.vs/
+**.sln
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
 
 #Files
 #All files with these extension will be ignored for server operations

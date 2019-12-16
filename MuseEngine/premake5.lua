@@ -102,19 +102,19 @@ project "Muse"
 		defines "MUSE_DEBUG"
 		runtime "Debug"
 		symbols "on"
-		links "librttr_core_d.lib"
+		links "rttr_core_lib_s_d.lib"
 
 	filter "configurations:Release"
 		defines "MUSE_RELEASE"
 		runtime "Release"
 		optimize "on"
-		links "librttr_core.lib"
+		links "rttr_core_lib_s.lib"
 
 	filter "configurations:Dist"
 		defines "MUSE_DIST"
 		runtime "Release"
 		optimize "on"
-		links "librttr_core.lib"
+		links "rttr_core_lib_s.lib"
 
 project "TestGame"
 	location "TestGame"
@@ -137,7 +137,8 @@ project "TestGame"
 		"Muse/vendor/spdlog/include",
 		"Muse/src",
 		"Muse/vendor",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.rttr}",
 	}
 
 	links
