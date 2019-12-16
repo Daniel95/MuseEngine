@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Core/Engine.h"
 #include "Core/Layer.h"
+#include "Core/ImGuiLayer.h"
 
 class ExampleLayer : public Muse::Layer
 {
@@ -30,6 +31,7 @@ Muse::Application* Muse::CreateApplication()
 void Game::OnStart()
 {
 	PushLayer(new ExampleLayer());
+	PushOverlay(new Muse::ImGuiLayer());
 }
 
 void Game::OnUpdate(float deltaTime)

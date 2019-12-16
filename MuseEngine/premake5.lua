@@ -151,7 +151,7 @@ project "TestGame"
 		
 	filter "configurations:Debug"
 		defines "MUSE_DEBUG"
-		runtime "Debug"
+		runtime "Debug" 
 		symbols "on"
 
 	filter "configurations:Release"

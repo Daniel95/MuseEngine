@@ -64,6 +64,12 @@
     <Filter Include="vendor\stb_image">
       <UniqueIdentifier>{0DA0BA59-F998-D9AB-22CB-BE300E23B9B7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Core\ImGui">
+      <UniqueIdentifier>{1c6287f0-b00a-4b7c-80dc-2be65f2af16a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core\Platform\OpenGL">
+      <UniqueIdentifier>{f3b51e31-dd5e-40d2-9cbb-1e3bfeccc0f9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Application.h">
@@ -1251,6 +1257,12 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\ImGuiLayer.h">
+      <Filter>src\Core\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Platform\OpenGL\imgui_impl_opengl3.h">
+      <Filter>src\Core\Platform\OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1318,6 +1330,12 @@
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\ImGuiLayer.cpp">
+      <Filter>src\Core\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Platform\OpenGL\imgui_impl_opengl3.cpp">
+      <Filter>src\Core\Platform\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

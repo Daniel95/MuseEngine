@@ -14,6 +14,9 @@ namespace Muse
 	class Application
 	{
 	public:
+        inline static Application& Get() { return *s_Instance; }
+        inline Window& GetWindow() { return *window; }
+
 		Application();
 		virtual ~Application();
         SystemManager* GetSystemManager() const;
@@ -27,6 +30,7 @@ namespace Muse
 
         void PushLayer(Layer* layer);
         void PushOverlay(Layer* layer);
+ 
     protected:
         virtual void OnStart() = 0;
         virtual void OnUpdate(float deltaTime) = 0;
@@ -34,6 +38,7 @@ namespace Muse
         virtual void OnRender() = 0;
 
     private:
+        static Application* s_Instance;
         bool running = true;
         std::unique_ptr<Window> window;
         SystemManager* systemManager;

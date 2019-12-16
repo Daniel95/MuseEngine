@@ -17,8 +17,13 @@ namespace Muse
 {
 #define BIND_EVENT_FN_TEMP(x) std::bind(&Application::x, this, std::placeholders::_1)
 
+    Application* Application::s_Instance = nullptr;
+
     Application::Application()
     {
+        ASSERT(!s_Instance, "A instance of Application already exists!");
+        s_Instance = this;
+
         window = std::unique_ptr<Window>(Window::Create());
         window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
 
@@ -69,11 +74,11 @@ namespace Muse
 
 	void Application::Render()
 	{
-        glClearColor(1, 0, 1, 1);
-        glClear(GL_COLOR_BUFFER_BIT);
         window->OnUpdate();
 
         OnRender();
+        glClearColor(1, 0, 1, 1);
+        glClear(GL_COLOR_BUFFER_BIT);
 	}
 
     void Application::OnEvent(Event& event)
@@ -97,11 +102,13 @@ namespace Muse
     void Application::PushLayer(Layer* layer)
     {
         layerStack.PushLayer(layer);
+        layer->OnAttach();
     }
 
     void Application::PushOverlay(Layer* layer)
     {
         layerStack.PushOverlay(layer);
+        layer->OnAttach();
     }
 
     bool Application::OnWindowClose(WindowCloseEvent& windowCloseEvent)
