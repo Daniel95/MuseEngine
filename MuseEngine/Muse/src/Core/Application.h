@@ -36,6 +36,7 @@ namespace Muse
         virtual void OnUpdate(float deltaTime) = 0;
         virtual void OnFixedUpdate() = 0;
         virtual void OnRender() = 0;
+        void Test();
 
     private:
         static Application* s_Instance;

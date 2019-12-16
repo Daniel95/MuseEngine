@@ -12,6 +12,7 @@
 #include "Core/Layer.h"
 
 #include <glad/glad.h>
+#include "System/EventTest.h"
 
 namespace Muse
 {
@@ -32,6 +33,25 @@ namespace Muse
         systemManager->CreateSystem<ResourceSystem>();
         systemManager->CreateSystem<SoundSystem>();
         systemManager->CreateSystem<SceneSystem>(*this);
+
+
+        EventTest* eventTest = new EventTest();
+
+        eventTest->Subscribe(std::bind(&Application::Test, this));
+        eventTest->Unsubscribe(std::bind(&Application::Test, this));
+
+        LOG_ENGINE_INFO("eventTest sybscriptions: {0}", eventTest->GetSubscriptionCount());
+
+        eventTest->Dispatch();
+
+        /*
+         *
+        eventTest->Subscribe([this]
+        {
+            LOG_ENGINE_INFO("event dispatched");
+        });
+        eventTest->Dispatch();
+         */
     }
 
     Application::~Application()
@@ -109,6 +129,11 @@ namespace Muse
     {
         layerStack.PushOverlay(layer);
         layer->OnAttach();
+    }
+
+    void Application::Test()
+    {
+        LOG_ENGINE_INFO("Test");
     }
 
     bool Application::OnWindowClose(WindowCloseEvent& windowCloseEvent)
