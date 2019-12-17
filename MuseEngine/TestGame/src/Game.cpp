@@ -12,10 +12,10 @@ public:
 
 	void OnUpdate(Muse::Timestep ts) override
 	{
-		LOG_INFO("ExampleLayer::Update");
+		//LOG_INFO("ExampleLayer::Update");
 	}
 
-	void OnEvent(Muse::Event& event) override
+	void OnEvent(Muse::EventOld& event) override
 	{
 		LOG_INFO("{0}", event.ToString());
 	}
@@ -32,6 +32,10 @@ void Game::OnStart()
 {
 	PushLayer(new ExampleLayer());
 	PushOverlay(new Muse::ImGuiLayer());
+
+	s_EventTest.Unsubscribe(this);
+
+	s_EventTest.Dispatch();
 }
 
 void Game::OnUpdate(float deltaTime)

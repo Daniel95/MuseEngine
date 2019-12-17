@@ -30,7 +30,7 @@ namespace Muse
 
 #define EVENT_CLASS_CATEGORY(category) virtual int GetCategoryFlags() const override { return category; }
 
-	class Event
+	class EventOld
 	{
 	public:
 		bool Handled = false;
@@ -49,7 +49,7 @@ namespace Muse
 	class EventDispatcher
 	{
 	public:
-		EventDispatcher(Event& event)
+		EventDispatcher(EventOld& event)
 			: m_Event(event)
 		{
 		}
@@ -66,10 +66,10 @@ namespace Muse
 			return false;
 		}
 	private:
-		Event& m_Event;
+		EventOld& m_Event;
 	};
 
-	inline std::ostream& operator<<(std::ostream& os, const Event& e)
+	inline std::ostream& operator<<(std::ostream& os, const EventOld& e)
 	{
 		return os << e.ToString();
 	}

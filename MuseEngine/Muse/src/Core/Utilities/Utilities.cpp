@@ -20,6 +20,14 @@ ullong Muse::StringHash(const std::string& a_String)
     return hash;
 }
 
+std::string Muse::PointerToString(void* a_Pointer)
+{
+    const void* address = static_cast<const void*>(a_Pointer);
+    std::stringstream ss;
+    ss << address;
+    return ss.str();
+}
+
 bool Muse::Replace(std::string& str, const std::string& from, const std::string& to)
 {
     size_t start_pos = str.find(from);

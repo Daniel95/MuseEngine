@@ -7,5 +7,6 @@ namespace Muse
 {
     /// String hash using sdbm algorithm
     ullong StringHash(const std::string& a_String);
+    std::string PointerToString(void* a_Pointer);
     bool Replace(std::string& str, const std::string& from, const std::string& to);
 }

@@ -12,13 +12,13 @@
 #include "Core/Layer.h"
 
 #include <glad/glad.h>
-#include "System/EventTest.h"
 
 namespace Muse
 {
 #define BIND_EVENT_FN_TEMP(x) std::bind(&Application::x, this, std::placeholders::_1)
 
     Application* Application::s_Instance = nullptr;
+    Event Application::s_EventTest;
 
     Application::Application()
     {
@@ -34,24 +34,11 @@ namespace Muse
         systemManager->CreateSystem<SoundSystem>();
         systemManager->CreateSystem<SceneSystem>(*this);
 
+        s_EventTest.Subscribe(this, std::bind(&Application::Test, this));
 
-        EventTest* eventTest = new EventTest();
+        LOG_ENGINE_INFO("eventTest sybscriptions: {0}", s_EventTest.GetSubscriptionCount());
 
-        eventTest->Subscribe(std::bind(&Application::Test, this));
-        eventTest->Unsubscribe(std::bind(&Application::Test, this));
-
-        LOG_ENGINE_INFO("eventTest sybscriptions: {0}", eventTest->GetSubscriptionCount());
-
-        eventTest->Dispatch();
-
-        /*
-         *
-        eventTest->Subscribe([this]
-        {
-            LOG_ENGINE_INFO("event dispatched");
-        });
-        eventTest->Dispatch();
-         */
+        s_EventTest.Dispatch();
     }
 
     Application::~Application()
@@ -101,9 +88,9 @@ namespace Muse
         glClear(GL_COLOR_BUFFER_BIT);
 	}
 
-    void Application::OnEvent(Event& event)
+    void Application::OnEvent(EventOld& event)
     {
-        LOG_ENGINE_TRACE("Event {0}", event.ToString());
+        LOG_ENGINE_TRACE("EventOld {0}", event.ToString());
 
         EventDispatcher eventDispatcher(event);
 

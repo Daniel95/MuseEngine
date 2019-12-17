@@ -78,7 +78,7 @@ namespace Muse
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 
-    void ImGuiLayer::OnEvent(Event& event)
+    void ImGuiLayer::OnEvent(EventOld& event)
     {
     }
 }

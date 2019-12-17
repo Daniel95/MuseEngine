@@ -13,7 +13,7 @@ namespace Muse
         virtual void OnAttach() override;
         virtual void OnDetach() override;
         virtual void OnUpdate(Timestep ts) override;
-        virtual void OnEvent(Event& event) override;
+        virtual void OnEvent(EventOld& event) override;
     private:
         float m_Time;
     };

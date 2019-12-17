@@ -147,7 +147,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Core\System\EventTest.h" />
+    <ClInclude Include="src\Core\Event.h" />
     <ClInclude Include="src\Core\Application.h" />
     <ClInclude Include="src\Core\Engine.h" />
     <ClInclude Include="src\Core\Gameplay\Component\BoxCollider2D.h" />
@@ -161,9 +161,12 @@
     <ClInclude Include="src\Core\Platform\OpenGL\imgui_impl_opengl3.h" />
     <ClInclude Include="src\Core\Platform\WindowsWindow.h" />
     <ClInclude Include="src\Core\System\Event\ApplicationEvent.h" />
+    <ClInclude Include="src\Core\System\Event\ApplicationEventOld.h" />
     <ClInclude Include="src\Core\System\Event\KeyEvent.h" />
+    <ClInclude Include="src\Core\System\Event\KeyEventOld.h" />
     <ClInclude Include="src\Core\System\Event\MouseEvent.h" />
     <ClInclude Include="src\Core\System\EventSystem.h" />
+    <ClInclude Include="src\Core\System\Event\MouseEventOld.h" />
     <ClInclude Include="src\Core\System\Manager\ISystem.h" />
     <ClInclude Include="src\Core\System\Manager\SystemID.h" />
     <ClInclude Include="src\Core\System\Manager\SystemManager.h" />
@@ -548,6 +551,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp" />
+    <ClCompile Include="src\Core\Event.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\BoxCollider2D.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\Component.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\TestComponent.cpp" />

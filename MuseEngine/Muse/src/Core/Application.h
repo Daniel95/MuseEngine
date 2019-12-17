@@ -2,6 +2,7 @@
 
 #include "Window.h"
 #include "LayerStack.h"
+#include "Event.h"
 
 namespace Muse
 {
@@ -10,6 +11,7 @@ namespace Muse
     class GameWindow;
     class SceneSystem;
     class SystemManager;
+    class EventTest;
 
 	class Application
 	{
@@ -26,11 +28,13 @@ namespace Muse
         void FixedUpdate();
         void Render();
 
-        void OnEvent(Event& event);
+        void OnEvent(EventOld& event);
 
         void PushLayer(Layer* layer);
         void PushOverlay(Layer* layer);
- 
+
+        static Event s_EventTest;
+
     protected:
         virtual void OnStart() = 0;
         virtual void OnUpdate(float deltaTime) = 0;
