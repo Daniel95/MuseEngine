@@ -3,14 +3,6 @@
 
 namespace Muse
 {
-	Event::Event()
-	{
-	}
-
-	Event::~Event()
-	{
-	}
-
 	void Event::Subscribe(void* idPtr, const std::function<void()>& function)
 	{
 		ullong id = PointerToHash(idPtr);
