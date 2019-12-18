@@ -8,7 +8,7 @@ namespace Muse
 	class KeyPressedEvent : public Event<int, int> {};
 
 	//Params: Keycode, RepeatCount.
-	class KeyReleasedEvent : public Event<int, int> {};
+	class KeyReleasedEvent : public Event<int> {};
 
 	//Params: Keycode.
 	class KeyTypedEvent : public Event<int> {};

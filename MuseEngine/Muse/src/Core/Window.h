@@ -2,6 +2,9 @@
 #include <string>
 #include <functional>
 #include "Core/Event/ApplicationEvent.h"
+#include "Core/Event/KeyEvent.h"
+#include "Core/Event/KeyEvent.h"
+#include "Core/Event/MouseEvent.h"
 
 namespace Muse
 {
@@ -26,6 +29,12 @@ namespace Muse
         //using EventCallbackFn = std::function<void(EventOld&)>;
         WindowCloseEvent WindowCloseEvent;
         WindowResizeEvent WindowResizeEvent;
+        KeyPressedEvent KeyPressedEvent;
+        KeyReleasedEvent KeyReleasedEvent;
+        MouseButtonPressedEvent MouseButtonPressedEvent;
+        MouseButtonReleasedEvent MouseButtonReleasedEvent;
+        MouseScrolledEvent MouseScrolledEvent;
+        MouseMovedEvent MouseMovedEvent;
 
         Window() = default;
         virtual ~Window() = default;

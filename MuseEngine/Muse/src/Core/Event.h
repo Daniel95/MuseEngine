@@ -13,14 +13,20 @@ namespace Muse
 		Event() = default;
 		virtual ~Event() = default;
 
+
+		template<typename... Targs>
 		void Subscribe(void* idPtr, const std::function<void(Targs ...)>& function);
+		template<typename... Targs>
 		void Unsubscribe(void* idPtr);
-		void Dispatch();
+		template<typename... Targs>
+		void Dispatch(Targs ...);
+		template<typename... Targs>
 		const int GetSubscriptionCount() const;
 
 	private:
 		static ullong PointerToHash(void* idPtr);
 
-		std::map<ullong, std::function<void()>> subscriptions;
+		template<typename... Targs>
+		std::map<ullong, std::function<void(Targs ...)>> subscriptions;
 	};
 }

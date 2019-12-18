@@ -8,7 +8,7 @@
 #include "Core/System/Manager/SystemManager.h"
 #include "Core/Utilities/Log.h"
 #include "Core/Utilities/Defines.h"
-#include "Core/System/Event/ApplicationEvent.h"
+#include "Core/Event/ApplicationEvent.h"
 #include "Core/Layer.h"
 
 #include <glad/glad.h>
@@ -25,6 +25,9 @@ namespace Muse
         window = std::unique_ptr<Window>(Window::Create());
         window->WindowCloseEvent.Subscribe(this, std::bind(&Application::OnWindowClose, this));
         window->WindowResizeEvent.Subscribe(this, std::bind(&Application::OnWindowResize, this, std::placeholders::_1, std::placeholders::_2));
+
+        window->WindowCloseEvent.Dispatch();
+        window->WindowResizeEvent.Dispatch(100, 100);
 
         systemManager = new SystemManager();
 

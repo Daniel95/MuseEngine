@@ -7,7 +7,7 @@ namespace Muse
 	class MouseMovedEvent : public Event<float, float> {};
 
 	//Params: float xOffset, float yOffset.
-	class MouseMovedEvent : public Event<float, float> {};
+	class MouseScrolledEvent : public Event<float, float> {};
 
 	//Params: int button.
 	class MouseButtonEvent : public Event<int> {};

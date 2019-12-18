@@ -7,6 +7,9 @@
     <Filter Include="src\Core">
       <UniqueIdentifier>{A5D31CCF-91A0-77DA-BAB9-6582A6E5AC68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Core\Event">
+      <UniqueIdentifier>{B6BC3D04-A28A-310A-8B1E-A230778B0D6F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Core\Gameplay">
       <UniqueIdentifier>{44C69AF8-B0DC-988E-F953-24B065A96916}</UniqueIdentifier>
     </Filter>
@@ -21,9 +24,6 @@
     </Filter>
     <Filter Include="src\Core\System">
       <UniqueIdentifier>{199BDBAC-8526-4971-8E37-CC65FA41A571}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Core\System\Event">
-      <UniqueIdentifier>{2A4B191F-96B7-D419-5FAB-6C77CBD6F681}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Core\System\Manager">
       <UniqueIdentifier>{43E00982-AF17-5219-B821-B63C24D87812}</UniqueIdentifier>
@@ -74,6 +74,27 @@
     </ClInclude>
     <ClInclude Include="src\Core\Engine.h">
       <Filter>src\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Event.h">
+      <Filter>src\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Event\ApplicationEvent.h">
+      <Filter>src\Core\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Event\ApplicationEventOld.h">
+      <Filter>src\Core\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Event\KeyEvent.h">
+      <Filter>src\Core\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Event\KeyEventOld.h">
+      <Filter>src\Core\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Event\MouseEvent.h">
+      <Filter>src\Core\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Event\MouseEventOld.h">
+      <Filter>src\Core\Event</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Gameplay\Component\BoxCollider2D.h">
       <Filter>src\Core\Gameplay\Component</Filter>
@@ -1251,22 +1272,12 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Event.h" />
-    <ClInclude Include="src\Core\Event\ApplicationEvent.h">
-      <Filter>src\Core\System\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Event\ApplicationEventOld.h" />
-    <ClInclude Include="src\Core\Event\KeyEvent.h">
-      <Filter>src\Core\System\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Event\KeyEventOld.h" />
-    <ClInclude Include="src\Core\Event\MouseEvent.h">
-      <Filter>src\Core\System\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Event\MouseEventOld.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
+      <Filter>src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Event.cpp">
       <Filter>src\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Gameplay\Component\BoxCollider2D.cpp">
@@ -1338,6 +1349,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Event.cpp" />
   </ItemGroup>
 </Project>

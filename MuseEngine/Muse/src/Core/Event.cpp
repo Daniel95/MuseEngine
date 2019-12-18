@@ -24,11 +24,11 @@ namespace Muse
 	}
 
 	template <typename ... Targs>
-	void Event<Targs ...>::Dispatch()
+	void Event<Targs ...>::Dispatch(Targs ...)
 	{
 		for (std::pair<ullong, const std::function<void()>> pair : subscriptions)
 		{
-			pair.second();
+			pair.second(Targs ...);
 		}
 	}
 
