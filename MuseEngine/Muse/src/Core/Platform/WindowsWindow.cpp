@@ -73,7 +73,7 @@ namespace Muse
         glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)
         {
             WindowsWindow& data = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
-            data.WindowResizeEvent.Dispatch(width, height);
+            //data.WindowResizeEvent.Dispatch(width, height);
         });
 
 
@@ -85,17 +85,17 @@ namespace Muse
             {
                 case GLFW_PRESS:
                 {
-                    windowsWindow.KeyPressedEvent.Dispatch(key, 0);
+                    //windowsWindow.KeyPressedEvent.Dispatch(key, 0);
                     break;
                 }
                 case GLFW_RELEASE:
                 {
-                    windowsWindow.KeyReleasedEvent.Dispatch(key);
+                    //windowsWindow.KeyReleasedEvent.Dispatch(key);
                     break;
                 }
                 case GLFW_REPEAT:
                 {
-                    windowsWindow.KeyPressedEvent.Dispatch(key, 1);
+                    //windowsWindow.KeyPressedEvent.Dispatch(key, 1);
                     break;
                 }
             }
@@ -110,12 +110,12 @@ namespace Muse
             {
                 case GLFW_PRESS:
                 {
-                    windowsWindow.MouseButtonPressedEvent.Dispatch(button);
+                    //windowsWindow.MouseButtonPressedEvent.Dispatch(button);
                     break;
                 }
                 case GLFW_RELEASE:
                 {
-                    windowsWindow.MouseButtonReleasedEvent.Dispatch(button);
+                    //windowsWindow.MouseButtonReleasedEvent.Dispatch(button);
                     break;
                 }
             }
@@ -124,13 +124,13 @@ namespace Muse
         glfwSetScrollCallback(window, [](GLFWwindow* window, double xOffset, double yOffset)
         {
             WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
-            windowsWindow.MouseScrolledEvent.Dispatch(static_cast<float>(xOffset), static_cast<float>(yOffset));
+            //windowsWindow.MouseScrolledEvent.Dispatch(static_cast<float>(xOffset), static_cast<float>(yOffset));
         });
 
         glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos)
         {
             WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
-            windowsWindow.MouseMovedEvent.Dispatch(static_cast<float>(xPos), static_cast<float>(yPos));
+            //windowsWindow.MouseMovedEvent.Dispatch(static_cast<float>(xPos), static_cast<float>(yPos));
         });
     }
 

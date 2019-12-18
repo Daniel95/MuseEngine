@@ -32,10 +32,6 @@ void Game::OnStart()
 {
 	PushLayer(new ExampleLayer());
 	PushOverlay(new Muse::ImGuiLayer());
-
-	s_EventTest.Unsubscribe(this);
-
-	s_EventTest.Dispatch();
 }
 
 void Game::OnUpdate(float deltaTime)

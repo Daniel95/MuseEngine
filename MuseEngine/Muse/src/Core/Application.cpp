@@ -26,9 +26,6 @@ namespace Muse
         window->WindowCloseEvent.Subscribe(this, std::bind(&Application::OnWindowClose, this));
         window->WindowResizeEvent.Subscribe(this, std::bind(&Application::OnWindowResize, this, std::placeholders::_1, std::placeholders::_2));
 
-        window->WindowCloseEvent.Dispatch();
-        window->WindowResizeEvent.Dispatch(100, 100);
-
         systemManager = new SystemManager();
 
         systemManager->CreateSystem<ResourceSystem>();

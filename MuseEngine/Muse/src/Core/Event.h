@@ -1,32 +1,69 @@
 ﻿#pragma once
 
 #include <functional>
+#include <map>
 
 #include "Core/Utilities/Utilities.h"
 
 namespace Muse
 {
-	template<typename... Targs>
+	template<typename... Args>
 	class Event
 	{
 	public:
 		Event() = default;
 		virtual ~Event() = default;
 
-
-		template<typename... Targs>
-		void Subscribe(void* idPtr, const std::function<void(Targs ...)>& function);
-		template<typename... Targs>
+		void Subscribe(void* idPtr, const std::function<void(Args ...)>& function);
 		void Unsubscribe(void* idPtr);
-		template<typename... Targs>
-		void Dispatch(Targs ...);
-		template<typename... Targs>
+		void Dispatch(Args ...);
 		const int GetSubscriptionCount() const;
 
 	private:
 		static ullong PointerToHash(void* idPtr);
 
-		template<typename... Targs>
-		std::map<ullong, std::function<void(Targs ...)>> subscriptions;
+		std::map<ullong, std::function<void(Args ...)>> subscriptions;
 	};
+
+	template <typename ... Args>
+	void Event<Args ...>::Dispatch(Args ... args)
+	{
+		for (std::pair<ullong, const std::function<void(Args ...)>> pair : subscriptions)
+		{
+			pair.second(args ...);
+		}
+	}
+
+	template <typename ... Args>
+	void Event<Args ...>::Subscribe(void* idPtr, const std::function<void(Args ...)>& function)
+	{
+		ullong id = PointerToHash(idPtr);
+
+		ASSERT_ENGINE(subscriptions.count(id) == 0, "Cannot Subscribe: This ID is already subscribed to this event!");
+
+		subscriptions[id] = function;
+	}
+
+	template <typename ... Args>
+	void Event<Args ...>::Unsubscribe(void* idPtr)
+	{
+		ullong id = PointerToHash(idPtr);
+
+		ASSERT_ENGINE(subscriptions.count(id) != 0, "Cannot Unsubscribe: This ID not subscribed to this event!");
+
+		subscriptions.erase(id);
+	}
+
+	template <typename ... Args>
+	const int Event<Args ...>::GetSubscriptionCount() const
+	{
+		return subscriptions.size();
+	}
+
+	template <typename ... Args>
+	ullong Event<Args ...>::PointerToHash(void* idPtr)
+	{
+		const std::string name = PointerToString(idPtr);
+		return Muse::StringHash(name);
+	}
 }

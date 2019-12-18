@@ -2,7 +2,6 @@
 
 #include "Window.h"
 #include "LayerStack.h"
-#include "Event.h"
 
 namespace Muse
 {
@@ -11,7 +10,6 @@ namespace Muse
     class GameWindow;
     class SceneSystem;
     class SystemManager;
-    class EventTest;
 
 	class Application
 	{
