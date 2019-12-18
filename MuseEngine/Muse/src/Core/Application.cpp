@@ -43,6 +43,12 @@ namespace Muse
     {
         window->WindowCloseEvent.Unsubscribe(this);
         window->WindowResizeEvent.Unsubscribe(this);
+        window->KeyPressedEvent.Unsubscribe(this);
+        window->KeyReleasedEvent.Unsubscribe(this);
+        window->MouseButtonPressedEvent.Unsubscribe(this);
+        window->MouseButtonReleasedEvent.Unsubscribe(this);
+        window->MouseScrolledEvent.Unsubscribe(this);
+        window->MouseMovedEvent.Unsubscribe(this);
 
         delete systemManager;
     }
