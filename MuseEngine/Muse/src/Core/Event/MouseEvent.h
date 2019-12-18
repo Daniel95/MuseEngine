@@ -4,18 +4,18 @@
 
 namespace Muse 
 {
-	//Params: float x, y.
-	class MouseMovedEvent : public Event<float, float> {};
+	//Params: float a_X, a_Y.
+	class MouseMovedEvent : public Event<float, float> { };
 
-	//Params: float xOffset, float yOffset.
-	class MouseScrolledEvent : public Event<float, float> {};
+	//Params: float a_XOffset, float a_YOffset.
+	class MouseScrolledEvent : public Event<float, float> { };
 
-	//Params: int button.
-	class MouseButtonEvent : public Event<int> {};
+	//Params: int a_Button.
+	class MouseButtonEvent : public Event<int> { };
 
-	//Params: int button.
-	class MouseButtonPressedEvent : public Event<int> {};
+	//Params: int a_Button.
+	class MouseButtonPressedEvent : public Event<int> { };
 
-	//Params: int button.
-	class MouseButtonReleasedEvent : public Event<int> {};
+	//Params: int a_Button.
+	class MouseButtonReleasedEvent : public Event<int> { };
 }

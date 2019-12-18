@@ -14,40 +14,40 @@ namespace Muse
 		Event() = default;
 		virtual ~Event() = default;
 
-		void Subscribe(void* idPtr, const std::function<void(Args ...)>& function);
-		void Unsubscribe(void* idPtr);
-		void Dispatch(Args ...);
+		void Subscribe(const void* a_PointerID, const std::function<void(Args ...)>& a_Function);
+		void Unsubscribe(const void* a_PointerID);
+		void Dispatch(Args ... a_Args);
 		const int GetSubscriptionCount() const;
 
 	private:
-		static ullong PointerToHash(void* idPtr);
+		static ullong PointerToHash(const void* a_PointerID);
 
 		std::map<ullong, std::function<void(Args ...)>> subscriptions;
 	};
 
 	template <typename ... Args>
-	void Event<Args ...>::Dispatch(Args ... args)
+	void Event<Args ...>::Dispatch(Args ... a_Args)
 	{
 		for (auto pair : subscriptions)
 		{
-			pair.second(args ...);
+			pair.second(a_Args ...);
 		}
 	}
 
 	template <typename ... Args>
-	void Event<Args ...>::Subscribe(void* idPtr, const std::function<void(Args ...)>& function)
+	void Event<Args ...>::Subscribe(const void* a_PointerID, const std::function<void(Args ...)>& a_Function)
 	{
-		ullong id = PointerToHash(idPtr);
+		ullong id = PointerToHash(a_PointerID);
 
 		ASSERT_ENGINE(subscriptions.count(id) == 0, "Cannot Subscribe: This ID is already subscribed to this event!");
 
-		subscriptions[id] = function;
+		subscriptions[id] = a_Function;
 	}
 
 	template <typename ... Args>
-	void Event<Args ...>::Unsubscribe(void* idPtr)
+	void Event<Args ...>::Unsubscribe(const void* a_PointerID)
 	{
-		ullong id = PointerToHash(idPtr);
+		ullong id = PointerToHash(a_PointerID);
 
 		ASSERT_ENGINE(subscriptions.count(id) != 0, "Cannot Unsubscribe: This ID not subscribed to this event!");
 
@@ -61,9 +61,9 @@ namespace Muse
 	}
 
 	template <typename ... Args>
-	ullong Event<Args ...>::PointerToHash(void* idPtr)
+	ullong Event<Args ...>::PointerToHash(const void* a_PointerID)
 	{
-		const std::string name = PointerToString(idPtr);
+		const std::string name = PointerToString(a_PointerID);
 		return Muse::StringHash(name);
 	}
 }

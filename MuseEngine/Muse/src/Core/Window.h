@@ -29,6 +29,7 @@ namespace Muse
         WindowResizeEvent WindowResizeEvent;
         KeyPressedEvent KeyPressedEvent;
         KeyReleasedEvent KeyReleasedEvent;
+        KeyTypedEvent KeyTypedEvent;
         MouseButtonPressedEvent MouseButtonPressedEvent;
         MouseButtonReleasedEvent MouseButtonReleasedEvent;
         MouseScrolledEvent MouseScrolledEvent;

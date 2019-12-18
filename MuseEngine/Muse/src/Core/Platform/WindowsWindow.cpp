@@ -68,16 +68,17 @@ namespace Muse
             windowsWindow->WindowCloseEvent.Dispatch();
         });
 
-        //Set GLFW callbacks
         glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)
         {
-            WindowsWindow& data = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
-            data.WindowResizeEvent.Dispatch(width, height);
+            WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
+            windowsWindow.WindowResizeEvent.Dispatch(width, height);
         });
-
 
         glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
         {
+            scancode;
+            mods;
+
             WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
 
             switch (action)
@@ -100,9 +101,16 @@ namespace Muse
             }
         });
 
+        glfwSetCharCallback(window, [](GLFWwindow* window, unsigned int a_KeyCode)
+        {
+            WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
+            windowsWindow.KeyTypedEvent.Dispatch(a_KeyCode);
+        });
 
         glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods)
         {
+            mods;
+
             WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
 
             switch (action)

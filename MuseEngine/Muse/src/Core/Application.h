@@ -15,10 +15,11 @@ namespace Muse
 	{
 	public:
         inline static Application& Get() { return *s_Instance; }
-        inline Window& GetWindow() { return *window; }
 
 		Application();
 		virtual ~Application();
+
+        inline Window& GetWindow() { return *window; }
         SystemManager* GetSystemManager() const;
 
         void Start();
@@ -34,7 +35,6 @@ namespace Muse
         virtual void OnUpdate(float deltaTime) = 0;
         virtual void OnFixedUpdate() = 0;
         virtual void OnRender() = 0;
-        void Test();
 
     private:
         static Application* s_Instance;
@@ -49,7 +49,7 @@ namespace Muse
         void OnKeyReleasedEvent(int a_KeyCode);
         void OnMouseButtonPressedEvent(int a_Button);
         void OnMouseButtonReleasedEvent(int a_Button);
-        void OnMouseScrolledEvent(float a_XOffset, float a_yOffset);
+        void OnMouseScrolledEvent(float a_XOffset, float a_YOffset);
         void OnMouseMovedEvent(float a_X, float a_Y);
 
 	};

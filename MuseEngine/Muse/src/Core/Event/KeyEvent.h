@@ -4,12 +4,13 @@
 
 namespace Muse 
 {
-	//Params: Keycode, RepeatCount.
-	class KeyPressedEvent : public Event<int, int> {};
+	//Params: a_Keycode, a_RepeatCount.
+	class KeyPressedEvent : public Event<int, int> { };
 
-	//Params: Keycode, RepeatCount.
-	class KeyReleasedEvent : public Event<int> {};
+	//Params: a_Keycode, a_RepeatCount.
+	class KeyReleasedEvent : public Event<int> { };
 
-	//Params: Keycode.
-	class KeyTypedEvent : public Event<int> {};
+	//Params: a_Keycode.
+	class KeyTypedEvent : public Event<int> { };
+
 }

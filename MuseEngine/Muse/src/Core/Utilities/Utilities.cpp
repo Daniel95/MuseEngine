@@ -20,7 +20,7 @@ ullong Muse::StringHash(const std::string& a_String)
     return hash;
 }
 
-std::string Muse::PointerToString(void* a_Pointer)
+std::string Muse::PointerToString(const void* a_Pointer)
 {
     const void* address = static_cast<const void*>(a_Pointer);
     std::stringstream ss;
