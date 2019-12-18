@@ -14,11 +14,6 @@ public:
 	{
 		//LOG_INFO("ExampleLayer::Update");
 	}
-
-	void OnEvent(Muse::EventOld& event) override
-	{
-		LOG_INFO("{0}", event.ToString());
-	}
 };
 
 

@@ -75,9 +75,6 @@
     <ClInclude Include="src\Core\Engine.h">
       <Filter>src\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Event.h">
-      <Filter>src\Core</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\Event\ApplicationEvent.h">
       <Filter>src\Core\Event</Filter>
     </ClInclude>
@@ -116,9 +113,6 @@
     </ClInclude>
     <ClInclude Include="src\Core\Platform\WindowsWindow.h">
       <Filter>src\Core\Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\System\EventSystem.h">
-      <Filter>src\Core\System</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\System\Manager\ISystem.h">
       <Filter>src\Core\System\Manager</Filter>
@@ -1263,12 +1257,12 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Event\Event.h">
+      <Filter>src\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
-      <Filter>src\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Event.cpp">
       <Filter>src\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Gameplay\Component\BoxCollider2D.cpp">
@@ -1339,6 +1333,9 @@
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Event\Event.cpp">
+      <Filter>src\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "System/EventSystem.h"
 #include "Timestep.h"
 
 namespace Muse
@@ -15,7 +14,7 @@ namespace Muse
 		virtual void OnDetach() {}
 		virtual void OnUpdate(Timestep ts) {}
 		virtual void OnImGuiRender() {}
-		virtual void OnEvent(Muse::EventOld& event) {}
+		//virtual void OnEvent(Muse::EventOld& event) {}
 
 		inline const std::string& GetName() const { return debugName; }
 	protected:
