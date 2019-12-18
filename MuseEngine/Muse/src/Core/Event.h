@@ -28,7 +28,7 @@ namespace Muse
 	template <typename ... Args>
 	void Event<Args ...>::Dispatch(Args ... args)
 	{
-		for (std::pair<ullong, const std::function<void(Args ...)>> pair : subscriptions)
+		for (auto pair : subscriptions)
 		{
 			pair.second(args ...);
 		}

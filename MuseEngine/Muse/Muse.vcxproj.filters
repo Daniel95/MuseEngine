@@ -81,19 +81,10 @@
     <ClInclude Include="src\Core\Event\ApplicationEvent.h">
       <Filter>src\Core\Event</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Event\ApplicationEventOld.h">
-      <Filter>src\Core\Event</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\Event\KeyEvent.h">
       <Filter>src\Core\Event</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Event\KeyEventOld.h">
-      <Filter>src\Core\Event</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\Event\MouseEvent.h">
-      <Filter>src\Core\Event</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Event\MouseEventOld.h">
       <Filter>src\Core\Event</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Gameplay\Component\BoxCollider2D.h">

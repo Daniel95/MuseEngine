@@ -44,7 +44,14 @@ namespace Muse
         LayerStack layerStack;
 
         void OnWindowClose();
-        void OnWindowResize(int width, int height);
+        void OnWindowResize(int a_Width, int a_Height);
+        void KeyPressedEvent(int a_KeyCode, int a_RepeatCount);
+        void OnKeyReleasedEvent(int a_KeyCode);
+        void OnMouseButtonPressedEvent(int a_Button);
+        void OnMouseButtonReleasedEvent(int a_Button);
+        void OnMouseScrolledEvent(float a_XOffset, float a_yOffset);
+        void OnMouseMovedEvent(float a_X, float a_Y);
+
 	};
 
 	// To be defined in client.

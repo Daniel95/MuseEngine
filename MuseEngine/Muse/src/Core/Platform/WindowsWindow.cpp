@@ -36,10 +36,9 @@ namespace Muse
 
     void WindowsWindow::Init(const WindowProperties& properties)
     {
-        data.Title = properties.Title;
-        data.Width = properties.Width;
-        data.Height = properties.Height;
-
+        title = properties.Title;
+        width = properties.Width;
+        height = properties.Height;
 
         if(!GLFWInitialized)
         {
@@ -52,28 +51,28 @@ namespace Muse
         }
 
 
-        window = glfwCreateWindow(static_cast<int>(properties.Width), static_cast<int>(properties.Height), data.Title.c_str(), nullptr, nullptr);
+        window = glfwCreateWindow(static_cast<int>(properties.Width), static_cast<int>(properties.Height), title.c_str(), nullptr, nullptr);
         glfwMakeContextCurrent(window);
         const int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
         ASSERT_ENGINE(status, "Failed to initialize Glad!");
 
-        glfwSetWindowUserPointer(window, &data);
+        glfwSetWindowUserPointer(window, this);
         SetVSync(true);
 
         LOG_ENGINE_ERROR("Created window {0}, ({1}, {2})", properties.Title, properties.Width, properties.Height);
 
         glfwSetWindowCloseCallback(window, [](GLFWwindow* window)
         {
-            WindowsWindow& data = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
-            data.WindowCloseEvent.Dispatch();
+            WindowsWindow* windowsWindow = static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
+            windowsWindow->WindowCloseEvent.Dispatch();
         });
 
         //Set GLFW callbacks
         glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)
         {
             WindowsWindow& data = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
-            //data.WindowResizeEvent.Dispatch(width, height);
+            data.WindowResizeEvent.Dispatch(width, height);
         });
 
 
@@ -85,17 +84,17 @@ namespace Muse
             {
                 case GLFW_PRESS:
                 {
-                    //windowsWindow.KeyPressedEvent.Dispatch(key, 0);
+                    windowsWindow.KeyPressedEvent.Dispatch(key, 0);
                     break;
                 }
                 case GLFW_RELEASE:
                 {
-                    //windowsWindow.KeyReleasedEvent.Dispatch(key);
+                    windowsWindow.KeyReleasedEvent.Dispatch(key);
                     break;
                 }
                 case GLFW_REPEAT:
                 {
-                    //windowsWindow.KeyPressedEvent.Dispatch(key, 1);
+                    windowsWindow.KeyPressedEvent.Dispatch(key, 1);
                     break;
                 }
             }
@@ -110,12 +109,12 @@ namespace Muse
             {
                 case GLFW_PRESS:
                 {
-                    //windowsWindow.MouseButtonPressedEvent.Dispatch(button);
+                    windowsWindow.MouseButtonPressedEvent.Dispatch(button);
                     break;
                 }
                 case GLFW_RELEASE:
                 {
-                    //windowsWindow.MouseButtonReleasedEvent.Dispatch(button);
+                    windowsWindow.MouseButtonReleasedEvent.Dispatch(button);
                     break;
                 }
             }
@@ -124,13 +123,13 @@ namespace Muse
         glfwSetScrollCallback(window, [](GLFWwindow* window, double xOffset, double yOffset)
         {
             WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
-            //windowsWindow.MouseScrolledEvent.Dispatch(static_cast<float>(xOffset), static_cast<float>(yOffset));
+            windowsWindow.MouseScrolledEvent.Dispatch(static_cast<float>(xOffset), static_cast<float>(yOffset));
         });
 
         glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos)
         {
             WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
-            //windowsWindow.MouseMovedEvent.Dispatch(static_cast<float>(xPos), static_cast<float>(yPos));
+            windowsWindow.MouseMovedEvent.Dispatch(static_cast<float>(xPos), static_cast<float>(yPos));
         });
     }
 
@@ -156,11 +155,11 @@ namespace Muse
             glfwSwapInterval(0);
         }
 
-        data.VSync = enabled;
+        vSync = enabled;
     }
 
     bool WindowsWindow::IsVSync() const
     {
-        return data.VSync;
+        return vSync;
     }
 }

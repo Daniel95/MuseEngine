@@ -14,22 +14,19 @@ namespace Muse
 
         void OnUpdate() override;
 
-        inline unsigned int GetWidth() const override { return data.Width;  }
-        inline unsigned int GetHeight() const override { return data.Height; }
+        unsigned int GetWidth() const override { return width;  }
+        unsigned int GetHeight() const override { return height; }
+        void SetWidth(const unsigned int a_Width) override { width = a_Width; }
+        void SetHeight(const unsigned int a_Height) override { height = a_Height; }
 
         void SetVSync(bool enabled) override;
         bool IsVSync() const override;
 
     private:
-        struct WindowData
-        {
-            std::string Title;
-            unsigned int Width, Height;
-            bool VSync;
-        };
-
-        WindowData data;
         GLFWwindow* window;
+        std::string title;
+        unsigned int width, height;
+        bool vSync;
 
         virtual void Init(const WindowProperties& properties);
         virtual void Shutdown();

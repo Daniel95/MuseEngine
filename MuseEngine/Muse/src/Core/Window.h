@@ -1,8 +1,6 @@
 #pragma once
 #include <string>
-#include <functional>
 #include "Core/Event/ApplicationEvent.h"
-#include "Core/Event/KeyEvent.h"
 #include "Core/Event/KeyEvent.h"
 #include "Core/Event/MouseEvent.h"
 
@@ -47,6 +45,8 @@ namespace Muse
 
         virtual unsigned int GetWidth() const = 0;
         virtual unsigned int GetHeight() const = 0;
+        virtual void SetWidth(unsigned int a_Width) = 0;
+        virtual void SetHeight(unsigned int a_Height) = 0;
 
         // Window attributes
         virtual void SetVSync(bool enabled) = 0;

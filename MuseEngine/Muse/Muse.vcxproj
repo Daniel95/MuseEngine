@@ -151,11 +151,8 @@
     <ClInclude Include="src\Core\Engine.h" />
     <ClInclude Include="src\Core\Event.h" />
     <ClInclude Include="src\Core\Event\ApplicationEvent.h" />
-    <ClInclude Include="src\Core\Event\ApplicationEventOld.h" />
     <ClInclude Include="src\Core\Event\KeyEvent.h" />
-    <ClInclude Include="src\Core\Event\KeyEventOld.h" />
     <ClInclude Include="src\Core\Event\MouseEvent.h" />
-    <ClInclude Include="src\Core\Event\MouseEventOld.h" />
     <ClInclude Include="src\Core\Gameplay\Component\BoxCollider2D.h" />
     <ClInclude Include="src\Core\Gameplay\Component\Component.h" />
     <ClInclude Include="src\Core\Gameplay\Component\TestComponent.h" />
