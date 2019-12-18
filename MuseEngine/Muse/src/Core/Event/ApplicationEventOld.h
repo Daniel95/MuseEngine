@@ -2,6 +2,7 @@
 
 #include "Core/System/EventSystem.h"
 
+/*
 namespace Muse {
 
 	class WindowResizeEvent : public EventOld
@@ -62,3 +63,4 @@ namespace Muse {
 		EVENT_CLASS_CATEGORY(EventCategoryApplication)
 	};
 }
+*/

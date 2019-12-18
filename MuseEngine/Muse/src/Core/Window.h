@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 #include <functional>
-#include "Core/System/EventSystem.h"
+#include "Core/Event/ApplicationEvent.h"
 
 namespace Muse
 {
@@ -24,6 +24,8 @@ namespace Muse
     {
     public:
         //using EventCallbackFn = std::function<void(EventOld&)>;
+        WindowCloseEvent WindowCloseEvent;
+        WindowResizeEvent WindowResizeEvent;
 
         Window() = default;
         virtual ~Window() = default;
@@ -38,10 +40,10 @@ namespace Muse
         virtual unsigned int GetHeight() const = 0;
 
         // Window attributes
-        virtual void SetEventCallback(const std::function<void(EventOld&)>& callback) = 0;
         virtual void SetVSync(bool enabled) = 0;
         virtual bool IsVSync() const = 0;
 
         static Window* Create(const WindowProperties& properties = WindowProperties());
+
     };
 }

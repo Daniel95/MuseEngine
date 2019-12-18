@@ -28,12 +28,8 @@ namespace Muse
         void FixedUpdate();
         void Render();
 
-        void OnEvent(EventOld& event);
-
         void PushLayer(Layer* layer);
         void PushOverlay(Layer* layer);
-
-        static Event s_EventTest;
 
     protected:
         virtual void OnStart() = 0;
@@ -49,7 +45,8 @@ namespace Muse
         SystemManager* systemManager;
         LayerStack layerStack;
 
-        bool OnWindowClose(WindowCloseEvent& windowCloseEvent);
+        void OnWindowClose();
+        void OnWindowResize(int width, int height);
 	};
 
 	// To be defined in client.

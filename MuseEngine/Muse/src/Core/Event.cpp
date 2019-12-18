@@ -3,7 +3,8 @@
 
 namespace Muse
 {
-	void Event::Subscribe(void* idPtr, const std::function<void()>& function)
+	template <typename ... Targs>
+	void Event<Targs ...>::Subscribe(void* idPtr, const std::function<void(Targs ...)>& function)
 	{
 		ullong id = PointerToHash(idPtr);
 
@@ -12,7 +13,8 @@ namespace Muse
 		subscriptions[id] = function;
 	}
 
-	void Event::Unsubscribe(void* idPtr)
+	template <typename ... Targs>
+	void Event<Targs ...>::Unsubscribe(void* idPtr)
 	{
 		ullong id = PointerToHash(idPtr);
 
@@ -21,7 +23,8 @@ namespace Muse
 		subscriptions.erase(id);
 	}
 
-	void Event::Dispatch()
+	template <typename ... Targs>
+	void Event<Targs ...>::Dispatch()
 	{
 		for (std::pair<ullong, const std::function<void()>> pair : subscriptions)
 		{
@@ -29,12 +32,14 @@ namespace Muse
 		}
 	}
 
-	const int Event::GetSubscriptionCount() const
+	template <typename ... Targs>
+	const int Event<Targs ...>::GetSubscriptionCount() const
 	{
 		return subscriptions.size();
 	}
 
-	ullong Event::PointerToHash(void* idPtr)
+	template <typename ... Targs>
+	ullong Event<Targs ...>::PointerToHash(void* idPtr)
 	{
 		const std::string name = PointerToString(idPtr);
 		return Muse::StringHash(name);

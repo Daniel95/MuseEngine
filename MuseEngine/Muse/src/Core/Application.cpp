@@ -15,10 +15,7 @@
 
 namespace Muse
 {
-#define BIND_EVENT_FN_TEMP(x) std::bind(&Application::x, this, std::placeholders::_1)
-
     Application* Application::s_Instance = nullptr;
-    Event Application::s_EventTest;
 
     Application::Application()
     {
@@ -26,23 +23,21 @@ namespace Muse
         s_Instance = this;
 
         window = std::unique_ptr<Window>(Window::Create());
-        window->SetEventCallback(BIND_EVENT_FN(Application::OnEvent));
+        window->WindowCloseEvent.Subscribe(this, std::bind(&Application::OnWindowClose, this));
+        window->WindowResizeEvent.Subscribe(this, std::bind(&Application::OnWindowResize, this, std::placeholders::_1, std::placeholders::_2));
 
         systemManager = new SystemManager();
 
         systemManager->CreateSystem<ResourceSystem>();
         systemManager->CreateSystem<SoundSystem>();
         systemManager->CreateSystem<SceneSystem>(*this);
-
-        s_EventTest.Subscribe(this, std::bind(&Application::Test, this));
-
-        LOG_ENGINE_INFO("eventTest sybscriptions: {0}", s_EventTest.GetSubscriptionCount());
-
-        s_EventTest.Dispatch();
     }
 
     Application::~Application()
     {
+        window->WindowCloseEvent.Unsubscribe(this);
+        window->WindowResizeEvent.Unsubscribe(this);
+
         delete systemManager;
     }
 
@@ -88,6 +83,7 @@ namespace Muse
         glClear(GL_COLOR_BUFFER_BIT);
 	}
 
+    /*
     void Application::OnEvent(EventOld& event)
     {
         LOG_ENGINE_TRACE("EventOld {0}", event.ToString());
@@ -105,6 +101,7 @@ namespace Muse
             }
         }
     }
+    */
 
     void Application::PushLayer(Layer* layer)
     {
@@ -120,12 +117,16 @@ namespace Muse
 
     void Application::Test()
     {
-        LOG_ENGINE_INFO("Test");
     }
 
-    bool Application::OnWindowClose(WindowCloseEvent& windowCloseEvent)
+    void Application::OnWindowClose()
     {
+        LOG_ENGINE_INFO("OnWindowClose");
         running = false;
-        return true;
+    }
+
+    void Application::OnWindowResize(int width, int height)
+    {
+        LOG_ENGINE_INFO("OnWindowResize: {0}, {0}", width, height);
     }
 }

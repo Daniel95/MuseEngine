@@ -2,6 +2,7 @@
 
 #include "Core/System/EventSystem.h"
 
+/*
 namespace Muse {
 
 	class MouseMovedEvent : public EventOld
@@ -94,3 +95,4 @@ namespace Muse {
 	};
 
 }
+*/

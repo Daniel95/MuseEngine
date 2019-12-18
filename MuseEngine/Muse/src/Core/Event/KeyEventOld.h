@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core/System/EventSystem.h"
-
+/*
 namespace Muse {
 
 	class KeyEvent : public EventOld
@@ -69,3 +69,4 @@ namespace Muse {
 		EVENT_CLASS_TYPE(KeyTyped)
 	};
 }
+*/

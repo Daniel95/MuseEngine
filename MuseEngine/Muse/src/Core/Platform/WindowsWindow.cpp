@@ -3,9 +3,9 @@
 #include "WindowsWindow.h"
 #include "Core/Utilities/Defines.h"
 #include "Core/Utilities/Log.h"
-#include "Core/System/Event/ApplicationEvent.h"
-#include "Core/System/Event/KeyEvent.h"
-#include "Core/System/Event/MouseEvent.h"
+#include "Core/Event/ApplicationEvent.h"
+#include "Core/Event/KeyEvent.h"
+#include "Core/Event/MouseEvent.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>

@@ -6,13 +6,14 @@
 
 namespace Muse
 {
+	template<typename... Targs>
 	class Event
 	{
 	public:
 		Event() = default;
 		virtual ~Event() = default;
 
-		void Subscribe(void* idPtr, const std::function<void()>& function);
+		void Subscribe(void* idPtr, const std::function<void(Targs ...)>& function);
 		void Unsubscribe(void* idPtr);
 		void Dispatch();
 		const int GetSubscriptionCount() const;
