@@ -36,9 +36,9 @@ namespace Muse
 
     void WindowsWindow::Init(const WindowProperties& properties)
     {
-        title = properties.Title;
-        width = properties.Width;
-        height = properties.Height;
+        m_Title = properties.Title;
+        m_Width = properties.Width;
+        m_Height = properties.Height;
 
         if(!GLFWInitialized)
         {
@@ -51,30 +51,30 @@ namespace Muse
         }
 
 
-        window = glfwCreateWindow(static_cast<int>(properties.Width), static_cast<int>(properties.Height), title.c_str(), nullptr, nullptr);
-        glfwMakeContextCurrent(window);
+        m_Window = glfwCreateWindow(static_cast<int>(properties.Width), static_cast<int>(properties.Height), m_Title.c_str(), nullptr, nullptr);
+        glfwMakeContextCurrent(m_Window);
         const int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
         ASSERT_ENGINE(status, "Failed to initialize Glad!");
 
-        glfwSetWindowUserPointer(window, this);
+        glfwSetWindowUserPointer(m_Window, this);
         SetVSync(true);
 
         LOG_ENGINE_ERROR("Created window {0}, ({1}, {2})", properties.Title, properties.Width, properties.Height);
 
-        glfwSetWindowCloseCallback(window, [](GLFWwindow* window)
+        glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
         {
             WindowsWindow* windowsWindow = static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
             windowsWindow->WindowCloseEvent.Dispatch();
         });
 
-        glfwSetWindowSizeCallback(window, [](GLFWwindow* window, int width, int height)
+        glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
         {
             WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
             windowsWindow.WindowResizeEvent.Dispatch(width, height);
         });
 
-        glfwSetKeyCallback(window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+        glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
         {
             scancode;
             mods;
@@ -101,13 +101,13 @@ namespace Muse
             }
         });
 
-        glfwSetCharCallback(window, [](GLFWwindow* window, unsigned int a_KeyCode)
+        glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int a_KeyCode)
         {
             WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
             windowsWindow.KeyTypedEvent.Dispatch(a_KeyCode);
         });
 
-        glfwSetMouseButtonCallback(window, [](GLFWwindow* window, int button, int action, int mods)
+        glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
         {
             mods;
 
@@ -128,13 +128,13 @@ namespace Muse
             }
         });
 
-        glfwSetScrollCallback(window, [](GLFWwindow* window, double xOffset, double yOffset)
+        glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset)
         {
             WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
             windowsWindow.MouseScrolledEvent.Dispatch(static_cast<float>(xOffset), static_cast<float>(yOffset));
         });
 
-        glfwSetCursorPosCallback(window, [](GLFWwindow* window, double xPos, double yPos)
+        glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
         {
             WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
             windowsWindow.MouseMovedEvent.Dispatch(static_cast<float>(xPos), static_cast<float>(yPos));
@@ -143,13 +143,13 @@ namespace Muse
 
     void WindowsWindow::Shutdown()
     {
-        glfwDestroyWindow(window);
+        glfwDestroyWindow(m_Window);
     }
 
     void WindowsWindow::OnUpdate()
     {
         glfwPollEvents();
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(m_Window);
     }
 
     void WindowsWindow::SetVSync(bool enabled)

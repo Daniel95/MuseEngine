@@ -12,20 +12,21 @@ namespace Muse
         WindowsWindow(const WindowProperties& properties);
         virtual ~WindowsWindow();
 
-        void OnUpdate() override;
+        virtual void OnUpdate() override;
 
-        unsigned int GetWidth() const override { return width;  }
-        unsigned int GetHeight() const override { return height; }
-        void SetWidth(const unsigned int a_Width) override { width = a_Width; }
-        void SetHeight(const unsigned int a_Height) override { height = a_Height; }
+        virtual unsigned int GetWidth() const override { return m_Width;  }
+        virtual unsigned int GetHeight() const override { return m_Height; }
+        virtual void SetWidth(const unsigned int a_Width) override { m_Width = a_Width; }
+        virtual void SetHeight(const unsigned int a_Height) override { m_Height = a_Height; }
 
-        void SetVSync(bool enabled) override;
-        bool IsVSync() const override;
+        virtual void SetVSync(bool enabled) override;
+        virtual bool IsVSync() const override;
+        virtual void* GetNativeWindow() const override { return m_Window; }
 
     private:
-        GLFWwindow* window;
-        std::string title;
-        unsigned int width, height;
+        GLFWwindow* m_Window;
+        std::string m_Title;
+        unsigned int m_Width, m_Height;
         bool vSync;
 
         virtual void Init(const WindowProperties& properties);

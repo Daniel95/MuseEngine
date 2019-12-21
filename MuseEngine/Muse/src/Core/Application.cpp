@@ -10,6 +10,7 @@
 #include "Core/Utilities/Defines.h"
 #include "Core/Event/ApplicationEvent.h"
 #include "Core/Layer.h"
+#include "Core/Input.h"
 
 #include <glad/glad.h>
 
@@ -77,6 +78,9 @@ namespace Muse
 
 	void Application::Update()
 	{
+        glm::vec2 mousePosition = Input::GetMousePosition();
+        LOG_ENGINE_INFO("{0}, {1}}", mousePosition.x, mousePosition.y);
+
         systemManager->UpdateSystems(0);
         OnUpdate(0.016f);
 	}

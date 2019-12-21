@@ -109,7 +109,6 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -150,8 +149,8 @@
   <ItemGroup>
     <ClInclude Include="src\Core\Application.h" />
     <ClInclude Include="src\Core\Engine.h" />
-    <ClInclude Include="src\Core\Event\Event.h" />
     <ClInclude Include="src\Core\Event\ApplicationEvent.h" />
+    <ClInclude Include="src\Core\Event\Event.h" />
     <ClInclude Include="src\Core\Event\KeyEvent.h" />
     <ClInclude Include="src\Core\Event\MouseEvent.h" />
     <ClInclude Include="src\Core\Gameplay\Component\BoxCollider2D.h" />
@@ -160,6 +159,7 @@
     <ClInclude Include="src\Core\Gameplay\Component\Transform.h" />
     <ClInclude Include="src\Core\Gameplay\GameObject.h" />
     <ClInclude Include="src\Core\ImGuiLayer.h" />
+    <ClInclude Include="src\Core\Input.h" />
     <ClInclude Include="src\Core\Layer.h" />
     <ClInclude Include="src\Core\LayerStack.h" />
     <ClInclude Include="src\Core\Platform\OpenGL\imgui_impl_opengl3.h" />
@@ -545,6 +545,7 @@
     <ClInclude Include="vendor\glm\glm\vec4.hpp" />
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
     <ClInclude Include="vendor\stb_image\stb_image.h" />
+    <ClInclude Include="src\Core\Platform\Windows\WindowsInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp" />
@@ -574,6 +575,7 @@
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
+    <ClCompile Include="src\Core\Platform\Windows\WindowsInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">
