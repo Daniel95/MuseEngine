@@ -10,7 +10,9 @@
 #include "Core/Utilities/Defines.h"
 #include "Core/Event/ApplicationEvent.h"
 #include "Core/Layer.h"
-#include "Core/Input.h"
+#include "Core/Input/Input.h"
+#include "Core/Input/MouseButtonCodes.h"
+#include "Core/Input/KeyCodes.h"
 
 #include <glad/glad.h>
 
@@ -78,8 +80,8 @@ namespace Muse
 
 	void Application::Update()
 	{
-        glm::vec2 mousePosition = Input::GetMousePosition();
-        LOG_ENGINE_INFO("{0}, {1}}", mousePosition.x, mousePosition.y);
+        LOG_ENGINE_INFO(Input::IsKeyPressed(MUSE_KEY_1));
+        LOG_ENGINE_INFO(Input::IsMouseButtonPressed(MUSE_MOUSE_BUTTON_1));
 
         systemManager->UpdateSystems(0);
         OnUpdate(0.016f);

@@ -159,9 +159,11 @@
     <ClInclude Include="src\Core\Gameplay\Component\Transform.h" />
     <ClInclude Include="src\Core\Gameplay\GameObject.h" />
     <ClInclude Include="src\Core\ImGuiLayer.h" />
-    <ClInclude Include="src\Core\Input.h" />
+    <ClInclude Include="src\Core\Input\Input.h" />
+    <ClInclude Include="src\Core\Input\KeyCodes.h" />
     <ClInclude Include="src\Core\Layer.h" />
     <ClInclude Include="src\Core\LayerStack.h" />
+    <ClInclude Include="src\Core\Input\MouseButtonCodes.h" />
     <ClInclude Include="src\Core\Platform\OpenGL\imgui_impl_opengl3.h" />
     <ClInclude Include="src\Core\Platform\WindowsWindow.h" />
     <ClInclude Include="src\Core\System\Manager\ISystem.h" />

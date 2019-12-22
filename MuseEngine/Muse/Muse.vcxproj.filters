@@ -1260,8 +1260,10 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Input.h" />
     <ClInclude Include="src\Core\Platform\Windows\WindowsInput.h" />
+    <ClInclude Include="src\Core\Input\KeyCodes.h" />
+    <ClInclude Include="src\Core\Input\MouseButtonCodes.h" />
+    <ClInclude Include="src\Core\Input\Input.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">

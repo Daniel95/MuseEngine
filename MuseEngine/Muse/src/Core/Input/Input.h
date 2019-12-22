@@ -7,7 +7,7 @@ namespace Muse
     public:
         virtual ~Input() = default;
         static bool IsKeyPressed(int a_Keycode) { return s_Instance->IsKeyPressedImpl(a_Keycode); }
-        static bool IsMouseButtonPressed(int a_Button) { return s_Instance->IsKeyPressedImpl(a_Button); }
+        static bool IsMouseButtonPressed(int a_Button) { return s_Instance->IsMouseButtonPressedImpl(a_Button); }
         static const glm::vec2& GetMousePosition() { return s_Instance->GetMousePositionImpl(); }
         static bool GetMouseX() { return s_Instance->GetMouseXImpl(); }
         static bool GetMouseY() { return s_Instance->GetMouseYImpl(); }
