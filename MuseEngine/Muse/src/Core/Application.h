@@ -36,22 +36,21 @@ namespace Muse
         virtual void OnFixedUpdate() = 0;
         virtual void OnRender() = 0;
 
+        virtual void OnWindowCloseEvent();
+        virtual void OnWindowResizeEvent(int a_Width, int a_Height);
+        virtual void OnKeyPressedEvent(int a_KeyCode, int a_RepeatCount);
+        virtual void OnKeyReleasedEvent(int a_KeyCode);
+        virtual void OnMouseButtonPressedEvent(int a_Button);
+        virtual void OnMouseButtonReleasedEvent(int a_Button);
+        virtual void OnMouseScrolledEvent(float a_XOffset, float a_YOffset);
+        virtual void OnMouseMovedEvent(float a_X, float a_Y);
+
     private:
         static Application* s_Instance;
         bool running = true;
         std::unique_ptr<Window> window;
         SystemManager* systemManager;
         LayerStack layerStack;
-
-        void OnWindowClose();
-        void OnWindowResize(int a_Width, int a_Height);
-        void KeyPressedEvent(int a_KeyCode, int a_RepeatCount);
-        void OnKeyReleasedEvent(int a_KeyCode);
-        void OnMouseButtonPressedEvent(int a_Button);
-        void OnMouseButtonReleasedEvent(int a_Button);
-        void OnMouseScrolledEvent(float a_XOffset, float a_YOffset);
-        void OnMouseMovedEvent(float a_X, float a_Y);
-
 	};
 
 	// To be defined in client.

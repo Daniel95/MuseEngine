@@ -26,9 +26,9 @@ namespace Muse
         s_Instance = this;
 
         window = std::unique_ptr<Window>(Window::Create());
-        window->WindowCloseEvent.Subscribe(this, std::bind(&Application::OnWindowClose, this));
-        window->WindowResizeEvent.Subscribe(this, std::bind(&Application::OnWindowResize, this, std::placeholders::_1, std::placeholders::_2));
-        window->KeyPressedEvent.Subscribe(this, std::bind(&Application::OnWindowResize, this, std::placeholders::_1, std::placeholders::_2));
+        window->WindowCloseEvent.Subscribe(this, std::bind(&Application::OnWindowCloseEvent, this));
+        window->WindowResizeEvent.Subscribe(this, std::bind(&Application::OnWindowResizeEvent, this, std::placeholders::_1, std::placeholders::_2));
+        window->KeyPressedEvent.Subscribe(this, std::bind(&Application::OnWindowResizeEvent, this, std::placeholders::_1, std::placeholders::_2));
         window->KeyReleasedEvent.Subscribe(this, std::bind(&Application::OnKeyReleasedEvent, this, std::placeholders::_1));
         window->MouseButtonPressedEvent.Subscribe(this, std::bind(&Application::OnMouseButtonPressedEvent, this, std::placeholders::_1));
         window->MouseButtonReleasedEvent.Subscribe(this, std::bind(&Application::OnMouseButtonReleasedEvent, this, std::placeholders::_1));
@@ -80,9 +80,6 @@ namespace Muse
 
 	void Application::Update()
 	{
-        LOG_ENGINE_INFO(Input::IsKeyPressed(MUSE_KEY_1));
-        LOG_ENGINE_INFO(Input::IsMouseButtonPressed(MUSE_MOUSE_BUTTON_1));
-
         systemManager->UpdateSystems(0);
         OnUpdate(0.016f);
 	}
@@ -113,43 +110,43 @@ namespace Muse
         layer->OnAttach();
     }
 
-    void Application::OnWindowClose()
+    void Application::OnWindowCloseEvent()
     {
         running = false;
     }
 
-    void Application::OnWindowResize(int a_Width, int a_Height)
+    void Application::OnWindowResizeEvent(int a_Width, int a_Height)
     {
         //LOG_ENGINE_INFO("OnWindowResize: {0}, {1}", a_Width, a_Height);
     }
 
-    void Application::KeyPressedEvent(int a_KeyCode, int a_RepeatCount)
+    void Application::OnKeyPressedEvent(int a_KeyCode, int a_RepeatCount)
     {
-        //LOG_ENGINE_INFO("KeyPressedEvent: {0}, {1}", a_KeyCode, a_RepeatCount);
+        //LOG_ENGINE_INFO("OnKeyPressed: {0}, {1}", a_KeyCode, a_RepeatCount);
     }
 
     void Application::OnKeyReleasedEvent(int a_KeyCode)
     {
-        //LOG_ENGINE_INFO("OnKeyReleasedEvent: {0}", a_KeyCode);
+        //LOG_ENGINE_INFO("OnKeyReleased: {0}", a_KeyCode);
     }
 
     void Application::OnMouseButtonPressedEvent(int a_Button)
     {
-        //LOG_ENGINE_INFO("OnMouseButtonPressedEvent: {0}", a_Button);
+        //LOG_ENGINE_INFO("OnMouseButtonPressed: {0}", a_Button);
     }
 
     void Application::OnMouseButtonReleasedEvent(int a_Button)
     {
-        //LOG_ENGINE_INFO("OnMouseButtonReleasedEvent: {0}", a_Button);
+        //LOG_ENGINE_INFO("OnMouseButtonReleased: {0}", a_Button);
     }
 
     void Application::OnMouseScrolledEvent(float a_XOffset, float a_YOffset)
     {
-        //LOG_ENGINE_INFO("OnMouseScrolledEvent: {0}, {1}", a_XOffset, a_YOffset);
+        //LOG_ENGINE_INFO("OnMouseScrolled: {0}, {1}", a_XOffset, a_YOffset);
     }
 
     void Application::OnMouseMovedEvent(float a_X, float a_Y)
     {
-        //LOG_ENGINE_INFO("OnMouseMovedEvent: {0}, {1}", a_X, a_Y);
+        //LOG_ENGINE_INFO("OnMouseMoved: {0}, {1}", a_X, a_Y);
     }
 }
