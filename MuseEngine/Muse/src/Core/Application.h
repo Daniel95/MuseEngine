@@ -2,6 +2,7 @@
 
 #include "Window.h"
 #include "LayerStack.h"
+#include "ImGui/ImGuiLayer.h"
 
 namespace Muse
 {
@@ -49,6 +50,7 @@ namespace Muse
         static Application* s_Instance;
         bool running = true;
         std::unique_ptr<Window> window;
+        ImGuiLayer* m_ImGuiLayer;
         SystemManager* systemManager;
         LayerStack layerStack;
 	};

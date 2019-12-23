@@ -14,7 +14,6 @@ namespace Muse
 		virtual void OnDetach() {}
 		virtual void OnUpdate(Timestep ts) {}
 		virtual void OnImGuiRender() {}
-		//virtual void OnEvent(Muse::EventOld& event) {}
 
 		inline const std::string& GetName() const { return debugName; }
 	protected:

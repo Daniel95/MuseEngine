@@ -102,17 +102,11 @@
     <ClInclude Include="src\Core\Gameplay\GameObject.h">
       <Filter>src\Core\Gameplay</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\ImGuiLayer.h">
-      <Filter>src\Core</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\Layer.h">
       <Filter>src\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\LayerStack.h">
       <Filter>src\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Platform\OpenGL\imgui_impl_opengl3.h">
-      <Filter>src\Core\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Platform\WindowsWindow.h">
       <Filter>src\Core\Platform</Filter>
@@ -1264,6 +1258,9 @@
     <ClInclude Include="src\Core\Input\KeyCodes.h" />
     <ClInclude Include="src\Core\Input\MouseButtonCodes.h" />
     <ClInclude Include="src\Core\Input\Input.h" />
+    <ClInclude Include="src\Core\ImGui\ImGuiLayer.h">
+      <Filter>src\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1287,17 +1284,11 @@
     <ClCompile Include="src\Core\Gameplay\GameObject.cpp">
       <Filter>src\Core\Gameplay</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\ImGuiLayer.cpp">
-      <Filter>src\Core</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\Layer.cpp">
       <Filter>src\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\LayerStack.cpp">
       <Filter>src\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Platform\OpenGL\imgui_impl_opengl3.cpp">
-      <Filter>src\Core\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Platform\WindowsWindow.cpp">
       <Filter>src\Core\Platform</Filter>
@@ -1342,5 +1333,9 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Platform\Windows\WindowsInput.cpp" />
+    <ClCompile Include="src\Core\ImGui\ImGuiLayer.cpp">
+      <Filter>src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\ImGui\ImGuiBuild.cpp" />
   </ItemGroup>
 </Project>

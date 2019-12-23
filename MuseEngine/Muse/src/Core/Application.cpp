@@ -25,6 +25,7 @@ namespace Muse
         ASSERT(!s_Instance, "A instance of Application already exists!");
         s_Instance = this;
 
+
         window = std::unique_ptr<Window>(Window::Create());
         window->WindowCloseEvent.Subscribe(this, std::bind(&Application::OnWindowCloseEvent, this));
         window->WindowResizeEvent.Subscribe(this, std::bind(&Application::OnWindowResizeEvent, this, std::placeholders::_1, std::placeholders::_2));
@@ -35,8 +36,10 @@ namespace Muse
         window->MouseScrolledEvent.Subscribe(this, std::bind(&Application::OnMouseScrolledEvent, this, std::placeholders::_1, std::placeholders::_2));
         window->MouseMovedEvent.Subscribe(this, std::bind(&Application::OnMouseMovedEvent, this, std::placeholders::_1, std::placeholders::_2));
 
-        systemManager = new SystemManager();
+        m_ImGuiLayer = new ImGuiLayer();
+        PushOverlay(m_ImGuiLayer);
 
+        systemManager = new SystemManager();
         systemManager->CreateSystem<ResourceSystem>();
         systemManager->CreateSystem<SoundSystem>();
         systemManager->CreateSystem<SceneSystem>(*this);
@@ -67,11 +70,6 @@ namespace Muse
 
         while (running)
         {
-            for (Layer* layer : layerStack)
-            {
-                layer->OnUpdate(0.16f);
-            }
-
             Update();
             FixedUpdate();
             Render();
@@ -80,6 +78,11 @@ namespace Muse
 
 	void Application::Update()
 	{
+        for (Layer* layer : layerStack)
+        {
+            layer->OnUpdate(0.16f);
+        }
+
         systemManager->UpdateSystems(0);
         OnUpdate(0.016f);
 	}
@@ -91,6 +94,13 @@ namespace Muse
 
 	void Application::Render()
 	{
+        m_ImGuiLayer->Begin();
+        for (Layer* layer : layerStack)
+        {
+            layer->OnImGuiRender();
+        }
+        m_ImGuiLayer->End();
+
         window->OnUpdate();
 
         OnRender();
