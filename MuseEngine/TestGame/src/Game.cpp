@@ -1,73 +1,26 @@
-#include "Game.h"
-#include "Core/Engine.h"
-#include "Core/Layer.h"
-#include "Core/ImGui/ImGuiLayer.h"
+﻿#include "Game.h"
+#include "imgui/imgui.h"
 
-class ExampleLayer : public Muse::Layer
-{
-public:
-	ExampleLayer()
-		: Layer("Example")
-	{ }
-
-	void OnUpdate(Muse::Timestep ts) override
-	{
-		//LOG_INFO("ExampleLayer::Update");
-	}
-};
-
-
-
-Muse::Application* Muse::CreateApplication()
-{
-	return new Game();
-}
-
-void Game::OnStart()
-{
-	PushLayer(new ExampleLayer());
-}
-
-void Game::OnUpdate(float deltaTime)
+Game::Game()
+    : Muse::Layer("Game Layer")
 {
 }
 
-void Game::OnFixedUpdate()
+void Game::OnAttach()
 {
 }
 
-void Game::OnRender()
+void Game::OnDetach()
 {
 }
 
-void Game::OnWindowCloseEvent()
+void Game::OnUpdate(Muse::Timestep ts)
 {
 }
 
-void Game::OnWindowResizeEvent(int a_Width, int a_Height)
+void Game::OnImGuiRender()
 {
-}
-
-void Game::OnKeyPressedEvent(int a_KeyCode, int a_RepeatCount)
-{
-}
-
-void Game::OnKeyReleasedEvent(int a_KeyCode)
-{
-}
-
-void Game::OnMouseButtonPressedEvent(int a_Button)
-{
-}
-
-void Game::OnMouseButtonReleasedEvent(int a_Button)
-{
-}
-
-void Game::OnMouseScrolledEvent(float a_XOffset, float a_YOffset)
-{
-}
-
-void Game::OnMouseMovedEvent(float a_X, float a_Y)
-{
+    ImGui::Begin("Settings");
+    ImGui::Text("Hello World");
+    ImGui::End();
 }

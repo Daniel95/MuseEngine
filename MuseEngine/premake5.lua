@@ -135,6 +135,7 @@ project "TestGame"
 	includedirs
 	{
 		"Muse/vendor/spdlog/include",
+		"Muse/vendor",
 		"Muse/src",
 		"Muse/vendor",
 		"%{IncludeDir.glm}",

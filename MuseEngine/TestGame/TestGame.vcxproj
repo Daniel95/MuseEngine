@@ -136,9 +136,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\GameApplication.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\GameApplication.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Muse\Muse.vcxproj">

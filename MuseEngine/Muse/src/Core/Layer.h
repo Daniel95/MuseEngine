@@ -2,6 +2,8 @@
 
 #include "Timestep.h"
 
+#include <string>
+
 namespace Muse
 {
 	class Layer
@@ -15,7 +17,7 @@ namespace Muse
 		virtual void OnUpdate(Timestep ts) {}
 		virtual void OnImGuiRender() {}
 
-		inline const std::string& GetName() const { return debugName; }
+		const std::string& GetName() const { return debugName; }
 	protected:
 		std::string debugName;
 
