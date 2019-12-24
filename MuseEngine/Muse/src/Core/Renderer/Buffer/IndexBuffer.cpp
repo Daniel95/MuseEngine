@@ -12,10 +12,6 @@
 
 namespace Muse
 {
-    IndexBuffer::~IndexBuffer()
-    {
-    }
-
     IndexBuffer* IndexBuffer::Create(uint32_t* a_Indices, uint32_t a_Count)
     {
         switch (Renderer::GetAPI())

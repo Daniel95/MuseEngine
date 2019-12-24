@@ -56,6 +56,7 @@ namespace Muse
         std::unique_ptr<Shader> m_Shader;
         std::unique_ptr<VertexBuffer> m_VertexBuffer;
         std::unique_ptr<IndexBuffer> m_IndexBuffer;
+        uint32_t m_VertexBufferO, m_IndexBufferO;
         ImGuiLayer* m_ImGuiLayer;
         SystemManager* m_SystemManager;
         LayerStack m_LayerStack;

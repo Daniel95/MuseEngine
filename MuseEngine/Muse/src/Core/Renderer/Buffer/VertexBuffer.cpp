@@ -12,14 +12,6 @@
 
 namespace Muse
 {
-    VertexBuffer::~VertexBuffer()
-    {
-    }
-
-    void VertexBuffer::SetData()
-    {
-    }
-
     VertexBuffer* VertexBuffer::Create(float* a_Vertices, uint32_t a_Size)
     {
         switch (Renderer::GetAPI())
@@ -28,7 +20,6 @@ namespace Muse
             {
                 return new OpenGLVertexBuffer(a_Vertices, a_Size);
             }
-
             default:
             {
                 std::string message = "RenderAPI: " + static_cast<int>(Renderer::GetAPI());

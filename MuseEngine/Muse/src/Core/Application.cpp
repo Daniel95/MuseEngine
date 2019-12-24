@@ -18,10 +18,32 @@
 #include "Renderer/Buffer/IndexBuffer.h"
 
 #include <glad/glad.h>
+#include "Renderer/Buffer/BufferLayout.h"
 
 namespace Muse
 {
     Application* Application::s_Instance = nullptr;
+
+    static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType a_ShaderDataType)
+    {
+        switch (a_ShaderDataType)
+        {
+            case ShaderDataType::Float:    return GL_FLOAT;
+            case ShaderDataType::Float2:   return GL_FLOAT;
+            case ShaderDataType::Float3:   return GL_FLOAT;
+            case ShaderDataType::Float4:   return GL_FLOAT;
+            case ShaderDataType::Mat3:     return GL_FLOAT;
+            case ShaderDataType::Mat4:     return GL_FLOAT;
+            case ShaderDataType::Int:      return GL_INT;
+            case ShaderDataType::Int2:     return GL_INT;
+            case ShaderDataType::Int3:     return GL_INT;
+            case ShaderDataType::Int4:     return GL_INT;
+            case ShaderDataType::Bool:     return GL_BOOL;
+        }
+
+        ASSERT(false, "Unknown ShaderDataType!");
+        return 0;
+    }
 
     Application::Application()
     {
@@ -51,11 +73,6 @@ namespace Muse
         glGenVertexArrays(1, &m_VertexArray);
         glBindVertexArray(m_VertexArray);
 
-        // Vertex Buffer
-        //glGenBuffers(1, &m_VertexBuffer);
-        //glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
-
-
         //Triangle vertices
         float vertices[3 * 3] =
         {
@@ -67,28 +84,68 @@ namespace Muse
 
 
 
+
+
+        // Vertex Array
+        glGenVertexArrays(1, &m_VertexArray);
+        glBindVertexArray(m_VertexArray);
+
+        // Vertex Buffer
+        glGenBuffers(1, &m_VertexBufferO);
+        glBindBuffer(GL_ARRAY_BUFFER, m_VertexBufferO);
+
+
         //GL STATIC DRAW: vertices won't change.
-        //glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-        //
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+        glEnableVertexAttribArray(0);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
+
+        // Index Buffer
+        glGenBuffers(1, &m_IndexBufferO);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBufferO);
+
+        //Triangle indices
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+
+
+
+
+
+
+
+        /*
         m_VertexBuffer = std::unique_ptr<VertexBuffer>(VertexBuffer::Create(vertices, sizeof(vertices)));
         m_VertexBuffer->Bind();
 
+        BufferLayout layout =
+        {
+            { ShaderDataType::Float3, "a_Position" }
+        };
+        m_VertexBuffer->SetLayout(layout);
+
+        uint32_t index = 0;
+        for (const auto& element : layout)
+        {
+            glEnableVertexAttribArray(index);
+            //Location, Amount of type, Type, normalized, stride (vertex size), pointer
+            glVertexAttribPointer(index,
+                element.GetComponentCount(),
+                ShaderDataTypeToOpenGLBaseType(element.Type),
+                element.Normalized ? GL_TRUE : GL_FALSE,
+                layout.GetStride(),
+                (const void*)element.Offset);
+            index++;
+        }
 
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
 
-        /*
-        // Index Buffer
-        glGenBuffers(1, &m_IndexBuffer);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
-
-        //Triangle indices
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-         */
-
         uint32_t count = sizeof(indices) / sizeof(uint32_t);
         m_IndexBuffer = std::unique_ptr<IndexBuffer>(IndexBuffer::Create(indices, count));
+        */
 
         std::string vertexSrc = R"(
             #version 330 core
@@ -135,8 +192,8 @@ namespace Muse
         delete m_SystemManager;
     }
 
-	void Application::Start()
-	{
+    void Application::Start()
+    {
         OnStart();
 
         while (m_Running)
@@ -145,10 +202,10 @@ namespace Muse
             FixedUpdate();
             Render();
         }
-	}
+    }
 
-	void Application::Update()
-	{
+    void Application::Update()
+    {
         for (Layer* layer : m_LayerStack)
         {
             layer->OnUpdate(0.16f);
@@ -156,15 +213,15 @@ namespace Muse
 
         m_SystemManager->UpdateSystems(0);
         OnUpdate(0.016f);
-	}
+    }
 
     void Application::FixedUpdate()
     {
         OnFixedUpdate();
     }
 
-	void Application::Render()
-	{
+    void Application::Render()
+    {
         m_ImGuiLayer->Begin();
         for (Layer* layer : m_LayerStack)
         {
@@ -179,9 +236,12 @@ namespace Muse
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         m_Shader->Bind();
+        //glBindVertexArray(m_VertexArray);
+        //glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+
         glBindVertexArray(m_VertexArray);
-        glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
-	}
+        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+    }
 
     void Application::PushLayer(Layer* layer)
     {
