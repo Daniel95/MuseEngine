@@ -2,6 +2,7 @@
 
 #include "Window.h"
 #include "Layer/LayerStack.h"
+#include "Renderer/Buffer/IndexBuffer.h"
 
 namespace Muse
 {
@@ -12,6 +13,7 @@ namespace Muse
     class SystemManager;
     class ImGuiLayer;
     class Shader;
+    class VertexBuffer;
 
 	class Application
 	{
@@ -52,10 +54,12 @@ namespace Muse
         bool m_Running = true;
         std::unique_ptr<Window> m_Window;
         std::unique_ptr<Shader> m_Shader;
+        std::unique_ptr<VertexBuffer> m_VertexBuffer;
+        std::unique_ptr<IndexBuffer> m_IndexBuffer;
         ImGuiLayer* m_ImGuiLayer;
         SystemManager* m_SystemManager;
         LayerStack m_LayerStack;
-        unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
+        unsigned int m_VertexArray;
 	};
 
 	// To be defined in client.

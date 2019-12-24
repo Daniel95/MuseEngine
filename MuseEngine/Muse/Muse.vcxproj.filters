@@ -135,15 +135,6 @@
     <ClInclude Include="src\Core\Layer\LayerStack.h">
       <Filter>src\Core\Layer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Platform\OpenGL\OpenGLContext.h">
-      <Filter>src\Core\Platform\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Platform\Windows\WindowsInput.h">
-      <Filter>src\Core\Platform\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Platform\Windows\WindowsWindow.h">
-      <Filter>src\Core\Platform\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\Renderer\GraphicsContext.h">
       <Filter>src\Core\Renderer</Filter>
     </ClInclude>
@@ -1291,6 +1282,20 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Renderer\Shader.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Core\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h">
+      <Filter>src\Core\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>src\Core\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Renderer\Buffer\IndexBuffer.h" />
+    <ClInclude Include="src\Core\Renderer\Buffer\VertexBuffer.h" />
+    <ClInclude Include="src\Core\Renderer\Renderer.h" />
+    <ClInclude Include="src\Platform\OpenGL\Buffer\OpenGLIndexBuffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\Buffer\OpenGLVertexBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1325,15 +1330,6 @@
     </ClCompile>
     <ClCompile Include="src\Core\Layer\LayerStack.cpp">
       <Filter>src\Core\Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Platform\OpenGL\OpenGLContext.cpp">
-      <Filter>src\Core\Platform\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Platform\Windows\WindowsInput.cpp">
-      <Filter>src\Core\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Platform\Windows\WindowsWindow.cpp">
-      <Filter>src\Core\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\System\Manager\ISystem.cpp">
       <Filter>src\Core\System\Manager</Filter>
@@ -1375,5 +1371,19 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Core\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
+      <Filter>src\Core\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
+      <Filter>src\Core\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Renderer\Buffer\IndexBuffer.cpp" />
+    <ClCompile Include="src\Core\Renderer\Buffer\VertexBuffer.cpp" />
+    <ClCompile Include="src\Core\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\Buffer\OpenGLIndexBuffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\Buffer\OpenGLVertexBuffer.cpp" />
   </ItemGroup>
 </Project>
