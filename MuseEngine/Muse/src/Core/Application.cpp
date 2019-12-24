@@ -74,39 +74,40 @@ namespace Muse
         glBindVertexArray(m_VertexArray);
 
         //Triangle vertices
-        float vertices[3 * 3] =
+        float vertices[3 * 7] =
         {
-            -0.5f, -0.5f, -0.0f,
-            0.5f, -0.5f, -0.0f,
-            0.0f, 0.5f, -0.0f,
+            -0.5f, -0.5f, -0.0f, 0.9f, 0.9f, 0.1f, 0.6f,
+            0.5f, -0.5f, -0.0f, 0.1f, 0.6f, 0.2f, 0.8f,
+            0.0f, 0.5f, -0.0f, 0.7f, 0.8f, 0.2f, 0.1f,
         };
         uint32_t indices[3] = { 0, 1, 2 };
 
         m_VertexBuffer = std::unique_ptr<VertexBuffer>(VertexBuffer::Create(vertices, sizeof(vertices)));
         m_VertexBuffer->Bind();
 
-        BufferLayout layout =
         {
-            { ShaderDataType::Float3, "a_Position" }
-        };
-        m_VertexBuffer->SetLayout(layout);
+            const BufferLayout layout =
+            {
+                { ShaderDataType::Float3, "a_Position" },
+                { ShaderDataType::Float4, "a_Color" }
+            };
+            m_VertexBuffer->SetLayout(layout);
+        }
 
         uint32_t index = 0;
+        const auto& layout = m_VertexBuffer->GetLayout();
         for (const auto& element : layout)
         {
             glEnableVertexAttribArray(index);
             //Location, Amount of type, Type, normalized, stride (vertex size), pointer
             glVertexAttribPointer(index,
-                element.GetComponentCount(),
+                element.GetNumberCount(),
                 ShaderDataTypeToOpenGLBaseType(element.Type),
                 element.Normalized ? GL_TRUE : GL_FALSE,
                 layout.GetStride(),
                 (const void*)element.Offset);
             index++;
         }
-
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
         uint32_t count = sizeof(indices) / sizeof(uint32_t);
         m_IndexBuffer = std::unique_ptr<IndexBuffer>(IndexBuffer::Create(indices, count));
@@ -115,12 +116,15 @@ namespace Muse
             #version 330 core
 
             layout(location = 0) in vec3 a_Position;
+            layout(location = 1) in vec4 a_Color;
 
             out vec3 v_Position;
+            out vec4 v_Color;
             
             void main()
             {
                 v_Position = a_Position;
+                v_Color = a_Color;
                 gl_Position = vec4(a_Position, 1.0);
             }
         )";
@@ -132,10 +136,12 @@ namespace Muse
             layout(location = 0) out vec4 color;
 
             in vec3 v_Position;
+            in vec4 v_Color;
 
             void main()
             {
                 color = vec4(v_Position * 0.5 + 0.5, 1.0);
+                color = v_Color;
             }
         )";
 
@@ -202,9 +208,6 @@ namespace Muse
         m_Shader->Bind();
         glBindVertexArray(m_VertexArray);
         glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
-
-        //glBindVertexArray(m_VertexArray);
-        //glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
     }
 
     void Application::PushLayer(Layer* layer)

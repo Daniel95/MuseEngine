@@ -59,7 +59,7 @@ namespace Muse
         {
         }
 
-        uint32_t GetComponentCount() const
+        uint32_t GetNumberCount() const
         {
             switch (Type)
             {
@@ -84,7 +84,7 @@ namespace Muse
      class BufferLayout
      {
      public:
-         BufferLayout() {}
+         BufferLayout() = default;
 
          BufferLayout(const std::initializer_list<BufferElement>& a_Elements)
              : m_Elements(a_Elements)
