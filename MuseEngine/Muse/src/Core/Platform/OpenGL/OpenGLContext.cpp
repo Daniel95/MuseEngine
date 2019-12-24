@@ -16,10 +16,13 @@ namespace Muse
     void OpenGLContext::Init()
     {
         glfwMakeContextCurrent(m_WindowHandle);
-
-
         const int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
         ASSERT_ENGINE(status, "Failed to initialize Glad!");
+
+        LOG_INFO("OpenGL Info:", glGetString(GL_VENDOR));
+        LOG_INFO("  Vendor: {0}", glGetString(GL_VENDOR));
+        LOG_INFO("  Renderer: {0}", glGetString(GL_RENDERER));
+        LOG_INFO("  Version: {0}", glGetString(GL_VERSION));
     }
 
     void OpenGLContext::SwapBuffers()
