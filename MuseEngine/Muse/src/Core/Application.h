@@ -1,8 +1,7 @@
 #pragma once
 
 #include "Window.h"
-#include "LayerStack.h"
-#include "ImGui/ImGuiLayer.h"
+#include "Layer/LayerStack.h"
 
 namespace Muse
 {
@@ -11,6 +10,7 @@ namespace Muse
     class GameWindow;
     class SceneSystem;
     class SystemManager;
+    class ImGuiLayer;
 
 	class Application
 	{

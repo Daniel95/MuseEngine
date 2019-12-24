@@ -109,6 +109,7 @@
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -162,10 +163,12 @@
     <ClInclude Include="src\Core\Input\Input.h" />
     <ClInclude Include="src\Core\Input\KeyCodes.h" />
     <ClInclude Include="src\Core\Input\MouseButtonCodes.h" />
-    <ClInclude Include="src\Core\Layer.h" />
-    <ClInclude Include="src\Core\LayerStack.h" />
+    <ClInclude Include="src\Core\Layer\Layer.h" />
+    <ClInclude Include="src\Core\Layer\LayerStack.h" />
     <ClInclude Include="src\Core\Platform\Windows\WindowsInput.h" />
-    <ClInclude Include="src\Core\Platform\WindowsWindow.h" />
+    <ClInclude Include="src\Core\Platform\Windows\WindowsWindow.h" />
+    <ClInclude Include="src\Core\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Core\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Core\System\Manager\ISystem.h" />
     <ClInclude Include="src\Core\System\Manager\SystemID.h" />
     <ClInclude Include="src\Core\System\Manager\SystemManager.h" />
@@ -558,10 +561,11 @@
     <ClCompile Include="src\Core\Gameplay\GameObject.cpp" />
     <ClCompile Include="src\Core\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Core\ImGui\ImGuiLayer.cpp" />
-    <ClCompile Include="src\Core\Layer.cpp" />
-    <ClCompile Include="src\Core\LayerStack.cpp" />
+    <ClCompile Include="src\Core\Layer\Layer.cpp" />
+    <ClCompile Include="src\Core\Layer\LayerStack.cpp" />
     <ClCompile Include="src\Core\Platform\Windows\WindowsInput.cpp" />
-    <ClCompile Include="src\Core\Platform\WindowsWindow.cpp" />
+    <ClCompile Include="src\Core\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\Core\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Core\System\Manager\ISystem.cpp" />
     <ClCompile Include="src\Core\System\Manager\SystemManager.cpp" />
     <ClCompile Include="src\Core\System\Resource\Resource.cpp" />

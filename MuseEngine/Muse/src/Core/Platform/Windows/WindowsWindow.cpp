@@ -6,8 +6,8 @@
 #include "Core/Event/ApplicationEvent.h"
 #include "Core/Event/KeyEvent.h"
 #include "Core/Event/MouseEvent.h"
+#include "Core/Platform/OpenGL/OpenGLContext.h"
 
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 namespace Muse
@@ -40,6 +40,7 @@ namespace Muse
         m_Width = properties.Width;
         m_Height = properties.Height;
 
+
         if(!GLFWInitialized)
         {
             const int success = glfwInit();
@@ -52,12 +53,11 @@ namespace Muse
 
 
         m_Window = glfwCreateWindow(static_cast<int>(properties.Width), static_cast<int>(properties.Height), m_Title.c_str(), nullptr, nullptr);
-        glfwMakeContextCurrent(m_Window);
-        const int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-
-        ASSERT_ENGINE(status, "Failed to initialize Glad!");
+        m_Context = new OpenGLContext(m_Window);
+        m_Context->Init();
 
         glfwSetWindowUserPointer(m_Window, this);
+
         SetVSync(true);
 
         LOG_ENGINE_ERROR("Created window {0}, ({1}, {2})", properties.Title, properties.Width, properties.Height);
@@ -149,7 +149,7 @@ namespace Muse
     void WindowsWindow::OnUpdate()
     {
         glfwPollEvents();
-        glfwSwapBuffers(m_Window);
+        m_Context->SwapBuffers();
     }
 
     void WindowsWindow::SetVSync(bool enabled)

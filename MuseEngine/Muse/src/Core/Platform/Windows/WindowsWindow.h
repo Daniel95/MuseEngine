@@ -6,6 +6,8 @@ struct GLFWwindow;
 
 namespace Muse
 {
+    class GraphicsContext;
+
     class WindowsWindow : public Window
     {
     public:
@@ -25,6 +27,7 @@ namespace Muse
 
     private:
         GLFWwindow* m_Window;
+        GraphicsContext* m_Context;
         std::string m_Title;
         unsigned int m_Width, m_Height;
         bool vSync;

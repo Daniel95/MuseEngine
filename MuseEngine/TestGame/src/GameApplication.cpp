@@ -1,6 +1,5 @@
 #include "GameApplication.h"
 #include "Core/Engine.h"
-#include "Core/Layer.h"
 #include "Game.h"
 
 class ExampleLayer : public Muse::Layer

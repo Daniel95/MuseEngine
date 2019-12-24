@@ -24,7 +24,6 @@ namespace Muse
     class Window
     {
     public:
-        //using EventCallbackFn = std::function<void(EventOld&)>;
         WindowCloseEvent WindowCloseEvent;
         WindowResizeEvent WindowResizeEvent;
         KeyPressedEvent KeyPressedEvent;
@@ -56,6 +55,5 @@ namespace Muse
         virtual void* GetNativeWindow() const = 0;
 
         static Window* Create(const WindowProperties& properties = WindowProperties());
-
     };
 }

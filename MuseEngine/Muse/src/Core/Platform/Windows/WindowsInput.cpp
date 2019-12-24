@@ -11,7 +11,7 @@ namespace Muse
     {
         const auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
         const auto state = glfwGetKey(window, a_Keycode);
-        return state == (GLFW_PRESS || GLFW_REPEAT);
+        return state == static_cast<const int>(GLFW_PRESS || GLFW_REPEAT);
     }
 
     bool WindowsInput::IsMouseButtonPressedImpl(int a_Button) const
@@ -21,7 +21,7 @@ namespace Muse
         return state == GLFW_PRESS;
     }
 
-    const glm::vec2 & WindowsInput::GetMousePositionImpl() const
+    glm::vec2 WindowsInput::GetMousePositionImpl() const
     {
         const auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
         double xPos, yPos;

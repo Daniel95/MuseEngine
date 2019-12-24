@@ -1,6 +1,7 @@
 ﻿#pragma once
 
-#include "Core/Layer.h"
+#include "Core/Layer/Layer.h"
+#include "Core/Timestep.h"
 
 class Game : public Muse::Layer
 {

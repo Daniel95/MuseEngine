@@ -120,17 +120,8 @@
     <ClInclude Include="src\Core\Input\MouseButtonCodes.h">
       <Filter>src\Core\Input</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Layer.h">
-      <Filter>src\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\LayerStack.h">
-      <Filter>src\Core</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\Platform\Windows\WindowsInput.h">
       <Filter>src\Core\Platform\Windows</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Platform\WindowsWindow.h">
-      <Filter>src\Core\Platform</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\System\Manager\ISystem.h">
       <Filter>src\Core\System\Manager</Filter>
@@ -1275,6 +1266,17 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Platform\Windows\WindowsWindow.h">
+      <Filter>src\Core\Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Core\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Core\Layer\LayerStack.h">
+      <Filter>src\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Layer\Layer.h">
+      <Filter>src\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1304,17 +1306,8 @@
     <ClCompile Include="src\Core\ImGui\ImGuiLayer.cpp">
       <Filter>src\Core\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Layer.cpp">
-      <Filter>src\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\LayerStack.cpp">
-      <Filter>src\Core</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\Platform\Windows\WindowsInput.cpp">
       <Filter>src\Core\Platform\Windows</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Platform\WindowsWindow.cpp">
-      <Filter>src\Core\Platform</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\System\Manager\ISystem.cpp">
       <Filter>src\Core\System\Manager</Filter>
@@ -1354,6 +1347,16 @@
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Platform\Windows\WindowsWindow.cpp">
+      <Filter>src\Core\Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Core\Layer\Layer.cpp">
+      <Filter>src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Layer\LayerStack.cpp">
+      <Filter>src\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
