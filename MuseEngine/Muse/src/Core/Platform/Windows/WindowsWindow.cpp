@@ -14,19 +14,19 @@ namespace Muse
 {
     static bool GLFWInitialized = false;
 
-    static void GLFWErrorCallback(int error, const char* description)
+    static void GLFWErrorCallback(const int a_Error, const char* a_Description)
     {
-        LOG_ENGINE_ERROR("GLFW Error ({0}): {1}", error, description);
+        LOG_ENGINE_ERROR("GLFW Error ({0}): {1}", a_Error, a_Description);
     }
 
-    Window* Window::Create(const WindowProperties& properties)
+    Window* Window::Create(const WindowProperties& a_Properties)
     {
-        return new WindowsWindow(properties);
+        return new WindowsWindow(a_Properties);
     }
 
-    WindowsWindow::WindowsWindow(const WindowProperties& properties)
+    WindowsWindow::WindowsWindow(const WindowProperties& a_Properties)
     {
-        Init(properties);
+        Init(a_Properties);
     }
 
     WindowsWindow::~WindowsWindow()
@@ -34,11 +34,11 @@ namespace Muse
         Shutdown();
     }
 
-    void WindowsWindow::Init(const WindowProperties& properties)
+    void WindowsWindow::Init(const WindowProperties& a_Properties)
     {
-        m_Title = properties.Title;
-        m_Width = properties.Width;
-        m_Height = properties.Height;
+        m_Title = a_Properties.Title;
+        m_Width = a_Properties.Width;
+        m_Height = a_Properties.Height;
 
 
         if(!GLFWInitialized)
@@ -52,7 +52,7 @@ namespace Muse
         }
 
 
-        m_Window = glfwCreateWindow(static_cast<int>(properties.Width), static_cast<int>(properties.Height), m_Title.c_str(), nullptr, nullptr);
+        m_Window = glfwCreateWindow(static_cast<int>(a_Properties.Width), static_cast<int>(a_Properties.Height), m_Title.c_str(), nullptr, nullptr);
         m_Context = new OpenGLContext(m_Window);
         m_Context->Init();
 
@@ -60,7 +60,7 @@ namespace Muse
 
         SetVSync(true);
 
-        LOG_ENGINE_INFO("Created window {0}, ({1}, {2})", properties.Title, properties.Width, properties.Height);
+        LOG_ENGINE_INFO("Created window {0}, ({1}, {2})", a_Properties.Title, a_Properties.Width, a_Properties.Height);
 
         glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
         {
@@ -74,70 +74,70 @@ namespace Muse
             windowsWindow.WindowResizeEvent.Dispatch(width, height);
         });
 
-        glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+        glfwSetKeyCallback(m_Window, [](GLFWwindow* a_Window, int a_Key, int a_Scancode, int a_Action, int a_Mods)
         {
-            scancode;
-            mods;
+            a_Scancode;
+            a_Mods;
 
-            WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
+            WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(a_Window));
 
-            switch (action)
+            switch (a_Action)
             {
                 case GLFW_PRESS:
                 {
-                    windowsWindow.KeyPressedEvent.Dispatch(key, 0);
+                    windowsWindow.KeyPressedEvent.Dispatch(a_Key, 0);
                     break;
                 }
                 case GLFW_RELEASE:
                 {
-                    windowsWindow.KeyReleasedEvent.Dispatch(key);
+                    windowsWindow.KeyReleasedEvent.Dispatch(a_Key);
                     break;
                 }
                 case GLFW_REPEAT:
                 {
-                    windowsWindow.KeyPressedEvent.Dispatch(key, 1);
+                    windowsWindow.KeyPressedEvent.Dispatch(a_Key, 1);
                     break;
                 }
             }
         });
 
-        glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int a_KeyCode)
+        glfwSetCharCallback(m_Window, [](GLFWwindow* a_Window, unsigned int a_KeyCode)
         {
-            WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
+            WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(a_Window));
             windowsWindow.KeyTypedEvent.Dispatch(a_KeyCode);
         });
 
-        glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
+        glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* a_Window, int a_Button, int a_Action, int a_Mods)
         {
-            mods;
+            a_Mods;
 
-            WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
+            WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(a_Window));
 
-            switch (action)
+            switch (a_Action)
             {
                 case GLFW_PRESS:
                 {
-                    windowsWindow.MouseButtonPressedEvent.Dispatch(button);
+                    windowsWindow.MouseButtonPressedEvent.Dispatch(a_Button);
                     break;
                 }
                 case GLFW_RELEASE:
                 {
-                    windowsWindow.MouseButtonReleasedEvent.Dispatch(button);
+                    windowsWindow.MouseButtonReleasedEvent.Dispatch(a_Button);
                     break;
                 }
             }
         });
 
-        glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset)
+        glfwSetScrollCallback(m_Window, [](GLFWwindow* a_Window, double a_XOffset, double a_YOffset)
         {
-            WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
-            windowsWindow.MouseScrolledEvent.Dispatch(static_cast<float>(xOffset), static_cast<float>(yOffset));
+            WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(a_Window));
+            windowsWindow.MouseScrolledEvent.Dispatch(static_cast<float>(a_XOffset), static_cast<float>(a_YOffset));
         });
 
-        glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
+        glfwSetCursorPosCallback(m_Window, [](GLFWwindow* a_Window, double a_XPos, double a_YPos)
         {
-            WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(window));
-            windowsWindow.MouseMovedEvent.Dispatch(static_cast<float>(xPos), static_cast<float>(yPos));
+            WindowsWindow& windowsWindow = *static_cast<WindowsWindow*>(glfwGetWindowUserPointer(a_Window));
+            windowsWindow.MouseMovedEvent.Dispatch(static_cast<float>(a_XPos), static_cast<float>(a_YPos));
         });
     }
 
@@ -149,12 +149,13 @@ namespace Muse
     void WindowsWindow::OnUpdate()
     {
         glfwPollEvents();
+
         m_Context->SwapBuffers();
     }
 
-    void WindowsWindow::SetVSync(bool enabled)
+    void WindowsWindow::SetVSync(bool a_Enabled)
     {
-        if(enabled)
+        if(a_Enabled)
         {
             glfwSwapInterval(1);
         }
@@ -163,7 +164,7 @@ namespace Muse
             glfwSwapInterval(0);
         }
 
-        vSync = enabled;
+        vSync = a_Enabled;
     }
 
     bool WindowsWindow::IsVSync() const

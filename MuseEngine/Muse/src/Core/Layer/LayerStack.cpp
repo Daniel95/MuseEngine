@@ -6,42 +6,42 @@ namespace Muse
 {
 	LayerStack::~LayerStack()
 	{
-		for (Layer* layer : layers)
+		for (Layer* layer : m_Layers)
 		{
 			layer->OnDetach();
 			delete layer;
 		}
 	}
 
-	void LayerStack::PushLayer(Muse::Layer* layer)
+	void LayerStack::PushLayer(Muse::Layer* a_Layer)
 	{
-		layers.emplace(layers.begin() + layerInsertIndex, layer);
-		layerInsertIndex++;
+		m_Layers.emplace(m_Layers.begin() + m_LayerInsertIndex, a_Layer);
+		m_LayerInsertIndex++;
 	}
 
-	void LayerStack::PushOverlay(Layer* overlay)
+	void LayerStack::PushOverlay(Layer* a_Overlay)
 	{
-		layers.emplace_back(overlay);
+		m_Layers.emplace_back(a_Overlay);
 	}
 
-	void LayerStack::PopLayer(Layer* layer)
+	void LayerStack::PopLayer(Layer* a_Layer)
     {
-		auto it = std::find(layers.begin(), layers.begin() + layerInsertIndex, layer);
-		if (it != layers.begin() + layerInsertIndex)
+		auto it = std::find(m_Layers.begin(), m_Layers.begin() + m_LayerInsertIndex, a_Layer);
+		if (it != m_Layers.begin() + m_LayerInsertIndex)
 		{
-			layer->OnDetach();
-			layers.erase(it);
-			layerInsertIndex--;
+			a_Layer->OnDetach();
+			m_Layers.erase(it);
+			m_LayerInsertIndex--;
 		}
 	}
 
-	void LayerStack::PopOverlay(Layer* overlay)
+	void LayerStack::PopOverlay(Layer* a_Overlay)
 	{
-		auto it = std::find(layers.begin() + layerInsertIndex, layers.end(), overlay);
-		if (it != layers.end())
+		auto it = std::find(m_Layers.begin() + m_LayerInsertIndex, m_Layers.end(), a_Overlay);
+		if (it != m_Layers.end())
 		{
-			overlay->OnDetach();
-			layers.erase(it);
+			a_Overlay->OnDetach();
+			m_Layers.erase(it);
 		}
 	}
 }

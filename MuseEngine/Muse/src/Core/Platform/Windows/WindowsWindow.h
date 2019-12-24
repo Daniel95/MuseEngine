@@ -11,7 +11,7 @@ namespace Muse
     class WindowsWindow : public Window
     {
     public:
-        WindowsWindow(const WindowProperties& properties);
+        WindowsWindow(const WindowProperties& a_Properties);
         virtual ~WindowsWindow();
 
         virtual void OnUpdate() override;
@@ -21,7 +21,7 @@ namespace Muse
         virtual void SetWidth(const unsigned int a_Width) override { m_Width = a_Width; }
         virtual void SetHeight(const unsigned int a_Height) override { m_Height = a_Height; }
 
-        virtual void SetVSync(bool enabled) override;
+        virtual void SetVSync(bool a_Enabled) override;
         virtual bool IsVSync() const override;
         virtual void* GetNativeWindow() const override { return m_Window; }
 
@@ -32,7 +32,7 @@ namespace Muse
         unsigned int m_Width, m_Height;
         bool vSync;
 
-        virtual void Init(const WindowProperties& properties);
+        virtual void Init(const WindowProperties& a_Properties);
         virtual void Shutdown();
     };
 }

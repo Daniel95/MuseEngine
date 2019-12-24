@@ -27,8 +27,6 @@ namespace Muse
 
     void OpenGLContext::SwapBuffers()
     {
-        //glBegin(GL_TRIANGLES);
-
         glfwSwapBuffers(m_WindowHandle);
     }
 }

@@ -3,8 +3,8 @@
 
 namespace Muse
 {
-	Layer::Layer(const std::string& debugName)
-		: debugName(debugName)
+	Layer::Layer(const std::string& a_Name)
+		: debugName(a_Name)
 	{
 	}
 }

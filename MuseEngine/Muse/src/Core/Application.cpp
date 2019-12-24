@@ -27,35 +27,33 @@ namespace Muse
         s_Instance = this;
 
 
-        window = std::unique_ptr<Window>(Window::Create());
-        window->WindowCloseEvent.Subscribe(this, std::bind(&Application::OnWindowCloseEvent, this));
-        window->WindowResizeEvent.Subscribe(this, std::bind(&Application::OnWindowResizeEvent, this, std::placeholders::_1, std::placeholders::_2));
-        window->KeyPressedEvent.Subscribe(this, std::bind(&Application::OnWindowResizeEvent, this, std::placeholders::_1, std::placeholders::_2));
-        window->KeyReleasedEvent.Subscribe(this, std::bind(&Application::OnKeyReleasedEvent, this, std::placeholders::_1));
-        window->MouseButtonPressedEvent.Subscribe(this, std::bind(&Application::OnMouseButtonPressedEvent, this, std::placeholders::_1));
-        window->MouseButtonReleasedEvent.Subscribe(this, std::bind(&Application::OnMouseButtonReleasedEvent, this, std::placeholders::_1));
-        window->MouseScrolledEvent.Subscribe(this, std::bind(&Application::OnMouseScrolledEvent, this, std::placeholders::_1, std::placeholders::_2));
-        window->MouseMovedEvent.Subscribe(this, std::bind(&Application::OnMouseMovedEvent, this, std::placeholders::_1, std::placeholders::_2));
+        m_Window = std::unique_ptr<Window>(Window::Create());
+        m_Window->WindowCloseEvent.Subscribe(this, std::bind(&Application::OnWindowCloseEvent, this));
+        m_Window->WindowResizeEvent.Subscribe(this, std::bind(&Application::OnWindowResizeEvent, this, std::placeholders::_1, std::placeholders::_2));
+        m_Window->KeyPressedEvent.Subscribe(this, std::bind(&Application::OnWindowResizeEvent, this, std::placeholders::_1, std::placeholders::_2));
+        m_Window->KeyReleasedEvent.Subscribe(this, std::bind(&Application::OnKeyReleasedEvent, this, std::placeholders::_1));
+        m_Window->MouseButtonPressedEvent.Subscribe(this, std::bind(&Application::OnMouseButtonPressedEvent, this, std::placeholders::_1));
+        m_Window->MouseButtonReleasedEvent.Subscribe(this, std::bind(&Application::OnMouseButtonReleasedEvent, this, std::placeholders::_1));
+        m_Window->MouseScrolledEvent.Subscribe(this, std::bind(&Application::OnMouseScrolledEvent, this, std::placeholders::_1, std::placeholders::_2));
+        m_Window->MouseMovedEvent.Subscribe(this, std::bind(&Application::OnMouseMovedEvent, this, std::placeholders::_1, std::placeholders::_2));
 
         m_ImGuiLayer = new ImGuiLayer();
         PushOverlay(m_ImGuiLayer);
 
-        systemManager = new SystemManager();
-        systemManager->CreateSystem<ResourceSystem>();
-        systemManager->CreateSystem<SoundSystem>();
-        systemManager->CreateSystem<SceneSystem>(*this);
+        m_SystemManager = new SystemManager();
+        m_SystemManager->CreateSystem<ResourceSystem>();
+        m_SystemManager->CreateSystem<SoundSystem>();
+        m_SystemManager->CreateSystem<SceneSystem>(*this);
 
         // Vertex Array
-        // Vertex Buffer
-        // Index Buffer
-
         glGenVertexArrays(1, &m_VertexArray);
         glBindVertexArray(m_VertexArray);
 
+        // Vertex Buffer
         glGenBuffers(1, &m_VertexBuffer);
         glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
 
-        //Triangle
+        //Triangle vertices
         float vertices[3 * 3] =
         {
             -0.5f, -0.5f, -0.0f,
@@ -69,10 +67,11 @@ namespace Muse
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
-        //Create index buffer
+        // Index Buffer
         glGenBuffers(1, &m_IndexBuffer);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
 
+        //Triangle indices
         unsigned int indices[3] = { 0, 1, 2 };
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
@@ -109,28 +108,23 @@ namespace Muse
 
     Application::~Application()
     {
-        window->WindowCloseEvent.Unsubscribe(this);
-        window->WindowResizeEvent.Unsubscribe(this);
-        window->KeyPressedEvent.Unsubscribe(this);
-        window->KeyReleasedEvent.Unsubscribe(this);
-        window->MouseButtonPressedEvent.Unsubscribe(this);
-        window->MouseButtonReleasedEvent.Unsubscribe(this);
-        window->MouseScrolledEvent.Unsubscribe(this);
-        window->MouseMovedEvent.Unsubscribe(this);
+        m_Window->WindowCloseEvent.Unsubscribe(this);
+        m_Window->WindowResizeEvent.Unsubscribe(this);
+        m_Window->KeyPressedEvent.Unsubscribe(this);
+        m_Window->KeyReleasedEvent.Unsubscribe(this);
+        m_Window->MouseButtonPressedEvent.Unsubscribe(this);
+        m_Window->MouseButtonReleasedEvent.Unsubscribe(this);
+        m_Window->MouseScrolledEvent.Unsubscribe(this);
+        m_Window->MouseMovedEvent.Unsubscribe(this);
 
-        delete systemManager;
-    }
-
-    SystemManager* Application::GetSystemManager() const
-    {
-        return systemManager;
+        delete m_SystemManager;
     }
 
 	void Application::Start()
 	{
         OnStart();
 
-        while (running)
+        while (m_Running)
         {
             Update();
             FixedUpdate();
@@ -140,12 +134,12 @@ namespace Muse
 
 	void Application::Update()
 	{
-        for (Layer* layer : layerStack)
+        for (Layer* layer : m_LayerStack)
         {
             layer->OnUpdate(0.16f);
         }
 
-        systemManager->UpdateSystems(0);
+        m_SystemManager->UpdateSystems(0);
         OnUpdate(0.016f);
 	}
 
@@ -157,13 +151,13 @@ namespace Muse
 	void Application::Render()
 	{
         m_ImGuiLayer->Begin();
-        for (Layer* layer : layerStack)
+        for (Layer* layer : m_LayerStack)
         {
             layer->OnImGuiRender();
         }
         m_ImGuiLayer->End();
 
-        window->OnUpdate();
+        m_Window->OnUpdate();
 
         OnRender();
         glClearColor(0.1f, 0.1f, 0.1f, 1);
@@ -176,19 +170,19 @@ namespace Muse
 
     void Application::PushLayer(Layer* layer)
     {
-        layerStack.PushLayer(layer);
+        m_LayerStack.PushLayer(layer);
         layer->OnAttach();
     }
 
     void Application::PushOverlay(Layer* layer)
     {
-        layerStack.PushOverlay(layer);
+        m_LayerStack.PushOverlay(layer);
         layer->OnAttach();
     }
 
     void Application::OnWindowCloseEvent()
     {
-        running = false;
+        m_Running = false;
     }
 
     void Application::OnWindowResizeEvent(int a_Width, int a_Height)

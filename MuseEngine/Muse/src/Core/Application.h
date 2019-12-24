@@ -21,8 +21,8 @@ namespace Muse
 		Application();
 		virtual ~Application();
 
-        inline Window& GetWindow() { return *window; }
-        SystemManager* GetSystemManager() const;
+        Window& GetWindow() const { return *m_Window; }
+        SystemManager& GetSystemManager() const { return *m_SystemManager; }
 
         void Start();
         void Update();
@@ -34,7 +34,7 @@ namespace Muse
 
     protected:
         virtual void OnStart() = 0;
-        virtual void OnUpdate(float deltaTime) = 0;
+        virtual void OnUpdate(float m_DeltaTime) = 0;
         virtual void OnFixedUpdate() = 0;
         virtual void OnRender() = 0;
 
@@ -49,12 +49,12 @@ namespace Muse
 
     private:
         static Application* s_Instance;
-        bool running = true;
-        std::unique_ptr<Window> window;
+        bool m_Running = true;
+        std::unique_ptr<Window> m_Window;
         std::unique_ptr<Shader> m_Shader;
         ImGuiLayer* m_ImGuiLayer;
-        SystemManager* systemManager;
-        LayerStack layerStack;
+        SystemManager* m_SystemManager;
+        LayerStack m_LayerStack;
         unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
 	};
 

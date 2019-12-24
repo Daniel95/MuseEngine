@@ -33,7 +33,7 @@ namespace Muse
     {
         m_Application = &a_Application;
 
-        SceneSystem& sceneSystem = m_Application->GetSystemManager()->GetSystem<SceneSystem>();
+        SceneSystem& sceneSystem = m_Application->GetSystemManager().GetSystem<SceneSystem>();
     }
 
     void Scene::SetApplication(Application& a_Application)
@@ -41,12 +41,12 @@ namespace Muse
         m_Application = &a_Application;
 
         // Here temporarily, to make it work
-        SceneSystem& sceneSystem = m_Application->GetSystemManager()->GetSystem<SceneSystem>();
+        SceneSystem& sceneSystem = m_Application->GetSystemManager().GetSystem<SceneSystem>();
     }
 
     void Scene::Unload()
     {
-        SceneSystem& sceneSystem = m_Application->GetSystemManager()->GetSystem<SceneSystem>();
+        SceneSystem& sceneSystem = m_Application->GetSystemManager().GetSystem<SceneSystem>();
 
         DestroyAllGameObjects();
     }
@@ -173,7 +173,7 @@ namespace Muse
             }
         }
 
-        SceneSystem& sceneSystem = m_Application->GetSystemManager()->GetSystem<SceneSystem>();
+        SceneSystem& sceneSystem = m_Application->GetSystemManager().GetSystem<SceneSystem>();
     }
 
     std::string Scene::Serialize()

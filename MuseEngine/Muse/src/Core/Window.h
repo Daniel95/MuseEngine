@@ -54,6 +54,6 @@ namespace Muse
 
         virtual void* GetNativeWindow() const = 0;
 
-        static Window* Create(const WindowProperties& properties = WindowProperties());
+        static Window* Create(const WindowProperties& a_Properties = WindowProperties());
     };
 }
