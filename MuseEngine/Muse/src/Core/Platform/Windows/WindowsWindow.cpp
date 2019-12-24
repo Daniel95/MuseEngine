@@ -60,7 +60,7 @@ namespace Muse
 
         SetVSync(true);
 
-        LOG_ENGINE_ERROR("Created window {0}, ({1}, {2})", properties.Title, properties.Width, properties.Height);
+        LOG_ENGINE_INFO("Created window {0}, ({1}, {2})", properties.Title, properties.Width, properties.Height);
 
         glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
         {

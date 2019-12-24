@@ -168,6 +168,7 @@
     <ClInclude Include="src\Core\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Core\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Core\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Core\Renderer\Shader.h" />
     <ClInclude Include="src\Core\System\Manager\ISystem.h" />
     <ClInclude Include="src\Core\System\Manager\SystemID.h" />
     <ClInclude Include="src\Core\System\Manager\SystemManager.h" />
@@ -565,6 +566,7 @@
     <ClCompile Include="src\Core\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Core\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Core\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\Core\Renderer\Shader.cpp" />
     <ClCompile Include="src\Core\System\Manager\ISystem.cpp" />
     <ClCompile Include="src\Core\System\Manager\SystemManager.cpp" />
     <ClCompile Include="src\Core\System\Resource\Resource.cpp" />

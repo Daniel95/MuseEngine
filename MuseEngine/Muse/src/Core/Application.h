@@ -11,6 +11,7 @@ namespace Muse
     class SceneSystem;
     class SystemManager;
     class ImGuiLayer;
+    class Shader;
 
 	class Application
 	{
@@ -50,6 +51,7 @@ namespace Muse
         static Application* s_Instance;
         bool running = true;
         std::unique_ptr<Window> window;
+        std::unique_ptr<Shader> m_Shader;
         ImGuiLayer* m_ImGuiLayer;
         SystemManager* systemManager;
         LayerStack layerStack;

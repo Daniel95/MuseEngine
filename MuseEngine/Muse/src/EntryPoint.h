@@ -9,7 +9,7 @@ int main(int argc, char** argv)
 {
     Muse::Log::Init();
 
-    LOG_ENGINE_WARN("Initialized Log!");
+    LOG_ENGINE_INFO("Initialized Log!");
 
     Muse::Application* application = Muse::CreateApplication();
     application->Start();
