@@ -82,40 +82,6 @@ namespace Muse
         };
         uint32_t indices[3] = { 0, 1, 2 };
 
-
-
-
-
-        // Vertex Array
-        glGenVertexArrays(1, &m_VertexArray);
-        glBindVertexArray(m_VertexArray);
-
-        // Vertex Buffer
-        glGenBuffers(1, &m_VertexBufferO);
-        glBindBuffer(GL_ARRAY_BUFFER, m_VertexBufferO);
-
-
-        //GL STATIC DRAW: vertices won't change.
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
-
-        // Index Buffer
-        glGenBuffers(1, &m_IndexBufferO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBufferO);
-
-        //Triangle indices
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-
-
-
-
-
-
-
-        /*
         m_VertexBuffer = std::unique_ptr<VertexBuffer>(VertexBuffer::Create(vertices, sizeof(vertices)));
         m_VertexBuffer->Bind();
 
@@ -142,10 +108,8 @@ namespace Muse
         glEnableVertexAttribArray(0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), nullptr);
 
-
         uint32_t count = sizeof(indices) / sizeof(uint32_t);
         m_IndexBuffer = std::unique_ptr<IndexBuffer>(IndexBuffer::Create(indices, count));
-        */
 
         std::string vertexSrc = R"(
             #version 330 core
@@ -236,11 +200,11 @@ namespace Muse
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         m_Shader->Bind();
-        //glBindVertexArray(m_VertexArray);
-        //glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
-
         glBindVertexArray(m_VertexArray);
-        glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
+        glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+
+        //glBindVertexArray(m_VertexArray);
+        //glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
     }
 
     void Application::PushLayer(Layer* layer)
