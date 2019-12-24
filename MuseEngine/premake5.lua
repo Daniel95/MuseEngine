@@ -94,7 +94,6 @@ project "Muse"
 
 		defines
 		{
-			"MUSE_BUILD_DLL",
 			"GLFW_INCLUDE_NONE"
 		}
 

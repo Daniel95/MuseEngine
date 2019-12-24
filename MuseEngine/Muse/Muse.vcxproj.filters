@@ -22,11 +22,20 @@
     <Filter Include="src\Core\Input">
       <UniqueIdentifier>{64EB8104-50B9-750A-394D-E63025BA516F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Core\Layer">
+      <UniqueIdentifier>{3138B104-1D06-A50A-069A-1531F206816F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Core\Platform">
       <UniqueIdentifier>{99F9B77A-0510-B610-4E87-4132BADC8698}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Core\Platform\OpenGL">
+      <UniqueIdentifier>{ADBC9A84-99E1-E904-C22C-CF94AEB0E822}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Core\Platform\Windows">
       <UniqueIdentifier>{D32C0E70-3FEF-41FA-889F-D086F4A01AD8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core\Renderer">
+      <UniqueIdentifier>{EB009555-5717-93EB-A08E-1E0D0CE46373}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Core\System">
       <UniqueIdentifier>{199BDBAC-8526-4971-8E37-CC65FA41A571}</UniqueIdentifier>
@@ -120,8 +129,23 @@
     <ClInclude Include="src\Core\Input\MouseButtonCodes.h">
       <Filter>src\Core\Input</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Layer\Layer.h">
+      <Filter>src\Core\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Layer\LayerStack.h">
+      <Filter>src\Core\Layer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Core\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Core\Platform\Windows\WindowsInput.h">
       <Filter>src\Core\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Platform\Windows\WindowsWindow.h">
+      <Filter>src\Core\Platform\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Renderer\GraphicsContext.h">
+      <Filter>src\Core\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\System\Manager\ISystem.h">
       <Filter>src\Core\System\Manager</Filter>
@@ -1266,17 +1290,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Platform\Windows\WindowsWindow.h">
-      <Filter>src\Core\Platform</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Renderer\GraphicsContext.h" />
-    <ClInclude Include="src\Core\Platform\OpenGL\OpenGLContext.h" />
-    <ClInclude Include="src\Core\Layer\LayerStack.h">
-      <Filter>src\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Layer\Layer.h">
-      <Filter>src\Core</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1306,7 +1319,19 @@
     <ClCompile Include="src\Core\ImGui\ImGuiLayer.cpp">
       <Filter>src\Core\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Layer\Layer.cpp">
+      <Filter>src\Core\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Layer\LayerStack.cpp">
+      <Filter>src\Core\Layer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Core\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Core\Platform\Windows\WindowsInput.cpp">
+      <Filter>src\Core\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Core\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\System\Manager\ISystem.cpp">
@@ -1347,16 +1372,6 @@
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Platform\Windows\WindowsWindow.cpp">
-      <Filter>src\Core\Platform</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Platform\OpenGL\OpenGLContext.cpp" />
-    <ClCompile Include="src\Core\Layer\Layer.cpp">
-      <Filter>src\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Layer\LayerStack.cpp">
-      <Filter>src\Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

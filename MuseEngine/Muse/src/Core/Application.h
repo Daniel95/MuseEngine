@@ -53,6 +53,7 @@ namespace Muse
         ImGuiLayer* m_ImGuiLayer;
         SystemManager* systemManager;
         LayerStack layerStack;
+        unsigned int m_VertexArray, m_VertexBuffer, m_IndexBuffer;
 	};
 
 	// To be defined in client.
