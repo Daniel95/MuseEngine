@@ -16,6 +16,8 @@ namespace Muse
         virtual void AddVertexBuffer(std::shared_ptr<VertexBuffer>& a_VertexBuffer) override;
         virtual void SetIndexBuffer(std::shared_ptr<IndexBuffer>& a_IndexBuffer) override;
 
+        const std::vector<std::shared_ptr<VertexBuffer>>& GetVertexBuffers() const override { return m_VertexBuffers; }
+        const std::shared_ptr<IndexBuffer>& GetIndexBuffer() const override { return m_IndexBuffer; }
     private:
         std::vector<std::shared_ptr<VertexBuffer>> m_VertexBuffers;
         std::shared_ptr<IndexBuffer> m_IndexBuffer;

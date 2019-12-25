@@ -55,9 +55,14 @@ namespace Muse
         bool m_Running = true;
         std::shared_ptr<Window> m_Window;
         std::shared_ptr<Shader> m_Shader;
+        std::shared_ptr<Shader> m_BlueShader;
         std::shared_ptr<VertexBuffer> m_VertexBuffer;
         std::shared_ptr<IndexBuffer> m_IndexBuffer;
         std::shared_ptr<VertexArray> m_VertexArray;
+
+        std::shared_ptr<VertexArray> m_SquareVA;
+
+
         ImGuiLayer* m_ImGuiLayer;
         SystemManager* m_SystemManager;
         LayerStack m_LayerStack;
