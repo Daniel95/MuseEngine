@@ -1297,6 +1297,8 @@
     <ClInclude Include="src\Platform\OpenGL\Buffer\OpenGLIndexBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\Buffer\OpenGLVertexBuffer.h" />
     <ClInclude Include="src\Core\Renderer\Buffer\BufferLayout.h" />
+    <ClInclude Include="src\Core\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1387,5 +1389,7 @@
     <ClCompile Include="src\Platform\OpenGL\Buffer\OpenGLIndexBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\Buffer\OpenGLVertexBuffer.cpp" />
     <ClCompile Include="src\Core\Renderer\Buffer\BufferLayout.cpp" />
+    <ClCompile Include="src\Core\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
   </ItemGroup>
 </Project>

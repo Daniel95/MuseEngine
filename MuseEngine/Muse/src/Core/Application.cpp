@@ -16,6 +16,7 @@
 #include "Core/Renderer/Shader.h"
 #include "Renderer/Buffer/VertexBuffer.h"
 #include "Renderer/Buffer/IndexBuffer.h"
+#include "Renderer/VertexArray.h"
 
 #include <glad/glad.h>
 #include "Renderer/Buffer/BufferLayout.h"
@@ -23,27 +24,6 @@
 namespace Muse
 {
     Application* Application::s_Instance = nullptr;
-
-    static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType a_ShaderDataType)
-    {
-        switch (a_ShaderDataType)
-        {
-            case ShaderDataType::Float:    return GL_FLOAT;
-            case ShaderDataType::Float2:   return GL_FLOAT;
-            case ShaderDataType::Float3:   return GL_FLOAT;
-            case ShaderDataType::Float4:   return GL_FLOAT;
-            case ShaderDataType::Mat3:     return GL_FLOAT;
-            case ShaderDataType::Mat4:     return GL_FLOAT;
-            case ShaderDataType::Int:      return GL_INT;
-            case ShaderDataType::Int2:     return GL_INT;
-            case ShaderDataType::Int3:     return GL_INT;
-            case ShaderDataType::Int4:     return GL_INT;
-            case ShaderDataType::Bool:     return GL_BOOL;
-        }
-
-        ASSERT(false, "Unknown ShaderDataType!");
-        return 0;
-    }
 
     Application::Application()
     {
@@ -70,8 +50,10 @@ namespace Muse
         m_SystemManager->CreateSystem<SceneSystem>(*this);
 
         // Vertex Array
-        glGenVertexArrays(1, &m_VertexArray);
-        glBindVertexArray(m_VertexArray);
+        //glGenVertexArrays(1, &m_VertexArray);
+        //glBindVertexArray(m_VertexArray);
+
+        m_VertexArray.reset(VertexArray::Create());
 
         //Triangle vertices
         float vertices[3 * 7] =
@@ -82,35 +64,20 @@ namespace Muse
         };
         uint32_t indices[3] = { 0, 1, 2 };
 
-        m_VertexBuffer = std::unique_ptr<VertexBuffer>(VertexBuffer::Create(vertices, sizeof(vertices)));
+        m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
         m_VertexBuffer->Bind();
 
+        const BufferLayout layout =
         {
-            const BufferLayout layout =
-            {
-                { ShaderDataType::Float3, "a_Position" },
-                { ShaderDataType::Float4, "a_Color" }
-            };
-            m_VertexBuffer->SetLayout(layout);
-        }
+            { ShaderDataType::Float3, "a_Position" },
+            { ShaderDataType::Float4, "a_Color" }
+        };
+        m_VertexBuffer->SetLayout(layout);
+        m_VertexArray->AddVertexBuffer(m_VertexBuffer);
 
-        uint32_t index = 0;
-        const auto& layout = m_VertexBuffer->GetLayout();
-        for (const auto& element : layout)
-        {
-            glEnableVertexAttribArray(index);
-            //Location, Amount of type, Type, normalized, stride (vertex size), pointer
-            glVertexAttribPointer(index,
-                element.GetNumberCount(),
-                ShaderDataTypeToOpenGLBaseType(element.Type),
-                element.Normalized ? GL_TRUE : GL_FALSE,
-                layout.GetStride(),
-                (const void*)element.Offset);
-            index++;
-        }
-
-        uint32_t count = sizeof(indices) / sizeof(uint32_t);
-        m_IndexBuffer = std::unique_ptr<IndexBuffer>(IndexBuffer::Create(indices, count));
+        const uint32_t count = sizeof(indices) / sizeof(uint32_t);
+        m_IndexBuffer.reset(IndexBuffer::Create(indices, count));
+        m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 
         std::string vertexSrc = R"(
             #version 330 core
@@ -128,7 +95,6 @@ namespace Muse
                 gl_Position = vec4(a_Position, 1.0);
             }
         )";
-
 
         std::string fragmentSrc = R"(
             #version 330 core
@@ -206,7 +172,7 @@ namespace Muse
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         m_Shader->Bind();
-        glBindVertexArray(m_VertexArray);
+        m_VertexArray->Bind();
         glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
     }
 

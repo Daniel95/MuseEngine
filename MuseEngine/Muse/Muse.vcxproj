@@ -167,9 +167,11 @@
     <ClInclude Include="src\Core\Layer\LayerStack.h" />
     <ClInclude Include="src\Core\Renderer\Buffer\IndexBuffer.h" />
     <ClInclude Include="src\Core\Renderer\Renderer.h" />
+    <ClInclude Include="src\Core\Renderer\VertexArray.h" />
     <ClInclude Include="src\Platform\OpenGL\Buffer\OpenGLIndexBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\Buffer\OpenGLVertexBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Core\Renderer\Buffer\VertexBuffer.h" />
@@ -572,9 +574,11 @@
     <ClCompile Include="src\Core\Layer\LayerStack.cpp" />
     <ClCompile Include="src\Core\Renderer\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="src\Core\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Core\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Platform\OpenGL\Buffer\OpenGLIndexBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\Buffer\OpenGLVertexBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Core\Renderer\Buffer\VertexBuffer.cpp" />

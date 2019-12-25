@@ -6,6 +6,7 @@
 
 namespace Muse
 {
+    class VertexArray;
     class Layer;
     class WindowCloseEvent;
     class GameWindow;
@@ -52,15 +53,14 @@ namespace Muse
     private:
         static Application* s_Instance;
         bool m_Running = true;
-        std::unique_ptr<Window> m_Window;
-        std::unique_ptr<Shader> m_Shader;
-        std::unique_ptr<VertexBuffer> m_VertexBuffer;
-        std::unique_ptr<IndexBuffer> m_IndexBuffer;
-        uint32_t m_VertexBufferO, m_IndexBufferO;
+        std::shared_ptr<Window> m_Window;
+        std::shared_ptr<Shader> m_Shader;
+        std::shared_ptr<VertexBuffer> m_VertexBuffer;
+        std::shared_ptr<IndexBuffer> m_IndexBuffer;
+        std::shared_ptr<VertexArray> m_VertexArray;
         ImGuiLayer* m_ImGuiLayer;
         SystemManager* m_SystemManager;
         LayerStack m_LayerStack;
-        unsigned int m_VertexArray;
 	};
 
 	// To be defined in client.
