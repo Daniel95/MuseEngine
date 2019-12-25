@@ -30,7 +30,6 @@ namespace Muse
         ASSERT(!s_Instance, "A instance of Application already exists!");
         s_Instance = this;
 
-
         m_Window = std::unique_ptr<Window>(Window::Create());
         m_Window->WindowCloseEvent.Subscribe(this, std::bind(&Application::OnWindowCloseEvent, this));
         m_Window->WindowResizeEvent.Subscribe(this, std::bind(&Application::OnWindowResizeEvent, this, std::placeholders::_1, std::placeholders::_2));
@@ -49,9 +48,9 @@ namespace Muse
         m_SystemManager->CreateSystem<SoundSystem>();
         m_SystemManager->CreateSystem<SceneSystem>(*this);
 
-        // Vertex Array
-        //glGenVertexArrays(1, &m_VertexArray);
-        //glBindVertexArray(m_VertexArray);
+        /////////////////////////////////////////////////////////////////
+        //// Triangle ///////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
 
         m_VertexArray.reset(VertexArray::Create());
 
@@ -79,9 +78,9 @@ namespace Muse
         m_IndexBuffer.reset(IndexBuffer::Create(indices, count));
         m_VertexArray->SetIndexBuffer(m_IndexBuffer);
 
-
-
-
+        /////////////////////////////////////////////////////////////////
+        //// Blue Square ////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////
 
         float squareVertices[3 * 4] =
         {
@@ -95,7 +94,7 @@ namespace Muse
 
         m_SquareVA.reset(VertexArray::Create());
 
-        std::shared_ptr<VertexBuffer> squareVB;// = std::make_shared<VertexBuffer>(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+        std::shared_ptr<VertexBuffer> squareVB;
         squareVB.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
         squareVB->SetLayout(
         {
@@ -109,73 +108,8 @@ namespace Muse
         squareIB.reset(IndexBuffer::Create(squareIndices, squareCount));
         m_SquareVA->SetIndexBuffer(squareIB);
 
-        std::string vertexSrc = R"(
-            #version 330 core
-
-            layout(location = 0) in vec3 a_Position;
-            layout(location = 1) in vec4 a_Color;
-
-            out vec3 v_Position;
-            out vec4 v_Color;
-            
-            void main()
-            {
-                v_Position = a_Position;
-                v_Color = a_Color;
-                gl_Position = vec4(a_Position, 1.0);
-            }
-        )";
-
-        std::string fragmentSrc = R"(
-            #version 330 core
-
-            layout(location = 0) out vec4 color;
-
-            in vec3 v_Position;
-            in vec4 v_Color;
-
-            void main()
-            {
-                color = vec4(v_Position * 0.5 + 0.5, 1.0);
-                color = v_Color;
-            }
-        )";
-
-
-        std::string blueVertexSrc = R"(
-            #version 330 core
-
-            layout(location = 0) in vec3 a_Position;
-            layout(location = 1) in vec4 a_Color;
-
-            out vec3 v_Position;
-            out vec4 v_Color;
-            
-            void main()
-            {
-                v_Position = a_Position;
-                v_Color = a_Color;
-                gl_Position = vec4(a_Position, 1.0);
-            }
-        )";
-
-        std::string blueFragmentSrc = R"(
-            #version 330 core
-
-            layout(location = 0) out vec4 color;
-
-            in vec3 v_Position;
-
-            void main()
-            {
-                color = vec4(0.2, 0.3, 0.8, 1.0);
-            }
-        )";
-
-
-
-        m_Shader = std::make_unique<Shader>(vertexSrc, fragmentSrc);
-        m_BlueShader = std::make_unique<Shader>(blueVertexSrc, blueFragmentSrc);
+        m_Shader = std::make_unique<Shader>(s_VertexSrc, s_FragmentSrc);
+        m_BlueShader = std::make_unique<Shader>(s_BlueVertexSrc, s_BlueFragmentSrc);
     }
 
     Application::~Application()
