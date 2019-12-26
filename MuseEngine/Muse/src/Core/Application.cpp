@@ -17,9 +17,11 @@
 #include "Renderer/Buffer/VertexBuffer.h"
 #include "Renderer/Buffer/IndexBuffer.h"
 #include "Renderer/VertexArray.h"
+#include "Renderer/RendererAPI.h"
 
-#include <glad/glad.h>
 #include "Renderer/Buffer/BufferLayout.h"
+#include "Renderer/RenderCommand.h"
+#include "Renderer/Renderer.h"
 
 namespace Muse
 {
@@ -50,7 +52,7 @@ namespace Muse
 
         /////////////////////////////////////////////////////////////////
         //// Triangle ///////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////
+        /////////////////////////////////////////////////////////////////    
 
         m_VertexArray.reset(VertexArray::Create());
 
@@ -59,7 +61,7 @@ namespace Muse
         {
             -0.5f, -0.5f, -0.0f, 0.9f, 0.9f, 0.1f, 0.6f,
             0.5f, -0.5f, -0.0f, 0.1f, 0.6f, 0.2f, 0.8f,
-            0.0f, 0.5f, -0.0f, 0.7f, 0.8f, 0.2f, 0.1f,
+            0.0f, 0.5f, -0.0f, 0.2, 0.3, 0.8, 1.0,
         };
         uint32_t indices[3] = { 0, 1, 2 };
 
@@ -166,16 +168,19 @@ namespace Muse
         m_Window->OnUpdate();
 
         OnRender();
-        glClearColor(0.1f, 0.1f, 0.1f, 1);
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+        RenderCommand::Clear();
+
+        Renderer::BeginScene();
 
         m_BlueShader->Bind();
-        m_SquareVA->Bind();
-        glDrawElements(GL_TRIANGLES, m_SquareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+        Renderer::Submit(m_SquareVA);
 
         m_Shader->Bind();
-        m_VertexArray->Bind();
-        glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount(), GL_UNSIGNED_INT, nullptr);
+        Renderer::Submit(m_VertexArray);
+
+        Renderer::EndScene();
     }
 
     void Application::PushLayer(Layer* layer)

@@ -16,7 +16,7 @@ namespace Muse
     {
         switch (Renderer::GetAPI())
         {
-            case RendererAPI::OpenGL:
+            case RendererAPI::API::OpenGL:
             {
                 return new OpenGLVertexBuffer(a_Vertices, a_Size);
             }

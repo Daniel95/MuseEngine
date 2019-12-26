@@ -1,21 +1,16 @@
 ﻿#pragma once
+#include "RendererAPI.h"
 
 namespace Muse
 {
-    enum class RendererAPI
-    {
-        None = 0,
-        OpenGL = 1,
-    };
-
     class Renderer
     {
     public:
-        static RendererAPI GetAPI() { return s_RendererAPI; }
+        static void BeginScene();
+        static void EndScene();
+        static void Submit(const std::shared_ptr<VertexArray>& a_VertexArray);
 
-    private:
+        static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 
-        static RendererAPI s_RendererAPI;
-    
     };
 }
