@@ -1,7 +1,9 @@
 #pragma once
 #include "Component.h"
 
-#include <rttr/registration_friend>
+#include <glm/glm.hpp>
+//#include "glm/ext/matrix_transform.inl"
+//#include "glm/detail/type_quat.hpp"
 
 namespace Muse
 {
@@ -16,32 +18,37 @@ namespace Muse
 		Transform();
 		virtual ~Transform();
 
-        /*
-		const DXS::Vector3 & GetPosition() const;
-		void SetPosition(const DXS::Vector3& a_Position);
-		void SetPosition(const DXS::Vector2& a_Position);
-		void Move(const DXS::Vector3& a_Movement);
-		void Move(const DXS::Vector2& a_Movement);
+		const glm::vec3& GetPosition() const { return m_Position; }
+		void SetPosition(const glm::vec3& a_Position);
+		void SetPosition(const glm::vec2& a_Position);
+		void Move(const glm::vec3& a_Movement);
+		void Move(const glm::vec2& a_Movement);
 
-		const DXS::Vector3& GetScale() const;
-		void SetScale(const DXS::Vector3& a_Scale);
-		void SetScale(const DXS::Vector2& a_Scale);
+		const glm::vec3& GetScale() const { return m_Scale; }
+		void SetScale(const glm::vec3& a_Scale);
+		void SetScale(const glm::vec2& a_Scale);
 
-		const DXS::Quaternion & GetRotation() const;
-		void SetRotation(const DXS::Quaternion& a_Rotation);
+		//const glm::quat & GetRotation() const { return m_RotationQuaternion; }
+		void SetRotation(const glm::quat& a_Rotation);
 
-		const DXS::Vector4 GetTranslation();
-		const DXS::Matrix& GetTranslationMatrix();
-		const DXS::Matrix& GetRotationMatrix();
-		const DXS::Matrix& GetScaleMatrix();
-		const DXS::Matrix& GetModelMatrix();
+		const glm::vec4 GetTranslation() const { return glm::vec4(m_Position.x, m_Position.y, m_Position.z, 1); }
+		const glm::mat4& GetTranslationMatrix() const { return m_TranslationMatrix; }
+		const glm::mat4& GetRotationMatrix() const { return m_RotationMatrix; }
+		const glm::mat4& GetScaleMatrix() const { return m_ScaleMatrix; }
+		const glm::mat4& GetModelMatrix() const { return m_ModelMatrix; }
 
-		const bool IsDirty() const;
+		bool IsDirty() const { return !m_DirtyPosition || !m_DirtyScale || !m_DirtyRotation; }
 
-		const DXS::Vector3& RTTRGetPosition() const;
-		void RTTRSetPosition(const DXS::Vector3& a_Position);
-		const DXS::Vector3& RTTRGetScale() const;
-		void RTTRSetScale(const DXS::Vector3& a_Scale);
+		const glm::mat4& GetTranslationMatrix();
+		const glm::mat4& GetRotationMatrix();
+		const glm::mat4& GetScaleMatrix();
+		const glm::mat4& GetModelMatrix();
+
+
+		const glm::vec3& RTTRGetPosition() const { return m_Position; }
+		void RTTRSetPosition(const glm::vec3& a_Position) { SetPosition(a_Position); }
+		const glm::vec3& RTTRGetScale() const { return m_Scale; }
+		void RTTRSetScale(const glm::vec3& a_Scale) { SetScale(a_Scale); }
 
 		RTTR_REGISTRATION_FRIEND;
 
@@ -49,16 +56,27 @@ namespace Muse
 		bool m_DirtyPosition = true;
 		bool m_DirtyRotation = true;
 		bool m_DirtyScale = true;
-		bool m_DirtyModel = true;
 
-		DXS::Vector3 m_Position = DXS::Vector3::Zero;
-		DXS::Vector3 m_Scale = DXS::Vector3::One;
-		DXS::Quaternion m_RotationQuaternion = DXS::Quaternion::Identity;
 
-		DXS::Matrix m_TranslationMatrix = DXS::Matrix::Identity;
-		DXS::Matrix m_RotationMatrix = DXS::Matrix::Identity;
-		DXS::Matrix m_ScaleMatrix = DXS::Matrix::Identity;
-		DXS::Matrix m_ModelMatrix = DXS::Matrix::Identity;
-        */
+		glm::vec3 m_Position = glm::vec3(0, 0, 0);
+		glm::vec3 m_Scale = glm::vec3(1, 1, 1);
+		//glm::quat m_RotationQuaternion;
+
+		glm::mat4 m_TranslationMatrix;
+		glm::mat4 m_RotationMatrix;
+		glm::mat4 m_ScaleMatrix;
+		glm::mat4 m_ModelMatrix;
+
+
+		/*
+		glm::vec3 m_Position = glm::vec3(0, 0, 0);
+		glm::vec3 m_Scale = glm::vec3(1, 1, 1);
+		glm::quat m_RotationQuaternion = glm::identity<glm::quat>();
+
+		glm::mat4 m_TranslationMatrix = glm::identity<glm::mat4>();
+		glm::mat4 m_RotationMatrix = glm::identity<glm::mat4>();
+		glm::mat4 m_ScaleMatrix = glm::identity<glm::mat4>();
+		glm::mat4 m_ModelMatrix = glm::identity<glm::mat4>();
+	    */
 	};
 }

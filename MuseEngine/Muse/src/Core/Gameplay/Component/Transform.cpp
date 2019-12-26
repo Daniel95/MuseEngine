@@ -2,21 +2,97 @@
 
 #include "Core/Gameplay/Component/Transform.h"
 
-#include "Core/Application.h"
-#include "Core/Gameplay/GameObject.h"
-#include "Core/Gameplay/Component/Component.h"
-#include "Core/System/Scene/Scene.h"
-#include "Core/Utilities/Log.h"
-
 namespace Muse
 {
 	Transform::Transform()
 	{
-		//m_RotationMatrix = XMMatrixIdentity();
 	}
 
 	Transform::~Transform()
 	{
+	}
+
+    void Transform::SetPosition(const glm::vec3& a_Position)
+    {
+		m_DirtyPosition = true;
+		m_Position = a_Position;
+    }
+
+    void Transform::SetPosition(const glm::vec2& a_Position)
+    {
+		m_DirtyPosition = true;
+		m_Position = glm::vec3(a_Position.x, a_Position.y, m_Position.z);
+    }
+
+    void Transform::Move(const glm::vec3& a_Movement)
+    {
+		m_DirtyPosition = true;
+		m_Position += a_Movement;
+    }
+
+    void Transform::Move(const glm::vec2& a_Movement)
+    {
+		m_DirtyPosition = true;
+		m_Position += glm::vec3(a_Movement.x, a_Movement.y, 0);
+    }
+
+    void Transform::SetScale(const glm::vec3& a_Scale)
+    {
+		m_DirtyScale = true;
+		m_Scale = a_Scale;
+    }
+
+    void Transform::SetScale(const glm::vec2& a_Scale)
+    {
+		m_Scale = glm::vec3(a_Scale.x, a_Scale.y, m_Scale.z);;
+    }
+
+    void Transform::SetRotation(const glm::quat& a_Rotation)
+    {
+		//m_RotationQuaternion = a_Rotation;
+    }
+
+	const glm::mat4& Transform::GetTranslationMatrix()
+	{
+		if (m_DirtyPosition)
+		{
+			//m_TranslationMatrix = DXS::Matrix::CreateTranslation(-m_Position);
+			m_DirtyPosition = false;
+		}
+
+		return m_TranslationMatrix;
+	}
+
+	const glm::mat4& Transform::GetRotationMatrix()
+	{
+		if (m_DirtyRotation)
+		{
+			//m_RotationMatrix = DirectX::XMMatrixTranspose(DirectX::XMMatrixRotationQuaternion(m_RotationQuaternion));
+			m_DirtyRotation = false;
+		}
+
+		return m_RotationMatrix;
+	}
+
+	const glm::mat4& Transform::GetScaleMatrix()
+	{
+		if (m_DirtyScale)
+		{
+			//m_ScaleMatrix = DirectX::XMMatrixScalingFromVector(m_Scale);
+			m_DirtyScale = false;
+		}
+
+		return m_ScaleMatrix;
+	}
+
+	const glm::mat4& Transform::GetModelMatrix()
+	{
+		if (IsDirty())
+		{
+			m_ModelMatrix = GetScaleMatrix() * GetRotationMatrix() * GetTranslationMatrix();
+		}
+
+		return m_ModelMatrix;
 	}
 
     /*
@@ -126,16 +202,6 @@ namespace Muse
 		}
 
 		return m_ModelMatrix;
-	}
-
-	const bool Transform::IsDirty() const
-	{
-		if (m_DirtyPosition || m_DirtyRotation || m_DirtyScale)
-		{
-			return true;
-		}
-
-		return false;
 	}
 
 	const DXS::Vector3& Transform::RTTRGetPosition() const
