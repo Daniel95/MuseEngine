@@ -2,6 +2,7 @@
 
 #include "Core/Application.h"
 
+#include "Window.h"
 #include "Core/System/ResourceSystem.h"
 #include "Core/System/SceneSystem.h"
 #include "Core/System/SoundSystem.h"
@@ -10,18 +11,6 @@
 #include "Core/Utilities/Defines.h"
 #include "Core/Event/ApplicationEvent.h"
 #include "ImGui/ImGuiLayer.h"
-#include "Core/Input/Input.h"
-#include "Core/Input/MouseButtonCodes.h"
-#include "Core/Input/KeyCodes.h"
-#include "Core/Renderer/Shader.h"
-#include "Renderer/Buffer/VertexBuffer.h"
-#include "Renderer/Buffer/IndexBuffer.h"
-#include "Renderer/VertexArray.h"
-#include "Renderer/RendererAPI.h"
-
-#include "Renderer/Buffer/BufferLayout.h"
-#include "Renderer/RenderCommand.h"
-#include "Renderer/Renderer.h"
 
 namespace Muse
 {
@@ -49,69 +38,6 @@ namespace Muse
         m_SystemManager->CreateSystem<ResourceSystem>();
         m_SystemManager->CreateSystem<SoundSystem>();
         m_SystemManager->CreateSystem<SceneSystem>(*this);
-
-        /////////////////////////////////////////////////////////////////
-        //// Triangle ///////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////    
-
-        m_VertexArray.reset(VertexArray::Create());
-
-        //Triangle vertices
-        float vertices[3 * 7] =
-        {
-            -0.5f, -0.5f, -0.0f, 0.9f, 0.9f, 0.1f, 0.6f,
-            0.5f, -0.5f, -0.0f, 0.1f, 0.6f, 0.2f, 0.8f,
-            0.0f, 0.5f, -0.0f, 0.2, 0.3, 0.8, 1.0,
-        };
-        uint32_t indices[3] = { 0, 1, 2 };
-
-        m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
-        m_VertexBuffer->Bind();
-
-        const BufferLayout layout =
-        {
-            { ShaderDataType::Float3, "a_Position" },
-            { ShaderDataType::Float4, "a_Color" }
-        };
-        m_VertexBuffer->SetLayout(layout);
-        m_VertexArray->AddVertexBuffer(m_VertexBuffer);
-
-        const uint32_t count = sizeof(indices) / sizeof(uint32_t);
-        m_IndexBuffer.reset(IndexBuffer::Create(indices, count));
-        m_VertexArray->SetIndexBuffer(m_IndexBuffer);
-
-        /////////////////////////////////////////////////////////////////
-        //// Blue Square ////////////////////////////////////////////////
-        /////////////////////////////////////////////////////////////////
-
-        float squareVertices[3 * 4] =
-        {
-            -0.5f, -0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f, 
-            0.5f, 0.5f, 0.0f,
-            -0.5f, 0.5f, 0.0f,
-
-        };
-        uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-
-        m_SquareVA.reset(VertexArray::Create());
-
-        std::shared_ptr<VertexBuffer> squareVB;
-        squareVB.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
-        squareVB->SetLayout(
-        {
-            { ShaderDataType::Float3, "a_Position" },
-        });
-        m_SquareVA->AddVertexBuffer(squareVB);
-
-        
-        std::shared_ptr<IndexBuffer> squareIB;
-        const uint32_t squareCount = sizeof(squareIndices) / sizeof(uint32_t);
-        squareIB.reset(IndexBuffer::Create(squareIndices, squareCount));
-        m_SquareVA->SetIndexBuffer(squareIB);
-
-        m_Shader = std::make_unique<Shader>(s_VertexSrc, s_FragmentSrc);
-        m_BlueShader = std::make_unique<Shader>(s_BlueVertexSrc, s_BlueFragmentSrc);
     }
 
     Application::~Application()
@@ -168,19 +94,6 @@ namespace Muse
         m_Window->OnUpdate();
 
         OnRender();
-
-        RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
-        RenderCommand::Clear();
-
-        Renderer::BeginScene();
-
-        m_BlueShader->Bind();
-        Renderer::Submit(m_SquareVA);
-
-        m_Shader->Bind();
-        Renderer::Submit(m_VertexArray);
-
-        Renderer::EndScene();
     }
 
     void Application::PushLayer(Layer* layer)

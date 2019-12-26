@@ -1,7 +1,14 @@
 #pragma once
 
 #include "Core/Application.h"
-#include "Core/Utilities/Log.h"
+
+namespace Muse
+{
+    class Shader;
+    class VertexBuffer;
+    class IndexBuffer;
+    class VertexArray;
+}
 
 class GameApplication : public Muse::Application
 {
@@ -23,5 +30,13 @@ protected:
     virtual void OnMouseButtonReleasedEvent(int a_Button);
     virtual void OnMouseScrolledEvent(float a_XOffset, float a_YOffset);
     virtual void OnMouseMovedEvent(float a_X, float a_Y);
+
+private:
+    std::shared_ptr<Muse::Shader> m_Shader;
+    std::shared_ptr<Muse::Shader> m_BlueShader;
+    std::shared_ptr<Muse::VertexBuffer> m_VB;
+    std::shared_ptr<Muse::IndexBuffer> m_IB;
+    std::shared_ptr<Muse::VertexArray> m_TriangleVA;
+    std::shared_ptr<Muse::VertexArray> m_SquareVA;
 
 };

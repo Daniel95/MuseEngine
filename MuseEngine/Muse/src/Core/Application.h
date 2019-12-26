@@ -1,20 +1,16 @@
 #pragma once
 
-#include "Window.h"
 #include "Layer/LayerStack.h"
-#include "Renderer/Buffer/IndexBuffer.h"
+#include <memory>
 
 namespace Muse
 {
-    class VertexArray;
     class Layer;
-    class WindowCloseEvent;
     class GameWindow;
     class SceneSystem;
     class SystemManager;
     class ImGuiLayer;
-    class Shader;
-    class VertexBuffer;
+    class Window;
 
 	class Application
 	{
@@ -54,14 +50,6 @@ namespace Muse
         static Application* s_Instance;
         bool m_Running = true;
         std::shared_ptr<Window> m_Window;
-        std::shared_ptr<Shader> m_Shader;
-        std::shared_ptr<Shader> m_BlueShader;
-        std::shared_ptr<VertexBuffer> m_VertexBuffer;
-        std::shared_ptr<IndexBuffer> m_IndexBuffer;
-        std::shared_ptr<VertexArray> m_VertexArray;
-
-        std::shared_ptr<VertexArray> m_SquareVA;
-
 
         ImGuiLayer* m_ImGuiLayer;
         SystemManager* m_SystemManager;

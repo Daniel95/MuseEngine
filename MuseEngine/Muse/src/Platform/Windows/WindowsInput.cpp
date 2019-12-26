@@ -2,6 +2,7 @@
 #include "WindowsInput.h"
 #include "Core/Application.h"
 #include "GLFW/glfw3.h"
+#include "Core/Window.h"
 
 namespace Muse
 {
