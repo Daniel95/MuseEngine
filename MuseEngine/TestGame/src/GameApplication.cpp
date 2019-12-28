@@ -31,7 +31,7 @@ Muse::Application* Muse::CreateApplication()
 
 void GameApplication::OnStart()
 {
-    m_Camera.reset(new Muse::OrthographicCamera(-1.0f, 1.0f, -1.0f, 1.0f));
+    m_Camera.reset(new Muse::OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f));
 
     /////////////////////////////////////////////////////////////////
     //// Triangle ///////////////////////////////////////////////////
@@ -99,7 +99,7 @@ void GameApplication::OnStart()
 	PushLayer(new Game());
 }
 
-void GameApplication::OnUpdate(float deltaTime)
+void GameApplication::OnUpdate(float a_DeltaTime)
 {
 }
 
@@ -112,15 +112,10 @@ void GameApplication::OnRender()
     Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
     Muse::RenderCommand::Clear();
 
-	Muse::Renderer::BeginScene();
+    Muse::Renderer::BeginScene(*m_Camera);
 
-	m_BlueShader->Bind();
-    m_BlueShader->UploadUniformMat4("u_ViewProjection", m_Camera->GetViewProjectionMatrix());
-	Muse::Renderer::Submit(m_SquareVA);
-
-	m_Shader->Bind();
-    m_Shader->UploadUniformMat4("u_ViewProjection", m_Camera->GetViewProjectionMatrix());
-	Muse::Renderer::Submit(m_TriangleVA);
+	Muse::Renderer::Submit(m_BlueShader, m_SquareVA);
+	Muse::Renderer::Submit(m_Shader, m_TriangleVA);
 
 	Muse::Renderer::EndScene();
 }

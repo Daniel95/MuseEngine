@@ -19,7 +19,7 @@ public:
 
 protected:
     virtual void OnStart() override;
-    virtual void OnUpdate(float deltaTime) override;
+    virtual void OnUpdate(float a_DeltaTime) override;
     virtual void OnFixedUpdate() override;
     virtual void OnRender() override;
 
