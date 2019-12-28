@@ -4,14 +4,6 @@
 
 namespace Muse
 {
-	Transform::Transform()
-	{
-	}
-
-	Transform::~Transform()
-	{
-	}
-
     void Transform::SetPosition(const glm::vec3& a_Position)
     {
 		m_DirtyPosition = true;
@@ -44,19 +36,27 @@ namespace Muse
 
     void Transform::SetScale(const glm::vec2& a_Scale)
     {
+		m_DirtyScale = true;
 		m_Scale = glm::vec3(a_Scale.x, a_Scale.y, m_Scale.z);;
     }
 
-    void Transform::SetRotation(const glm::quat& a_Rotation)
+    void Transform::SetRotation(const glm::vec3& a_Rotation)
     {
-		//m_RotationQuaternion = a_Rotation;
+		m_DirtyScale = true;
+		m_Rotation = a_Rotation;
+    }
+
+    void Transform::SetRotationQuat(const glm::quat& a_Rotation)
+    {
+		m_DirtyScale = true;
+		m_RotationQuaternion = a_Rotation;
     }
 
 	const glm::mat4& Transform::GetTranslationMatrix()
 	{
 		if (m_DirtyPosition)
 		{
-			//m_TranslationMatrix = DXS::Matrix::CreateTranslation(-m_Position);
+			m_TranslationMatrix = glm::translate(m_Position);
 			m_DirtyPosition = false;
 		}
 
@@ -67,7 +67,10 @@ namespace Muse
 	{
 		if (m_DirtyRotation)
 		{
-			//m_RotationMatrix = DirectX::XMMatrixTranspose(DirectX::XMMatrixRotationQuaternion(m_RotationQuaternion));
+			m_RotationMatrix = glm::rotate(m_Rotation.x, glm::vec3(1, 0, 0));
+			m_RotationMatrix = glm::rotate(m_RotationMatrix, m_Rotation.y, glm::vec3(0, 1, 0));
+			m_RotationMatrix = glm::rotate(m_RotationMatrix, m_Rotation.z, glm::vec3(0, 0, 1));
+
 			m_DirtyRotation = false;
 		}
 
@@ -78,7 +81,8 @@ namespace Muse
 	{
 		if (m_DirtyScale)
 		{
-			//m_ScaleMatrix = DirectX::XMMatrixScalingFromVector(m_Scale);
+			m_ScaleMatrix = glm::scale(m_Scale);
+
 			m_DirtyScale = false;
 		}
 
@@ -95,135 +99,29 @@ namespace Muse
 		return m_ModelMatrix;
 	}
 
-    /*
-	const DXS::Vector3 & Transform::GetPosition() const
+	glm::vec3 Transform::InverseTransformPoint(const glm::vec3& worldPoint)
 	{
-		return m_Position;
+		const glm::vec4 transformed = glm::inverse(GetModelMatrix()) * glm::vec4(worldPoint.x, worldPoint.y, worldPoint.z, 1);
+		return glm::vec3(transformed);
 	}
 
-	void Transform::SetPosition(const DXS::Vector3& a_Position)
+	glm::vec3 Transform::InverseTransformVector(const glm::vec3& worldVector)
 	{
-		m_Position = a_Position;
-
-		m_DirtyPosition = true;
-		m_DirtyModel = true;
+		const glm::vec4 transformed = glm::inverse(GetModelMatrix()) * glm::vec4(worldVector.x, worldVector.y, worldVector.z, 0);
+		return glm::vec3(transformed);
 	}
 
-	void Transform::SetPosition(const DXS::Vector2& a_Position)
+	glm::vec3 Transform::TransformPoint(const glm::vec3& localPoint)
 	{
-		SetPosition(DXS::Vector3(a_Position.x, a_Position.y, m_Position.z));
+		const glm::vec4 transformed = GetModelMatrix() * glm::vec4(localPoint.x, localPoint.y, localPoint.z, 1);
+		return glm::vec3(transformed);
 	}
 
-	void Transform::Move(const DXS::Vector3& a_Movement)
+	glm::vec3 Transform::TransformVector(const glm::vec3& localVector)
 	{
-		SetPosition(GetPosition() + a_Movement);
+		const glm::vec4 transformed = GetModelMatrix() * glm::vec4(localVector.x, localVector.y, localVector.z, 0);
+		return glm::vec3(transformed);
 	}
-
-	void Transform::Move(const DXS::Vector2& a_Movement)
-	{
-		Move(DXS::Vector3(a_Movement.x, a_Movement.y, 0));
-	}
-
-	const DXS::Vector3 & Transform::GetScale() const
-	{
-		return m_Scale;
-	}
-
-	void Transform::SetScale(const DXS::Vector3& a_Scale)
-	{
-		m_Scale = a_Scale;
-
-		m_DirtyScale = true;
-		m_DirtyModel = true;
-	}
-
-	void Transform::SetScale(const DXS::Vector2& a_Scale)
-	{
-		SetScale(DXS::Vector3(a_Scale.x, a_Scale.y, m_Scale.z));
-	}
-
-	const DXS::Quaternion & Transform::GetRotation() const
-	{
-		return m_RotationQuaternion;
-	}
-
-	void Transform::SetRotation(const DXS::Quaternion& a_Rotation)
-	{
-		m_RotationQuaternion = a_Rotation;
-
-		m_DirtyRotation = true;
-		m_DirtyModel = true;
-	}
-
-	const DXS::Vector4 Transform::GetTranslation()
-	{
-		return DXS::Vector4(m_Position.x, m_Position.y, m_Position.z, 1);
-	}
-
-	const DXS::Matrix& Transform::GetTranslationMatrix()
-	{
-		if (m_DirtyPosition)
-		{
-			m_TranslationMatrix = DXS::Matrix::CreateTranslation(-m_Position);
-			m_DirtyPosition = false;
-		}
-
-		return m_TranslationMatrix;
-	}
-
-	const DXS::Matrix& Transform::GetRotationMatrix()
-	{
-		if (m_DirtyRotation)
-		{
-			m_RotationMatrix = DirectX::XMMatrixTranspose(DirectX::XMMatrixRotationQuaternion(m_RotationQuaternion));
-			m_DirtyRotation = false;
-		}
-
-		return m_RotationMatrix;
-	}
-
-	const DXS::Matrix& Transform::GetScaleMatrix()
-	{
-		if (m_DirtyScale)
-		{
-			m_ScaleMatrix = DirectX::XMMatrixScalingFromVector(m_Scale);
-			m_DirtyScale = false;
-		}
-
-		return m_ScaleMatrix;
-	}
-
-	const DXS::Matrix& Transform::GetModelMatrix()
-	{
-		if (m_DirtyModel)
-		{
-			m_ModelMatrix = GetScaleMatrix() * GetRotationMatrix() * GetTranslationMatrix();
-			m_DirtyModel = false;
-		}
-
-		return m_ModelMatrix;
-	}
-
-	const DXS::Vector3& Transform::RTTRGetPosition() const
-	{
-		return GetPosition();
-	}
-
-	void Transform::RTTRSetPosition(const DXS::Vector3& a_Position)
-	{
-		SetPosition(a_Position);
-	}
-
-	const DXS::Vector3& Transform::RTTRGetScale() const
-	{
-		return GetScale();
-	}
-
-	void Transform::RTTRSetScale(const DXS::Vector3& a_Scale)
-	{
-		SetScale(a_Scale);
-	}
-    */
 }
 
 RTTR_REGISTRATION

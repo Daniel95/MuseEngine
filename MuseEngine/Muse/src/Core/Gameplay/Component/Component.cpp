@@ -53,11 +53,6 @@ namespace Muse
         OnDisable();
 	}
 
-	GameObject* Component::GetGameObject()
-    {
-        return m_GameObject;
-    }
-
 	void Component::OnEnable()
 	{
 	}

@@ -1,5 +1,10 @@
 ﻿#include "Game.h"
 #include "imgui/imgui.h"
+#include "Core/System/Scene/Scene.h"
+#include "Core/System/Manager/SystemManager.h"
+#include "Core/System/SceneSystem.h"
+#include "Core/Gameplay/GameObject.h"
+#include "Core/Gameplay/Component/CameraComponent.h"
 
 Game::Game()
     : Muse::Layer("Game Layer")
@@ -8,6 +13,7 @@ Game::Game()
 
 void Game::OnAttach()
 {
+    m_Scene = &Muse::SystemManager::Get().GetSystem<Muse::SceneSystem>().NewScene();
 }
 
 void Game::OnDetach()

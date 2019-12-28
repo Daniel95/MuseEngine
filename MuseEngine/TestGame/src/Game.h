@@ -2,6 +2,11 @@
 
 #include "Core/Layer/Layer.h"
 #include "Core/Timestep.h"
+#include <memory>
+
+namespace Muse {
+    class Scene;
+}
 
 class Game : public Muse::Layer
 {
@@ -14,5 +19,8 @@ public:
 
 	void OnUpdate(Muse::Timestep ts) override;
 	virtual void OnImGuiRender() override;
+
+private:
+	Muse::Scene* m_Scene;
 
 };

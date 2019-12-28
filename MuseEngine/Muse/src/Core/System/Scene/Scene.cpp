@@ -4,10 +4,10 @@
 
 #include "Core/Application.h"
 #include "Core/Gameplay/GameObject.h"
-#include "Core/Gameplay/Component/BoxCollider2D.h"
 #include "Core/Gameplay/Component/Transform.h"
 #include "Core/System/SceneSystem.h"
 #include "Core/System/Manager/SystemManager.h"
+#include "Core/Gameplay/Component/CameraComponent.h"
 #include "Core/Utilities/json/from_json.h"
 #include "Core/Utilities/json/to_json.h"
 
@@ -21,6 +21,8 @@ namespace Muse
         m_Name = a_Path;
         Replace(m_Name, GAME_SCENE_PATH, "");
         Replace(m_Name, ".txt", "");
+
+        CreateEditorCamera();
     }
 
     Scene::~Scene()
@@ -29,25 +31,8 @@ namespace Muse
         _ASSERT(m_GameObjectsToUpdate.size() == 0);
     }
 
-    void Scene::Init(Application& a_Application)
-    {
-        m_Application = &a_Application;
-
-        SceneSystem& sceneSystem = m_Application->GetSystemManager().GetSystem<SceneSystem>();
-    }
-
-    void Scene::SetApplication(Application& a_Application)
-    {
-        m_Application = &a_Application;
-
-        // Here temporarily, to make it work
-        SceneSystem& sceneSystem = m_Application->GetSystemManager().GetSystem<SceneSystem>();
-    }
-
     void Scene::Unload()
     {
-        SceneSystem& sceneSystem = m_Application->GetSystemManager().GetSystem<SceneSystem>();
-
         DestroyAllGameObjects();
     }
 
@@ -83,22 +68,22 @@ namespace Muse
     GameObject& Scene::AddGameObject(const glm::vec2& a_Position, const glm::vec2& a_Size)
     {
         GameObject& gameObject = AddGameObject();
-        //gameObject.GetTransform()->SetPosition(a_Position);
-        //gameObject.GetTransform()->SetScale(a_Size);
+        gameObject.GetTransform()->SetPosition(a_Position);
+        gameObject.GetTransform()->SetScale(a_Size);
         return gameObject;
     }
 
     GameObject& Scene::AddGameObject(const glm::vec3& a_Position, const glm::vec3& a_Size)
     {
         GameObject& gameObject = AddGameObject();
-        //gameObject.GetTransform()->SetPosition(a_Position);
-        //gameObject.GetTransform()->SetScale(a_Size);
+        gameObject.GetTransform()->SetPosition(a_Position);
+        gameObject.GetTransform()->SetScale(a_Size);
         return gameObject;
     }
 
     void Scene::RemoveGameObject(GameObject& a_GameObject)
     {
-        _ASSERT(std::find(m_GameObjectsToRemove.begin(), m_GameObjectsToRemove.end(), &a_GameObject) == m_GameObjectsToRemove.end());
+        ASSERT(std::find(m_GameObjectsToRemove.begin(), m_GameObjectsToRemove.end(), &a_GameObject) == m_GameObjectsToRemove.end(), "GameObject to remove does not exists!");
         m_GameObjectsToRemove.push_back(&a_GameObject);
     }
 
@@ -110,22 +95,10 @@ namespace Muse
         }
         m_GameObjectsToAdd.clear();
 
-    #ifndef EDITOR
         for (GameObject* gameObject : m_GameObjectsToUpdate)
         {
             gameObject->Update(a_DeltaTime);
         }
-    #else 
-        for (GameObject* gameObject : m_GameObjectsToUpdate)
-        {
-            if (gameObject->HasComponent<SpriteRenderer>())
-            {
-                gameObject->GetComponent<SpriteRenderer>()->Update(a_DeltaTime);
-            }
-        }
-
-        EditorInteractions(a_DeltaTime);
-    #endif
 
         for (GameObject* gameObjectToRemove : m_GameObjectsToRemove)
         {
@@ -140,21 +113,6 @@ namespace Muse
         {
             gameObject->FixedUpdate(a_TimeStep);
         }
-    }
-
-    Application* Scene::GetApplication() const
-    {
-        return m_Application;
-    }
-
-    const std::vector<GameObject*>& Scene::GetGameObjects()
-    {
-        return m_GameObjectsToUpdate;
-    }
-
-    void Scene::SetGameObjects(const std::vector<GameObject*>& a_GameObjects)
-    {
-        m_GameObjectsToUpdate = a_GameObjects;
     }
 
     void Scene::Deserialize(const std::string& a_json)
@@ -173,10 +131,10 @@ namespace Muse
             }
         }
 
-        SceneSystem& sceneSystem = m_Application->GetSystemManager().GetSystem<SceneSystem>();
+        SceneSystem& sceneSystem = Application::Get().GetSystemManager().GetSystem<SceneSystem>();
     }
 
-    std::string Scene::Serialize()
+    std::string Scene::Serialize() const
     {
         return io::to_json(*this);
     }
@@ -187,31 +145,11 @@ namespace Muse
         std::experimental::filesystem::path path{ fullPath }; //creates TestingFolder object on C:
         std::experimental::filesystem::create_directories(path.parent_path()); //add directories based on the object path (without this line it will not work)
 
-    #ifdef EDITOR
         DestroyEditorCamera();
-
-        GameObject* objectWithCam = nullptr;
-        for (GameObject* gameObject : m_GameObjectsToUpdate)
-        {
-            if (gameObject->GetComponent<Camera>() != nullptr)
-            {
-                objectWithCam = gameObject;
-                gameObject->Enable();
-                break;
-            }
-        }
-    #endif // EDITOR
 
         std::string jsonString = Serialize();
 
-    #ifdef EDITOR
-        if (objectWithCam != nullptr)
-        {
-            objectWithCam->Disable();
-        }
-
         CreateEditorCamera();
-    #endif // EDITOR
 
         std::ofstream ofs(path);
         ofs << jsonString;
@@ -237,54 +175,26 @@ namespace Muse
 
     void Scene::SaveState()
     {
-        _ASSERT(mc_MaxStateSaves > 0);
+        _ASSERT(m_MaxStateSaves > 0);
 
         while (m_CurrentStateIndex < m_States.size())
         {
             m_States.pop_back(); // Remove any undo's from stack if a change has been made
         }
 
-    #ifdef EDITOR
-        GameObject* objectWithCam = nullptr;
-        if (Camera::HasMainCamera())
-        {
-            objectWithCam = Camera::GetMainCamera().GetGameObject();
-            bool isEditorCam = objectWithCam->HasComponent<EditorCamera>();
-            if (isEditorCam)
-            {
-                for (auto objectItr = m_GameObjectsToUpdate.begin(); objectItr != m_GameObjectsToUpdate.end(); ++objectItr)
-                {
-                    GameObject* object = *objectItr;
-                    if (object == objectWithCam)
-                    {
-                        m_GameObjectsToUpdate.erase(objectItr);
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                objectWithCam = nullptr; // MainCam is not an editor cam, thus correctly created later
-            }
-        }
-    #endif // EDITOR
+        DestroyEditorCamera();
 
         std::string serialized = Serialize();
         m_States.push_back(serialized);
 
-    #ifdef EDITOR
-        if (objectWithCam != nullptr)
-        {
-            m_GameObjectsToUpdate.push_back(objectWithCam);
-        }
-    #endif // EDITOR
+        CreateEditorCamera();
 
-        if (m_States.size() > mc_MaxStateSaves + 1)
+        if (m_States.size() > m_MaxStateSaves + 1)
         {
             LOG_ENGINE_ERROR("m_States size is over the m_UndoCount");
             _ASSERT(false);
         }
-        else if (m_States.size() > mc_MaxStateSaves)
+        else if (m_States.size() > m_MaxStateSaves)
         {
             m_States.pop_front();
         }
@@ -300,16 +210,6 @@ namespace Muse
         m_GameObjectsToUpdate.erase(std::remove(m_GameObjectsToUpdate.begin(), m_GameObjectsToUpdate.end(), a_GameObject), m_GameObjectsToUpdate.end());
 
         delete a_GameObject;
-    }
-
-    bool Scene::CanUndo()
-    {
-        return m_States.size() > 0 && m_CurrentStateIndex > 0;
-    }
-
-    bool Scene::CanRedo()
-    {
-        return m_States.size() > 0 && m_CurrentStateIndex < m_States.size() - 1;
     }
 
     void Scene::Undo()
@@ -337,15 +237,42 @@ namespace Muse
         }
     }
 
-    const std::string& Scene::GetName() const
+    GameObject* Scene::GetEditorCamera() const
     {
-        return m_Name;
+        GameObject* editorCameraGameObject = nullptr;
+        for (GameObject* gameObject : m_GameObjectsToUpdate)
+        {
+            CameraComponent* camera = gameObject->GetComponent<CameraComponent>();
+
+            if (camera != nullptr
+                && camera->IsEditorCamera())
+            {
+                editorCameraGameObject = gameObject;
+                break;
+            }
+        }
+
+        return editorCameraGameObject;
     }
 
-    void Scene::SetName(const std::string& a_Name)
+    void Scene::DestroyEditorCamera()
     {
-        m_Name = a_Name;
+        GameObject* cameraGameObject = GetEditorCamera();
+        ASSERT(cameraGameObject != nullptr, "EditorCamera does not exists!");
+        delete cameraGameObject;
     }
+
+    GameObject& Scene::CreateEditorCamera()
+    {
+        ASSERT(GetEditorCamera() == nullptr, "EditorCamera already exists!");
+        GameObject& gameObject = AddGameObject();
+
+        gameObject.AddComponent<CameraComponent>().MakeEditorCamera();
+
+        return gameObject;
+    }
+
+    //#endif
 
     RTTR_REGISTRATION
     {

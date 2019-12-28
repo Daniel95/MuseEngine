@@ -23,7 +23,7 @@ namespace Muse
 		void Enable();
         void Disable();
 
-        GameObject* GetGameObject();
+        GameObject* GetGameObject() const { return m_GameObject; }
 		const bool& IsEnabled() { return m_isEnabled; };
 
 		RTTR_REGISTRATION_FRIEND;

@@ -10,8 +10,8 @@ namespace Muse
     class SystemManager
     {
     public:
-        SystemManager();
-        ~SystemManager();
+        SystemManager() = default;
+        virtual ~SystemManager();
 
         std::vector<ISystem*> GetAllSystems(); // Do not use every frame
         void InitializeSystems();
@@ -23,6 +23,8 @@ namespace Muse
         T& GetSystem();
         template<typename T>
         void DeleteSystem();
+
+        static SystemManager& Get();
 
     private:
         std::unordered_map<unsigned short, ISystem*> m_Systems;

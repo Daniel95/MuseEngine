@@ -3,14 +3,10 @@
 #include "Core/System/Manager/SystemManager.h"
 
 #include "Core/System/Manager/ISystem.h"
+#include "Core/Application.h"
 
 namespace Muse
 {
-    SystemManager::SystemManager()
-    {
-
-    }
-
     SystemManager::~SystemManager()
     {
         for (auto itr = m_Systems.begin(); itr != m_Systems.end(); itr++)
@@ -47,5 +43,10 @@ namespace Muse
         {
             itr->second->Update(a_DeltaTime);
         }
+    }
+
+    SystemManager& SystemManager::Get()
+    {
+        return Application::Get().GetSystemManager();
     }
 }

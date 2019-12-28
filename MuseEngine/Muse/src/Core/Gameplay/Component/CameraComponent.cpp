@@ -1,7 +1,7 @@
 ﻿#include "MusePCH.h"
-#include "Camera.h"
+#include "CameraComponent.h"
 
 namespace Muse
 {
-    
+
 }

@@ -2,7 +2,6 @@
 #include "Core/System/Manager/ISystem.h"
 
 #include <string>
-#include <vector>
 
 namespace Muse 
 {
@@ -19,12 +18,12 @@ namespace Muse
         SceneSystem(SystemManager& a_SystemManager, Application& a_Application);
         ~SceneSystem();
 
-        void Initialize();
-        void Update(float a_DeltaTime);
+        void Initialize() override;
+        void Update(float a_DeltaTime) override;
         void FixedUpdate(float a_TimeStep);
-        void Terminate();
+        void Terminate() override;
 
-        void NewScene();
+        Scene& NewScene();
         void LoadScene(const std::string& a_SceneName);
         void ReloadScene();
         Scene* GetActiveScene();

@@ -15,6 +15,7 @@
 
 namespace Muse 
 {
+    class CameraComponent;
     class Application;
     class GameObject;
 
@@ -26,8 +27,6 @@ namespace Muse
 		Scene(ullong a_ID, const std::string& a_Path);
         ~Scene();
 
-        void Init(Application& a_Application);
-        void SetApplication(Application& a_Application);
         void DestroyAllGameObjects();
         GameObject& AddGameObject();
         GameObject& AddGameObject(const glm::vec2 & a_Position, const glm::vec2 & a_Size);
@@ -35,30 +34,31 @@ namespace Muse
         void RemoveGameObject(GameObject& a_GameObject);
         void Update(float a_DeltaTime);
         void FixedUpdate(float a_TimeStep);
-        Application* GetApplication() const;
-        const std::vector<GameObject*> & GetGameObjects();
-        void SetGameObjects(const std::vector<GameObject*> & a_GameObjects);
+        const std::vector<GameObject*> & GetGameObjects() const { return m_GameObjectsToUpdate; }
+        void SetGameObjects(const std::vector<GameObject*> & a_GameObjects) { m_GameObjectsToUpdate = a_GameObjects; }
         void Deserialize(const std::string& a_Path);
-        std::string Serialize();
+        std::string Serialize() const;
         void Save(const std::string& a_Path, const std::string& a_Name);
 		void Load(const std::string& a_Path, const std::string& a_Name);
         void SaveState();
         void DestroyGameObjectImmediate(GameObject* a_GameObject);
-        bool CanUndo();
-        bool CanRedo();
+        bool CanUndo() const { return m_States.size() > 0 && m_CurrentStateIndex > 0; }
+        bool CanRedo() const { return m_States.size() > 0 && m_CurrentStateIndex < m_States.size() - 1; }
         void Undo();
         void Redo();
-        const std::string& GetName() const;
-        void SetName(const std::string& a_Name);
+        const std::string& GetName() const { return m_Name; }
+        void SetName(const std::string& a_Name) { m_Name = a_Name; }
+        GameObject* GetEditorCamera() const;
+        void DestroyEditorCamera();
+        GameObject& CreateEditorCamera();
 
     private:
-        Application* m_Application;
         std::vector<GameObject*> m_GameObjectsToUpdate;
         std::vector<GameObject*> m_GameObjectsToAdd;
         std::vector<GameObject*> m_GameObjectsToRemove;
         std::deque<std::string> m_States;
         std::string m_Name;
-        const int mc_MaxStateSaves = 20;
+        const int m_MaxStateSaves = 20;
         int m_CurrentStateIndex = 0;
 
         void Unload();

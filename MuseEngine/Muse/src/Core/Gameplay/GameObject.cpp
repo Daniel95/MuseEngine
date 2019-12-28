@@ -24,7 +24,6 @@ namespace Muse
     void GameObject::Init(Scene& a_Scene)
     {
         m_Scene = &a_Scene;
-        m_SystemManager = &m_Scene->GetApplication()->GetSystemManager();
 
         if (!HasComponent<Transform>())
         {

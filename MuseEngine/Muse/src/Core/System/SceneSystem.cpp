@@ -60,7 +60,7 @@ namespace Muse
     {
     }
 
-    void SceneSystem::NewScene()
+    Scene& SceneSystem::NewScene()
     {
         if (m_ActiveScene != nullptr)
         {
@@ -70,7 +70,8 @@ namespace Muse
 
         std::string newScenePath = GAME_SCENE_PATH + "NewScene.txt";
         m_ActiveScene = m_SystemManager.GetSystem<ResourceSystem>().LoadResource<Scene>(newScenePath);
-        m_ActiveScene->Init(*m_Application);
+
+        return *m_ActiveScene;
     }
 
     void SceneSystem::LoadScene(const std::string& a_SceneName)
@@ -100,7 +101,6 @@ namespace Muse
 
         std::string newScenePath = GAME_SCENE_PATH + a_SceneName + ".txt";
         m_ActiveScene = m_SystemManager.GetSystem<ResourceSystem>().LoadResource<Scene>(newScenePath);
-        m_ActiveScene->Init(*m_Application);
         m_ActiveScene->Load(GAME_SCENE_PATH, a_SceneName);
     }
 }
