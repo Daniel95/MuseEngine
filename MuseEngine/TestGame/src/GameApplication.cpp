@@ -83,7 +83,7 @@ void GameApplication::OnStart()
     squareVB.reset(Muse::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
     squareVB->SetLayout(
         {
-            {Muse::ShaderDataType::Float3, "a_Position" },
+            { Muse::ShaderDataType::Float3, "a_Position" },
         });
     m_SquareVA->AddVertexBuffer(squareVB);
 

@@ -23,7 +23,7 @@ namespace Muse
         glm::mat4 m_ViewMatrix = glm::identity<glm::mat4>();
         glm::mat4 m_ViewProjectionMatrix = glm::identity<glm::mat4>();
 
-        glm::vec3 m_Position;
+        glm::vec3 m_Position = glm::vec3(0, 0, 1);
         float m_Rotation = 0.0f;
 
         void RecalculateViewMatrix();
