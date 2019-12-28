@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <glm/glm.hpp>
 
 namespace Muse
 {
@@ -13,6 +14,8 @@ namespace Muse
         void Bind();
         void Unbind();
 
+        void UploadUniformMat4(const std::string& a_name, const glm::mat4& a_Matrix);
+
     private:
         uint32_t m_RendererID;
     };
@@ -23,6 +26,8 @@ namespace Muse
             layout(location = 0) in vec3 a_Position;
             layout(location = 1) in vec4 a_Color;
 
+            uniform mat4 u_ViewProjection;
+
             out vec3 v_Position;
             out vec4 v_Color;
             
@@ -30,7 +35,7 @@ namespace Muse
             {
                 v_Position = a_Position;
                 v_Color = a_Color;
-                gl_Position = vec4(a_Position, 1.0);
+                gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
             }
         )";
 
@@ -56,6 +61,8 @@ namespace Muse
             layout(location = 0) in vec3 a_Position;
             layout(location = 1) in vec4 a_Color;
 
+            uniform mat4 u_ViewProjection;
+
             out vec3 v_Position;
             out vec4 v_Color;
             
@@ -63,7 +70,7 @@ namespace Muse
             {
                 v_Position = a_Position;
                 v_Color = a_Color;
-                gl_Position = vec4(a_Position, 1.0);
+                gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
             }
         )";
 

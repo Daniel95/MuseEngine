@@ -9,6 +9,7 @@
 #include "Core/Renderer/Buffer/IndexBuffer.h"
 #include "Core/Renderer/VertexArray.h"
 #include "Core/Renderer/RendererAPI.h"
+#include "Core/Renderer/OrthographicCamera.h"
 
 class ExampleLayer : public Muse::Layer
 {
@@ -30,14 +31,16 @@ Muse::Application* Muse::CreateApplication()
 
 void GameApplication::OnStart()
 {
+    m_Camera.reset(new Muse::OrthographicCamera(-1.0f, 1.0f, -1.0f, 1.0f));
+
     /////////////////////////////////////////////////////////////////
-//// Triangle ///////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////    
+    //// Triangle ///////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////    
 
     m_TriangleVA.reset(Muse::VertexArray::Create());
 
     //Triangle vertices
-    float vertices[3 * 7] =
+    float vertices[3 * 7]
     {
         -0.5f, -0.5f, -0.0f, 0.9f, 0.9f, 0.1f, 0.6f,
         0.5f, -0.5f, -0.0f, 0.1f, 0.6f, 0.2f, 0.8f,
@@ -112,9 +115,11 @@ void GameApplication::OnRender()
 	Muse::Renderer::BeginScene();
 
 	m_BlueShader->Bind();
+    m_BlueShader->UploadUniformMat4("u_ViewProjection", m_Camera->GetViewProjectionMatrix());
 	Muse::Renderer::Submit(m_SquareVA);
 
 	m_Shader->Bind();
+    m_Shader->UploadUniformMat4("u_ViewProjection", m_Camera->GetViewProjectionMatrix());
 	Muse::Renderer::Submit(m_TriangleVA);
 
 	Muse::Renderer::EndScene();

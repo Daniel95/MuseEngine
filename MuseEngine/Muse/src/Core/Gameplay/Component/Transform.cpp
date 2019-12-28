@@ -2,6 +2,9 @@
 
 #include "Core/Gameplay/Component/Transform.h"
 
+#include <glm/gtx/matrix_decompose.hpp>
+#include <glm/gtx/transform.hpp>
+
 namespace Muse
 {
     void Transform::SetPosition(const glm::vec3& a_Position)

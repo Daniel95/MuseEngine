@@ -3,6 +3,7 @@
 #include "glad/glad.h"
 #include "Core/Utilities/Log.h"
 #include "Core/Utilities/Defines.h"
+#include "glm/gtc/type_ptr.hpp"
 
 namespace Muse
 {
@@ -125,5 +126,14 @@ namespace Muse
     void Shader::Unbind()
     {
 		glUseProgram(0);
+    }
+
+    void Shader::UploadUniformMat4(const std::string& a_name, const glm::mat4& a_Matrix)
+    {
+		GLint location = glGetUniformLocation(m_RendererID, a_name.c_str());
+
+		ASSERT(location != -1, "Uniform not found!");
+
+		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(a_Matrix));
     }
 }

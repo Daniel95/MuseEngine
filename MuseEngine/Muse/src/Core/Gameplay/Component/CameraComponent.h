@@ -6,7 +6,7 @@ namespace Muse
     class CameraComponent : public Component
     {
     public:
-        CameraComponent() = default;
+        CameraComponent();
         virtual ~CameraComponent() = default;
 
         void MakeEditorCamera() { m_IsEditorCamera = true; }
@@ -15,5 +15,10 @@ namespace Muse
     private:
         bool m_IsEditorCamera = false;
 
+        glm::mat4 m_ProjectionMatrix;
+        glm::mat4 m_ViewMatrix;
+
+        glm::vec3 m_Position;
+        float m_Rotation = 0.0f;
     };
 }

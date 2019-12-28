@@ -4,6 +4,7 @@
 
 namespace Muse
 {
+    class OrthographicCamera;
     class Shader;
     class VertexBuffer;
     class IndexBuffer;
@@ -38,5 +39,6 @@ private:
     std::shared_ptr<Muse::IndexBuffer> m_IB;
     std::shared_ptr<Muse::VertexArray> m_TriangleVA;
     std::shared_ptr<Muse::VertexArray> m_SquareVA;
+    std::shared_ptr<Muse::OrthographicCamera> m_Camera;
 
 };
