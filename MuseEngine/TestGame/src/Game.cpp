@@ -13,7 +13,6 @@ Game::Game()
 
 void Game::OnAttach()
 {
-    m_Scene = &Muse::SystemManager::Get().GetSystem<Muse::SceneSystem>().NewScene();
 }
 
 void Game::OnDetach()

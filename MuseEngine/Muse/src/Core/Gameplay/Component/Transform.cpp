@@ -9,49 +9,49 @@ namespace Muse
 {
     void Transform::SetPosition(const glm::vec3& a_Position)
     {
-		m_DirtyPosition = true;
+		m_DirtyPosition = m_DirtyModel = true;
 		m_Position = a_Position;
     }
 
     void Transform::SetPosition(const glm::vec2& a_Position)
     {
-		m_DirtyPosition = true;
+		m_DirtyPosition = m_DirtyModel = true;
 		m_Position = glm::vec3(a_Position.x, a_Position.y, m_Position.z);
     }
 
     void Transform::Move(const glm::vec3& a_Movement)
     {
-		m_DirtyPosition = true;
+		m_DirtyPosition = m_DirtyModel = true;
 		m_Position += a_Movement;
     }
 
     void Transform::Move(const glm::vec2& a_Movement)
     {
-		m_DirtyPosition = true;
+		m_DirtyPosition = m_DirtyModel = true;
 		m_Position += glm::vec3(a_Movement.x, a_Movement.y, 0);
     }
 
     void Transform::SetScale(const glm::vec3& a_Scale)
     {
-		m_DirtyScale = true;
+		m_DirtyScale = m_DirtyModel = true;
 		m_Scale = a_Scale;
     }
 
     void Transform::SetScale(const glm::vec2& a_Scale)
     {
-		m_DirtyScale = true;
+		m_DirtyScale = m_DirtyModel = true;
 		m_Scale = glm::vec3(a_Scale.x, a_Scale.y, m_Scale.z);;
     }
 
     void Transform::SetRotation(const glm::vec3& a_Rotation)
     {
-		m_DirtyScale = true;
+		m_DirtyScale = m_DirtyModel = true;
 		m_Rotation = a_Rotation;
     }
 
     void Transform::SetRotationQuat(const glm::quat& a_Rotation)
     {
-		m_DirtyScale = true;
+		m_DirtyScale = m_DirtyModel = true;
 		m_RotationQuaternion = a_Rotation;
     }
 
@@ -94,7 +94,7 @@ namespace Muse
 
 	const glm::mat4& Transform::GetModelMatrix()
 	{
-		if (IsDirty())
+		if (m_DirtyModel)
 		{
 			m_ModelMatrix = GetScaleMatrix() * GetRotationMatrix() * GetTranslationMatrix();
 		}

@@ -21,6 +21,5 @@ public:
 	virtual void OnImGuiRender() override;
 
 private:
-	Muse::Scene* m_Scene;
 
 };

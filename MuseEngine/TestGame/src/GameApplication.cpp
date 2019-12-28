@@ -8,8 +8,10 @@
 #include "Core/Renderer/Buffer/VertexBuffer.h"
 #include "Core/Renderer/Buffer/IndexBuffer.h"
 #include "Core/Renderer/VertexArray.h"
-#include "Core/Renderer/RendererAPI.h"
-#include "Core/Renderer/OrthographicCamera.h"
+#include "Core/System/Manager/SystemManager.h"
+#include "Core/Gameplay/Component/CameraComponent.h"
+#include "Core/Input/Input.h"
+#include "Core/Input/KeyCodes.h"
 
 class ExampleLayer : public Muse::Layer
 {
@@ -31,7 +33,7 @@ Muse::Application* Muse::CreateApplication()
 
 void GameApplication::OnStart()
 {
-    m_Camera.reset(new Muse::OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f));
+    m_Scene = &Muse::SystemManager::Get().GetSystem<Muse::SceneSystem>().NewScene();
 
     /////////////////////////////////////////////////////////////////
     //// Triangle ///////////////////////////////////////////////////
@@ -101,6 +103,23 @@ void GameApplication::OnStart()
 
 void GameApplication::OnUpdate(float a_DeltaTime)
 {
+    if(Muse::Input::IsKeyPressed(MUSE_KEY_A))
+    {
+        Muse::CameraComponent::GetMain()->GetTransform()->Move(glm::vec2(-0.01f, 0.0f));
+    }
+    else if (Muse::Input::IsKeyPressed(MUSE_KEY_D))
+    {
+        Muse::CameraComponent::GetMain()->GetTransform()->Move(glm::vec2(0.01f, 0.0f));
+    }
+
+    if (Muse::Input::IsKeyPressed(MUSE_KEY_S))
+    {
+        Muse::CameraComponent::GetMain()->GetTransform()->Move(glm::vec2(0.0f, -0.01f));
+    }
+    else if (Muse::Input::IsKeyPressed(MUSE_KEY_W))
+    {
+        Muse::CameraComponent::GetMain()->GetTransform()->Move(glm::vec2(0.0f, 0.01f));
+    }
 }
 
 void GameApplication::OnFixedUpdate()
@@ -112,7 +131,7 @@ void GameApplication::OnRender()
     Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
     Muse::RenderCommand::Clear();
 
-    Muse::Renderer::BeginScene(*m_Camera);
+    Muse::Renderer::BeginScene(*Muse::CameraComponent::GetMain());
 
 	Muse::Renderer::Submit(m_BlueShader, m_SquareVA);
 	Muse::Renderer::Submit(m_Shader, m_TriangleVA);

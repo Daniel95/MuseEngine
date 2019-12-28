@@ -3,13 +3,14 @@
 
 namespace Muse
 {
+    class CameraComponent;
     class Shader;
     class OrthographicCamera;
 
     class Renderer
     {
     public:
-        static void BeginScene(const OrthographicCamera& a_Camera);
+        static void BeginScene(const CameraComponent& a_Camera);
         static void EndScene();
         static void Submit(const std::shared_ptr<Shader>& a_Shader, const std::shared_ptr<VertexArray>& a_VertexArray);
 
@@ -21,6 +22,6 @@ namespace Muse
             glm::mat4 ViewProjectionMatrix;
         };
 
-        static SceneData* m_SceneData;
+        static SceneData* s_SceneData;
     };
 }

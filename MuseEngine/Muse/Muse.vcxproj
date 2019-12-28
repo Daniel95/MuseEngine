@@ -167,7 +167,6 @@
     <ClInclude Include="src\Core\Layer\LayerStack.h" />
     <ClInclude Include="src\Core\Renderer\Buffer\IndexBuffer.h" />
     <ClInclude Include="src\Core\Gameplay\Component\CameraComponent.h" />
-    <ClInclude Include="src\Core\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Core\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Core\Renderer\Renderer.h" />
     <ClInclude Include="src\Core\Renderer\RendererAPI.h" />
@@ -579,7 +578,6 @@
     <ClCompile Include="src\Core\Layer\LayerStack.cpp" />
     <ClCompile Include="src\Core\Renderer\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\CameraComponent.cpp" />
-    <ClCompile Include="src\Core\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Core\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Core\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Core\Renderer\RendererAPI.cpp" />

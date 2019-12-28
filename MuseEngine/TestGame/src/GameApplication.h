@@ -4,6 +4,7 @@
 
 namespace Muse
 {
+    class Scene;
     class OrthographicCamera;
     class Shader;
     class VertexBuffer;
@@ -23,14 +24,14 @@ protected:
     virtual void OnFixedUpdate() override;
     virtual void OnRender() override;
 
-    virtual void OnWindowCloseEvent();
-    virtual void OnWindowResizeEvent(int a_Width, int a_Height);
-    virtual void OnKeyPressedEvent(int a_KeyCode, int a_RepeatCount);
-    virtual void OnKeyReleasedEvent(int a_KeyCode);
-    virtual void OnMouseButtonPressedEvent(int a_Button);
-    virtual void OnMouseButtonReleasedEvent(int a_Button);
-    virtual void OnMouseScrolledEvent(float a_XOffset, float a_YOffset);
-    virtual void OnMouseMovedEvent(float a_X, float a_Y);
+    virtual void OnWindowCloseEvent() override;
+    virtual void OnWindowResizeEvent(int a_Width, int a_Height) override;
+    virtual void OnKeyPressedEvent(int a_KeyCode, int a_RepeatCount) override;
+    virtual void OnKeyReleasedEvent(int a_KeyCode) override;
+    virtual void OnMouseButtonPressedEvent(int a_Button) override;
+    virtual void OnMouseButtonReleasedEvent(int a_Button) override;
+    virtual void OnMouseScrolledEvent(float a_XOffset, float a_YOffset) override;
+    virtual void OnMouseMovedEvent(float a_X, float a_Y) override;
 
 private:
     std::shared_ptr<Muse::Shader> m_Shader;
@@ -39,6 +40,6 @@ private:
     std::shared_ptr<Muse::IndexBuffer> m_IB;
     std::shared_ptr<Muse::VertexArray> m_TriangleVA;
     std::shared_ptr<Muse::VertexArray> m_SquareVA;
-    std::shared_ptr<Muse::OrthographicCamera> m_Camera;
+    Muse::Scene* m_Scene;
 
 };

@@ -50,7 +50,7 @@ namespace Muse
 		glm::vec3 TransformPoint(const glm::vec3& a_LocalPoint); //Local to world point
 		glm::vec3 TransformVector(const glm::vec3& a_LocalVector); //Local to world vector
 
-		bool IsDirty() const { return !m_DirtyPosition || !m_DirtyScale || !m_DirtyRotation; }
+		//bool IsDirty() const { return !m_DirtyPosition || !m_DirtyScale || !m_DirtyRotation; }
 
 		const glm::mat4& GetTranslationMatrix();
 		const glm::mat4& GetRotationMatrix();
@@ -68,6 +68,7 @@ namespace Muse
 		bool m_DirtyPosition = true;
 		bool m_DirtyRotation = true;
 		bool m_DirtyScale = true;
+		bool m_DirtyModel = true;
 
 		glm::vec3 m_Position = glm::vec3(0, 0, 0);
 		glm::vec3 m_Scale = glm::vec3(1, 1, 1);

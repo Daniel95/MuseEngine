@@ -7,6 +7,7 @@ namespace Muse
 {
     class GameObject;
     class BoxCollider2D;
+    class Transform;
 
     class Component
     {
@@ -24,6 +25,7 @@ namespace Muse
         void Disable();
 
         GameObject* GetGameObject() const { return m_GameObject; }
+        Transform* GetTransform() const;
 		const bool& IsEnabled() { return m_isEnabled; };
 
 		RTTR_REGISTRATION_FRIEND;

@@ -2,7 +2,7 @@
 
 #include "Core/Gameplay/Component/Component.h"
 #include "Core/Gameplay/GameObject.h"
-#include "Core/Utilities/Log.h"
+#include "Transform.h"
 
 namespace Muse 
 {
@@ -40,7 +40,6 @@ namespace Muse
         a_TimeStep;
     }
 
-
 	void Component::Enable()
 	{
 		m_isEnabled = true;
@@ -53,7 +52,12 @@ namespace Muse
         OnDisable();
 	}
 
-	void Component::OnEnable()
+    Transform* Component::GetTransform() const
+    {
+		return m_GameObject->GetTransform();
+    }
+
+    void Component::OnEnable()
 	{
 	}
 
