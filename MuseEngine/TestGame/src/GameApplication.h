@@ -23,6 +23,7 @@ protected:
     virtual void OnUpdate(float a_DeltaTime) override;
     virtual void OnFixedUpdate() override;
     virtual void OnRender() override;
+    virtual void OnImGUIRender() override;
 
     virtual void OnWindowCloseEvent() override;
     virtual void OnWindowResizeEvent(int a_Width, int a_Height) override;

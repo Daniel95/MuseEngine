@@ -1,23 +1,19 @@
 #pragma once
 
 #include <string>
-#include <glm/glm.hpp>
 
 namespace Muse
 {
     class Shader
     {
     public:
-        Shader(const std::string& a_VertexSrc, const std::string& a_FragmentSrc);
-        ~Shader();
+        virtual ~Shader() = default;
 
-        void Bind();
-        void Unbind();
+        virtual void Bind() const = 0;
+        virtual void Unbind() const = 0;
 
-        void UploadUniformMat4(const std::string& a_name, const glm::mat4& a_Matrix);
+        static Shader* Create(const std::string& a_VertexSrc, const std::string& a_FragmentSrc);
 
-    private:
-        uint32_t m_RendererID;
     };
 
     static std::string s_VertexSrc = R"(

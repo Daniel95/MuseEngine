@@ -5,15 +5,14 @@
 #include "Core/Renderer/Renderer.h"
 #include "Core/Renderer/Shader.h"
 #include "Core/Renderer/Buffer/BufferLayout.h"
-#include "Core/Renderer/Buffer/VertexBuffer.h"
-#include "Core/Renderer/Buffer/IndexBuffer.h"
-#include "Core/Renderer/VertexArray.h"
 #include "Core/System/Manager/SystemManager.h"
 #include "Core/Gameplay/Component/CameraComponent.h"
 #include "Core/Input/Input.h"
 #include "Core/Input/KeyCodes.h"
 #include "Core/Gameplay/Component/MeshComponent.h"
 #include "PlayerComponent.h"
+#include "imgui/imgui.h"
+#include "glm/gtc/type_ptr.hpp"
 
 class ExampleLayer : public Muse::Layer
 {
@@ -93,8 +92,8 @@ void GameApplication::OnStart()
         gameObject.GetTransform()->SetPosition({ -1, 0, 0 });
     }
 
-    m_Shader = std::make_unique<Muse::Shader>(Muse::s_VertexSrc, Muse::s_FragmentSrc);
-    m_BlueShader = std::make_unique<Muse::Shader>(Muse::s_BlueVertexSrc, Muse::s_BlueFragmentSrc);
+    m_Shader.reset(Muse::Shader::Create(Muse::s_VertexSrc, Muse::s_FragmentSrc));
+    m_BlueShader.reset(Muse::Shader::Create(Muse::s_BlueVertexSrc, Muse::s_BlueFragmentSrc));
 
 	//PushLayer(new Game());
 }
@@ -144,6 +143,14 @@ void GameApplication::OnRender()
 	//Muse::Renderer::Submit(m_Shader, m_TriangleVA);
 
 	Muse::Renderer::EndScene();
+}
+
+void GameApplication::OnImGUIRender()
+{
+    //ImGui::Begin("Settings");
+    //ImGui::ColorEdit3("Square Color", glm::value_ptr());
+
+    //ImGui::End();
 }
 
 void GameApplication::OnWindowCloseEvent()

@@ -36,6 +36,7 @@ namespace Muse
         virtual void OnUpdate(float a_DeltaTime) = 0;
         virtual void OnFixedUpdate() = 0;
         virtual void OnRender() = 0;
+        virtual void OnImGUIRender() = 0;
 
         virtual void OnWindowCloseEvent();
         virtual void OnWindowResizeEvent(int a_Width, int a_Height);
