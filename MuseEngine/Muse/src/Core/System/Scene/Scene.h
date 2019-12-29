@@ -2,7 +2,7 @@
 
 #include "Core/System/Resource/Resource.h"
 #include "Core/Gameplay/Component/Component.h"
-#include "Core/Gameplay/Component/Transform.h"
+#include "Core/Gameplay/Component/TransformComponent.h"
 #include "Core/Utilities/Defines.h"
 
 #include <rttr/variant.h>

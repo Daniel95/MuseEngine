@@ -3,7 +3,7 @@
 #include "Core/Gameplay/Component/BoxCollider2D.h"
 #include "Core/Utilities/Log.h"
 #include "Core/Gameplay/GameObject.h"
-#include "Core/Gameplay/Component/Transform.h"
+#include "Core/Gameplay/Component/TransformComponent.h"
 #include "Core/System/Scene/Scene.h"
 
 namespace Muse
@@ -29,11 +29,6 @@ namespace Muse
     void BoxCollider2D::Update(float a_DeltaTime)
     {
         _ASSERT(m_CollisionType != CollisionType::NONE);
-    }
-
-    void BoxCollider2D::FixedUpdate(float a_TimeStep)
-    {
-
     }
 
     void BoxCollider2D::SetCollisionType(CollisionType a_CollisionType)

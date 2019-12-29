@@ -111,9 +111,6 @@
     <ClInclude Include="src\Core\Gameplay\Component\TestComponent.h">
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Gameplay\Component\Transform.h">
-      <Filter>src\Core\Gameplay\Component</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\Gameplay\GameObject.h">
       <Filter>src\Core\Gameplay</Filter>
     </ClInclude>
@@ -1303,6 +1300,10 @@
     <ClInclude Include="src\Core\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
     <ClInclude Include="src\Core\Gameplay\Component\CameraComponent.h" />
+    <ClInclude Include="src\Core\Gameplay\Component\TransformComponent.h">
+      <Filter>src\Core\Gameplay\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Gameplay\Component\MeshComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1318,9 +1319,6 @@
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Gameplay\Component\TestComponent.cpp">
-      <Filter>src\Core\Gameplay\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Gameplay\Component\Transform.cpp">
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Gameplay\GameObject.cpp">
@@ -1399,5 +1397,9 @@
     <ClCompile Include="src\Core\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\CameraComponent.cpp" />
+    <ClCompile Include="src\Core\Gameplay\Component\TransformComponent.cpp">
+      <Filter>src\Core\Gameplay\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Gameplay\Component\MeshComponent.cpp" />
   </ItemGroup>
 </Project>

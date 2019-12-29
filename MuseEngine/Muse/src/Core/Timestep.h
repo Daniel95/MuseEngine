@@ -5,8 +5,8 @@ namespace Muse
 	class Timestep
 	{
 	public:
-		Timestep(float time = 0.0f)
-			: m_Time(time)
+		Timestep(float a_Time = 0.0f)
+			: m_Time(a_Time)
 		{
 		}
 

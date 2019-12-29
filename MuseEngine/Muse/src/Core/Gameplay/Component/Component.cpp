@@ -2,19 +2,11 @@
 
 #include "Core/Gameplay/Component/Component.h"
 #include "Core/Gameplay/GameObject.h"
-#include "Transform.h"
+#include "TransformComponent.h"
 
 namespace Muse 
 {
     class BoxCollider2D;
-    Component::Component() 
-    {
-        m_GameObject = nullptr;
-    }
-
-    Component::~Component()
-    {
-    }
 
     void Component::Init(GameObject* a_GameObject)
     {
@@ -52,7 +44,7 @@ namespace Muse
         OnDisable();
 	}
 
-    Transform* Component::GetTransform() const
+    TransformComponent* Component::GetTransform() const
     {
 		return m_GameObject->GetTransform();
     }

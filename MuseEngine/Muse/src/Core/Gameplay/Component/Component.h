@@ -7,15 +7,15 @@ namespace Muse
 {
     class GameObject;
     class BoxCollider2D;
-    class Transform;
+    class TransformComponent;
 
     class Component
     {
         RTTR_ENABLE();
 
     public:
-        Component();
-        virtual ~Component();
+        Component() = default;
+        virtual ~Component() = default;
 
         virtual void Init(GameObject* a_GameObject);
         virtual void Update(float a_DeltaTime);
@@ -25,8 +25,8 @@ namespace Muse
         void Disable();
 
         GameObject* GetGameObject() const { return m_GameObject; }
-        Transform* GetTransform() const;
-		const bool& IsEnabled() { return m_isEnabled; };
+        TransformComponent* GetTransform() const;
+		bool IsEnabled() const { return m_isEnabled; };
 
 		RTTR_REGISTRATION_FRIEND;
 
@@ -35,7 +35,8 @@ namespace Muse
 		virtual void OnDisable();
 
     private:
-        GameObject* m_GameObject;
+        GameObject* m_GameObject = nullptr;
 		bool m_isEnabled = true;
+
     };
 }

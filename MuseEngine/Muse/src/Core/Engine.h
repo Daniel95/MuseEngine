@@ -10,7 +10,7 @@
 #include "Core/System/SceneSystem.h"
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Gameplay/Component/BoxCollider2D.h"
-#include "Core/Gameplay/Component/Transform.h"
+#include "Core/Gameplay/Component/TransformComponent.h"
 
 // Entry Point
 #include "EntryPoint.h"

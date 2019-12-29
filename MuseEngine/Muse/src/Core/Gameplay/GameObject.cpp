@@ -3,16 +3,12 @@
 #include "Core/Gameplay/GameObject.h"
 
 #include "Core/Application.h"
-#include "Core/Gameplay/Component/Transform.h"
+#include "Core/Gameplay/Component/TransformComponent.h"
 #include "Core/System/SceneSystem.h"
 #include "Core/System/Scene/Scene.h"
 
 namespace Muse 
 {
-    GameObject::GameObject()
-    {
-    }
-
     GameObject::~GameObject()
     {
         for (Component* component : m_Components)
@@ -25,9 +21,9 @@ namespace Muse
     {
         m_Scene = &a_Scene;
 
-        if (!HasComponent<Transform>())
+        if (!HasComponent<TransformComponent>())
         {
-            AddComponent<Transform>();
+            AddComponent<TransformComponent>();
         }
     }
 
@@ -88,9 +84,9 @@ namespace Muse
         return m_SystemManager;
     }
 
-    Transform* GameObject::GetTransform() const
+    TransformComponent* GameObject::GetTransform() const
     {
-        return GetComponent<Transform>();
+        return GetComponent<TransformComponent>();
     }
 
     void GameObject::SetComponents(const std::vector<Component*>& a_Components)

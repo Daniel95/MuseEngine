@@ -15,7 +15,7 @@ namespace Muse
 	class Application
 	{
 	public:
-        inline static Application& Get() { return *s_Instance; }
+        static Application& Get() { return *s_Instance; }
 
 		Application();
 		virtual ~Application();
@@ -28,12 +28,12 @@ namespace Muse
         void FixedUpdate();
         void Render();
 
-        void PushLayer(Layer* layer);
-        void PushOverlay(Layer* layer);
+        void PushLayer(Layer* a_Layer);
+        void PushOverlay(Layer* a_Layer);
 
     protected:
         virtual void OnStart() = 0;
-        virtual void OnUpdate(float m_DeltaTime) = 0;
+        virtual void OnUpdate(float a_DeltaTime) = 0;
         virtual void OnFixedUpdate() = 0;
         virtual void OnRender() = 0;
 
@@ -54,6 +54,7 @@ namespace Muse
         ImGuiLayer* m_ImGuiLayer;
         SystemManager* m_SystemManager;
         LayerStack m_LayerStack;
+        float m_LastFrameTime = 0.0f;
 	};
 
 	// To be defined in client.

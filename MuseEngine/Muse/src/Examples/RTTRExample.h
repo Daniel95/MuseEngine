@@ -162,7 +162,7 @@ void TestSerialization(Muse::Application& a_Application)
     Engine::Scene* scene = new Engine::Scene(a_Application);
     Engine::GameObject* gameObject = new Engine::GameObject(*scene);
     gameObject->AddComponent<Engine::BoxCollider2D>();
-    Engine::Transform* transform = gameObject->GetComponent<Engine::Transform>();
+    Engine::TransformComponent* transform = gameObject->GetComponent<Engine::TransformComponent>();
 
     transform->Move(DXS::Vector2(12, 0));
 

@@ -27,9 +27,6 @@ namespace Muse
         void LoadScene(const std::string& a_SceneName);
         void ReloadScene();
         Scene* GetActiveScene();
-        
-    private:
-        void LoadSceneImmediate(const std::string& a_SceneName);
 
     private:
         Application* m_Application;
@@ -38,6 +35,7 @@ namespace Muse
         Scene* m_ActiveScene = nullptr;
         bool m_InspectLoadedScenes = false;
 
+        void LoadSceneImmediate(const std::string& a_SceneName);
 
     };
 }

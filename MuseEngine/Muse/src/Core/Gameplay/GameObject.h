@@ -10,7 +10,7 @@
 namespace Muse 
 {
     class Scene;
-    class Transform;
+    class TransformComponent;
     class SystemManager;
 
 	class GameObject
@@ -18,8 +18,8 @@ namespace Muse
         RTTR_ENABLE();
 
 	public:
-        GameObject();
-		~GameObject();
+        GameObject() = default;
+		virtual ~GameObject();
 
         void Init(Scene& a_Scene);
         void Update(float a_DeltaTime);
@@ -36,11 +36,11 @@ namespace Muse
         template <class T>
         T* GetComponent() const;
 
-        void AddRawComponent(Component* a_Component) { m_Components.push_back(a_Component); };
+        //void AddRawComponent(Component* a_Component) { m_Components.push_back(a_Component); };
 
         Scene* GetScene() const;
         SystemManager* GetSystemManager() const;
-        Transform* GetTransform() const;
+        TransformComponent* GetTransform() const;
 
         const std::vector<Component*>& GetComponents();
         void SetComponents(const std::vector<Component*>& a_Components);
@@ -55,7 +55,7 @@ namespace Muse
 	};
 
     template<class T>
-    inline bool GameObject::HasComponent()
+    bool GameObject::HasComponent()
     {
         static_assert(std::is_base_of<Component, T>::value, "Type must derive from Component");
         
@@ -63,7 +63,7 @@ namespace Muse
     }
 
     template<class T>
-    inline T& GameObject::AddComponent()
+    T& GameObject::AddComponent()
     {
         static_assert(std::is_base_of<Component, T>::value, "Type must derive from Component");
         _ASSERT(!HasComponent<T>());
@@ -78,7 +78,7 @@ namespace Muse
     }
 
     template<class T>
-    inline void GameObject::RemoveComponent()
+    void GameObject::RemoveComponent()
     {
         static_assert(std::is_base_of<Component, T>::value, "Type must derive from Component");
 
@@ -92,7 +92,7 @@ namespace Muse
     }
 
     template<class T>
-    inline T* GameObject::GetComponent() const
+    T* GameObject::GetComponent() const
     {
         static_assert(std::is_base_of<Component, T>::value, "Type must derive from Component");
 

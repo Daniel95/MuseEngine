@@ -42,4 +42,6 @@ private:
     std::shared_ptr<Muse::VertexArray> m_SquareVA;
     Muse::Scene* m_Scene;
 
+    const float m_CameraMoveSpeed = 0.3f;
+
 };

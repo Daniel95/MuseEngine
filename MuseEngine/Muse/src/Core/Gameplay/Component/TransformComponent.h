@@ -15,13 +15,13 @@ namespace Muse
 	class GameObject;
 	struct DX12Matrix;
 
-	class Transform : public Component
+	class TransformComponent : public Component
 	{
         RTTR_ENABLE(Component);
 
 	public:
-		Transform() = default;
-		virtual ~Transform() = default;
+		TransformComponent() = default;
+		virtual ~TransformComponent() = default;
 
 		const glm::vec3& GetPosition() const { return m_Position; }
 		void SetPosition(const glm::vec3& a_Position);
@@ -49,8 +49,6 @@ namespace Muse
 		glm::vec3 InverseTransformVector(const glm::vec3& a_WorldVector); //World to local vector
 		glm::vec3 TransformPoint(const glm::vec3& a_LocalPoint); //Local to world point
 		glm::vec3 TransformVector(const glm::vec3& a_LocalVector); //Local to world vector
-
-		//bool IsDirty() const { return !m_DirtyPosition || !m_DirtyScale || !m_DirtyRotation; }
 
 		const glm::mat4& GetTranslationMatrix();
 		const glm::mat4& GetRotationMatrix();

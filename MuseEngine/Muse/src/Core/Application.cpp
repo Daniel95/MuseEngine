@@ -10,7 +10,9 @@
 #include "Core/Utilities/Log.h"
 #include "Core/Utilities/Defines.h"
 #include "Core/Event/ApplicationEvent.h"
+#include "Core/Timestep.h"
 #include "ImGui/ImGuiLayer.h"
+#include "GLFW/glfw3.h"
 
 namespace Muse
 {
@@ -68,13 +70,18 @@ namespace Muse
 
     void Application::Update()
     {
+        float time = static_cast<float>(glfwGetTime()); //Platform::GetTime
+        float deltaTime = time - m_LastFrameTime;
+        m_LastFrameTime = time;
+
+
         for (Layer* layer : m_LayerStack)
         {
-            layer->OnUpdate(0.16f);
+            layer->OnUpdate(deltaTime);
         }
 
-        m_SystemManager->UpdateSystems(0);
-        OnUpdate(0.016f);
+        m_SystemManager->UpdateSystems(deltaTime);
+        OnUpdate(deltaTime);
     }
 
     void Application::FixedUpdate()
@@ -96,16 +103,16 @@ namespace Muse
         OnRender();
     }
 
-    void Application::PushLayer(Layer* layer)
+    void Application::PushLayer(Layer* a_Layer)
     {
-        m_LayerStack.PushLayer(layer);
-        layer->OnAttach();
+        m_LayerStack.PushLayer(a_Layer);
+        a_Layer->OnAttach();
     }
 
-    void Application::PushOverlay(Layer* layer)
+    void Application::PushOverlay(Layer* a_Layer)
     {
-        m_LayerStack.PushOverlay(layer);
-        layer->OnAttach();
+        m_LayerStack.PushOverlay(a_Layer);
+        a_Layer->OnAttach();
     }
 
     void Application::OnWindowCloseEvent()

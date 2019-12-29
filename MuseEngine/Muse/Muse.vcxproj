@@ -147,6 +147,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\Gameplay\Component\MeshComponent.h" />
     <ClInclude Include="src\Core\Renderer\Buffer\BufferLayout.h" />
     <ClInclude Include="src\Core\Application.h" />
     <ClInclude Include="src\Core\Engine.h" />
@@ -157,7 +158,7 @@
     <ClInclude Include="src\Core\Gameplay\Component\BoxCollider2D.h" />
     <ClInclude Include="src\Core\Gameplay\Component\Component.h" />
     <ClInclude Include="src\Core\Gameplay\Component\TestComponent.h" />
-    <ClInclude Include="src\Core\Gameplay\Component\Transform.h" />
+    <ClInclude Include="src\Core\Gameplay\Component\TransformComponent.h" />
     <ClInclude Include="src\Core\Gameplay\GameObject.h" />
     <ClInclude Include="src\Core\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Core\Input\Input.h" />
@@ -564,13 +565,14 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\Gameplay\Component\MeshComponent.cpp" />
     <ClCompile Include="src\Core\Renderer\Buffer\BufferLayout.cpp" />
     <ClCompile Include="src\Core\Application.cpp" />
     <ClCompile Include="src\Core\Event\Event.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\BoxCollider2D.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\Component.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\TestComponent.cpp" />
-    <ClCompile Include="src\Core\Gameplay\Component\Transform.cpp" />
+    <ClCompile Include="src\Core\Gameplay\Component\TransformComponent.cpp" />
     <ClCompile Include="src\Core\Gameplay\GameObject.cpp" />
     <ClCompile Include="src\Core\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Core\ImGui\ImGuiLayer.cpp" />

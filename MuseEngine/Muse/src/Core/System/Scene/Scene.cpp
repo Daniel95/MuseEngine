@@ -4,7 +4,7 @@
 
 #include "Core/Application.h"
 #include "Core/Gameplay/GameObject.h"
-#include "Core/Gameplay/Component/Transform.h"
+#include "Core/Gameplay/Component/TransformComponent.h"
 #include "Core/System/SceneSystem.h"
 #include "Core/System/Manager/SystemManager.h"
 #include "Core/Gameplay/Component/CameraComponent.h"

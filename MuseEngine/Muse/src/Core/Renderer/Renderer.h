@@ -12,7 +12,7 @@ namespace Muse
     public:
         static void BeginScene(const CameraComponent& a_Camera);
         static void EndScene();
-        static void Submit(const std::shared_ptr<Shader>& a_Shader, const std::shared_ptr<VertexArray>& a_VertexArray);
+        static void Submit(const std::shared_ptr<Shader>& a_Shader, const std::shared_ptr<VertexArray>& a_VertexArray, const glm::mat4& a_Transform = glm::mat4(1.0f));
 
         static RendererAPI::API GetAPI() { return RendererAPI::GetAPI(); }
 
