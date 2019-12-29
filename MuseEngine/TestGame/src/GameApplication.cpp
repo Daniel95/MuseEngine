@@ -13,6 +13,7 @@
 #include "Core/Input/Input.h"
 #include "Core/Input/KeyCodes.h"
 #include "Core/Gameplay/Component/MeshComponent.h"
+#include "PlayerComponent.h"
 
 class ExampleLayer : public Muse::Layer
 {
@@ -37,33 +38,6 @@ void GameApplication::OnStart()
     m_Scene = &Muse::SystemManager::Get().GetSystem<Muse::SceneSystem>().NewScene();
 
     /////////////////////////////////////////////////////////////////
-    //// Triangle ///////////////////////////////////////////////////
-    /////////////////////////////////////////////////////////////////    
-    {
-        float vertices[3 * 7]
-        {
-            -0.5f, -0.5f, -0.0f, 0.9f, 0.9f, 0.1f, 0.6f,
-            0.5f, -0.5f, -0.0f, 0.1f, 0.6f, 0.2f, 0.8f,
-            0.0f, 0.5f, -0.0f, 0.2, 0.3, 0.8, 1.0,
-        };
-        uint32_t indices[3] = { 0, 1, 2 };
-
-        const Muse::BufferLayout layout =
-        {
-            { Muse::ShaderDataType::Float3, "a_Position" },
-            { Muse::ShaderDataType::Float4, "a_Color" }
-        };
-
-        Muse::GameObject& triangleGameObject = m_Scene->AddGameObject();
-        triangleGameObject.AddComponent<Muse::MeshComponent>().SetMesh(vertices, 
-            3 * 7, 
-            indices, 
-            3, 
-            layout);
-        triangleGameObject.GetTransform()->SetPosition({ 3, 0, 0 });
-    }
-
-    /////////////////////////////////////////////////////////////////
     //// Blue Square ////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////
     {
@@ -82,13 +56,41 @@ void GameApplication::OnStart()
             { Muse::ShaderDataType::Float3, "a_Position" },
         };
 
-        Muse::GameObject& squareGameObject = m_Scene->AddGameObject();
-        squareGameObject.AddComponent<Muse::MeshComponent>().SetMesh(vertices,
+        Muse::GameObject& gameObject = m_Scene->AddGameObject();
+        gameObject.AddComponent<PlayerComponent>();
+        gameObject.AddComponent<Muse::MeshComponent>().SetMesh(vertices,
             3 * 4,
             indices,
             6,
             layout);
-        squareGameObject.GetTransform()->SetPosition({ -1, 0, 0 });
+        gameObject.GetTransform()->SetPosition({ 0, 0, 0 });
+    }
+
+    /////////////////////////////////////////////////////////////////
+    //// Triangle ///////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////    
+    {
+        float vertices[3 * 7]
+        {
+            -0.5f, -0.5f, -0.0f, 0.9f, 0.9f, 0.1f, 0.6f,
+            0.5f, -0.5f, -0.0f, 0.1f, 0.6f, 0.2f, 0.8f,
+            0.0f, 0.5f, -0.0f, 0.2, 0.3, 0.8, 1.0,
+        };
+        uint32_t indices[3] = { 0, 1, 2 };
+
+        const Muse::BufferLayout layout =
+        {
+            { Muse::ShaderDataType::Float3, "a_Position" },
+            { Muse::ShaderDataType::Float4, "a_Color" }
+        };
+
+        Muse::GameObject& gameObject = m_Scene->AddGameObject();
+        gameObject.AddComponent<Muse::MeshComponent>().SetMesh(vertices, 
+            3 * 7, 
+            indices, 
+            3, 
+            layout);
+        gameObject.GetTransform()->SetPosition({ -1, 0, 0 });
     }
 
     m_Shader = std::make_unique<Muse::Shader>(Muse::s_VertexSrc, Muse::s_FragmentSrc);
@@ -99,20 +101,20 @@ void GameApplication::OnStart()
 
 void GameApplication::OnUpdate(float a_DeltaTime)
 {
-    if(Muse::Input::IsKeyPressed(MUSE_KEY_A))
+    if(Muse::Input::IsKeyPressed(MUSE_KEY_LEFT))
     {
         Muse::CameraComponent::GetMain()->GetTransform()->Move(glm::vec2(-m_CameraMoveSpeed * a_DeltaTime, 0.0f));
     }
-    else if (Muse::Input::IsKeyPressed(MUSE_KEY_D))
+    else if (Muse::Input::IsKeyPressed(MUSE_KEY_RIGHT))
     {
         Muse::CameraComponent::GetMain()->GetTransform()->Move(glm::vec2(m_CameraMoveSpeed * a_DeltaTime, 0.0f));
     }
 
-    if (Muse::Input::IsKeyPressed(MUSE_KEY_S))
+    if (Muse::Input::IsKeyPressed(MUSE_KEY_DOWN))
     {
         Muse::CameraComponent::GetMain()->GetTransform()->Move(glm::vec2(0.0f, -m_CameraMoveSpeed * a_DeltaTime));
     }
-    else if (Muse::Input::IsKeyPressed(MUSE_KEY_W))
+    else if (Muse::Input::IsKeyPressed(MUSE_KEY_UP))
     {
         Muse::CameraComponent::GetMain()->GetTransform()->Move(glm::vec2(0.0f, m_CameraMoveSpeed * a_DeltaTime));
     }
