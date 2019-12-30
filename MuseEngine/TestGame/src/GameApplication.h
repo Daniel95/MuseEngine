@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Core/Application.h"
+#include "glm/vec3.hpp"
 
 namespace Muse
 {
@@ -35,13 +36,15 @@ protected:
     virtual void OnMouseMovedEvent(float a_X, float a_Y) override;
 
 private:
-    std::shared_ptr<Muse::Shader> m_Shader;
-    std::shared_ptr<Muse::Shader> m_BlueShader;
+    std::shared_ptr<Muse::Shader> m_VertexColorShader;
+    std::shared_ptr<Muse::Shader> m_FlatColorShader;
     std::shared_ptr<Muse::VertexBuffer> m_VB;
     std::shared_ptr<Muse::IndexBuffer> m_IB;
     std::shared_ptr<Muse::VertexArray> m_TriangleVA;
     std::shared_ptr<Muse::VertexArray> m_SquareVA;
     Muse::Scene* m_Scene;
+
+    glm::vec3 m_FlatShaderColor = { 0.8, 0.2, 0.4 };
 
     const float m_CameraMoveSpeed = 0.3f;
 

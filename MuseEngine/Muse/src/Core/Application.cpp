@@ -92,6 +92,7 @@ namespace Muse
     void Application::Render()
     {
         m_ImGuiLayer->Begin();
+        OnImGUIRender();
         for (Layer* layer : m_LayerStack)
         {
             layer->OnImGuiRender();

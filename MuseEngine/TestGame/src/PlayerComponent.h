@@ -8,4 +8,5 @@ public:
 
 private:
     float m_MoveSpeed = 0.3f;
+
 };

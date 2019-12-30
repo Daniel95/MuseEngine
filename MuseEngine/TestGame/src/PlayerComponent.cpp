@@ -2,6 +2,8 @@
 #include "Core/Input/Input.h"
 #include "Core/Input/KeyCodes.h"
 #include "Core/Gameplay/Component/TransformComponent.h"
+#include "imgui/imgui.h"
+#include "glm/gtc/type_ptr.hpp"
 
 void PlayerComponent::Update(float a_DeltaTime)
 {

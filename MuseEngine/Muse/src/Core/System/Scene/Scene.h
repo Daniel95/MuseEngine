@@ -4,6 +4,7 @@
 #include "Core/Gameplay/Component/Component.h"
 #include "Core/Gameplay/Component/TransformComponent.h"
 #include "Core/Utilities/Defines.h"
+#include "Core/Gameplay/GameObject.h"
 
 #include <rttr/variant.h>
 #include <glm/vec2.hpp>
@@ -17,7 +18,6 @@ namespace Muse
 {
     class CameraComponent;
     class Application;
-    class GameObject;
 
 	class Scene : public Resource
 	{
@@ -51,6 +51,10 @@ namespace Muse
         GameObject* GetEditorCamera() const;
         void DestroyEditorCamera();
         GameObject& CreateEditorCamera();
+        template<typename T>
+        GameObject* FindGameObjectOfType();
+        template<typename T>
+        const std::vector<GameObject*>& FindGameObjectsOfType();
 
     private:
         std::vector<GameObject*> m_GameObjectsToUpdate;
@@ -64,4 +68,36 @@ namespace Muse
         void Unload();
 
 	};
+
+    template <typename T>
+    GameObject* Scene::FindGameObjectOfType()
+    {
+        GameObject* gameObjectOfType = nullptr;
+
+        for(GameObject* gameObject : m_GameObjectsToUpdate)
+        {
+            if(gameObject->HasComponent<T>())
+            {
+                gameObjectOfType = gameObject;
+            }
+        }
+
+        return gameObjectOfType;
+    }
+
+    template <typename T>
+    const std::vector<GameObject*>& Scene::FindGameObjectsOfType()
+    {
+        std::vector<GameObject*> gameObjectsOfType;
+
+        for (GameObject* gameObject : m_GameObjectsToUpdate)
+        {
+            if (gameObject->HasComponent<T>())
+            {
+                gameObjectsOfType.push_back(gameObject);
+            }
+        }
+
+        return gameObjectsOfType;
+    }
 }

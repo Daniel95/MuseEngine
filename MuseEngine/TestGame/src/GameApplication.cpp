@@ -13,6 +13,7 @@
 #include "PlayerComponent.h"
 #include "imgui/imgui.h"
 #include "glm/gtc/type_ptr.hpp"
+#include "Platform/OpenGL/OpenGLShader.h"
 
 class ExampleLayer : public Muse::Layer
 {
@@ -37,7 +38,7 @@ void GameApplication::OnStart()
     m_Scene = &Muse::SystemManager::Get().GetSystem<Muse::SceneSystem>().NewScene();
 
     /////////////////////////////////////////////////////////////////
-    //// Blue Square ////////////////////////////////////////////////
+    //// Player Red Square ////////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////
     {
         float vertices[3 * 4] =
@@ -92,8 +93,8 @@ void GameApplication::OnStart()
         gameObject.GetTransform()->SetPosition({ -1, 0, 0 });
     }
 
-    m_Shader.reset(Muse::Shader::Create(Muse::s_VertexSrc, Muse::s_FragmentSrc));
-    m_BlueShader.reset(Muse::Shader::Create(Muse::s_BlueVertexSrc, Muse::s_BlueFragmentSrc));
+    m_VertexColorShader.reset(Muse::Shader::Create(Muse::s_VertexSrc, Muse::s_FragmentSrc));
+    m_FlatColorShader.reset(Muse::Shader::Create(Muse::s_FlatColorVertexSrc, Muse::s_FlatColorFragmentSrc));
 
 	//PushLayer(new Game());
 }
@@ -130,27 +131,31 @@ void GameApplication::OnRender()
 
     Muse::Renderer::BeginScene(*Muse::CameraComponent::GetMain());
 
+    std::dynamic_pointer_cast<Muse::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_FlatShaderColor);
+
     for (auto& gameObject : m_Scene->GetGameObjects())
     {
         Muse::MeshComponent* meshComponent = gameObject->GetComponent<Muse::MeshComponent>();
         if(meshComponent != nullptr)
         {
-            Muse::Renderer::Submit(m_Shader, meshComponent->GetVA(), gameObject->GetTransform()->GetModelMatrix());
+            Muse::Renderer::Submit(m_FlatColorShader, meshComponent->GetVA(), gameObject->GetTransform()->GetModelMatrix());
         }
     }
-
-	//Muse::Renderer::Submit(m_BlueShader, m_SquareVA);
-	//Muse::Renderer::Submit(m_Shader, m_TriangleVA);
 
 	Muse::Renderer::EndScene();
 }
 
 void GameApplication::OnImGUIRender()
 {
-    //ImGui::Begin("Settings");
-    //ImGui::ColorEdit3("Square Color", glm::value_ptr());
+    Muse::GameObject* playerGameObject = m_Scene->FindGameObjectOfType<PlayerComponent>();
 
-    //ImGui::End();
+    if (playerGameObject == nullptr) { return; }
+
+    PlayerComponent* playerComponent = playerGameObject->GetComponent<PlayerComponent>();
+
+    ImGui::Begin("Settings");
+    ImGui::ColorEdit3("Square Color", glm::value_ptr(m_FlatShaderColor));
+    ImGui::End();
 }
 
 void GameApplication::OnWindowCloseEvent()
