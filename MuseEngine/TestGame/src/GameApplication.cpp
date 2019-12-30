@@ -14,6 +14,7 @@
 #include "imgui/imgui.h"
 #include "glm/gtc/type_ptr.hpp"
 #include "Platform/OpenGL/OpenGLShader.h"
+#include "Core/Renderer/Texture.h"
 
 class ExampleLayer : public Muse::Layer
 {
@@ -41,8 +42,10 @@ void GameApplication::OnStart()
     m_FlatColorShader.reset(Muse::Shader::Create(Muse::s_FlatColorVertexSrc, Muse::s_FlatColorFragmentSrc));
     m_TextureShader.reset(Muse::Shader::Create(Muse::s_TextureVertexSrc, Muse::s_TextureFragmentSrc));
 
+    m_Texture = Muse::Texture2D::Create("assets/textures/Checkerboard.png");
+
     /////////////////////////////////////////////////////////////////
-    //// Player Textured Square //////////////////////////////////////////
+    //// Player Textured Square /////////////////////////////////////
     /////////////////////////////////////////////////////////////////
     {
         float vertices[5 * 4] =
@@ -70,10 +73,13 @@ void GameApplication::OnStart()
             6,
             layout);
         renderComponent.SetShader(m_TextureShader);
+
+        std::dynamic_pointer_cast<Muse::OpenGLShader>(m_TextureShader)->Bind();
+        std::dynamic_pointer_cast<Muse::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
     }
 
     /////////////////////////////////////////////////////////////////
-    //// Dynamic Color Square //////////////////////////////////////////
+    //// Dynamic Color Square ///////////////////////////////////////
     /////////////////////////////////////////////////////////////////
     {
         float vertices[3 * 4] =
@@ -173,6 +179,8 @@ void GameApplication::OnRender()
 
     m_FlatColorShader->Bind();
     std::dynamic_pointer_cast<Muse::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_FlatShaderColor);
+
+    m_Texture->Bind();
 
     for (auto& gameObject : m_Scene->GetGameObjects())
     {

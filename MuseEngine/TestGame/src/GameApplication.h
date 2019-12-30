@@ -5,6 +5,7 @@
 
 namespace Muse
 {
+    class Texture2D;
     class Scene;
     class OrthographicCamera;
     class Shader;
@@ -39,6 +40,7 @@ private:
     std::shared_ptr<Muse::Shader> m_VertexColorShader;
     std::shared_ptr<Muse::Shader> m_FlatColorShader;
     std::shared_ptr<Muse::Shader> m_TextureShader;
+    std::shared_ptr<Muse::Texture2D> m_Texture;
     Muse::Scene* m_Scene;
 
     glm::vec3 m_FlatShaderColor = { 0.8, 0.2, 0.4 };

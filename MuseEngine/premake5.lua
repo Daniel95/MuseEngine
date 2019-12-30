@@ -73,7 +73,8 @@ project "Muse"
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.rapidjson}",
-		"%{IncludeDir.rttr}"
+		"%{IncludeDir.rttr}",
+		"%{IncludeDir.stb_image}"
 	}
 
 	libdirs 
