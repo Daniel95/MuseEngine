@@ -42,10 +42,11 @@ void GameApplication::OnStart()
     m_FlatColorShader.reset(Muse::Shader::Create(Muse::s_FlatColorVertexSrc, Muse::s_FlatColorFragmentSrc));
     m_TextureShader.reset(Muse::Shader::Create(Muse::s_TextureVertexSrc, Muse::s_TextureFragmentSrc));
 
-    m_Texture = Muse::Texture2D::Create("assets/textures/Checkerboard.png");
+    m_CheckerboardTexture = Muse::Texture2D::Create("assets/textures/Checkerboard.png");
+    m_RaymanTexture = Muse::Texture2D::Create("assets/textures/Rayman.png");
 
     /////////////////////////////////////////////////////////////////
-    //// Player Textured Square /////////////////////////////////////
+    //// Checkerboard ///////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////
     {
         float vertices[5 * 4] =
@@ -64,7 +65,6 @@ void GameApplication::OnStart()
         };
 
         Muse::GameObject& gameObject = m_Scene->AddGameObject();
-        gameObject.AddComponent<PlayerComponent>();
         Muse::RenderComponent& renderComponent = gameObject.AddComponent<Muse::RenderComponent>();
 
         renderComponent.SetMesh(vertices,
@@ -73,6 +73,7 @@ void GameApplication::OnStart()
             6,
             layout);
         renderComponent.SetShader(m_TextureShader);
+        renderComponent.SetTexture(m_CheckerboardTexture);
 
         std::dynamic_pointer_cast<Muse::OpenGLShader>(m_TextureShader)->Bind();
         std::dynamic_pointer_cast<Muse::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
@@ -142,6 +143,42 @@ void GameApplication::OnStart()
         gameObject.GetTransform()->SetPosition({ -1, 0, 0 });
     }
 
+    /////////////////////////////////////////////////////////////////
+    //// Player Textured Square /////////////////////////////////////
+    /////////////////////////////////////////////////////////////////
+    {
+        float vertices[5 * 4] =
+        {
+            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+            0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
+        };
+        uint32_t indices[6] = { 0, 1, 2, 2, 3, 0 };
+
+        const Muse::BufferLayout layout =
+        {
+            { Muse::ShaderDataType::Float3, "a_Position" },
+            { Muse::ShaderDataType::Float2, "a_TexCoord" },
+        };
+
+        Muse::GameObject& gameObject = m_Scene->AddGameObject();
+        gameObject.AddComponent<PlayerComponent>();
+        Muse::RenderComponent& renderComponent = gameObject.AddComponent<Muse::RenderComponent>();
+
+        renderComponent.SetMesh(vertices,
+            5 * 4,
+            indices,
+            6,
+            layout);
+        renderComponent.SetShader(m_TextureShader);
+        renderComponent.SetTexture(m_RaymanTexture);
+
+        std::dynamic_pointer_cast<Muse::OpenGLShader>(m_TextureShader)->Bind();
+        std::dynamic_pointer_cast<Muse::OpenGLShader>(m_TextureShader)->UploadUniformInt("u_Texture", 0);
+        gameObject.GetTransform()->SetPosition({ 0, 0, 1 });
+    }
+
 	//PushLayer(new Game());
 }
 
@@ -172,6 +209,8 @@ void GameApplication::OnFixedUpdate()
 
 void GameApplication::OnRender()
 {
+    Muse::Renderer::Init();
+
     Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
     Muse::RenderCommand::Clear();
 
@@ -180,13 +219,17 @@ void GameApplication::OnRender()
     m_FlatColorShader->Bind();
     std::dynamic_pointer_cast<Muse::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_FlatShaderColor);
 
-    m_Texture->Bind();
+    m_CheckerboardTexture->Bind();
 
     for (auto& gameObject : m_Scene->GetGameObjects())
     {
         Muse::RenderComponent* meshComponent = gameObject->GetComponent<Muse::RenderComponent>();
         if(meshComponent != nullptr)
         {
+            if(meshComponent->GetTexture() != nullptr)
+            {
+                meshComponent->GetTexture()->Bind();
+            }
             Muse::Renderer::Submit(meshComponent->GetShader(), meshComponent->GetVA(), gameObject->GetTransform()->GetModelMatrix());
         }
     }

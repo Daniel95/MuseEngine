@@ -13,6 +13,8 @@
 #include "Core/Timestep.h"
 #include "ImGui/ImGuiLayer.h"
 #include "GLFW/glfw3.h"
+#include "Renderer/Renderer.h"
+#include "glad/glad.h"
 
 namespace Muse
 {
@@ -32,6 +34,8 @@ namespace Muse
         m_Window->MouseButtonReleasedEvent.Subscribe(this, std::bind(&Application::OnMouseButtonReleasedEvent, this, std::placeholders::_1));
         m_Window->MouseScrolledEvent.Subscribe(this, std::bind(&Application::OnMouseScrolledEvent, this, std::placeholders::_1, std::placeholders::_2));
         m_Window->MouseMovedEvent.Subscribe(this, std::bind(&Application::OnMouseMovedEvent, this, std::placeholders::_1, std::placeholders::_2));
+
+        Renderer::Init();
 
         m_ImGuiLayer = new ImGuiLayer();
         PushOverlay(m_ImGuiLayer);

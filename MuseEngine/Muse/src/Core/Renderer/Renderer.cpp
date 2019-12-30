@@ -9,6 +9,11 @@ namespace Muse
 {
     Renderer::SceneData* Renderer::s_SceneData = new SceneData();
 
+    void Renderer::Init()
+    {
+        RenderCommand::Init();
+    }
+
     void Renderer::BeginScene(const CameraComponent& a_Camera)
     {
         s_SceneData->ViewProjectionMatrix = a_Camera.GetViewProjectionMatrix();

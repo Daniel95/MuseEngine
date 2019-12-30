@@ -6,6 +6,7 @@
 #include "Core/Renderer/VertexArray.h"
 #include "Core/Renderer/Buffer/BufferLayout.h"
 #include "Core/Renderer/Shader.h"
+#include "Core/Renderer/Texture.h"
 
 namespace Muse
 {

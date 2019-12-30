@@ -9,6 +9,11 @@ namespace Muse
 {
     RendererAPI* RenderCommand::s_RendererAPI = new OpenGLRendererAPI();
 
+    void RenderCommand::Init()
+    {
+        s_RendererAPI->Init();
+    }
+
     void RenderCommand::SetClearColor(const glm::vec4& a_Color)
     {
         s_RendererAPI->SetClearColor(a_Color);
