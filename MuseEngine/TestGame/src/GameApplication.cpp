@@ -38,9 +38,9 @@ void GameApplication::OnStart()
 {
     m_Scene = &Muse::SystemManager::Get().GetSystem<Muse::SceneSystem>().NewScene();
 
-    m_VertexColorShader.reset(Muse::Shader::Create(Muse::s_VertexSrc, Muse::s_FragmentSrc));
-    m_FlatColorShader.reset(Muse::Shader::Create(Muse::s_FlatColorVertexSrc, Muse::s_FlatColorFragmentSrc));
-    m_TextureShader.reset(Muse::Shader::Create(Muse::s_TextureVertexSrc, Muse::s_TextureFragmentSrc));
+    m_VertexColorShader.reset(Muse::Shader::Create("assets/shaders/VertexColors.glsl"));
+    m_FlatColorShader.reset(Muse::Shader::Create("assets/shaders/FlatColor.glsl"));
+    m_TextureShader.reset(Muse::Shader::Create("assets/shaders/Texture.glsl"));
 
     m_CheckerboardTexture = Muse::Texture2D::Create("assets/textures/Checkerboard.png");
     m_RaymanTexture = Muse::Texture2D::Create("assets/textures/Rayman.png");

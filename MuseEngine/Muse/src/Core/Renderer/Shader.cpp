@@ -14,13 +14,31 @@ namespace Muse
     {
     }
 
-    Shader* Shader::Create(const std::string& a_VertexSrc, const std::string& a_FragmentSrc)
+    Shader* Shader::Create(const std::string& a_FilePath)
     {
         switch (Renderer::GetAPI())
         {
             case RendererAPI::API::OpenGL:
             {
-                return new OpenGLShader(a_VertexSrc, a_FragmentSrc);
+                return new OpenGLShader(a_FilePath);
+            }
+            default:
+            {
+                std::string message = "RenderAPI: " + static_cast<int>(Renderer::GetAPI());
+                message.append(" is not supported!");
+                ASSERT(false, message);
+                return nullptr;
+            }
+        }
+    }
+
+    Shader* Shader::Create(const std::string& a_Name, const std::string& a_VertexSrc, const std::string& a_FragmentSrc)
+    {
+        switch (Renderer::GetAPI())
+        {
+            case RendererAPI::API::OpenGL:
+            {
+                return new OpenGLShader(a_Name, a_VertexSrc, a_FragmentSrc);
             }
             default:
             {

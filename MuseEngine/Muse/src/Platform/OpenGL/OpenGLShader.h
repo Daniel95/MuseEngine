@@ -1,12 +1,16 @@
 ﻿#pragma once
 #include "Core/Renderer/Shader.h"
 
+// TODO: REMOVE!
+typedef unsigned int GLenum;
+
 namespace Muse 
 {
     class OpenGLShader : public Shader
     {
     public:
-        OpenGLShader(const std::string& a_VertexSrc, const std::string& a_FragmentSrc);
+        OpenGLShader(const std::string& a_FilePath);
+        OpenGLShader(const std::string& a_Name, const std::string& a_VertexSrc, const std::string& a_FragmentSrc);
         virtual ~OpenGLShader();
 
         virtual void Bind() const override;
@@ -22,7 +26,11 @@ namespace Muse
 
     private:
         uint32_t m_RendererID;
+        std::string m_Name;
 
+        std::string ReadFile(const std::string& a_Filepath) const;
+        std::unordered_map<GLenum, std::string> Preprocess(const std::string& a_Source) const;
+        void Compile(const std::unordered_map<GLenum, std::string>& a_ShaderSources);
     };
 
 }
