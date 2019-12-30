@@ -3,6 +3,7 @@
 #include "Core/Utilities/Log.h"
 
 #include <string>
+#include <memory>
 
 #define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
 
@@ -36,4 +37,3 @@ const std::string GAME_SCENE_PATH =			"../Assets/Game/Scenes/";
 
 typedef unsigned long long ullong;
 typedef unsigned int uint;
-

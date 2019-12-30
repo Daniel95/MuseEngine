@@ -9,7 +9,7 @@
 #include "Core/Gameplay/Component/CameraComponent.h"
 #include "Core/Input/Input.h"
 #include "Core/Input/KeyCodes.h"
-#include "Core/Gameplay/Component/MeshComponent.h"
+#include "Core/Gameplay/Component/RenderComponent.h"
 #include "PlayerComponent.h"
 #include "imgui/imgui.h"
 #include "glm/gtc/type_ptr.hpp"
@@ -37,8 +37,43 @@ void GameApplication::OnStart()
 {
     m_Scene = &Muse::SystemManager::Get().GetSystem<Muse::SceneSystem>().NewScene();
 
+    m_VertexColorShader.reset(Muse::Shader::Create(Muse::s_VertexSrc, Muse::s_FragmentSrc));
+    m_FlatColorShader.reset(Muse::Shader::Create(Muse::s_FlatColorVertexSrc, Muse::s_FlatColorFragmentSrc));
+    m_TextureShader.reset(Muse::Shader::Create(Muse::s_TextureVertexSrc, Muse::s_TextureFragmentSrc));
+
     /////////////////////////////////////////////////////////////////
-    //// Player Red Square ////////////////////////////////////////////////
+    //// Player Textured Square //////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////
+    {
+        float vertices[5 * 4] =
+        {
+            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+            0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
+        };
+        uint32_t indices[6] = { 0, 1, 2, 2, 3, 0 };
+
+        const Muse::BufferLayout layout =
+        {
+            { Muse::ShaderDataType::Float3, "a_Position" },
+            { Muse::ShaderDataType::Float2, "a_TexCoord" },
+        };
+
+        Muse::GameObject& gameObject = m_Scene->AddGameObject();
+        gameObject.AddComponent<PlayerComponent>();
+        Muse::RenderComponent& renderComponent = gameObject.AddComponent<Muse::RenderComponent>();
+
+        renderComponent.SetMesh(vertices,
+            5 * 4,
+            indices,
+            6,
+            layout);
+        renderComponent.SetShader(m_TextureShader);
+    }
+
+    /////////////////////////////////////////////////////////////////
+    //// Dynamic Color Square //////////////////////////////////////////
     /////////////////////////////////////////////////////////////////
     {
         float vertices[3 * 4] =
@@ -47,7 +82,6 @@ void GameApplication::OnStart()
             0.5f, -0.5f, 0.0f,
             0.5f, 0.5f, 0.0f,
             -0.5f, 0.5f, 0.0f,
-
         };
         uint32_t indices[6] = { 0, 1, 2, 2, 3, 0 };
 
@@ -57,13 +91,16 @@ void GameApplication::OnStart()
         };
 
         Muse::GameObject& gameObject = m_Scene->AddGameObject();
-        gameObject.AddComponent<PlayerComponent>();
-        gameObject.AddComponent<Muse::MeshComponent>().SetMesh(vertices,
+        Muse::RenderComponent& renderComponent = gameObject.AddComponent<Muse::RenderComponent>();
+
+        renderComponent.SetMesh(vertices,
             3 * 4,
             indices,
             6,
             layout);
-        gameObject.GetTransform()->SetPosition({ 0, 0, 0 });
+        renderComponent.SetShader(m_FlatColorShader);
+
+        gameObject.GetTransform()->SetPosition({ 1.1f, 0, 0 });
     }
 
     /////////////////////////////////////////////////////////////////
@@ -85,16 +122,19 @@ void GameApplication::OnStart()
         };
 
         Muse::GameObject& gameObject = m_Scene->AddGameObject();
-        gameObject.AddComponent<Muse::MeshComponent>().SetMesh(vertices, 
+        Muse::RenderComponent& renderComponent = gameObject.AddComponent<Muse::RenderComponent>();
+
+        renderComponent.SetMesh(vertices,
             3 * 7, 
             indices, 
             3, 
             layout);
+
+        renderComponent.SetShader(m_VertexColorShader);
+
+
         gameObject.GetTransform()->SetPosition({ -1, 0, 0 });
     }
-
-    m_VertexColorShader.reset(Muse::Shader::Create(Muse::s_VertexSrc, Muse::s_FragmentSrc));
-    m_FlatColorShader.reset(Muse::Shader::Create(Muse::s_FlatColorVertexSrc, Muse::s_FlatColorFragmentSrc));
 
 	//PushLayer(new Game());
 }
@@ -131,14 +171,15 @@ void GameApplication::OnRender()
 
     Muse::Renderer::BeginScene(*Muse::CameraComponent::GetMain());
 
+    m_FlatColorShader->Bind();
     std::dynamic_pointer_cast<Muse::OpenGLShader>(m_FlatColorShader)->UploadUniformFloat3("u_Color", m_FlatShaderColor);
 
     for (auto& gameObject : m_Scene->GetGameObjects())
     {
-        Muse::MeshComponent* meshComponent = gameObject->GetComponent<Muse::MeshComponent>();
+        Muse::RenderComponent* meshComponent = gameObject->GetComponent<Muse::RenderComponent>();
         if(meshComponent != nullptr)
         {
-            Muse::Renderer::Submit(m_FlatColorShader, meshComponent->GetVA(), gameObject->GetTransform()->GetModelMatrix());
+            Muse::Renderer::Submit(meshComponent->GetShader(), meshComponent->GetVA(), gameObject->GetTransform()->GetModelMatrix());
         }
     }
 

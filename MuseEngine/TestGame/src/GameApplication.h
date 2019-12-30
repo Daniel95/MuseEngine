@@ -38,10 +38,7 @@ protected:
 private:
     std::shared_ptr<Muse::Shader> m_VertexColorShader;
     std::shared_ptr<Muse::Shader> m_FlatColorShader;
-    std::shared_ptr<Muse::VertexBuffer> m_VB;
-    std::shared_ptr<Muse::IndexBuffer> m_IB;
-    std::shared_ptr<Muse::VertexArray> m_TriangleVA;
-    std::shared_ptr<Muse::VertexArray> m_SquareVA;
+    std::shared_ptr<Muse::Shader> m_TextureShader;
     Muse::Scene* m_Scene;
 
     glm::vec3 m_FlatShaderColor = { 0.8, 0.2, 0.4 };

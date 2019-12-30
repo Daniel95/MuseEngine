@@ -1303,8 +1303,8 @@
     <ClInclude Include="src\Core\Gameplay\Component\TransformComponent.h">
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Gameplay\Component\MeshComponent.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\Core\Gameplay\Component\RenderComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1401,7 +1401,7 @@
     <ClCompile Include="src\Core\Gameplay\Component\TransformComponent.cpp">
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Gameplay\Component\MeshComponent.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="src\Core\Gameplay\Component\RenderComponent.cpp" />
   </ItemGroup>
 </Project>

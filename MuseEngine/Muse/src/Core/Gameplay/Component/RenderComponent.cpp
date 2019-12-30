@@ -1,14 +1,15 @@
 ﻿#include "MusePCH.h"
-#include "MeshComponent.h"
+#include "RenderComponent.h"
 
 #include "Core/Renderer/Buffer/VertexBuffer.h"
 #include "Core/Renderer/Buffer/IndexBuffer.h"
 #include "Core/Renderer/VertexArray.h"
 #include "Core/Renderer/Buffer/BufferLayout.h"
+#include "Core/Renderer/Shader.h"
 
 namespace Muse
 {
-    void MeshComponent::SetMesh(float a_Vertices[], int a_VerticesCount, uint32_t a_Indices[], int a_IndicesCount, const BufferLayout& a_BufferLayout)
+    void RenderComponent::SetMesh(float a_Vertices[], int a_VerticesCount, uint32_t a_Indices[], int a_IndicesCount, const BufferLayout& a_BufferLayout)
     {
         m_VA.reset(Muse::VertexArray::Create());
 
@@ -23,11 +24,15 @@ namespace Muse
         m_VA->SetIndexBuffer(m_IB);
     }
 
-    void MeshComponent::OnEnable()
+    void RenderComponent::Update(float a_DeltaTime)
     {
     }
 
-    void MeshComponent::OnDisable()
+    void RenderComponent::OnEnable()
+    {
+    }
+
+    void RenderComponent::OnDisable()
     {
     }
 }
