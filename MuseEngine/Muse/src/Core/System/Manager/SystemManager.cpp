@@ -37,14 +37,6 @@ namespace Muse
         }
     }
 
-    void SystemManager::UpdateSystems(float a_DeltaTime)
-    {
-        for (auto itr = m_Systems.begin(); itr != m_Systems.end(); itr++)
-        {
-            itr->second->Update(a_DeltaTime);
-        }
-    }
-
     SystemManager& SystemManager::Get()
     {
         return Application::Get().GetSystemManager();

@@ -10,11 +10,9 @@
 #include "Core/Utilities/Log.h"
 #include "Core/Utilities/Defines.h"
 #include "Core/Event/ApplicationEvent.h"
-#include "Core/Timestep.h"
 #include "ImGui/ImGuiLayer.h"
 #include "GLFW/glfw3.h"
 #include "Renderer/Renderer.h"
-#include "glad/glad.h"
 
 namespace Muse
 {
@@ -67,7 +65,9 @@ namespace Muse
         while (m_Running)
         {
             Update();
-            FixedUpdate();
+            //FixedUpdate();
+            LateUpdate();
+            ImGuiRender();
             Render();
         }
     }
@@ -75,36 +75,49 @@ namespace Muse
     void Application::Update()
     {
         float time = static_cast<float>(glfwGetTime()); //Platform::GetTime
-        float deltaTime = time - m_LastFrameTime;
+        m_DeltaTime = time - m_LastFrameTime;
         m_LastFrameTime = time;
 
 
         for (Layer* layer : m_LayerStack)
         {
-            layer->OnUpdate(deltaTime);
+            layer->OnUpdate(m_DeltaTime);
         }
 
-        m_SystemManager->UpdateSystems(deltaTime);
-        OnUpdate(deltaTime);
+        m_UpdateEvent.Dispatch(m_DeltaTime);
+        OnUpdate(m_DeltaTime);
     }
 
     void Application::FixedUpdate()
     {
+        m_FixedUpdateEvent.Dispatch();
         OnFixedUpdate();
     }
 
-    void Application::Render()
+    void Application::LateUpdate()
+    {
+        m_LateUpdateEvent.Dispatch(m_DeltaTime);
+    }
+
+    void Application::ImGuiRender()
     {
         m_ImGuiLayer->Begin();
-        OnImGUIRender();
+
+        m_ImGuiRenderEvent.Dispatch();
+        OnImGuiRender();
         for (Layer* layer : m_LayerStack)
         {
             layer->OnImGuiRender();
         }
-        m_ImGuiLayer->End();
 
+        m_ImGuiLayer->End();
+    }
+
+    void Application::Render()
+    {
         m_Window->OnUpdate();
 
+        m_RenderEvent.Dispatch();
         OnRender();
     }
 

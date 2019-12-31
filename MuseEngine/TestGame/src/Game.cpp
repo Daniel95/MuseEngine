@@ -19,13 +19,11 @@ void Game::OnDetach()
 {
 }
 
-void Game::OnUpdate(Muse::Timestep ts)
+void Game::OnUpdate(float a_DeltaTime)
 {
 }
 
 void Game::OnImGuiRender()
 {
-    ImGui::Begin("Settings");
-    ImGui::Text("Hello World");
-    ImGui::End();
+
 }

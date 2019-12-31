@@ -1,8 +1,6 @@
 ﻿#pragma once
 
 #include "Core/Layer/Layer.h"
-#include "Core/Timestep.h"
-#include <memory>
 
 namespace Muse {
     class Scene;
@@ -17,7 +15,7 @@ public:
 	virtual void OnAttach() override;
 	virtual void OnDetach() override;
 
-	void OnUpdate(Muse::Timestep ts) override;
+	void OnUpdate(float a_DeltaTime) override;
 	virtual void OnImGuiRender() override;
 
 private:

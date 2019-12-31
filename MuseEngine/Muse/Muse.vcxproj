@@ -185,7 +185,6 @@
     <ClInclude Include="src\Core\System\Scene\Scene.h" />
     <ClInclude Include="src\Core\System\SceneSystem.h" />
     <ClInclude Include="src\Core\System\SoundSystem.h" />
-    <ClInclude Include="src\Core\Timestep.h" />
     <ClInclude Include="src\Core\Utilities\Defines.h" />
     <ClInclude Include="src\Core\Utilities\Log.h" />
     <ClInclude Include="src\Core\Utilities\Utilities.h" />

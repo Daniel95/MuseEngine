@@ -15,7 +15,6 @@ namespace Muse
 
         std::vector<ISystem*> GetAllSystems(); // Do not use every frame
         void InitializeSystems();
-        void UpdateSystems(float a_DeltaTime);
 
         template<typename T, typename... Targs>
         T& CreateSystem(Targs&& ... a_Args);

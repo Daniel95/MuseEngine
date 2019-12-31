@@ -201,9 +201,6 @@
     <ClInclude Include="src\Core\System\SoundSystem.h">
       <Filter>src\Core\System</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Timestep.h">
-      <Filter>src\Core</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\Utilities\Defines.h">
       <Filter>src\Core\Utilities</Filter>
     </ClInclude>

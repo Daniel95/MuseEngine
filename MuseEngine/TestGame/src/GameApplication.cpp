@@ -23,7 +23,7 @@ public:
 		: Layer("Example")
 	{ }
 
-	void OnUpdate(Muse::Timestep ts) override
+	void OnUpdate(float a_DeltaTime) override
 	{
 		//LOG_INFO("ExampleLayer::Update");
 	}
@@ -40,7 +40,7 @@ void GameApplication::OnStart()
 
     auto vertexColorShader = m_ShaderLibrary.Load("assets/shaders/VertexColor.glsl");
     auto flatColorShader = m_ShaderLibrary.Load("assets/shaders/FlatColor.glsl");
-    auto textureShader = m_ShaderLibrary.Load("assets/shaders/Textfure.glsl");
+    auto textureShader = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
 
     m_CheckerboardTexture = Muse::Texture2D::Create("assets/textures/Checkerboard.png");
     m_RaymanTexture = Muse::Texture2D::Create("assets/textures/Rayman.png");
@@ -205,6 +205,7 @@ void GameApplication::OnUpdate(float a_DeltaTime)
 
 void GameApplication::OnFixedUpdate()
 {
+    
 }
 
 void GameApplication::OnRender()
@@ -239,7 +240,7 @@ void GameApplication::OnRender()
 	Muse::Renderer::EndScene();
 }
 
-void GameApplication::OnImGUIRender()
+void GameApplication::OnImGuiRender()
 {
     Muse::GameObject* playerGameObject = m_Scene->FindGameObjectOfType<PlayerComponent>();
 

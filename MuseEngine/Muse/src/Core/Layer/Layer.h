@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Core/Timestep.h"
-
 #include <string>
 
 namespace Muse
@@ -14,7 +12,7 @@ namespace Muse
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate(Timestep a_Timestep) {}
+		virtual void OnUpdate(float a_DeltaTime) {}
 		virtual void OnImGuiRender() {}
 
 		const std::string& GetName() const { return debugName; }

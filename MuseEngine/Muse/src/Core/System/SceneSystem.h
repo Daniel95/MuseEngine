@@ -19,9 +19,8 @@ namespace Muse
         ~SceneSystem();
 
         void Initialize() override;
-        void Update(float a_DeltaTime) override;
-        void FixedUpdate(float a_TimeStep);
         void Terminate() override;
+        void OnUpdate(float a_DeltaTime);
 
         Scene& NewScene();
         void LoadScene(const std::string& a_SceneName);

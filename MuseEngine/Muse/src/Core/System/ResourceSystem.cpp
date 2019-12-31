@@ -10,7 +10,6 @@
 
 namespace Muse
 {
-
     ResourceSystem::ResourceSystem(SystemManager& a_SystemManager)
         : ISystem(a_SystemManager)
     {
@@ -22,11 +21,11 @@ namespace Muse
         size_t len;
         _dupenv_s(&pValue, &len, "APPDATA");
 
-        std::string RaymanPCSavePath = std::string(pValue) + std::string("\\RayMan");
+        std::string savePath = std::string(pValue) + std::string("\\Muse");
 
-        if (!std::experimental::filesystem::exists(RaymanPCSavePath))
+        if (!std::experimental::filesystem::exists(savePath))
         {
-            std::experimental::filesystem::create_directory(RaymanPCSavePath);
+            std::experimental::filesystem::create_directory(savePath);
         }
     }
 
@@ -41,16 +40,6 @@ namespace Muse
 
         return resources;
     }
-
-    void ResourceSystem::Update(float a_DeltaTime)
-    {
-        a_DeltaTime;
-    }
-
-	void ResourceSystem::LateUpdate()
-	{
-
-	}
 
 	void ResourceSystem::Terminate()
     {

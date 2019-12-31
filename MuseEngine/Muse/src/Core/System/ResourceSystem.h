@@ -20,7 +20,7 @@ namespace Muse
         ~ResourceSystem() = default;
 
         template<typename T, typename... Args>
-        T* LoadResource(const std::string & a_ResourcePath, Args&& ... args);
+        T* LoadResource(const std::string & a_ResourcePath, Args&& ... a_Args);
         template<typename T>
         std::vector<T*> GetResourcesOfType() const;
         template<typename T>
@@ -28,8 +28,6 @@ namespace Muse
         std::vector<const Resource*> GetAllResources() const;
 
         void Initialize() override;
-        void Update(float a_DeltaTime) override;
-		void LateUpdate();
         void Terminate() override;
 
     protected:
@@ -47,7 +45,7 @@ namespace Muse
     };
 
     template<typename T>
-    inline std::vector<T*> ResourceSystem::GetResourcesOfType() const
+    std::vector<T*> ResourceSystem::GetResourcesOfType() const
     {
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Component");
 
@@ -67,7 +65,7 @@ namespace Muse
     }
 
     template<typename T, typename... Args>
-    T* ResourceSystem::LoadResource(const std::string & a_ResourcePath, Args&&... args)
+    T* ResourceSystem::LoadResource(const std::string & a_ResourcePath, Args&&... a_Args)
     {
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Resource");
 
@@ -76,7 +74,7 @@ namespace Muse
         T* resource = GetLoadedResource<T>(id);
         if (resource == nullptr)
         {
-            resource = new T(id, a_ResourcePath, args...);
+            resource = new T(id, a_ResourcePath, a_Args...);
             m_Resources.insert(std::make_pair(id, resource));
             m_RefCounters.insert(std::make_pair(id, 1));
         }

@@ -17,6 +17,4 @@ namespace Muse
         static std::shared_ptr<Shader> Create(const std::string& a_FilePath);
         static std::shared_ptr<Shader> Create(const std::string& a_Name, const std::string& a_VertexSrc, const std::string& a_FragmentSrc);
     };
-
-
 }

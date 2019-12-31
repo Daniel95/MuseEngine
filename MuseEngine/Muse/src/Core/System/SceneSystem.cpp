@@ -10,6 +10,7 @@
 #include "Core/System/Manager/SystemManager.h"
 #include "Core/System/Scene/Scene.h"
 #include "Core/Utilities/Log.h"
+#include "Core/Window.h"
 
 namespace Muse 
 {
@@ -17,10 +18,14 @@ namespace Muse
         : ISystem(a_SystemManager)
     {
         m_Application = &a_Application;
+
+        Application::Get().m_UpdateEvent.Subscribe(this, std::bind(&SceneSystem::OnUpdate, this, std::placeholders::_1));
     }
 
     SceneSystem::~SceneSystem()
     {
+        Application::Get().m_UpdateEvent.Unsubscribe(this);
+
         if (m_ActiveScene != nullptr)
         {
             delete m_ActiveScene;
@@ -31,7 +36,7 @@ namespace Muse
     {
     }
 
-    void SceneSystem::Update(float a_DeltaTime)
+    void SceneSystem::OnUpdate(float a_DeltaTime)
     {
         if (m_SceneNameToLoad != "")
         {
@@ -42,17 +47,6 @@ namespace Muse
         if (m_ActiveScene != nullptr)
         {
             m_ActiveScene->Update(a_DeltaTime);
-        }
-    }
-
-    void SceneSystem::FixedUpdate(float a_TimeStep)
-    {
-        if (m_SceneNameToLoad == "")
-        {
-            if (m_ActiveScene != nullptr)
-            {
-                m_ActiveScene->FixedUpdate(a_TimeStep);
-            }
         }
     }
 

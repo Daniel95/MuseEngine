@@ -9,9 +9,15 @@ namespace Muse
 
 	class WindowCloseEvent : public Event<> { };
 
-	class AppTickEvent : public Event<> { };
+	//Params: a_DeltaTime.
+	class UpdateEvent : public Event<float> { };
 
-	class AppUpdateEvent : public Event<> { };
+	class FixedUpdateEvent : public Event<> {};
 
-	class AppRenderEvent : public Event<> { };
+	//Params: a_DeltaTime.
+	class LateUpdateEvent : public Event<float> { };
+
+	class ImGuiRenderEvent : public Event<> { };
+
+	class RenderEvent : public Event<> { };
 }

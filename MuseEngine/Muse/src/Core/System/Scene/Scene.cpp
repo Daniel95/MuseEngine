@@ -164,7 +164,7 @@ namespace Muse
         if (!std::experimental::filesystem::exists(fullPath))
         {
             LOG_ENGINE_ERROR("Scene does not exists! {0}", fullPath);
-            _ASSERT(false, "Scene does not exists!");
+            ASSERT_ENGINE(false, "Scene does not exists!");
         }
     #endif
 
@@ -191,17 +191,14 @@ namespace Muse
 
         CreateEditorCamera();
 
-        if (m_States.size() > m_MaxStateSaves + 1)
-        {
-            LOG_ENGINE_ERROR("m_States size is over the m_UndoCount");
-            _ASSERT(false);
-        }
-        else if (m_States.size() > m_MaxStateSaves)
+        ASSERT_ENGINE(m_States.size() <= m_MaxStateSaves + 1, "m_States size is over the m_UndoCount");
+
+        if (m_States.size() > m_MaxStateSaves)
         {
             m_States.pop_front();
         }
 
-        m_CurrentStateIndex = (int) m_States.size();
+        m_CurrentStateIndex = static_cast<int>(m_States.size());
 
         LOG_ENGINE_INFO("m_CurrentStateIndex: {0}", m_CurrentStateIndex);
     }

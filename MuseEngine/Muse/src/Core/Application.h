@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Layer/LayerStack.h"
+#include "Event/ApplicationEvent.h"
+
 #include <memory>
 
 namespace Muse
@@ -22,21 +24,30 @@ namespace Muse
 
         Window& GetWindow() const { return *m_Window; }
         SystemManager& GetSystemManager() const { return *m_SystemManager; }
+        float GetDeltaTime() const { return m_DeltaTime; }
 
         void Start();
         void Update();
         void FixedUpdate();
+        void LateUpdate();
+        void ImGuiRender();
         void Render();
 
         void PushLayer(Layer* a_Layer);
         void PushOverlay(Layer* a_Layer);
+
+        UpdateEvent m_UpdateEvent;
+        FixedUpdateEvent m_FixedUpdateEvent;
+        LateUpdateEvent m_LateUpdateEvent;
+        ImGuiRenderEvent m_ImGuiRenderEvent;
+        RenderEvent m_RenderEvent;
 
     protected:
         virtual void OnStart() = 0;
         virtual void OnUpdate(float a_DeltaTime) = 0;
         virtual void OnFixedUpdate() = 0;
         virtual void OnRender() = 0;
-        virtual void OnImGUIRender() = 0;
+        virtual void OnImGuiRender() = 0;
 
         virtual void OnWindowCloseEvent();
         virtual void OnWindowResizeEvent(int a_Width, int a_Height);
@@ -51,6 +62,7 @@ namespace Muse
         static Application* s_Instance;
         bool m_Running = true;
         std::shared_ptr<Window> m_Window;
+        float m_DeltaTime = 0;
 
         ImGuiLayer* m_ImGuiLayer;
         SystemManager* m_SystemManager;
