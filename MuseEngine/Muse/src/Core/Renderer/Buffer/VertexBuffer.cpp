@@ -12,13 +12,13 @@
 
 namespace Muse
 {
-    VertexBuffer* VertexBuffer::Create(float* a_Vertices, uint32_t a_Size)
+    std::shared_ptr<VertexBuffer> VertexBuffer::Create(float* a_Vertices, uint32_t a_Size)
     {
         switch (Renderer::GetAPI())
         {
             case RendererAPI::API::OpenGL:
             {
-                return new OpenGLVertexBuffer(a_Vertices, a_Size);
+                return std::make_shared<OpenGLVertexBuffer>(a_Vertices, a_Size);
             }
             default:
             {

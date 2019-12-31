@@ -14,13 +14,13 @@ namespace Muse
     {
     }
 
-    Shader* Shader::Create(const std::string& a_FilePath)
+    std::shared_ptr<Shader> Shader::Create(const std::string& a_FilePath)
     {
         switch (Renderer::GetAPI())
         {
             case RendererAPI::API::OpenGL:
             {
-                return new OpenGLShader(a_FilePath);
+                return std::make_shared<OpenGLShader>(a_FilePath);
             }
             default:
             {
@@ -32,13 +32,13 @@ namespace Muse
         }
     }
 
-    Shader* Shader::Create(const std::string& a_Name, const std::string& a_VertexSrc, const std::string& a_FragmentSrc)
+    std::shared_ptr<Shader> Shader::Create(const std::string& a_Name, const std::string& a_VertexSrc, const std::string& a_FragmentSrc)
     {
         switch (Renderer::GetAPI())
         {
             case RendererAPI::API::OpenGL:
             {
-                return new OpenGLShader(a_Name, a_VertexSrc, a_FragmentSrc);
+                return std::make_shared<OpenGLShader>(a_Name, a_VertexSrc, a_FragmentSrc);
             }
             default:
             {
@@ -49,4 +49,5 @@ namespace Muse
             }
         }
     }
+
 }

@@ -36,7 +36,7 @@ namespace Muse
         void FixedUpdate(float a_TimeStep);
         const std::vector<GameObject*> & GetGameObjects() const { return m_GameObjectsToUpdate; }
         void SetGameObjects(const std::vector<GameObject*> & a_GameObjects) { m_GameObjectsToUpdate = a_GameObjects; }
-        void Deserialize(const std::string& a_Path);
+        void Deserialize(const std::string& a_Json);
         std::string Serialize() const;
         void Save(const std::string& a_Path, const std::string& a_Name);
 		void Load(const std::string& a_Path, const std::string& a_Name);

@@ -12,13 +12,13 @@
 
 namespace Muse
 {
-    IndexBuffer* IndexBuffer::Create(uint32_t* a_Indices, uint32_t a_Count)
+    std::shared_ptr<IndexBuffer> IndexBuffer::Create(uint32_t* a_Indices, uint32_t a_Count)
     {
         switch (Renderer::GetAPI())
         {
             case RendererAPI::API::OpenGL:
             {
-                return new OpenGLIndexBuffer(a_Indices, a_Count);
+                return std::make_shared<OpenGLIndexBuffer>(a_Indices, a_Count);
             }
 
             default:

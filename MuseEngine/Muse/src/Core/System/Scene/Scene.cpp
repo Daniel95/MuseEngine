@@ -115,11 +115,11 @@ namespace Muse
         }
     }
 
-    void Scene::Deserialize(const std::string& a_json)
+    void Scene::Deserialize(const std::string& a_Json)
     {
         Unload();
 
-        io::from_json(a_json, *this);
+        io::from_json(a_Json, *this);
 
         for (GameObject* gameObject : m_GameObjectsToUpdate)
         {
@@ -160,11 +160,13 @@ namespace Muse
     {
         const std::string fullPath = a_Path + a_Name + ".txt";
 
+    #ifdef MUSE_DEBUG 
         if (!std::experimental::filesystem::exists(fullPath))
         {
             LOG_ENGINE_ERROR("Scene does not exists! {0}", fullPath);
-            _ASSERT(false);
+            _ASSERT(false, "Scene does not exists!");
         }
+    #endif
 
         std::ifstream stream(fullPath);
         std::string sceneJSON((std::istreambuf_iterator<char>(stream)),

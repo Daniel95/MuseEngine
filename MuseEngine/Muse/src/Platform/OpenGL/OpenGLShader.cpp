@@ -32,10 +32,11 @@ namespace Muse
 		Compile(shaderSources);
 
 		// Extract name from filepath
+		// assets/shaders/FlatColor.glsl (between the last / and last .)
 		auto lastSlash = a_Filepath.find_last_of("/\\");
 		lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
-		auto lastDot = a_Filepath.rfind('.');
-		auto count = lastDot == std::string::npos ? a_Filepath.size() - lastSlash : lastDot - lastSlash;
+        const auto lastDot = a_Filepath.rfind('.');
+        const auto count = lastDot == std::string::npos ? a_Filepath.size() - lastSlash : lastDot - lastSlash;
 		m_Name = a_Filepath.substr(lastSlash, count);
 	}
 
@@ -63,7 +64,7 @@ namespace Muse
 		glUseProgram(0);
 	}
 
-	///Improvement: cache the uniform location in a map, id is a_Name.
+    ///Improvement: cache the uniform location in a map, id is a_Name.
     void OpenGLShader::UploadUniformInt(const std::string& a_Name, int a_Int) const
     {
 		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
@@ -160,7 +161,16 @@ namespace Muse
 			ASSERT_ENGINE(nextLinePos != std::string::npos, "Syntax error");
 			pos = a_Source.find(typeToken, nextLinePos); //Start of next shader type declaration line
 
-			shaderSources[ShaderTypeFromString(type)] = (pos == std::string::npos) ? a_Source.substr(nextLinePos) : a_Source.substr(nextLinePos, pos - nextLinePos);
+			if(pos == std::string::npos)
+			{
+				shaderSources[ShaderTypeFromString(type)] = a_Source.substr(nextLinePos);
+			}
+		    else
+			{
+				shaderSources[ShaderTypeFromString(type)] = a_Source.substr(nextLinePos, pos - nextLinePos);
+			}
+
+			//shaderSources[ShaderTypeFromString(type)] = (pos == std::string::npos) ? a_Source.substr(nextLinePos) : a_Source.substr(nextLinePos, pos - nextLinePos);
 		}
 
 		return shaderSources;

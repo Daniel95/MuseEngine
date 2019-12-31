@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include <memory>
+
 namespace Muse
 {
     class IndexBuffer
@@ -12,6 +14,6 @@ namespace Muse
 
         virtual uint32_t GetCount() const = 0;
 
-        static IndexBuffer* Create(uint32_t* a_Indices, uint32_t a_Size);
+        static std::shared_ptr<IndexBuffer> Create(uint32_t* a_Indices, uint32_t a_Count);
     };
 }

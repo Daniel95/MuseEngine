@@ -16,6 +16,8 @@ namespace Muse
         virtual void Bind() const override;
         virtual void Unbind() const override;
 
+        const std::string& GetName() override { return m_Name; }
+
         void UploadUniformInt(const std::string& a_Name, int a_Int) const;
         void UploadUniformFloat(const std::string& a_Name, float a_Float) const;
         void UploadUniformFloat2(const std::string& a_Name, const glm::vec2& a_Float2) const;
@@ -32,5 +34,4 @@ namespace Muse
         std::unordered_map<GLenum, std::string> Preprocess(const std::string& a_Source) const;
         void Compile(const std::unordered_map<GLenum, std::string>& a_ShaderSources);
     };
-
 }

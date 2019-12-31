@@ -2,6 +2,7 @@
 
 #include "Core/Application.h"
 #include "glm/vec3.hpp"
+#include "Core/Renderer/ShaderLibrary.h"
 
 namespace Muse
 {
@@ -37,11 +38,9 @@ protected:
     virtual void OnMouseMovedEvent(float a_X, float a_Y) override;
 
 private:
-    std::shared_ptr<Muse::Shader> m_VertexColorShader;
-    std::shared_ptr<Muse::Shader> m_FlatColorShader;
-    std::shared_ptr<Muse::Shader> m_TextureShader;
     std::shared_ptr<Muse::Texture2D> m_CheckerboardTexture, m_RaymanTexture;
     Muse::Scene* m_Scene;
+    Muse::ShaderLibrary m_ShaderLibrary;
 
     glm::vec3 m_FlatShaderColor = { 0.8, 0.2, 0.4 };
 

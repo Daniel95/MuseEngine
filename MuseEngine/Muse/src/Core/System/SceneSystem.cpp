@@ -95,11 +95,11 @@ namespace Muse
     {
         if (m_ActiveScene != nullptr)
         {
-            std::string oldScenePath = GAME_SCENE_PATH + m_ActiveScene->GetName() + ".txt";
+            const std::string oldScenePath = GAME_SCENE_PATH + m_ActiveScene->GetName() + ".txt";
             m_SystemManager.GetSystem<ResourceSystem>().UnloadResource<Scene>(oldScenePath);
         }
 
-        std::string newScenePath = GAME_SCENE_PATH + a_SceneName + ".txt";
+        const std::string newScenePath = GAME_SCENE_PATH + a_SceneName + ".txt";
         m_ActiveScene = m_SystemManager.GetSystem<ResourceSystem>().LoadResource<Scene>(newScenePath);
         m_ActiveScene->Load(GAME_SCENE_PATH, a_SceneName);
     }

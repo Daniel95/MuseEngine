@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 namespace Muse
 {
     class BufferLayout;
@@ -15,6 +17,6 @@ namespace Muse
         virtual void Bind() const = 0;
         virtual void Unbind() const = 0;
 
-        static VertexBuffer* Create(float* a_Vertices, uint32_t a_Size);
+        static std::shared_ptr<VertexBuffer> Create(float* a_Vertices, uint32_t a_Size);
     };
 }
