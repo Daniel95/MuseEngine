@@ -15,6 +15,7 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "Platform/OpenGL/OpenGLShader.h"
 #include "Core/Renderer/Texture.h"
+#include "Core/System/ResourceSystem.h"
 
 class ExampleLayer : public Muse::Layer
 {
@@ -36,11 +37,11 @@ Muse::Application* Muse::CreateApplication()
 
 void GameApplication::OnStart()
 {
-    m_Scene = &Muse::SystemManager::Get().GetSystem<Muse::SceneSystem>().NewScene();
+    m_Scene = Muse::SystemManager::Get().GetSystem<Muse::SceneSystem>().NewScene();
 
-    auto vertexColorShader = m_ShaderLibrary.Load("assets/shaders/VertexColor.glsl");
-    auto flatColorShader = m_ShaderLibrary.Load("assets/shaders/FlatColor.glsl");
-    auto textureShader = m_ShaderLibrary.Load("assets/shaders/Texture.glsl");
+    std::shared_ptr<Muse::Shader> vertexColorShader = GetSystemManager().GetSystem<Muse::ResourceSystem>().Load<Muse::Shader>("assets/shaders/VertexColor.glsl");
+    std::shared_ptr<Muse::Shader> flatColorShader = GetSystemManager().GetSystem<Muse::ResourceSystem>().Load<Muse::Shader>("assets/shaders/FlatColor.glsl");
+    std::shared_ptr<Muse::Shader> textureShader = GetSystemManager().GetSystem<Muse::ResourceSystem>().Load<Muse::Shader>("assets/shaders/Texture.glsl");
 
     m_CheckerboardTexture = Muse::Texture2D::Create("assets/textures/Checkerboard.png");
     m_RaymanTexture = Muse::Texture2D::Create("assets/textures/Rayman.png");
@@ -217,7 +218,10 @@ void GameApplication::OnRender()
 
     Muse::Renderer::BeginScene(*Muse::CameraComponent::GetMain());
 
-    auto flatColorShader =  m_ShaderLibrary.Get("FlatColor");
+    std::shared_ptr<Muse::Shader> flatColorShader = GetSystemManager().GetSystem<Muse::ResourceSystem>().Load<Muse::Shader>("assets/shaders/FlatColor.glsl");
+
+    //auto flatColorShader = m_SystemManager->GetSystem<Muse::ResourceSystem>().Load<Muse::Shader>();
+    //auto flatColorShader =  m_ShaderLibrary.Get("FlatColor");
 
     flatColorShader->Bind();
     std::dynamic_pointer_cast<Muse::OpenGLShader>(flatColorShader)->UploadUniformFloat3("u_Color", m_FlatShaderColor);

@@ -25,11 +25,6 @@ namespace Muse
     SceneSystem::~SceneSystem()
     {
         Application::Get().m_UpdateEvent.Unsubscribe(this);
-
-        if (m_ActiveScene != nullptr)
-        {
-            delete m_ActiveScene;
-        }
     }
 
     void SceneSystem::Initialize()
@@ -54,18 +49,18 @@ namespace Muse
     {
     }
 
-    Scene& SceneSystem::NewScene()
+    std::shared_ptr<Scene> SceneSystem::NewScene()
     {
         if (m_ActiveScene != nullptr)
         {
-            std::string oldScenePath = GAME_SCENE_PATH + m_ActiveScene->GetName() + ".txt";
+            const std::string oldScenePath = GAME_SCENE_PATH + m_ActiveScene->GetName() + ".txt";
             m_SystemManager.GetSystem<ResourceSystem>().UnloadResource<Scene>(oldScenePath);
         }
 
-        std::string newScenePath = GAME_SCENE_PATH + "NewScene.txt";
-        m_ActiveScene = m_SystemManager.GetSystem<ResourceSystem>().LoadResource<Scene>(newScenePath);
+        const std::string newScenePath = GAME_SCENE_PATH + "NewScene.txt";
+        m_ActiveScene = m_SystemManager.GetSystem<ResourceSystem>().Load<Scene>(newScenePath);
 
-        return *m_ActiveScene;
+        return m_ActiveScene;
     }
 
     void SceneSystem::LoadScene(const std::string& a_SceneName)
@@ -80,11 +75,6 @@ namespace Muse
         m_SceneNameToLoad = m_ActiveScene->GetName();
     }
 
-    Scene* SceneSystem::GetActiveScene()
-    {
-        return m_ActiveScene;
-    }
-
     void SceneSystem::LoadSceneImmediate(const std::string& a_SceneName)
     {
         if (m_ActiveScene != nullptr)
@@ -94,7 +84,7 @@ namespace Muse
         }
 
         const std::string newScenePath = GAME_SCENE_PATH + a_SceneName + ".txt";
-        m_ActiveScene = m_SystemManager.GetSystem<ResourceSystem>().LoadResource<Scene>(newScenePath);
-        m_ActiveScene->Load(GAME_SCENE_PATH, a_SceneName);
+        m_ActiveScene = m_SystemManager.GetSystem<ResourceSystem>().Load<Scene>(newScenePath);
+        m_ActiveScene->Load(newScenePath);
     }
 }

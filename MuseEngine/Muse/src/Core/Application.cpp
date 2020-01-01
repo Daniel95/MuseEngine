@@ -74,7 +74,7 @@ namespace Muse
 
     void Application::Update()
     {
-        float time = static_cast<float>(glfwGetTime()); //Platform::GetTime
+        float time = static_cast<float>(glfwGetTime()); //Replace with: Platform::GetTime
         m_DeltaTime = time - m_LastFrameTime;
         m_LastFrameTime = time;
 

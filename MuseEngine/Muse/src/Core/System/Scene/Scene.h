@@ -24,7 +24,7 @@ namespace Muse
         RTTR_ENABLE(Resource);
 
 	public:
-		Scene(ullong a_ID, const std::string& a_Path);
+		Scene();
         ~Scene();
 
         void DestroyAllGameObjects();
@@ -38,8 +38,9 @@ namespace Muse
         void SetGameObjects(const std::vector<GameObject*> & a_GameObjects) { m_GameObjectsToUpdate = a_GameObjects; }
         void Deserialize(const std::string& a_Json);
         std::string Serialize() const;
-        void Save(const std::string& a_Path, const std::string& a_Name);
-		void Load(const std::string& a_Path, const std::string& a_Name);
+        void Save();
+        void Save(const std::string& a_Path);
+		void Load(const std::string& a_Path);
         void SaveState();
         void DestroyGameObjectImmediate(GameObject* a_GameObject);
         bool CanUndo() const { return m_States.size() > 0 && m_CurrentStateIndex > 0; }

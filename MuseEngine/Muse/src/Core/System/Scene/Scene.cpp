@@ -15,13 +15,8 @@
 
 namespace Muse
 {
-    Scene::Scene(ullong a_ID, const std::string& a_Path)
-        : Resource(a_ID, a_Path)
+    Scene::Scene()
     {
-        m_Name = a_Path;
-        Replace(m_Name, GAME_SCENE_PATH, "");
-        Replace(m_Name, ".txt", "");
-
         CreateEditorCamera();
     }
 
@@ -139,10 +134,14 @@ namespace Muse
         return io::to_json(*this);
     }
 
-    void Scene::Save(const std::string& a_Path, const std::string& a_Name)
+    void Scene::Save()
     {
-        const std::string fullPath = a_Path + a_Name + ".txt";
-        std::experimental::filesystem::path path{ fullPath }; //creates TestingFolder object on C:
+        Save(m_Path);
+    }
+
+    void Scene::Save(const std::string& a_Path)
+    {
+        std::experimental::filesystem::path path{ a_Path }; //creates TestingFolder object on C:
         std::experimental::filesystem::create_directories(path.parent_path()); //add directories based on the object path (without this line it will not work)
 
         DestroyEditorCamera();
@@ -156,19 +155,17 @@ namespace Muse
         ofs.close();
     }
 
-    void Scene::Load(const std::string& a_Path, const std::string& a_Name)
+    void Scene::Load(const std::string& a_Path)
     {
-        const std::string fullPath = a_Path + a_Name + ".txt";
-
     #ifdef MUSE_DEBUG 
-        if (!std::experimental::filesystem::exists(fullPath))
+        if (!std::experimental::filesystem::exists(a_Path))
         {
-            LOG_ENGINE_ERROR("Scene does not exists! {0}", fullPath);
+            LOG_ENGINE_ERROR("Scene does not exists! {0}", a_Path);
             ASSERT_ENGINE(false, "Scene does not exists!");
         }
     #endif
 
-        std::ifstream stream(fullPath);
+        std::ifstream stream(a_Path);
         std::string sceneJSON((std::istreambuf_iterator<char>(stream)),
                               std::istreambuf_iterator<char>());
 
@@ -276,7 +273,7 @@ namespace Muse
     RTTR_REGISTRATION
     {
         rttr::registration::class_<Scene>("Scene")
-            .constructor<ullong, const std::string&>()
+            .constructor<>()
             (
                 rttr::policy::ctor::as_raw_ptr
             )

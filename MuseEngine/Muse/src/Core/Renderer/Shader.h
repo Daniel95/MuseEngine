@@ -1,10 +1,11 @@
 #pragma once
 
 #include <string>
+#include "Core/System/Resource/Resource.h"
 
 namespace Muse
 {
-    class Shader
+    class Shader : public Resource
     {
     public:
         virtual ~Shader() = default;
@@ -16,5 +17,7 @@ namespace Muse
 
         static std::shared_ptr<Shader> Create(const std::string& a_FilePath);
         static std::shared_ptr<Shader> Create(const std::string& a_Name, const std::string& a_VertexSrc, const std::string& a_FragmentSrc);
+
+
     };
 }

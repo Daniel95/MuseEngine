@@ -3,9 +3,10 @@
 #include "Core/System/Manager/ISystem.h"
 #include "Core/System/Resource/Resource.h"
 #include "Core/Utilities/Defines.h"
+#include "Core/Renderer/Shader.h"
+#include "Core/System/Scene/Scene.h"
 
 #include <unordered_map>
-#include <cassert>
 
 namespace Muse
 {
@@ -20,22 +21,29 @@ namespace Muse
         ~ResourceSystem() = default;
 
         template<typename T, typename... Args>
-        T* LoadResource(const std::string & a_ResourcePath, Args&& ... a_Args);
+        std::shared_ptr<T> Load(const std::string & a_ResourcePath, Args&& ... a_Args);
         template<typename T>
-        std::vector<T*> GetResourcesOfType() const;
+        std::vector<std::shared_ptr<T>> GetResourcesOfType() const;
         template<typename T>
         void UnloadResource(const std::string & a_ResourcePath);
-        std::vector<const Resource*> GetAllResources() const;
+        std::vector<std::shared_ptr<Resource>> GetAllResources() const;
 
         void Initialize() override;
         void Terminate() override;
 
     protected:
         template<typename T>
-        T* GetLoadedResource(ullong id);
+        std::shared_ptr<T> CreateResource(const std::string& a_ResourcePath);
+        template<>
+        std::shared_ptr<Shader> CreateResource<Shader>(const std::string& a_ResourcePath);
+        template<>
+        std::shared_ptr<Scene> CreateResource<Scene>(const std::string& a_ResourcePath);
+
+        template<typename T>
+        std::shared_ptr<T> GetLoadedResource(ullong a_Id);
 
         /// A map of resources
-        std::unordered_map<ullong, Resource*> m_Resources;
+        std::unordered_map<ullong, std::shared_ptr<Resource>> m_Resources;
 
         /// A map of reference counters
         std::unordered_map<ullong, uint> m_RefCounters;
@@ -45,11 +53,11 @@ namespace Muse
     };
 
     template<typename T>
-    std::vector<T*> ResourceSystem::GetResourcesOfType() const
+    std::vector<std::shared_ptr<T>> ResourceSystem::GetResourcesOfType() const
     {
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Component");
 
-        std::vector<T*> resources;
+        std::vector<std::shared_ptr<T>> resources;
 
         for (auto const& x : m_Resources)
         {
@@ -65,16 +73,19 @@ namespace Muse
     }
 
     template<typename T, typename... Args>
-    T* ResourceSystem::LoadResource(const std::string & a_ResourcePath, Args&&... a_Args)
+    std::shared_ptr<T> ResourceSystem::Load(const std::string & a_ResourcePath, Args&&... a_Args)
     {
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Resource");
 
-        ullong id = T::CalculateResourceID(a_ResourcePath);
+        ullong id = T::CalculateResourceId(a_ResourcePath);
 
-        T* resource = GetLoadedResource<T>(id);
+        std::shared_ptr<T> resource = GetLoadedResource<T>(id);
         if (resource == nullptr)
         {
-            resource = new T(id, a_ResourcePath, a_Args...);
+            resource = CreateResource<T>(a_ResourcePath);
+
+            std::dynamic_pointer_cast<Resource>(resource)->SetPath(a_ResourcePath);
+
             m_Resources.insert(std::make_pair(id, resource));
             m_RefCounters.insert(std::make_pair(id, 1));
         }
@@ -83,17 +94,17 @@ namespace Muse
     }
 
     template <typename T>
-    T* ResourceSystem::GetLoadedResource(ullong id)
+    std::shared_ptr<T> ResourceSystem::GetLoadedResource(ullong a_Id)
     {
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Resource");
 
-        auto it = m_Resources.find(id);
+        auto it = m_Resources.find(a_Id);
 
         // Check cache
         if (it != m_Resources.end())
         {
-            ++m_RefCounters[id];
-            return dynamic_cast<T*>(it->second);
+            ++m_RefCounters[a_Id];
+            return std::dynamic_pointer_cast<T>(it->second);
         }
 
         return nullptr;
@@ -104,15 +115,32 @@ namespace Muse
     {
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Component");
 
-        ullong id = T::CalculateResourceID(a_ResourcePath);
+        ullong id = T::CalculateResourceId(a_ResourcePath);
 
-        _ASSERT(m_Resources.find(id) != m_Resources.end());
-
-        T* resource = GetLoadedResource<T>(id);
+        ASSERT_ENGINE(m_Resources.find(id) != m_Resources.end(), "Resource does not exists!");
 
         m_Resources.erase(id);
         m_RefCounters.erase(id);
+    }
 
-        delete resource;
+    template <typename T>
+    std::shared_ptr<T> ResourceSystem::CreateResource(const std::string& a_ResourcePath)
+    {
+        static_assert(std::is_abstract<T>(), "Cannot create this abstract resource.");
+        std::shared_ptr<T> resource = std::make_shared<T>(a_ResourcePath);
+
+        return resource;
+    }
+
+    template <>
+    std::shared_ptr<Shader> ResourceSystem::CreateResource<Shader>(const std::string& a_ResourcePath)
+    {
+        return Shader::Create(a_ResourcePath);
+    }
+
+    template <>
+    std::shared_ptr<Scene> ResourceSystem::CreateResource<Scene>(const std::string& a_ResourcePath)
+    {
+        return std::make_shared<Scene>();
     }
 }

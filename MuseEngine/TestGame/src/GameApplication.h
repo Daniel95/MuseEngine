@@ -3,6 +3,7 @@
 #include "Core/Application.h"
 #include "glm/vec3.hpp"
 #include "Core/Renderer/ShaderLibrary.h"
+#include <memory>
 
 namespace Muse
 {
@@ -39,8 +40,7 @@ protected:
 
 private:
     std::shared_ptr<Muse::Texture2D> m_CheckerboardTexture, m_RaymanTexture;
-    Muse::Scene* m_Scene;
-    Muse::ShaderLibrary m_ShaderLibrary;
+    std::shared_ptr<Muse::Scene> m_Scene;
 
     glm::vec3 m_FlatShaderColor = { 0.8, 0.2, 0.4 };
 

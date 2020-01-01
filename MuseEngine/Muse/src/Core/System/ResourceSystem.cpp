@@ -29,11 +29,11 @@ namespace Muse
         }
     }
 
-    std::vector<const Resource*> ResourceSystem::GetAllResources() const
+    std::vector<std::shared_ptr<Resource>> ResourceSystem::GetAllResources() const
     {
-        std::vector<const Resource*> resources;
+        std::vector<std::shared_ptr<Resource>> resources;
 
-        for (std::pair<ullong, Resource*> resource : m_Resources)
+        for (std::pair<ullong, std::shared_ptr<Resource>> resource : m_Resources)
         {
             resources.push_back(resource.second);
         }
@@ -44,4 +44,6 @@ namespace Muse
 	void ResourceSystem::Terminate()
     {
     }
+
+
 }

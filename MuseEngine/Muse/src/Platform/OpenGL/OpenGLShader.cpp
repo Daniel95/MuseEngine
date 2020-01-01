@@ -31,6 +31,13 @@ namespace Muse
 		auto shaderSources = Preprocess(source);
 		Compile(shaderSources);
 
+
+		/*
+		m_Name = a_Path;
+		Replace(m_Name, GAME_SCENE_PATH, "");
+		Replace(m_Name, ".txt", "");
+	    */
+
 		// Extract name from filepath
 		// assets/shaders/FlatColor.glsl (between the last / and last .)
 		auto lastSlash = a_Filepath.find_last_of("/\\");

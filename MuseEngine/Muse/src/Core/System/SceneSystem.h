@@ -22,16 +22,16 @@ namespace Muse
         void Terminate() override;
         void OnUpdate(float a_DeltaTime);
 
-        Scene& NewScene();
+        std::shared_ptr<Scene> NewScene();
         void LoadScene(const std::string& a_SceneName);
         void ReloadScene();
-        Scene* GetActiveScene();
+        std::shared_ptr<Scene> GetActiveScene() { return m_ActiveScene; }
 
     private:
         Application* m_Application;
         std::string m_SceneNameToLoad;
 
-        Scene* m_ActiveScene = nullptr;
+        std::shared_ptr<Scene> m_ActiveScene = nullptr;
         bool m_InspectLoadedScenes = false;
 
         void LoadSceneImmediate(const std::string& a_SceneName);
