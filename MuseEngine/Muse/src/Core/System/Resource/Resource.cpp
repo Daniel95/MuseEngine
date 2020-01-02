@@ -6,6 +6,8 @@ namespace Muse
 {
     void Resource::SetPathAndName(const std::string& a_Path)
     {
+        m_Path = a_Path;
+
         /*
         m_Name = a_Path;
         Replace(m_Name, GAME_SCENE_PATH, "");
