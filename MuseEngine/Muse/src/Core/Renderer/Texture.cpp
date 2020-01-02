@@ -6,7 +6,7 @@
 
 namespace Muse
 {
-    std::shared_ptr<Texture2D> Texture2D::Create(const std::string& a_Path)
+    std::shared_ptr<Texture> Texture::Create(const std::string& a_Path)
     {
         switch (Renderer::GetAPI())
         {

@@ -7,6 +7,7 @@
 #include "Core/System/Scene/Scene.h"
 
 #include <unordered_map>
+#include "Core/Renderer/Texture.h"
 
 namespace Muse
 {
@@ -38,6 +39,8 @@ namespace Muse
         std::shared_ptr<Shader> CreateResource<Shader>(const std::string& a_ResourcePath);
         template<>
         std::shared_ptr<Scene> CreateResource<Scene>(const std::string& a_ResourcePath);
+        template<>
+        std::shared_ptr<Texture> CreateResource<Texture>(const std::string& a_ResourcePath);
 
         template<typename T>
         std::shared_ptr<T> GetLoadedResource(ullong a_Id);
@@ -133,14 +136,20 @@ namespace Muse
     }
 
     template <>
-    std::shared_ptr<Shader> ResourceSystem::CreateResource<Shader>(const std::string& a_ResourcePath)
+    inline std::shared_ptr<Shader> ResourceSystem::CreateResource<Shader>(const std::string& a_ResourcePath)
     {
         return Shader::Create(a_ResourcePath);
     }
 
     template <>
-    std::shared_ptr<Scene> ResourceSystem::CreateResource<Scene>(const std::string& a_ResourcePath)
+    inline std::shared_ptr<Scene> ResourceSystem::CreateResource<Scene>(const std::string& a_ResourcePath)
     {
         return std::make_shared<Scene>();
+    }
+
+    template <>
+    inline std::shared_ptr<Texture> ResourceSystem::CreateResource<Texture>(const std::string& a_ResourcePath)
+    {
+        return Texture::Create(a_ResourcePath);
     }
 }

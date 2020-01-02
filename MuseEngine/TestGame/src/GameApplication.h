@@ -39,9 +39,6 @@ protected:
     virtual void OnMouseMovedEvent(float a_X, float a_Y) override;
 
 private:
-    std::shared_ptr<Muse::Texture2D> m_CheckerboardTexture, m_RaymanTexture;
-    std::shared_ptr<Muse::Scene> m_Scene;
-
     glm::vec3 m_FlatShaderColor = { 0.8, 0.2, 0.4 };
 
     const float m_CameraMoveSpeed = 0.3f;

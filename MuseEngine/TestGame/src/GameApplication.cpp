@@ -37,14 +37,18 @@ Muse::Application* Muse::CreateApplication()
 
 void GameApplication::OnStart()
 {
-    m_Scene = Muse::SystemManager::Get().GetSystem<Muse::SceneSystem>().NewScene();
+    std::shared_ptr<Muse::Scene> scene = Muse::SystemManager::Get().GetSystem<Muse::SceneSystem>().NewScene();
 
     std::shared_ptr<Muse::Shader> vertexColorShader = GetSystemManager().GetSystem<Muse::ResourceSystem>().Load<Muse::Shader>("assets/shaders/VertexColor.glsl");
     std::shared_ptr<Muse::Shader> flatColorShader = GetSystemManager().GetSystem<Muse::ResourceSystem>().Load<Muse::Shader>("assets/shaders/FlatColor.glsl");
     std::shared_ptr<Muse::Shader> textureShader = GetSystemManager().GetSystem<Muse::ResourceSystem>().Load<Muse::Shader>("assets/shaders/Texture.glsl");
 
-    m_CheckerboardTexture = Muse::Texture2D::Create("assets/textures/Checkerboard.png");
-    m_RaymanTexture = Muse::Texture2D::Create("assets/textures/Rayman.png");
+
+    std::shared_ptr<Muse::Texture> checkerboardTexture = GetSystemManager().GetSystem<Muse::ResourceSystem>().Load<Muse::Texture>("assets/textures/Checkerboard.png");
+    std::shared_ptr<Muse::Texture> raymanTexture = GetSystemManager().GetSystem<Muse::ResourceSystem>().Load<Muse::Texture>("assets/textures/Rayman.png");
+
+    //m_CheckerboardTexture = Muse::Texture2D::Create("assets/textures/Checkerboard.png");
+    //m_RaymanTexture = Muse::Texture2D::Create("assets/textures/Rayman.png");
 
     /////////////////////////////////////////////////////////////////
     //// Checkerboard ///////////////////////////////////////////////
@@ -65,7 +69,7 @@ void GameApplication::OnStart()
             { Muse::ShaderDataType::Float2, "a_TexCoord" },
         };
 
-        Muse::GameObject& gameObject = m_Scene->AddGameObject();
+        Muse::GameObject& gameObject = scene->AddGameObject();
         Muse::RenderComponent& renderComponent = gameObject.AddComponent<Muse::RenderComponent>();
 
         renderComponent.SetMesh(vertices,
@@ -74,7 +78,7 @@ void GameApplication::OnStart()
             6,
             layout);
         renderComponent.SetShader(textureShader);
-        renderComponent.SetTexture(m_CheckerboardTexture);
+        renderComponent.SetTexture(checkerboardTexture);
 
         std::dynamic_pointer_cast<Muse::OpenGLShader>(textureShader)->Bind();
         std::dynamic_pointer_cast<Muse::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
@@ -98,7 +102,7 @@ void GameApplication::OnStart()
             { Muse::ShaderDataType::Float3, "a_Position" },
         };
 
-        Muse::GameObject& gameObject = m_Scene->AddGameObject();
+        Muse::GameObject& gameObject = scene->AddGameObject();
         Muse::RenderComponent& renderComponent = gameObject.AddComponent<Muse::RenderComponent>();
 
         renderComponent.SetMesh(vertices,
@@ -129,7 +133,7 @@ void GameApplication::OnStart()
             { Muse::ShaderDataType::Float4, "a_Color" }
         };
 
-        Muse::GameObject& gameObject = m_Scene->AddGameObject();
+        Muse::GameObject& gameObject = scene->AddGameObject();
         Muse::RenderComponent& renderComponent = gameObject.AddComponent<Muse::RenderComponent>();
 
         renderComponent.SetMesh(vertices,
@@ -163,7 +167,7 @@ void GameApplication::OnStart()
             { Muse::ShaderDataType::Float2, "a_TexCoord" },
         };
 
-        Muse::GameObject& gameObject = m_Scene->AddGameObject();
+        Muse::GameObject& gameObject = scene->AddGameObject();
         gameObject.AddComponent<PlayerComponent>();
         Muse::RenderComponent& renderComponent = gameObject.AddComponent<Muse::RenderComponent>();
 
@@ -173,7 +177,7 @@ void GameApplication::OnStart()
             6,
             layout);
         renderComponent.SetShader(textureShader);
-        renderComponent.SetTexture(m_RaymanTexture);
+        renderComponent.SetTexture(raymanTexture);
 
         std::dynamic_pointer_cast<Muse::OpenGLShader>(textureShader)->Bind();
         std::dynamic_pointer_cast<Muse::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
@@ -220,15 +224,10 @@ void GameApplication::OnRender()
 
     std::shared_ptr<Muse::Shader> flatColorShader = GetSystemManager().GetSystem<Muse::ResourceSystem>().Load<Muse::Shader>("assets/shaders/FlatColor.glsl");
 
-    //auto flatColorShader = m_SystemManager->GetSystem<Muse::ResourceSystem>().Load<Muse::Shader>();
-    //auto flatColorShader =  m_ShaderLibrary.Get("FlatColor");
-
     flatColorShader->Bind();
     std::dynamic_pointer_cast<Muse::OpenGLShader>(flatColorShader)->UploadUniformFloat3("u_Color", m_FlatShaderColor);
 
-    m_CheckerboardTexture->Bind();
-
-    for (auto& gameObject : m_Scene->GetGameObjects())
+    for (auto& gameObject : GetSystemManager().GetSystem<Muse::SceneSystem>().GetActiveScene()->GetGameObjects())
     {
         Muse::RenderComponent* meshComponent = gameObject->GetComponent<Muse::RenderComponent>();
         if(meshComponent != nullptr)
@@ -246,7 +245,7 @@ void GameApplication::OnRender()
 
 void GameApplication::OnImGuiRender()
 {
-    Muse::GameObject* playerGameObject = m_Scene->FindGameObjectOfType<PlayerComponent>();
+    Muse::GameObject* playerGameObject = GetSystemManager().GetSystem<Muse::SceneSystem>().GetActiveScene()->FindGameObjectOfType<PlayerComponent>();
 
     if (playerGameObject == nullptr) { return; }
 
