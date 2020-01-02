@@ -5,8 +5,6 @@
 #include <string>
 #include <memory>
 
-#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
-
 #ifdef MUSE_DEBUG
 #define MUSE_ENABLE_ASSERTS
 #endif

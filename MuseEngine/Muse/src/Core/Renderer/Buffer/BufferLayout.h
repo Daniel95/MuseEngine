@@ -39,7 +39,7 @@ namespace Muse
             case ShaderDataType::Bool:     return 1;
         }
 
-        ASSERT(false, "Unknown ShaderDataType!");
+        ASSERT_ENGINE(false, "Unknown ShaderDataType!");
         return 0;
     }
 

@@ -2,11 +2,9 @@
 
 #include "Core/System/Manager/SystemManager.h"
 #include "Core/System/ResourceSystem.h"
-#include "Core/Utilities/Log.h"
 
 #include <string>
-#include <iostream>
-//#include <filesystem>
+#include <filesystem>
 
 namespace Muse
 {
@@ -23,9 +21,9 @@ namespace Muse
 
         std::string savePath = std::string(pValue) + std::string("\\Muse");
 
-        if (!std::experimental::filesystem::exists(savePath))
+        if (!std::filesystem::exists(savePath))
         {
-            std::experimental::filesystem::create_directory(savePath);
+            std::filesystem::create_directory(savePath);
         }
     }
 

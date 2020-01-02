@@ -24,6 +24,8 @@ namespace Muse
         template<typename T, typename... Args>
         std::shared_ptr<T> Load(const std::string & a_ResourcePath, Args&& ... a_Args);
         template<typename T>
+        std::shared_ptr<T> Get(const std::string& a_ResourcePath);
+        template<typename T>
         std::vector<std::shared_ptr<T>> GetResourcesOfType() const;
         template<typename T>
         void UnloadResource(const std::string & a_ResourcePath);
@@ -83,15 +85,27 @@ namespace Muse
         ullong id = T::CalculateResourceId(a_ResourcePath);
 
         std::shared_ptr<T> resource = GetLoadedResource<T>(id);
-        if (resource == nullptr)
-        {
-            resource = CreateResource<T>(a_ResourcePath);
+        ASSERT_ENGINE(resource == nullptr, "Resource is already loaded!");
 
-            std::dynamic_pointer_cast<Resource>(resource)->SetPath(a_ResourcePath);
+        resource = CreateResource<T>(a_ResourcePath);
 
-            m_Resources.insert(std::make_pair(id, resource));
-            m_RefCounters.insert(std::make_pair(id, 1));
-        }
+        std::dynamic_pointer_cast<Resource>(resource)->SetPathAndName(a_ResourcePath);
+
+        m_Resources.insert(std::make_pair(id, resource));
+        m_RefCounters.insert(std::make_pair(id, 1));
+
+        return resource;
+    }
+
+    template <typename T>
+    std::shared_ptr<T> ResourceSystem::Get(const std::string& a_ResourcePath)
+    {
+        static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Resource");
+
+        ullong id = T::CalculateResourceId(a_ResourcePath);
+
+        std::shared_ptr<T> resource = GetLoadedResource<T>(id);
+        ASSERT_ENGINE(resource != nullptr, "Resource is not yet loaded!");
 
         return resource;
     }

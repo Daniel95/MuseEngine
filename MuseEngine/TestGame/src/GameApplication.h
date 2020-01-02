@@ -2,8 +2,6 @@
 
 #include "Core/Application.h"
 #include "glm/vec3.hpp"
-#include "Core/Renderer/ShaderLibrary.h"
-#include <memory>
 
 namespace Muse
 {

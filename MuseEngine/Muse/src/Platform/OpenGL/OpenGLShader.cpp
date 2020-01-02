@@ -6,6 +6,7 @@
 #include "glm/gtc/type_ptr.hpp"
 
 #include <fstream>
+#include <filesystem>
 
 namespace Muse
 {
@@ -25,35 +26,14 @@ namespace Muse
 		return 0;
 	}
 
-	OpenGLShader::OpenGLShader(const std::string& a_Filepath)
+	OpenGLShader::OpenGLShader(const std::string& a_FilePath)
 	{
-		std::string source = ReadFile(a_Filepath);
-		auto shaderSources = Preprocess(source);
-		Compile(shaderSources);
-
-
-		/*
-		m_Name = a_Path;
-		Replace(m_Name, GAME_SCENE_PATH, "");
-		Replace(m_Name, ".txt", "");
-	    */
-
-		// Extract name from filepath
-		// assets/shaders/FlatColor.glsl (between the last / and last .)
-		auto lastSlash = a_Filepath.find_last_of("/\\");
-		lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
-        const auto lastDot = a_Filepath.rfind('.');
-        const auto count = lastDot == std::string::npos ? a_Filepath.size() - lastSlash : lastDot - lastSlash;
-		m_Name = a_Filepath.substr(lastSlash, count);
-	}
-
-	OpenGLShader::OpenGLShader(const std::string& a_Name, const std::string& a_VertexSrc, const std::string& a_FragmentSrc)
-		: m_Name(a_Name)
-	{
-		std::unordered_map<GLenum, std::string> sources;
-		sources[GL_VERTEX_SHADER] = a_VertexSrc;
-		sources[GL_FRAGMENT_SHADER] = a_FragmentSrc;
-		Compile(sources);
+		if (std::filesystem::exists(a_FilePath))
+		{
+			std::string source = ReadFile(a_FilePath);
+			auto shaderSources = Preprocess(source);
+			Compile(shaderSources);
+		}
 	}
 
 	OpenGLShader::~OpenGLShader()
@@ -121,7 +101,15 @@ namespace Muse
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(a_Matrix));
 	}
 
-    std::string OpenGLShader::ReadFile(const std::string& a_FilePath) const
+    void OpenGLShader::Compile(const std::string& a_VertexSource, const std::string& a_FragmentSource)
+    {
+		std::unordered_map<GLenum, std::string> sources;
+		sources[GL_VERTEX_SHADER] = a_VertexSource;
+		sources[GL_FRAGMENT_SHADER] = a_FragmentSource;
+		Compile(sources);
+    }
+
+    std::string OpenGLShader::ReadFile(const std::string& a_FilePath)
     {
 		std::string result;
 		std::ifstream in(a_FilePath, std::ios::in | std::ios::binary);
@@ -149,8 +137,8 @@ namespace Muse
 		return result;
     }
 
-	std::unordered_map<GLenum, std::string> OpenGLShader::Preprocess(const std::string& a_Source) const
-	{
+	std::unordered_map<GLenum, std::string> OpenGLShader::Preprocess(const std::string& a_Source)
+    {
 		std::unordered_map<GLenum, std::string> shaderSources;
 
 		const char* typeToken = "#type";
@@ -176,8 +164,6 @@ namespace Muse
 			{
 				shaderSources[ShaderTypeFromString(type)] = a_Source.substr(nextLinePos, pos - nextLinePos);
 			}
-
-			//shaderSources[ShaderTypeFromString(type)] = (pos == std::string::npos) ? a_Source.substr(nextLinePos) : a_Source.substr(nextLinePos, pos - nextLinePos);
 		}
 
 		return shaderSources;
@@ -185,6 +171,8 @@ namespace Muse
 
 	void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& a_ShaderSources)
 	{
+		m_IsCompiled = true;
+
 		GLuint program = glCreateProgram();
 		ASSERT_ENGINE(a_ShaderSources.size() <= 2, "We only support 2 shaders for now");
 		std::array<GLenum, 2> glShaderIDs;

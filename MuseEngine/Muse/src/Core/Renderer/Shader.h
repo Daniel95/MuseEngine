@@ -13,11 +13,14 @@ namespace Muse
         virtual void Bind() const = 0;
         virtual void Unbind() const = 0;
 
-        virtual const std::string& GetName() = 0;
+        virtual void Compile(const std::string& a_VertexSource, const std::string& a_FragmentSource) = 0;
 
         static std::shared_ptr<Shader> Create(const std::string& a_FilePath);
-        static std::shared_ptr<Shader> Create(const std::string& a_Name, const std::string& a_VertexSrc, const std::string& a_FragmentSrc);
 
+        bool GetIsCompiled() const { return m_IsCompiled; }
+
+    protected:
+        bool m_IsCompiled = false;
 
     };
 }

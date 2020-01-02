@@ -39,16 +39,12 @@ void GameApplication::OnStart()
 {
     std::shared_ptr<Muse::Scene> scene = Muse::SystemManager::Get().GetSystem<Muse::SceneSystem>().NewScene();
 
+    std::shared_ptr<Muse::Shader> textureShader = GetSystemManager().GetSystem<Muse::ResourceSystem>().Load<Muse::Shader>("assets/shaders/Texture.glsl");
     std::shared_ptr<Muse::Shader> vertexColorShader = GetSystemManager().GetSystem<Muse::ResourceSystem>().Load<Muse::Shader>("assets/shaders/VertexColor.glsl");
     std::shared_ptr<Muse::Shader> flatColorShader = GetSystemManager().GetSystem<Muse::ResourceSystem>().Load<Muse::Shader>("assets/shaders/FlatColor.glsl");
-    std::shared_ptr<Muse::Shader> textureShader = GetSystemManager().GetSystem<Muse::ResourceSystem>().Load<Muse::Shader>("assets/shaders/Texture.glsl");
-
 
     std::shared_ptr<Muse::Texture> checkerboardTexture = GetSystemManager().GetSystem<Muse::ResourceSystem>().Load<Muse::Texture>("assets/textures/Checkerboard.png");
     std::shared_ptr<Muse::Texture> raymanTexture = GetSystemManager().GetSystem<Muse::ResourceSystem>().Load<Muse::Texture>("assets/textures/Rayman.png");
-
-    //m_CheckerboardTexture = Muse::Texture2D::Create("assets/textures/Checkerboard.png");
-    //m_RaymanTexture = Muse::Texture2D::Create("assets/textures/Rayman.png");
 
     /////////////////////////////////////////////////////////////////
     //// Checkerboard ///////////////////////////////////////////////
@@ -222,8 +218,7 @@ void GameApplication::OnRender()
 
     Muse::Renderer::BeginScene(*Muse::CameraComponent::GetMain());
 
-    std::shared_ptr<Muse::Shader> flatColorShader = GetSystemManager().GetSystem<Muse::ResourceSystem>().Load<Muse::Shader>("assets/shaders/FlatColor.glsl");
-
+    std::shared_ptr<Muse::Shader> flatColorShader = GetSystemManager().GetSystem<Muse::ResourceSystem>().Get<Muse::Shader>("assets/shaders/FlatColor.glsl");
     flatColorShader->Bind();
     std::dynamic_pointer_cast<Muse::OpenGLShader>(flatColorShader)->UploadUniformFloat3("u_Color", m_FlatShaderColor);
 
