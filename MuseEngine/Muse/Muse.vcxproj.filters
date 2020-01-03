@@ -189,17 +189,8 @@
     <ClInclude Include="src\Core\System\Resource\Resource.h">
       <Filter>src\Core\System\Resource</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\System\ResourceSystem.h">
-      <Filter>src\Core\System</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\System\Scene\Scene.h">
       <Filter>src\Core\System\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\System\SceneSystem.h">
-      <Filter>src\Core\System</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\System\SoundSystem.h">
-      <Filter>src\Core\System</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Utilities\Defines.h">
       <Filter>src\Core\Utilities</Filter>
@@ -1344,6 +1335,12 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\System\ResourceManager.h">
+      <Filter>src\Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\System\SceneManager.h">
+      <Filter>src\Core\System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1421,17 +1418,8 @@
     <ClCompile Include="src\Core\System\Resource\Resource.cpp">
       <Filter>src\Core\System\Resource</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\System\ResourceSystem.cpp">
-      <Filter>src\Core\System</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\System\Scene\Scene.cpp">
       <Filter>src\Core\System\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\System\SceneSystem.cpp">
-      <Filter>src\Core\System</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\System\SoundSystem.cpp">
-      <Filter>src\Core\System</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Utilities\Log.cpp">
       <Filter>src\Core\Utilities</Filter>
@@ -1477,6 +1465,12 @@
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\System\ResourceManager.cpp">
+      <Filter>src\Core\System</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\System\SceneManager.cpp">
+      <Filter>src\Core\System</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

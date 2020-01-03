@@ -9,21 +9,21 @@ namespace Muse
     class Scene;
     class SystemManager;
 
-    class SceneSystem
+    class SceneManager
     {
         RTTR_ENABLE();
 
     public:
         /*
-        static SceneSystem& GetInstance()
+        static SceneManager& GetInstance()
         {
-            static SceneSystem instance;
+            static SceneManager instance;
             return instance;
         }
         */
 
-        SceneSystem();
-        virtual ~SceneSystem();
+        SceneManager();
+        virtual ~SceneManager();
 
         void OnUpdate(float a_DeltaTime);
 

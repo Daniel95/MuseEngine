@@ -9,7 +9,7 @@ namespace Muse
 {
     class Layer;
     class GameWindow;
-    class SceneSystem;
+    class SceneManager;
     class SystemManager;
     class ImGuiLayer;
     class Window;
@@ -61,7 +61,7 @@ namespace Muse
         static Application* s_Instance;
         bool m_Running = true;
         std::shared_ptr<Window> m_Window;
-        std::shared_ptr<SceneSystem> m_SceneManager;
+        std::shared_ptr<SceneManager> m_SceneManager;
         float m_DeltaTime = 0;
 
         ImGuiLayer* m_ImGuiLayer;

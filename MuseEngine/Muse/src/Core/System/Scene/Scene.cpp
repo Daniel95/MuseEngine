@@ -5,7 +5,7 @@
 #include "Core/Application.h"
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Gameplay/Component/TransformComponent.h"
-#include "Core/System/SceneSystem.h"
+#include "Core/System/SceneManager.h"
 #include "Core/System/Manager/SystemManager.h"
 #include "Core/Gameplay/Component/CameraComponent.h"
 #include "Core/Utilities/json/from_json.h"

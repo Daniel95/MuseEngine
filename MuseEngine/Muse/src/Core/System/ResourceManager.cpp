@@ -1,17 +1,17 @@
 #include "MusePCH.h"
 
 #include "Core/System/Manager/SystemManager.h"
-#include "Core/System/ResourceSystem.h"
+#include "Core/System/ResourceManager.h"
 
 #include <string>
 #include <filesystem>
 
 namespace Muse
 {
-    std::unordered_map<ullong, std::shared_ptr<Resource>> ResourceSystem::m_Resources;
-    std::unordered_map<ullong, uint> ResourceSystem::m_RefCounters;
+    std::unordered_map<ullong, std::shared_ptr<Resource>> ResourceManager::m_Resources;
+    std::unordered_map<ullong, uint> ResourceManager::m_RefCounters;
 
-    void ResourceSystem::CreateSaveLocation()
+    void ResourceManager::CreateSaveLocation()
     {
         char* pValue;
         size_t len;
@@ -25,7 +25,7 @@ namespace Muse
         }
     }
 
-    std::vector<std::shared_ptr<Resource>> ResourceSystem::GetAllResources()
+    std::vector<std::shared_ptr<Resource>> ResourceManager::GetAllResources()
     {
         std::vector<std::shared_ptr<Resource>> resources;
 

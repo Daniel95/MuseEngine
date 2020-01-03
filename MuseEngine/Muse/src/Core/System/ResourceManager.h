@@ -13,7 +13,7 @@ namespace Muse
 {
     class SystemManager;
 
-    class ResourceSystem
+    class ResourceManager
     {
         RTTR_ENABLE();
 
@@ -52,7 +52,7 @@ namespace Muse
     };
 
     template<typename T>
-    std::vector<std::shared_ptr<T>> ResourceSystem::GetResourcesOfType()
+    std::vector<std::shared_ptr<T>> ResourceManager::GetResourcesOfType()
     {
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Component");
 
@@ -72,7 +72,7 @@ namespace Muse
     }
 
     template<typename T, typename... Args>
-    std::shared_ptr<T> ResourceSystem::Load(const std::string & a_ResourcePath, Args&&... a_Args)
+    std::shared_ptr<T> ResourceManager::Load(const std::string & a_ResourcePath, Args&&... a_Args)
     {
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Resource");
 
@@ -92,7 +92,7 @@ namespace Muse
     }
 
     template <typename T>
-    std::shared_ptr<T> ResourceSystem::Get(const std::string& a_ResourcePath)
+    std::shared_ptr<T> ResourceManager::Get(const std::string& a_ResourcePath)
     {
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Resource");
 
@@ -105,7 +105,7 @@ namespace Muse
     }
 
     template <typename T>
-    std::shared_ptr<T> ResourceSystem::GetLoadedResource(ullong a_Id)
+    std::shared_ptr<T> ResourceManager::GetLoadedResource(ullong a_Id)
     {
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Resource");
 
@@ -122,7 +122,7 @@ namespace Muse
     }
 
     template<typename T>
-    void ResourceSystem::UnloadResource(const std::string & a_ResourcePath)
+    void ResourceManager::UnloadResource(const std::string & a_ResourcePath)
     {
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Component");
 
@@ -135,7 +135,7 @@ namespace Muse
     }
 
     template <typename T>
-    std::shared_ptr<T> ResourceSystem::CreateResource(const std::string& a_ResourcePath)
+    std::shared_ptr<T> ResourceManager::CreateResource(const std::string& a_ResourcePath)
     {
         static_assert(std::is_abstract<T>(), "Cannot create this abstract resource.");
         std::shared_ptr<T> resource = std::make_shared<T>(a_ResourcePath);
@@ -144,19 +144,19 @@ namespace Muse
     }
 
     template <>
-    inline std::shared_ptr<Shader> ResourceSystem::CreateResource<Shader>(const std::string& a_ResourcePath)
+    inline std::shared_ptr<Shader> ResourceManager::CreateResource<Shader>(const std::string& a_ResourcePath)
     {
         return Shader::Create(a_ResourcePath);
     }
 
     template <>
-    inline std::shared_ptr<Scene> ResourceSystem::CreateResource<Scene>(const std::string& a_ResourcePath)
+    inline std::shared_ptr<Scene> ResourceManager::CreateResource<Scene>(const std::string& a_ResourcePath)
     {
         return std::make_shared<Scene>();
     }
 
     template <>
-    inline std::shared_ptr<Texture> ResourceSystem::CreateResource<Texture>(const std::string& a_ResourcePath)
+    inline std::shared_ptr<Texture> ResourceManager::CreateResource<Texture>(const std::string& a_ResourcePath)
     {
         return Texture::Create(a_ResourcePath);
     }

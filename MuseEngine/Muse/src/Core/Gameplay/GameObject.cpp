@@ -4,7 +4,7 @@
 
 #include "Core/Application.h"
 #include "Core/Gameplay/Component/TransformComponent.h"
-#include "Core/System/SceneSystem.h"
+#include "Core/System/SceneManager.h"
 #include "Core/System/Scene/Scene.h"
 
 namespace Muse 

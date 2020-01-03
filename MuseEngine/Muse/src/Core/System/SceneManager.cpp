@@ -1,11 +1,11 @@
 #include "MusePCH.h"
 
-#include "Core/System/SceneSystem.h"
+#include "Core/System/SceneManager.h"
 
 #include "Core/Application.h"
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Gameplay/Component/BoxCollider2D.h"
-#include "Core/System/ResourceSystem.h"
+#include "Core/System/ResourceManager.h"
 #include "Core/System/Manager/ISystem.h"
 #include "Core/System/Manager/SystemManager.h"
 #include "Core/System/Scene/Scene.h"
@@ -14,21 +14,21 @@
 
 namespace Muse 
 {
-    std::string SceneSystem::m_SceneNameToLoad = "";
-    std::shared_ptr<Scene> SceneSystem::m_ActiveScene = nullptr;
-    bool SceneSystem::m_InspectLoadedScenes = false;
+    std::string SceneManager::m_SceneNameToLoad = "";
+    std::shared_ptr<Scene> SceneManager::m_ActiveScene = nullptr;
+    bool SceneManager::m_InspectLoadedScenes = false;
 
-    SceneSystem::SceneSystem()
+    SceneManager::SceneManager()
     {
-        Application::Get().m_UpdateEvent.Subscribe(this, std::bind(&SceneSystem::OnUpdate, this, std::placeholders::_1));
+        Application::Get().m_UpdateEvent.Subscribe(this, std::bind(&SceneManager::OnUpdate, this, std::placeholders::_1));
     }
 
-    SceneSystem::~SceneSystem()
+    SceneManager::~SceneManager()
     {
         Application::Get().m_UpdateEvent.Unsubscribe(this);
     }
 
-    void SceneSystem::OnUpdate(float a_DeltaTime)
+    void SceneManager::OnUpdate(float a_DeltaTime)
     {
         if (m_SceneNameToLoad != "")
         {
@@ -42,42 +42,42 @@ namespace Muse
         }
     }
 
-    std::shared_ptr<Scene> SceneSystem::NewScene()
+    std::shared_ptr<Scene> SceneManager::NewScene()
     {
         if (m_ActiveScene != nullptr)
         {
             const std::string oldScenePath = GAME_SCENE_PATH + m_ActiveScene->GetName() + ".txt";
-        ResourceSystem::UnloadResource<Scene>(oldScenePath);
+        ResourceManager::UnloadResource<Scene>(oldScenePath);
         }
 
         const std::string newScenePath = GAME_SCENE_PATH + "NewScene.txt";
-        m_ActiveScene = ResourceSystem::Load<Scene>(newScenePath);
+        m_ActiveScene = ResourceManager::Load<Scene>(newScenePath);
 
         return m_ActiveScene;
     }
 
-    void SceneSystem::LoadScene(const std::string& a_SceneName)
+    void SceneManager::LoadScene(const std::string& a_SceneName)
     {
         m_SceneNameToLoad = a_SceneName;
     }
 
-    void SceneSystem::ReloadScene()
+    void SceneManager::ReloadScene()
     {
         _ASSERT(m_ActiveScene != nullptr);
 
         m_SceneNameToLoad = m_ActiveScene->GetName();
     }
 
-    void SceneSystem::LoadSceneImmediate(const std::string& a_SceneName)
+    void SceneManager::LoadSceneImmediate(const std::string& a_SceneName)
     {
         if (m_ActiveScene != nullptr)
         {
             const std::string oldScenePath = GAME_SCENE_PATH + m_ActiveScene->GetName() + ".txt";
-            ResourceSystem::UnloadResource<Scene>(oldScenePath);
+            ResourceManager::UnloadResource<Scene>(oldScenePath);
         }
 
         const std::string newScenePath = GAME_SCENE_PATH + a_SceneName + ".txt";
-        m_ActiveScene = ResourceSystem::Load<Scene>(newScenePath);
+        m_ActiveScene = ResourceManager::Load<Scene>(newScenePath);
         m_ActiveScene->Load(newScenePath);
     }
 }

@@ -3,10 +3,8 @@
 #include "Core/Application.h"
 
 #include "Window.h"
-#include "Core/System/ResourceSystem.h"
-#include "Core/System/SceneSystem.h"
-#include "Core/System/SoundSystem.h"
-#include "Core/System/Manager/SystemManager.h"
+#include "Core/System/ResourceManager.h"
+#include "Core/System/SceneManager.h"
 #include "Core/Utilities/Log.h"
 #include "Core/Utilities/Defines.h"
 #include "Core/Event/ApplicationEvent.h"
@@ -35,7 +33,7 @@ namespace Muse
 
         Renderer::Init();
 
-        m_SceneManager = std::make_shared<SceneSystem>();
+        m_SceneManager = std::make_shared<SceneManager>();
 
         m_ImGuiLayer = new ImGuiLayer();
         PushOverlay(m_ImGuiLayer);

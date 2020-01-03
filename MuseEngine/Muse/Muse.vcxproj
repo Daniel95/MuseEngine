@@ -180,10 +180,9 @@
     <ClInclude Include="src\Core\System\Manager\SystemID.h" />
     <ClInclude Include="src\Core\System\Manager\SystemManager.h" />
     <ClInclude Include="src\Core\System\Resource\Resource.h" />
-    <ClInclude Include="src\Core\System\ResourceSystem.h" />
+    <ClInclude Include="src\Core\System\ResourceManager.h" />
     <ClInclude Include="src\Core\System\Scene\Scene.h" />
-    <ClInclude Include="src\Core\System\SceneSystem.h" />
-    <ClInclude Include="src\Core\System\SoundSystem.h" />
+    <ClInclude Include="src\Core\System\SceneManager.h" />
     <ClInclude Include="src\Core\Utilities\Defines.h" />
     <ClInclude Include="src\Core\Utilities\Log.h" />
     <ClInclude Include="src\Core\Utilities\Utilities.h" />
@@ -592,10 +591,9 @@
     <ClCompile Include="src\Core\System\Manager\ISystem.cpp" />
     <ClCompile Include="src\Core\System\Manager\SystemManager.cpp" />
     <ClCompile Include="src\Core\System\Resource\Resource.cpp" />
-    <ClCompile Include="src\Core\System\ResourceSystem.cpp" />
+    <ClCompile Include="src\Core\System\ResourceManager.cpp" />
     <ClCompile Include="src\Core\System\Scene\Scene.cpp" />
-    <ClCompile Include="src\Core\System\SceneSystem.cpp" />
-    <ClCompile Include="src\Core\System\SoundSystem.cpp" />
+    <ClCompile Include="src\Core\System\SceneManager.cpp" />
     <ClCompile Include="src\Core\Utilities\Log.cpp" />
     <ClCompile Include="src\Core\Utilities\Utilities.cpp" />
     <ClCompile Include="src\Core\Utilities\json\from_json.cpp" />
