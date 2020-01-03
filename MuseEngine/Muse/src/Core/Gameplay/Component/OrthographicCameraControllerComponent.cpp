@@ -38,28 +38,31 @@ namespace Muse
 
     void OrthographicCameraControllerComponent::OnUpdate(float a_DeltaTime)
     {
+        float moveSpeed = m_BaseMoveSpeed * a_DeltaTime * m_CameraComponent->GetZoomLevel();
+
         if (Input::IsKeyPressed(MUSE_KEY_A))
         {
-            GetTransform()->Move(glm::vec2(-m_MoveSpeed * a_DeltaTime, 0.0f));
+            GetTransform()->Move(glm::vec2(-moveSpeed, 0.0f));
         }
         else if (Input::IsKeyPressed(MUSE_KEY_D))
         {
-            GetTransform()->Move(glm::vec2(m_MoveSpeed * a_DeltaTime, 0.0f));
+            GetTransform()->Move(glm::vec2(moveSpeed, 0.0f));
         }
 
         if (Input::IsKeyPressed(MUSE_KEY_S))
         {
-            GetTransform()->Move(glm::vec2(0.0f, -m_MoveSpeed * a_DeltaTime));
+            GetTransform()->Move(glm::vec2(0.0f, -moveSpeed));
         }
         else if (Input::IsKeyPressed(MUSE_KEY_W))
         {
-            GetTransform()->Move(glm::vec2(0.0f, m_MoveSpeed * a_DeltaTime));
+            GetTransform()->Move(glm::vec2(0.0f, moveSpeed));
         }
     }
 
     void OrthographicCameraControllerComponent::OnMouseScrolledEvent(float a_XOffset, float a_YOffset)
     {
         float zoomLevel = m_CameraComponent->GetZoomLevel() - (a_YOffset * m_ZoomSpeed);
+        zoomLevel = std::max(zoomLevel, m_MinZoomLevel);
         m_CameraComponent->SetProjection(m_CameraComponent->GetAspectRatio(), zoomLevel);
     }
 
