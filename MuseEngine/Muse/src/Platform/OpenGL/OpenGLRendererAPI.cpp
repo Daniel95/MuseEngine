@@ -9,6 +9,8 @@ namespace Muse
     {
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+        glEnable(GL_DEPTH_TEST);
     }
 
     void OpenGLRendererAPI::SetViewport(uint32_t a_X, uint32_t a_Y, uint32_t a_Width, uint32_t a_Height)

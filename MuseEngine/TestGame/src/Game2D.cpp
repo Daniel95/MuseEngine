@@ -9,12 +9,12 @@
 
 
 /*
+*/
 #include "EntryPoint.h"
 Muse::Application* Muse::CreateApplication()
 {
 	return new Game2D();
 }
-*/
 
 void Game2D::OnStart()
 {
@@ -42,6 +42,8 @@ void Game2D::OnStart()
         //gameObject.GetTransform()->SetScale({ 3, 1, 1 });
 
     }
+
+    m_Texture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
 }
 
 void Game2D::OnRender()
@@ -56,9 +58,12 @@ void Game2D::OnRender()
         Muse::RenderComponent* meshComponent = gameObject->GetComponent<Muse::RenderComponent>();
         if(meshComponent != nullptr)
         {
+
             Muse::Renderer2D::DrawQuad(gameObject->GetTransform()->GetModelMatrix(), { 0.8f, 0.2f, 0.3f, 1.0f });
         }
     }
+
+    Muse::Renderer2D::DrawQuad({ 0, 0, 0.1f }, {1, 1}, m_Texture);
 
 	Muse::Renderer2D::EndScene();
 }
