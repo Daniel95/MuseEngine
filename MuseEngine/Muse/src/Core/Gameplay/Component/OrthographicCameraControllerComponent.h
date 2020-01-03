@@ -12,11 +12,14 @@ namespace Muse
         virtual ~OrthographicCameraControllerComponent();
         virtual void OnInit() override;
         void OnUpdate(float a_DeltaTime) override;
-        void SetCameraMoveSpeed(float a_CameraMoveSpeed) { m_CameraMoveSpeed = a_CameraMoveSpeed; }
-        float GetCameraMoveSpeed() const { return m_CameraMoveSpeed; }
+        void SetMoveSpeed(float a_CameraMoveSpeed) { m_MoveSpeed = a_CameraMoveSpeed; }
+        float GetMoveSpeed() const { return m_MoveSpeed; }
+        void SetZoomSpeed(float a_ZoomSpeed) { m_ZoomSpeed = a_ZoomSpeed; }
+        float GetZoomSpeed() const { return m_ZoomSpeed; }
 
     private:
-        float m_CameraMoveSpeed = 0.3f;
+        float m_MoveSpeed = 0.3f;
+        float m_ZoomSpeed = 0.3f;
         CameraComponent* m_CameraComponent = nullptr;
 
         void OnMouseScrolledEvent(float a_XOffset, float a_YOffset);
