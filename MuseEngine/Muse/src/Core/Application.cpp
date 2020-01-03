@@ -24,14 +24,14 @@ namespace Muse
 
         m_Window = std::unique_ptr<Window>(Window::Create());
 
-        m_Window->WindowCloseEvent.Subscribe( SUB_FN(Application::OnWindowCloseEvent));
-        m_Window->WindowResizeEvent.Subscribe(SUB_FN(Application::OnWindowResizeEvent, std::placeholders::_1, std::placeholders::_2));
-        m_Window->KeyPressedEvent.Subscribe(SUB_FN(Application::OnWindowResizeEvent, std::placeholders::_1, std::placeholders::_2));
-        m_Window->KeyReleasedEvent.Subscribe(SUB_FN(Application::OnKeyReleasedEvent, std::placeholders::_1));
-        m_Window->MouseButtonPressedEvent.Subscribe(SUB_FN(Application::OnMouseButtonPressedEvent, std::placeholders::_1));
-        m_Window->MouseButtonReleasedEvent.Subscribe(SUB_FN(Application::OnMouseButtonReleasedEvent, std::placeholders::_1));
-        m_Window->MouseScrolledEvent.Subscribe(SUB_FN(Application::OnMouseScrolledEvent, std::placeholders::_1, std::placeholders::_2));
-        m_Window->MouseMovedEvent.Subscribe(SUB_FN(Application::OnMouseMovedEvent, std::placeholders::_1, std::placeholders::_2));
+        m_Window->WindowCloseEvent.Subscribe( SUB_FN(Application::WindowCloseEvent));
+        m_Window->WindowResizeEvent.Subscribe(SUB_FN(Application::WindowResizeEvent, std::placeholders::_1, std::placeholders::_2));
+        m_Window->KeyPressedEvent.Subscribe(SUB_FN(Application::WindowResizeEvent, std::placeholders::_1, std::placeholders::_2));
+        m_Window->KeyReleasedEvent.Subscribe(SUB_FN(Application::KeyReleasedEvent, std::placeholders::_1));
+        m_Window->MouseButtonPressedEvent.Subscribe(SUB_FN(Application::MouseButtonPressedEvent, std::placeholders::_1));
+        m_Window->MouseButtonReleasedEvent.Subscribe(SUB_FN(Application::MouseButtonReleasedEvent, std::placeholders::_1));
+        m_Window->MouseScrolledEvent.Subscribe(SUB_FN(Application::MouseScrolledEvent, std::placeholders::_1, std::placeholders::_2));
+        m_Window->MouseMovedEvent.Subscribe(SUB_FN(Application::MouseMovedEvent, std::placeholders::_1, std::placeholders::_2));
 
         Renderer::Init();
 
@@ -44,6 +44,8 @@ namespace Muse
 
     Application::~Application()
     {
+        SceneManager::DestroyAllGameObjects();
+
         m_Window->WindowCloseEvent.Unsubscribe(this);
         m_Window->WindowResizeEvent.Unsubscribe(this);
         m_Window->KeyPressedEvent.Unsubscribe(this);
@@ -129,43 +131,44 @@ namespace Muse
         a_Layer->OnAttach();
     }
 
-    void Application::OnWindowCloseEvent()
+    void Application::WindowCloseEvent()
     {
         m_Running = false;
+        OnWindowCloseEvent();
     }
 
-    void Application::OnWindowResizeEvent(int a_Width, int a_Height)
+    void Application::WindowResizeEvent(int a_Width, int a_Height)
     {
-        //LOG_ENGINE_INFO("OnWindowResize: {0}, {1}", a_Width, a_Height);
+        OnWindowResizeEvent(a_Width, a_Height);
     }
 
-    void Application::OnKeyPressedEvent(int a_KeyCode, int a_RepeatCount)
+    void Application::KeyPressedEvent(int a_KeyCode, int a_RepeatCount)
     {
-        //LOG_ENGINE_INFO("OnKeyPressed: {0}, {1}", a_KeyCode, a_RepeatCount);
+        OnKeyPressedEvent(a_KeyCode, a_RepeatCount);
     }
 
-    void Application::OnKeyReleasedEvent(int a_KeyCode)
+    void Application::KeyReleasedEvent(int a_KeyCode)
     {
-        //LOG_ENGINE_INFO("OnKeyReleased: {0}", a_KeyCode);
+        OnKeyReleasedEvent(a_KeyCode);
     }
 
-    void Application::OnMouseButtonPressedEvent(int a_Button)
+    void Application::MouseButtonPressedEvent(int a_Button)
     {
-        //LOG_ENGINE_INFO("OnMouseButtonPressed: {0}", a_Button);
+        OnMouseButtonPressedEvent(a_Button);
     }
 
-    void Application::OnMouseButtonReleasedEvent(int a_Button)
+    void Application::MouseButtonReleasedEvent(int a_Button)
     {
-        //LOG_ENGINE_INFO("OnMouseButtonReleased: {0}", a_Button);
+        OnMouseButtonReleasedEvent(a_Button);
     }
 
-    void Application::OnMouseScrolledEvent(float a_XOffset, float a_YOffset)
+    void Application::MouseScrolledEvent(float a_XOffset, float a_YOffset)
     {
-        //LOG_ENGINE_INFO("OnMouseScrolled: {0}, {1}", a_XOffset, a_YOffset);
+        OnMouseScrolledEvent(a_XOffset, a_YOffset);
     }
 
-    void Application::OnMouseMovedEvent(float a_X, float a_Y)
+    void Application::MouseMovedEvent(float a_X, float a_Y)
     {
-        //LOG_ENGINE_INFO("OnMouseMoved: {0}, {1}", a_X, a_Y);
+        OnMouseMovedEvent(a_X, a_Y);
     }
 }

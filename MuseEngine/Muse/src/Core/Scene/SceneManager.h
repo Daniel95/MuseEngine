@@ -34,6 +34,7 @@ namespace Muse
         static void LoadScene(const std::string& a_SceneName);
         static void ReloadScene();
         static std::shared_ptr<Scene> GetActiveScene();
+        static void DestroyAllGameObjects();
 
     private:
         static std::string m_SceneNameToLoad;

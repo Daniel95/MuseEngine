@@ -31,8 +31,6 @@ void GameApplication::OnStart()
 {
     std::shared_ptr<Muse::Scene> scene = Muse::SceneManager::NewScene();
 
-    Muse::CameraComponent* cameraComponent = Muse::CameraComponent::GetMain();
-
     std::shared_ptr<Muse::Shader> textureShader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/Texture.glsl");
     std::shared_ptr<Muse::Shader> vertexColorShader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/VertexColor.glsl");
     m_FlatColorShader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/FlatColor.glsl");

@@ -49,14 +49,23 @@ namespace Muse
         virtual void OnRender() = 0;
         virtual void OnImGuiRender() = 0;
 
-        virtual void OnWindowCloseEvent();
-        virtual void OnWindowResizeEvent(int a_Width, int a_Height);
-        virtual void OnKeyPressedEvent(int a_KeyCode, int a_RepeatCount);
-        virtual void OnKeyReleasedEvent(int a_KeyCode);
-        virtual void OnMouseButtonPressedEvent(int a_Button);
-        virtual void OnMouseButtonReleasedEvent(int a_Button);
-        virtual void OnMouseScrolledEvent(float a_XOffset, float a_YOffset);
-        virtual void OnMouseMovedEvent(float a_X, float a_Y);
+        virtual void OnWindowCloseEvent() {}
+        virtual void OnWindowResizeEvent(int a_Width, int a_Height) {}
+        virtual void OnKeyPressedEvent(int a_KeyCode, int a_RepeatCount) {}
+        virtual void OnKeyReleasedEvent(int a_KeyCode) {}
+        virtual void OnMouseButtonPressedEvent(int a_Button) {}
+        virtual void OnMouseButtonReleasedEvent(int a_Button) {}
+        virtual void OnMouseScrolledEvent(float a_XOffset, float a_YOffset) {}
+        virtual void OnMouseMovedEvent(float a_X, float a_Y) {}
+
+        void WindowCloseEvent();
+        void WindowResizeEvent(int a_Width, int a_Height);
+        void KeyPressedEvent(int a_KeyCode, int a_RepeatCount);
+        void KeyReleasedEvent(int a_KeyCode);
+        void MouseButtonPressedEvent(int a_Button);
+        void MouseButtonReleasedEvent(int a_Button);
+        void MouseScrolledEvent(float a_XOffset, float a_YOffset);
+        void MouseMovedEvent(float a_X, float a_Y);
 
     private:
         static Application* s_Instance;

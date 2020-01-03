@@ -69,6 +69,14 @@ namespace Muse
         return m_ActiveScene;
     }
 
+    void SceneManager::DestroyAllGameObjects()
+    {
+        if(m_ActiveScene != nullptr)
+        {
+            m_ActiveScene->DestroyAllGameObjects();
+        }
+    }
+
     void SceneManager::LoadSceneImmediate(const std::string& a_SceneName)
     {
         if (m_ActiveScene != nullptr)
