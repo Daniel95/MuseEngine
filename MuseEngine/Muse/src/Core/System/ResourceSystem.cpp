@@ -8,12 +8,10 @@
 
 namespace Muse
 {
-    ResourceSystem::ResourceSystem(SystemManager& a_SystemManager)
-        : ISystem(a_SystemManager)
-    {
-    }
+    std::unordered_map<ullong, std::shared_ptr<Resource>> ResourceSystem::m_Resources;
+    std::unordered_map<ullong, uint> ResourceSystem::m_RefCounters;
 
-    void ResourceSystem::Initialize()
+    void ResourceSystem::CreateSaveLocation()
     {
         char* pValue;
         size_t len;
@@ -27,7 +25,7 @@ namespace Muse
         }
     }
 
-    std::vector<std::shared_ptr<Resource>> ResourceSystem::GetAllResources() const
+    std::vector<std::shared_ptr<Resource>> ResourceSystem::GetAllResources()
     {
         std::vector<std::shared_ptr<Resource>> resources;
 
@@ -38,10 +36,4 @@ namespace Muse
 
         return resources;
     }
-
-	void ResourceSystem::Terminate()
-    {
-    }
-
-
 }

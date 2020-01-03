@@ -13,52 +13,46 @@ namespace Muse
 {
     class SystemManager;
 
-    class ResourceSystem : public ISystem, public SystemRegistry<ResourceSystem>
+    class ResourceSystem
     {
-        RTTR_ENABLE(ISystem);
+        RTTR_ENABLE();
 
     public:
-        ResourceSystem(SystemManager& a_SystemManager);
-        ~ResourceSystem() = default;
-
         template<typename T, typename... Args>
-        std::shared_ptr<T> Load(const std::string & a_ResourcePath, Args&& ... a_Args);
+        static std::shared_ptr<T> Load(const std::string & a_ResourcePath, Args&& ... a_Args);
         template<typename T>
-        std::shared_ptr<T> Get(const std::string& a_ResourcePath);
+        static std::shared_ptr<T> Get(const std::string& a_ResourcePath);
         template<typename T>
-        std::vector<std::shared_ptr<T>> GetResourcesOfType() const;
+        static std::vector<std::shared_ptr<T>> GetResourcesOfType();
         template<typename T>
-        void UnloadResource(const std::string & a_ResourcePath);
-        std::vector<std::shared_ptr<Resource>> GetAllResources() const;
+        static void UnloadResource(const std::string & a_ResourcePath);
+        static std::vector<std::shared_ptr<Resource>> GetAllResources();
 
-        void Initialize() override;
-        void Terminate() override;
+        static void CreateSaveLocation();
 
     protected:
         template<typename T>
-        std::shared_ptr<T> CreateResource(const std::string& a_ResourcePath);
+        static std::shared_ptr<T> CreateResource(const std::string& a_ResourcePath);
         template<>
-        std::shared_ptr<Shader> CreateResource<Shader>(const std::string& a_ResourcePath);
+        static std::shared_ptr<Shader> CreateResource<Shader>(const std::string& a_ResourcePath);
         template<>
-        std::shared_ptr<Scene> CreateResource<Scene>(const std::string& a_ResourcePath);
+        static std::shared_ptr<Scene> CreateResource<Scene>(const std::string& a_ResourcePath);
         template<>
-        std::shared_ptr<Texture> CreateResource<Texture>(const std::string& a_ResourcePath);
+        static std::shared_ptr<Texture> CreateResource<Texture>(const std::string& a_ResourcePath);
 
         template<typename T>
-        std::shared_ptr<T> GetLoadedResource(ullong a_Id);
+        static std::shared_ptr<T> GetLoadedResource(ullong a_Id);
 
         /// A map of resources
-        std::unordered_map<ullong, std::shared_ptr<Resource>> m_Resources;
+        static std::unordered_map<ullong, std::shared_ptr<Resource>> m_Resources;
 
         /// A map of reference counters
-        std::unordered_map<ullong, uint> m_RefCounters;
+        static std::unordered_map<ullong, uint> m_RefCounters;
 
-    private:
-        bool m_InspectLoadedScenes = true;
     };
 
     template<typename T>
-    std::vector<std::shared_ptr<T>> ResourceSystem::GetResourcesOfType() const
+    std::vector<std::shared_ptr<T>> ResourceSystem::GetResourcesOfType()
     {
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Component");
 

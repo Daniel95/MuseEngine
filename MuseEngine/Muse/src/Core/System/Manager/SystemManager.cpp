@@ -36,9 +36,4 @@ namespace Muse
             itr->second->Initialize();
         }
     }
-
-    SystemManager& SystemManager::Get()
-    {
-        return Application::Get().GetSystemManager();
-    }
 }

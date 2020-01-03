@@ -23,8 +23,6 @@ namespace Muse
         template<typename T>
         void DeleteSystem();
 
-        static SystemManager& Get();
-
     private:
         std::unordered_map<unsigned short, ISystem*> m_Systems;
 

@@ -14,21 +14,18 @@
 
 namespace Muse 
 {
-    SceneSystem::SceneSystem(SystemManager& a_SystemManager, Application& a_Application)
-        : ISystem(a_SystemManager)
-    {
-        m_Application = &a_Application;
+    std::string SceneSystem::m_SceneNameToLoad = "";
+    std::shared_ptr<Scene> SceneSystem::m_ActiveScene = nullptr;
+    bool SceneSystem::m_InspectLoadedScenes = false;
 
+    SceneSystem::SceneSystem()
+    {
         Application::Get().m_UpdateEvent.Subscribe(this, std::bind(&SceneSystem::OnUpdate, this, std::placeholders::_1));
     }
 
     SceneSystem::~SceneSystem()
     {
         Application::Get().m_UpdateEvent.Unsubscribe(this);
-    }
-
-    void SceneSystem::Initialize()
-    {
     }
 
     void SceneSystem::OnUpdate(float a_DeltaTime)
@@ -45,20 +42,16 @@ namespace Muse
         }
     }
 
-    void SceneSystem::Terminate()
-    {
-    }
-
     std::shared_ptr<Scene> SceneSystem::NewScene()
     {
         if (m_ActiveScene != nullptr)
         {
             const std::string oldScenePath = GAME_SCENE_PATH + m_ActiveScene->GetName() + ".txt";
-            m_SystemManager.GetSystem<ResourceSystem>().UnloadResource<Scene>(oldScenePath);
+        ResourceSystem::UnloadResource<Scene>(oldScenePath);
         }
 
         const std::string newScenePath = GAME_SCENE_PATH + "NewScene.txt";
-        m_ActiveScene = m_SystemManager.GetSystem<ResourceSystem>().Load<Scene>(newScenePath);
+        m_ActiveScene = ResourceSystem::Load<Scene>(newScenePath);
 
         return m_ActiveScene;
     }
@@ -80,11 +73,11 @@ namespace Muse
         if (m_ActiveScene != nullptr)
         {
             const std::string oldScenePath = GAME_SCENE_PATH + m_ActiveScene->GetName() + ".txt";
-            m_SystemManager.GetSystem<ResourceSystem>().UnloadResource<Scene>(oldScenePath);
+            ResourceSystem::UnloadResource<Scene>(oldScenePath);
         }
 
         const std::string newScenePath = GAME_SCENE_PATH + a_SceneName + ".txt";
-        m_ActiveScene = m_SystemManager.GetSystem<ResourceSystem>().Load<Scene>(newScenePath);
+        m_ActiveScene = ResourceSystem::Load<Scene>(newScenePath);
         m_ActiveScene->Load(newScenePath);
     }
 }

@@ -23,7 +23,6 @@ namespace Muse
 		virtual ~Application();
 
         Window& GetWindow() const { return *m_Window; }
-        SystemManager& GetSystemManager() const { return *m_SystemManager; }
         float GetDeltaTime() const { return m_DeltaTime; }
 
         void Start();
@@ -62,10 +61,10 @@ namespace Muse
         static Application* s_Instance;
         bool m_Running = true;
         std::shared_ptr<Window> m_Window;
+        std::shared_ptr<SceneSystem> m_SceneManager;
         float m_DeltaTime = 0;
 
         ImGuiLayer* m_ImGuiLayer;
-        SystemManager* m_SystemManager;
         LayerStack m_LayerStack;
         float m_LastFrameTime = 0.0f;
 	};

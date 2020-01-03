@@ -125,8 +125,6 @@ namespace Muse
                 component->Init(gameObject);
             }
         }
-
-        SceneSystem& sceneSystem = Application::Get().GetSystemManager().GetSystem<SceneSystem>();
     }
 
     std::string Scene::Serialize() const

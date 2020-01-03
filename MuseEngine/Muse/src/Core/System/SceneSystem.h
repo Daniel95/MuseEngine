@@ -1,5 +1,4 @@
 #pragma once
-#include "Core/System/Manager/ISystem.h"
 
 #include <string>
 
@@ -10,31 +9,35 @@ namespace Muse
     class Scene;
     class SystemManager;
 
-    class SceneSystem : public ISystem, public SystemRegistry<SceneSystem>
+    class SceneSystem
     {
-        RTTR_ENABLE(ISystem);
+        RTTR_ENABLE();
 
     public:
-        SceneSystem(SystemManager& a_SystemManager, Application& a_Application);
-        ~SceneSystem();
+        /*
+        static SceneSystem& GetInstance()
+        {
+            static SceneSystem instance;
+            return instance;
+        }
+        */
 
-        void Initialize() override;
-        void Terminate() override;
+        SceneSystem();
+        virtual ~SceneSystem();
+
         void OnUpdate(float a_DeltaTime);
 
-        std::shared_ptr<Scene> NewScene();
-        void LoadScene(const std::string& a_SceneName);
-        void ReloadScene();
-        std::shared_ptr<Scene> GetActiveScene() { return m_ActiveScene; }
+        static std::shared_ptr<Scene> NewScene();
+        static void LoadScene(const std::string& a_SceneName);
+        static void ReloadScene();
+        static std::shared_ptr<Scene> GetActiveScene() { return m_ActiveScene; }
 
     private:
-        Application* m_Application;
-        std::string m_SceneNameToLoad;
+        static std::string m_SceneNameToLoad;
+        static std::shared_ptr<Scene> m_ActiveScene;
+        static bool m_InspectLoadedScenes;
 
-        std::shared_ptr<Scene> m_ActiveScene = nullptr;
-        bool m_InspectLoadedScenes = false;
-
-        void LoadSceneImmediate(const std::string& a_SceneName);
+        static void LoadSceneImmediate(const std::string& a_SceneName);
 
     };
 }

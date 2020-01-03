@@ -35,13 +35,10 @@ namespace Muse
 
         Renderer::Init();
 
+        m_SceneManager = std::make_shared<SceneSystem>();
+
         m_ImGuiLayer = new ImGuiLayer();
         PushOverlay(m_ImGuiLayer);
-
-        m_SystemManager = new SystemManager();
-        m_SystemManager->CreateSystem<ResourceSystem>();
-        m_SystemManager->CreateSystem<SoundSystem>();
-        m_SystemManager->CreateSystem<SceneSystem>(*this);
     }
 
     Application::~Application()
@@ -54,8 +51,6 @@ namespace Muse
         m_Window->MouseButtonReleasedEvent.Unsubscribe(this);
         m_Window->MouseScrolledEvent.Unsubscribe(this);
         m_Window->MouseMovedEvent.Unsubscribe(this);
-
-        delete m_SystemManager;
     }
 
     void Application::Start()
