@@ -31,9 +31,11 @@ void GameApplication::OnStart()
 {
     std::shared_ptr<Muse::Scene> scene = Muse::SceneManager::NewScene();
 
+    Muse::CameraComponent* cameraComponent = Muse::CameraComponent::GetMain();
+
     std::shared_ptr<Muse::Shader> textureShader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/Texture.glsl");
     std::shared_ptr<Muse::Shader> vertexColorShader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/VertexColor.glsl");
-    std::shared_ptr<Muse::Shader> flatColorShader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/FlatColor.glsl");
+    m_FlatColorShader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/FlatColor.glsl");
 
     std::shared_ptr<Muse::Texture> checkerboardTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Checkerboard.png");
     std::shared_ptr<Muse::Texture> raymanTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Rayman.png");
@@ -98,7 +100,7 @@ void GameApplication::OnStart()
             indices,
             6,
             layout);
-        renderComponent.SetShader(flatColorShader);
+        renderComponent.SetShader(m_FlatColorShader);
 
         gameObject.GetTransform()->SetPosition({ 1.1f, 0, 0 });
     }
@@ -177,23 +179,7 @@ void GameApplication::OnStart()
 
 void GameApplication::OnUpdate(float a_DeltaTime)
 {
-    if(Muse::Input::IsKeyPressed(MUSE_KEY_LEFT))
-    {
-        Muse::CameraComponent::GetMain()->GetTransform()->Move(glm::vec2(-m_CameraMoveSpeed * a_DeltaTime, 0.0f));
-    }
-    else if (Muse::Input::IsKeyPressed(MUSE_KEY_RIGHT))
-    {
-        Muse::CameraComponent::GetMain()->GetTransform()->Move(glm::vec2(m_CameraMoveSpeed * a_DeltaTime, 0.0f));
-    }
 
-    if (Muse::Input::IsKeyPressed(MUSE_KEY_DOWN))
-    {
-        Muse::CameraComponent::GetMain()->GetTransform()->Move(glm::vec2(0.0f, -m_CameraMoveSpeed * a_DeltaTime));
-    }
-    else if (Muse::Input::IsKeyPressed(MUSE_KEY_UP))
-    {
-        Muse::CameraComponent::GetMain()->GetTransform()->Move(glm::vec2(0.0f, m_CameraMoveSpeed * a_DeltaTime));
-    }
 }
 
 void GameApplication::OnFixedUpdate()
@@ -226,6 +212,8 @@ void GameApplication::OnRender()
             Muse::Renderer::Submit(meshComponent->GetShader(), meshComponent->GetVA(), gameObject->GetTransform()->GetModelMatrix());
         }
     }
+
+    //Muse::Renderer2D::DrawQuad({0.0f, 0.0f, 0.0f}, { 1.0f, 1.0f}, { 0.8f, 0.2f, 0.3f, 1.0f });
 
 	Muse::Renderer::EndScene();
 }

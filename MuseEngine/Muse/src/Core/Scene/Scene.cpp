@@ -10,6 +10,7 @@
 
 #include <rttr/registration>
 #include <filesystem>
+#include "Core/Gameplay/Component/OrthographicCameraControllerComponent.h"
 
 namespace Muse
 {
@@ -259,7 +260,8 @@ namespace Muse
         ASSERT(GetEditorCamera() == nullptr, "EditorCamera already exists!");
         GameObject& gameObject = AddGameObject();
 
-        gameObject.AddComponent<CameraComponent>().MakeEditorCamera();
+        gameObject.AddComponent<OrthographicCameraControllerComponent>().MakeEditorCamera();
+        //gameObject.AddComponent<CameraComponent>().MakeEditorCamera();
 
         return gameObject;
     }

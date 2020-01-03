@@ -8,20 +8,14 @@ namespace Muse
 {
     BoxCollider2D::BoxCollider2D()
     {
-    }
-
-    BoxCollider2D::~BoxCollider2D()
-    {
-    }
-
-    void BoxCollider2D::Init(GameObject* a_GameObject)
-    {
-        Component::Init(a_GameObject);
-
         if (m_CollisionType != CollisionType::NONE)
         {
             SetCollisionType(m_CollisionType);
         }
+    }
+
+    BoxCollider2D::~BoxCollider2D()
+    {
     }
 
     void BoxCollider2D::Update(float a_DeltaTime)

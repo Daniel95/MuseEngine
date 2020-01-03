@@ -17,7 +17,7 @@ namespace Muse
         Component() = default;
         virtual ~Component() = default;
 
-        virtual void Init(GameObject* a_GameObject);
+        void Init(GameObject* a_GameObject);
         virtual void Update(float a_DeltaTime);
         virtual void FixedUpdate(float a_TimeStep);
 

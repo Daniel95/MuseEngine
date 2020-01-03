@@ -15,7 +15,6 @@ namespace Muse
         BoxCollider2D();
         virtual ~BoxCollider2D();
 
-        virtual void Init(GameObject* a_GameObject) override;
         virtual void Update(float a_DeltaTime) override;
 
         CollisionType GetCollisionType();

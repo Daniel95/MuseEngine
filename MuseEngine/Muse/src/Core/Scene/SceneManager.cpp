@@ -43,7 +43,7 @@ namespace Muse
         if (m_ActiveScene != nullptr)
         {
             const std::string oldScenePath = GAME_SCENE_PATH + m_ActiveScene->GetName() + ".txt";
-        ResourceManager::UnloadResource<Scene>(oldScenePath);
+            ResourceManager::UnloadResource<Scene>(oldScenePath);
         }
 
         const std::string newScenePath = GAME_SCENE_PATH + "NewScene.txt";

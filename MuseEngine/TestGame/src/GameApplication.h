@@ -3,6 +3,11 @@
 #include "Core/Application.h"
 #include "glm/vec3.hpp"
 
+namespace Muse
+{
+    class Shader;
+}
+
 class GameApplication : public Muse::Application
 {
 public:
@@ -26,6 +31,7 @@ protected:
     virtual void OnMouseMovedEvent(float a_X, float a_Y) override;
 
 private:
+    std::shared_ptr<Muse::Shader> m_FlatColorShader;
     glm::vec3 m_FlatShaderColor = { 0.8, 0.2, 0.4 };
 
     const float m_CameraMoveSpeed = 0.3f;
