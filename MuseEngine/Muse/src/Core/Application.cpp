@@ -26,7 +26,7 @@ namespace Muse
 
         m_Window->WindowCloseEvent.Subscribe( SUB_FN(Application::WindowCloseEvent));
         m_Window->WindowResizeEvent.Subscribe(SUB_FN(Application::WindowResizeEvent, std::placeholders::_1, std::placeholders::_2));
-        m_Window->KeyPressedEvent.Subscribe(SUB_FN(Application::WindowResizeEvent, std::placeholders::_1, std::placeholders::_2));
+        m_Window->KeyPressedEvent.Subscribe(SUB_FN(Application::KeyPressedEvent, std::placeholders::_1, std::placeholders::_2));
         m_Window->KeyReleasedEvent.Subscribe(SUB_FN(Application::KeyReleasedEvent, std::placeholders::_1));
         m_Window->MouseButtonPressedEvent.Subscribe(SUB_FN(Application::MouseButtonPressedEvent, std::placeholders::_1));
         m_Window->MouseButtonReleasedEvent.Subscribe(SUB_FN(Application::MouseButtonReleasedEvent, std::placeholders::_1));
@@ -62,11 +62,20 @@ namespace Muse
 
         while (m_Running)
         {
-            Update();
-            //FixedUpdate();
-            LateUpdate();
-            ImGuiRender();
-            Render();
+            if(!m_Minimized)
+            {
+                Update();
+                //FixedUpdate();
+                LateUpdate();
+                ImGuiRender();
+                m_Window->OnUpdate();
+                Render();
+            }
+            else
+            {
+                ImGuiRender();
+                m_Window->OnUpdate();
+            }
         }
     }
 
@@ -113,8 +122,6 @@ namespace Muse
 
     void Application::Render()
     {
-        m_Window->OnUpdate();
-
         m_RenderEvent.Dispatch();
         OnRender();
     }
@@ -139,6 +146,8 @@ namespace Muse
 
     void Application::WindowResizeEvent(int a_Width, int a_Height)
     {
+        m_Minimized = a_Width == 0 || a_Height == 0;
+
         OnWindowResizeEvent(a_Width, a_Height);
     }
 

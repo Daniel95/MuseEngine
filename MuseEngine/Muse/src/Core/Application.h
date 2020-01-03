@@ -70,6 +70,7 @@ namespace Muse
     private:
         static Application* s_Instance;
         bool m_Running = true;
+        bool m_Minimized = false;
         std::shared_ptr<Window> m_Window;
         std::shared_ptr<SceneManager> m_SceneManager;
         std::shared_ptr<ResourceManager> m_ResourceManager;
