@@ -227,36 +227,4 @@ void GameApplication::OnImGuiRender()
     ImGui::Begin("Settings");
     ImGui::ColorEdit3("Square Color", glm::value_ptr(m_FlatShaderColor));
     ImGui::End();
-}
-
-void GameApplication::OnWindowCloseEvent()
-{
-}
-
-void GameApplication::OnWindowResizeEvent(int a_Width, int a_Height)
-{
-}
-
-void GameApplication::OnKeyPressedEvent(int a_KeyCode, int a_RepeatCount)
-{
-}
-
-void GameApplication::OnKeyReleasedEvent(int a_KeyCode)
-{
-}
-
-void GameApplication::OnMouseButtonPressedEvent(int a_Button)
-{
-}
-
-void GameApplication::OnMouseButtonReleasedEvent(int a_Button)
-{
-}
-
-void GameApplication::OnMouseScrolledEvent(float a_XOffset, float a_YOffset)
-{
-}
-
-void GameApplication::OnMouseMovedEvent(float a_X, float a_Y)
-{
-}
+} 
