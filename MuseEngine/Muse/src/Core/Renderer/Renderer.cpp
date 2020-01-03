@@ -32,8 +32,8 @@ namespace Muse
     {
         a_Shader->Bind();
 
-        std::dynamic_pointer_cast<OpenGLShader>(a_Shader)->UploadUniformMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
-        std::dynamic_pointer_cast<OpenGLShader>(a_Shader)->UploadUniformMat4("u_Transform", a_Transform);
+        a_Shader->SetMat4("u_ViewProjection", s_SceneData->ViewProjectionMatrix);
+        a_Shader->SetMat4("u_Transform", a_Transform);
 
         a_VertexArray->Bind();
         RenderCommand::DrawIndexed(a_VertexArray);

@@ -52,53 +52,53 @@ namespace Muse
 	}
 
     ///Improvement: cache the uniform location in a map, id is a_Name.
-    void OpenGLShader::UploadUniformInt(const std::string& a_Name, int a_Int) const
+    void OpenGLShader::SetInt(const std::string& a_Name, int a_Int)
     {
 		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
 		ASSERT(location != -1, "Uniform not found!");
 		glUniform1i(location, a_Int);
     }
 
-    void OpenGLShader::UploadUniformFloat(const std::string& a_Name, float a_Float) const
+    void OpenGLShader::SetFloat1(const std::string& a_Name, float a_Float)
     {
 		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
 		ASSERT(location != -1, "Uniform not found!");
 		glUniform1f(location, a_Float);
     }
 
-    void OpenGLShader::UploadUniformFloat2(const std::string& a_Name, const glm::vec2& a_Float2) const
+    void OpenGLShader::SetFloat2(const std::string& a_Name, const glm::vec2& a_Float2)
     {
 		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
 		ASSERT(location != -1, "Uniform not found!");
 		glUniform2f(location, a_Float2.x, a_Float2.y);
     }
 
-    void OpenGLShader::UploadUniformFloat3(const std::string& a_Name, const glm::vec3& a_Float3) const
+    void OpenGLShader::SetFloat3(const std::string& a_Name, const glm::vec3& a_Float3)
     {
 		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
 		ASSERT(location != -1, "Uniform not found!");
 		glUniform3f(location, a_Float3.x, a_Float3.y, a_Float3.z);
     }
 
-	void OpenGLShader::UploadUniformFloat4(const std::string& a_Name, const glm::vec4& a_Float4) const
+	void OpenGLShader::SetFloat4(const std::string& a_Name, const glm::vec4& a_Float4)
 	{
 		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
 		ASSERT(location != -1, "Uniform not found!");
 		glUniform4f(location, a_Float4.x, a_Float4.y, a_Float4.z, a_Float4.w);
 	}
 
-    void OpenGLShader::UploadUniformMat3(const std::string& a_Name, const glm::mat3& a_Matrix) const
+    void OpenGLShader::SetMat3(const std::string& a_Name, const glm::mat3& a_Mat3)
     {
 		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
 		ASSERT(location != -1, "Uniform not found!");
-		glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(a_Matrix));
+		glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(a_Mat3));
     }
 
-	void OpenGLShader::UploadUniformMat4(const std::string& a_Name, const glm::mat4& a_Matrix) const
+	void OpenGLShader::SetMat4(const std::string& a_Name, const glm::mat4& a_Mat4)
     {
 		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
 		ASSERT(location != -1, "Uniform not found!");
-		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(a_Matrix));
+		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(a_Mat4));
 	}
 
     void OpenGLShader::Compile(const std::string& a_VertexSource, const std::string& a_FragmentSource)

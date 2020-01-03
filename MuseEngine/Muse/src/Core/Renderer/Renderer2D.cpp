@@ -5,7 +5,9 @@
 #include "VertexArray.h"
 #include "Shader.h"
 #include "Buffer/BufferLayout.h"
-#include "Core/Gameplay/Component/RenderComponent.h"
+
+#include <memory>
+#include "Core/Resource/ResourceManager.h"
 
 namespace Muse
 {
@@ -15,47 +17,43 @@ namespace Muse
         std::shared_ptr<Shader> FlatColorShader;
     };
 
-    static Renderer2DStorage s_Data;
+    static Renderer2DStorage* s_Data;
     
     void Renderer2D::Init()
     {
+        s_Data = new Renderer2DStorage();
+        s_Data->QuadVertexArray = Muse::VertexArray::Create();
 
-        /*
-        float vertices[3 * 4] =
-        {
-            -0.5f, -0.5f, 0.0f,
-            0.5f, -0.5f, 0.0f,
-            0.5f, 0.5f, 0.0f,
-            -0.5f, 0.5f, 0.0f,
-        };
-        uint32_t indices[6] = { 0, 1, 2, 2, 3, 0 };
-
-        const Muse::BufferLayout layout =
-        {
-            { Muse::ShaderDataType::Float3, "a_Position" },
+        float quadVertices[5 * 4] = {
+            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+             0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+             0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+            -0.5f,  0.5f, 0.0f, 0.0f, 1.0f
         };
 
-        s_Data.
-        */
-        /*
-        renderComponent.SetMesh(vertices,
-            3 * 4,  
-            indices,
-            6,
-            layout);
-        renderComponent.SetShader(m_FlatColorShader);
+        std::shared_ptr<VertexBuffer> squareVB = VertexBuffer::Create(quadVertices, sizeof(quadVertices));
+        squareVB->SetLayout({
+            { ShaderDataType::Float3, "a_Position" },
+            { ShaderDataType::Float2, "a_TexCoord" }
+            });
+        s_Data->QuadVertexArray->AddVertexBuffer(squareVB);
 
-        gameObject.GetTransform()->SetPosition({ 1.1f, 0, 0 });
-        */
+        uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
+        std::shared_ptr<IndexBuffer> quadIB = IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
+        s_Data->QuadVertexArray->SetIndexBuffer(quadIB);
 
+        s_Data->FlatColorShader = ResourceManager::Get<Shader>("assets/shaders/FlatColor.glsl");
     }
 
     void Renderer2D::ShutDown()
     {
+        delete s_Data;
     }
 
     void Renderer2D::BeginScene(const CameraComponent& a_OrthographicCamera)
     {
+        s_Data->FlatColorShader->Bind();
+        s_Data->FlatColorShader->SetMat4("u_ViewProjection", a_OrthographicCamera.GetViewProjectionMatrix());
     }
 
     void Renderer2D::EndScene()

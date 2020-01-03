@@ -1,33 +1,22 @@
-#include "GameApplication.h"
+﻿#include "Game3D.h"
 
 #include "Muse.h"
 
-#include "EntryPoint.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 #include "glm/gtc/type_ptr.hpp"
 #include "imgui/imgui.h"
 #include "PlayerComponent.h"
-#include "Game.h"
 
-class ExampleLayer : public Muse::Layer
-{
-public:
-	ExampleLayer()
-		: Layer("Example")
-	{ }
-
-	void OnUpdate(float a_DeltaTime) override
-	{
-		//LOG_INFO("ExampleLayer::Update");
-	}
-};
+/*
+#include "EntryPoint.h"
 
 Muse::Application* Muse::CreateApplication()
 {
-	return new GameApplication();
+    return new Game3D();
 }
+*/
 
-void GameApplication::OnStart()
+void Game3D::OnStart()
 {
     std::shared_ptr<Muse::Scene> scene = Muse::SceneManager::NewScene();
 
@@ -68,8 +57,8 @@ void GameApplication::OnStart()
         renderComponent.SetShader(textureShader);
         renderComponent.SetTexture(checkerboardTexture);
 
-        std::dynamic_pointer_cast<Muse::OpenGLShader>(textureShader)->Bind();
-        std::dynamic_pointer_cast<Muse::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
+        textureShader->Bind();
+        textureShader->SetInt("u_Texture", 0);
     }
 
     /////////////////////////////////////////////////////////////////
@@ -125,9 +114,9 @@ void GameApplication::OnStart()
         Muse::RenderComponent& renderComponent = gameObject.AddComponent<Muse::RenderComponent>();
 
         renderComponent.SetMesh(vertices,
-            3 * 7, 
-            indices, 
-            3, 
+            3 * 7,
+            indices,
+            3,
             layout);
 
         renderComponent.SetShader(vertexColorShader);
@@ -167,25 +156,14 @@ void GameApplication::OnStart()
         renderComponent.SetShader(textureShader);
         renderComponent.SetTexture(raymanTexture);
 
-        std::dynamic_pointer_cast<Muse::OpenGLShader>(textureShader)->Bind();
-        std::dynamic_pointer_cast<Muse::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
+        textureShader->Bind();
+        textureShader->SetInt("u_Texture", 0);
+
         gameObject.GetTransform()->SetPosition({ 0, 0, 1 });
     }
-
-	//PushLayer(new Game());
 }
 
-void GameApplication::OnUpdate(float a_DeltaTime)
-{
-
-}
-
-void GameApplication::OnFixedUpdate()
-{
-    
-}
-
-void GameApplication::OnRender()
+void Game3D::OnRender()
 {
     Muse::Renderer::Init();
 
@@ -196,14 +174,14 @@ void GameApplication::OnRender()
 
     std::shared_ptr<Muse::Shader> flatColorShader = Muse::ResourceManager::Get<Muse::Shader>("assets/shaders/FlatColor.glsl");
     flatColorShader->Bind();
-    std::dynamic_pointer_cast<Muse::OpenGLShader>(flatColorShader)->UploadUniformFloat3("u_Color", m_FlatShaderColor);
+    flatColorShader->SetFloat3("u_Color", m_FlatShaderColor);
 
     for (auto& gameObject : Muse::SceneManager::GetActiveScene()->GetGameObjects())
     {
         Muse::RenderComponent* meshComponent = gameObject->GetComponent<Muse::RenderComponent>();
-        if(meshComponent != nullptr)
+        if (meshComponent != nullptr)
         {
-            if(meshComponent->GetTexture() != nullptr)
+            if (meshComponent->GetTexture() != nullptr)
             {
                 meshComponent->GetTexture()->Bind();
             }
@@ -211,12 +189,10 @@ void GameApplication::OnRender()
         }
     }
 
-    //Muse::Renderer2D::DrawQuad({0.0f, 0.0f, 0.0f}, { 1.0f, 1.0f}, { 0.8f, 0.2f, 0.3f, 1.0f });
-
-	Muse::Renderer::EndScene();
+    Muse::Renderer::EndScene();
 }
 
-void GameApplication::OnImGuiRender()
+void Game3D::OnImGuiRender()
 {
     Muse::GameObject* playerGameObject = Muse::SceneManager::GetActiveScene()->FindGameObjectOfType<PlayerComponent>();
 
@@ -227,4 +203,4 @@ void GameApplication::OnImGuiRender()
     ImGui::Begin("Settings");
     ImGui::ColorEdit3("Square Color", glm::value_ptr(m_FlatShaderColor));
     ImGui::End();
-} 
+}
