@@ -7,13 +7,14 @@
 #include "Core/Window.h"
 #include "CameraComponent.h"
 #include "Core/Gameplay/GameObject.h"
+#include "Core/Utilities/Defines.h"
 
 namespace Muse
 {
     OrthographicCameraControllerComponent::OrthographicCameraControllerComponent()
     {
-        Application::Get().GetWindow().MouseScrolledEvent.Subscribe(this, std::bind(&OrthographicCameraControllerComponent::OnMouseScrolledEvent, this, std::placeholders::_1, std::placeholders::_2));
-        Application::Get().GetWindow().WindowResizeEvent.Subscribe(this, std::bind(&OrthographicCameraControllerComponent::OnWindowResizeEvent, this, std::placeholders::_1, std::placeholders::_2));
+        Application::Get().GetWindow().MouseScrolledEvent.Subscribe(SUB_FN(OrthographicCameraControllerComponent::OnMouseScrolledEvent, std::placeholders::_1, std::placeholders::_2));
+        Application::Get().GetWindow().WindowResizeEvent.Subscribe(SUB_FN(OrthographicCameraControllerComponent::OnWindowResizeEvent, std::placeholders::_1, std::placeholders::_2));
     }
 
     OrthographicCameraControllerComponent::~OrthographicCameraControllerComponent()

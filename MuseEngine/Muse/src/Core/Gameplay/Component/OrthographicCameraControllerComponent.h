@@ -18,7 +18,7 @@ namespace Muse
         float GetZoomSpeed() const { return m_ZoomSpeed; }
 
     private:
-        float m_MoveSpeed = 0.3f;
+        float m_MoveSpeed = 0.6f;
         float m_ZoomSpeed = 0.3f;
         CameraComponent* m_CameraComponent = nullptr;
 

@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include <functional>
-#include <map>
+#include <unordered_map>
 
 #include "Core/Utilities/Utilities.h"
 
@@ -22,7 +22,7 @@ namespace Muse
 	private:
 		static ullong PointerToHash(const void* a_PointerID);
 
-		std::map<ullong, std::function<void(Args ...)>> subscriptions;
+		std::unordered_map<ullong, std::function<void(Args ...)>> subscriptions;
 	};
 
 	template <typename ... Args>

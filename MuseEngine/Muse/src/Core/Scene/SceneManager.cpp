@@ -1,11 +1,11 @@
 #include "MusePCH.h"
 
 #include "Core/Scene/SceneManager.h"
-
 #include "Core/Application.h"
 #include "Core/Resource//ResourceManager.h"
 #include "Core/Scene/Scene.h"
 #include "Core/Utilities/Log.h"
+#include "Core/Utilities/Defines.h"
 #include "Core/Window.h"
 
 namespace Muse 
@@ -16,7 +16,7 @@ namespace Muse
 
     SceneManager::SceneManager()
     {
-        Application::Get().m_UpdateEvent.Subscribe(this, std::bind(&SceneManager::OnUpdate, this, std::placeholders::_1));
+        Application::Get().m_UpdateEvent.Subscribe(SUB_FN(SceneManager::OnUpdate, std::placeholders::_1));
     }
 
     SceneManager::~SceneManager()

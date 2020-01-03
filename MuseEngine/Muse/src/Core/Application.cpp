@@ -9,6 +9,7 @@
 #include "Renderer/Renderer.h"
 #include "Scene/SceneManager.h"
 #include "Resource/ResourceManager.h"
+#include "Utilities/Defines.h"
 
 #include "GLFW/glfw3.h"
 
@@ -22,14 +23,15 @@ namespace Muse
         s_Instance = this;
 
         m_Window = std::unique_ptr<Window>(Window::Create());
-        m_Window->WindowCloseEvent.Subscribe(this, std::bind(&Application::OnWindowCloseEvent, this));
-        m_Window->WindowResizeEvent.Subscribe(this, std::bind(&Application::OnWindowResizeEvent, this, std::placeholders::_1, std::placeholders::_2));
-        m_Window->KeyPressedEvent.Subscribe(this, std::bind(&Application::OnWindowResizeEvent, this, std::placeholders::_1, std::placeholders::_2));
-        m_Window->KeyReleasedEvent.Subscribe(this, std::bind(&Application::OnKeyReleasedEvent, this, std::placeholders::_1));
-        m_Window->MouseButtonPressedEvent.Subscribe(this, std::bind(&Application::OnMouseButtonPressedEvent, this, std::placeholders::_1));
-        m_Window->MouseButtonReleasedEvent.Subscribe(this, std::bind(&Application::OnMouseButtonReleasedEvent, this, std::placeholders::_1));
-        m_Window->MouseScrolledEvent.Subscribe(this, std::bind(&Application::OnMouseScrolledEvent, this, std::placeholders::_1, std::placeholders::_2));
-        m_Window->MouseMovedEvent.Subscribe(this, std::bind(&Application::OnMouseMovedEvent, this, std::placeholders::_1, std::placeholders::_2));
+
+        m_Window->WindowCloseEvent.Subscribe( SUB_FN(Application::OnWindowCloseEvent));
+        m_Window->WindowResizeEvent.Subscribe(SUB_FN(Application::OnWindowResizeEvent, std::placeholders::_1, std::placeholders::_2));
+        m_Window->KeyPressedEvent.Subscribe(SUB_FN(Application::OnWindowResizeEvent, std::placeholders::_1, std::placeholders::_2));
+        m_Window->KeyReleasedEvent.Subscribe(SUB_FN(Application::OnKeyReleasedEvent, std::placeholders::_1));
+        m_Window->MouseButtonPressedEvent.Subscribe(SUB_FN(Application::OnMouseButtonPressedEvent, std::placeholders::_1));
+        m_Window->MouseButtonReleasedEvent.Subscribe(SUB_FN(Application::OnMouseButtonReleasedEvent, std::placeholders::_1));
+        m_Window->MouseScrolledEvent.Subscribe(SUB_FN(Application::OnMouseScrolledEvent, std::placeholders::_1, std::placeholders::_2));
+        m_Window->MouseMovedEvent.Subscribe(SUB_FN(Application::OnMouseMovedEvent, std::placeholders::_1, std::placeholders::_2));
 
         Renderer::Init();
 
