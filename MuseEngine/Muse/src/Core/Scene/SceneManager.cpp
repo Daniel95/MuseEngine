@@ -1,14 +1,10 @@
 #include "MusePCH.h"
 
-#include "Core/System/SceneManager.h"
+#include "Core/Scene/SceneManager.h"
 
 #include "Core/Application.h"
-#include "Core/Gameplay/GameObject.h"
-#include "Core/Gameplay/Component/BoxCollider2D.h"
-#include "Core/System/ResourceManager.h"
-#include "Core/System/Manager/ISystem.h"
-#include "Core/System/Manager/SystemManager.h"
-#include "Core/System/Scene/Scene.h"
+#include "Core/Resource//ResourceManager.h"
+#include "Core/Scene/Scene.h"
 #include "Core/Utilities/Log.h"
 #include "Core/Window.h"
 
@@ -66,6 +62,11 @@ namespace Muse
         _ASSERT(m_ActiveScene != nullptr);
 
         m_SceneNameToLoad = m_ActiveScene->GetName();
+    }
+
+    std::shared_ptr<Scene> SceneManager::GetActiveScene()
+    {
+        return m_ActiveScene;
     }
 
     void SceneManager::LoadSceneImmediate(const std::string& a_SceneName)

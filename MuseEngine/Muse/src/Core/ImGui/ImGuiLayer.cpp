@@ -4,7 +4,6 @@
 #include "imgui.h"
 
 //TEMP
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include "Core/Application.h"
 #include <examples/imgui_impl_opengl3.h>

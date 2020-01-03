@@ -1,16 +1,16 @@
 #include "MusePCH.h"
 
 #include "Core/Application.h"
-
 #include "Window.h"
-#include "Core/System/ResourceManager.h"
-#include "Core/System/SceneManager.h"
 #include "Core/Utilities/Log.h"
 #include "Core/Utilities/Defines.h"
 #include "Core/Event/ApplicationEvent.h"
 #include "ImGui/ImGuiLayer.h"
-#include "GLFW/glfw3.h"
 #include "Renderer/Renderer.h"
+#include "Scene/SceneManager.h"
+#include "Resource/ResourceManager.h"
+
+#include "GLFW/glfw3.h"
 
 namespace Muse
 {

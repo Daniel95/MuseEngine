@@ -49,7 +49,6 @@ namespace Muse
 	private:
         std::vector<Component*> m_Components;
         Scene* m_Scene;
-        SystemManager* m_SystemManager;
         bool m_Destroyed = false;
 
 	};

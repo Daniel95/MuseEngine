@@ -1341,6 +1341,7 @@
     <ClInclude Include="src\Core\Scene\SceneManager.h">
       <Filter>src\Core\System</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Renderer\Renderer2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1472,5 +1473,6 @@
     <ClCompile Include="src\Core\Scene\SceneManager.cpp">
       <Filter>src\Core\System</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Renderer\Renderer2D.cpp" />
   </ItemGroup>
 </Project>

@@ -28,13 +28,13 @@ std::string Muse::PointerToString(const void* a_Pointer)
     return ss.str();
 }
 
-bool Muse::Replace(std::string& str, const std::string& from, const std::string& to)
+bool Muse::Replace(std::string& a_Str, const std::string& a_From, const std::string& a_To)
 {
-    size_t start_pos = str.find(from);
+    size_t start_pos = a_Str.find(a_From);
     if (start_pos == std::string::npos)
     {
         return false;
     }
-    str.replace(start_pos, from.length(), to);
+    a_Str.replace(start_pos, a_From.length(), a_To);
     return true;
 }

@@ -1,11 +1,7 @@
 #include "MusePCH.h"
 
-#include "Core/Gameplay/GameObject.h"
-
-#include "Core/Application.h"
 #include "Core/Gameplay/Component/TransformComponent.h"
-#include "Core/System/SceneManager.h"
-#include "Core/System/Scene/Scene.h"
+#include "Core/Scene/Scene.h"
 
 namespace Muse 
 {
@@ -77,11 +73,6 @@ namespace Muse
     Scene* GameObject::GetScene() const
     {
         return m_Scene;
-    }
-
-    SystemManager* GameObject::GetSystemManager() const
-    {
-        return m_SystemManager;
     }
 
     TransformComponent* GameObject::GetTransform() const

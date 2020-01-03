@@ -32,6 +32,8 @@ namespace Muse
     WindowsWindow::~WindowsWindow()
     {
         Shutdown();
+
+        delete m_Context;
     }
 
     void WindowsWindow::Init(const WindowProperties& a_Properties)

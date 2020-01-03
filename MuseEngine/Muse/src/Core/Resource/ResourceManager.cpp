@@ -1,7 +1,6 @@
 #include "MusePCH.h"
 
-#include "Core/System/Manager/SystemManager.h"
-#include "Core/System/ResourceManager.h"
+#include "Core/Resource/ResourceManager.h"
 
 #include <string>
 #include <filesystem>

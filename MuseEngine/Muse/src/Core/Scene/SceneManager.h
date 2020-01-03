@@ -1,6 +1,9 @@
 #pragma once
 
 #include <string>
+#include <memory>
+
+#include <rttr/registration>
 
 namespace Muse 
 {
@@ -30,7 +33,7 @@ namespace Muse
         static std::shared_ptr<Scene> NewScene();
         static void LoadScene(const std::string& a_SceneName);
         static void ReloadScene();
-        static std::shared_ptr<Scene> GetActiveScene() { return m_ActiveScene; }
+        static std::shared_ptr<Scene> GetActiveScene();
 
     private:
         static std::string m_SceneNameToLoad;

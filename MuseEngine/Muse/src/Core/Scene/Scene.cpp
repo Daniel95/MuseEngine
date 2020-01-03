@@ -1,12 +1,9 @@
 #include "MusePCH.h"
 
-#include "Core/System/Scene/Scene.h"
-
+#include "Core/Scene/Scene.h"
 #include "Core/Application.h"
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Gameplay/Component/TransformComponent.h"
-#include "Core/System/SceneManager.h"
-#include "Core/System/Manager/SystemManager.h"
 #include "Core/Gameplay/Component/CameraComponent.h"
 #include "Core/Utilities/json/from_json.h"
 #include "Core/Utilities/json/to_json.h"
