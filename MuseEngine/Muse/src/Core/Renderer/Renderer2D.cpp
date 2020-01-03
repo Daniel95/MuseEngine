@@ -42,7 +42,7 @@ namespace Muse
         std::shared_ptr<IndexBuffer> quadIB = IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
         s_Data->QuadVertexArray->SetIndexBuffer(quadIB);
 
-        s_Data->FlatColorShader = ResourceManager::Get<Shader>("assets/shaders/FlatColor.glsl");
+        s_Data->FlatColorShader = ResourceManager::Load<Shader>("assets/shaders/FlatColor.glsl");
     }
 
     void Renderer2D::ShutDown()

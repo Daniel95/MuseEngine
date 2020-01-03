@@ -18,6 +18,8 @@ Muse::Application* Muse::CreateApplication()
 
 void Game2D::OnStart()
 {
+    Muse::Renderer2D::Init();
+
     std::shared_ptr<Muse::Scene> scene = Muse::SceneManager::NewScene();
 
     std::shared_ptr<Muse::Shader> textureShader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/Texture.glsl");
