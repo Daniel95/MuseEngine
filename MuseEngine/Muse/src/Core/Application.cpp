@@ -148,6 +148,8 @@ namespace Muse
     {
         m_Minimized = a_Width == 0 || a_Height == 0;
 
+        Renderer::OnWindowResize(a_Width, a_Height);
+
         OnWindowResizeEvent(a_Width, a_Height);
     }
 

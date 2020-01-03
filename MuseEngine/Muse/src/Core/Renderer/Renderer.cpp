@@ -14,6 +14,11 @@ namespace Muse
         RenderCommand::Init();
     }
 
+    void Renderer::OnWindowResize(uint32_t a_Width, uint32_t a_Height)
+    {
+        RenderCommand::SetViewport(0, 0, a_Width, a_Height);
+    }
+
     void Renderer::BeginScene(const CameraComponent& a_Camera)
     {
         s_SceneData->ViewProjectionMatrix = a_Camera.GetViewProjectionMatrix();

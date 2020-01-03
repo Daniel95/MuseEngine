@@ -11,6 +11,11 @@ namespace Muse
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
+    void OpenGLRendererAPI::SetViewport(uint32_t a_X, uint32_t a_Y, uint32_t a_Width, uint32_t a_Height)
+    {
+        glViewport(a_X, a_Y, a_Width, a_Height);
+    }
+
     void OpenGLRendererAPI::SetClearColor(const glm::vec4& a_Color)
     {
         glClearColor(a_Color.r, a_Color.g, a_Color.b, a_Color.a);

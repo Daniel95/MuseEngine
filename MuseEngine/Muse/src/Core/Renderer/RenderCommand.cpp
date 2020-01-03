@@ -14,6 +14,11 @@ namespace Muse
         s_RendererAPI->Init();
     }
 
+    void RenderCommand::SetViewport(uint32_t a_X, uint32_t a_Y, uint32_t a_Width, uint32_t a_Height)
+    {
+        s_RendererAPI->SetViewport(a_X, a_Y, a_Width, a_Height);
+    }
+
     void RenderCommand::SetClearColor(const glm::vec4& a_Color)
     {
         s_RendererAPI->SetClearColor(a_Color);

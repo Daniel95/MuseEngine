@@ -11,6 +11,7 @@ namespace Muse
     {
     public:
         static void Init();
+        static void OnWindowResize(uint32_t a_Width, uint32_t a_Height);
         static void BeginScene(const CameraComponent& a_Camera);
         static void EndScene();
         static void Submit(const std::shared_ptr<Shader>& a_Shader, const std::shared_ptr<VertexArray>& a_VertexArray, const glm::mat4& a_Transform = glm::mat4(1.0f));
