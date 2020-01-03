@@ -192,6 +192,7 @@
     <ClInclude Include="src\Core\Window.h" />
     <ClInclude Include="src\EntryPoint.h" />
     <ClInclude Include="src\Examples\RTTRExample.h" />
+    <ClInclude Include="src\Muse.h" />
     <ClInclude Include="src\MusePCH.h" />
     <ClInclude Include="src\Platform\OpenGL\Buffer\OpenGLIndexBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\Buffer\OpenGLVertexBuffer.h" />

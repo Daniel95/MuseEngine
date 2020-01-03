@@ -9,6 +9,7 @@
 #include "Core/Utilities/json/to_json.h"
 
 #include <rttr/registration>
+#include <filesystem>
 
 namespace Muse
 {
@@ -136,8 +137,8 @@ namespace Muse
 
     void Scene::Save(const std::string& a_Path)
     {
-        std::experimental::filesystem::path path{ a_Path }; //creates TestingFolder object on C:
-        std::experimental::filesystem::create_directories(path.parent_path()); //add directories based on the object path (without this line it will not work)
+        std::filesystem::path path{ a_Path }; //creates TestingFolder object on C:
+        std::filesystem::create_directories(path.parent_path()); //add directories based on the object path (without this line it will not work)
 
         DestroyEditorCamera();
 
@@ -153,7 +154,7 @@ namespace Muse
     void Scene::Load(const std::string& a_Path)
     {
     #ifdef MUSE_DEBUG 
-        if (!std::experimental::filesystem::exists(a_Path))
+        if (!std::filesystem::exists(a_Path))
         {
             LOG_ENGINE_ERROR("Scene does not exists! {0}", a_Path);
             ASSERT_ENGINE(false, "Scene does not exists!");

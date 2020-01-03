@@ -1,8 +1,8 @@
 ﻿#include "Game.h"
+
+#include "Muse.h"
+
 #include "imgui/imgui.h"
-#include "Core/Scene/SceneManager.h"
-#include "Core/Gameplay/GameObject.h"
-#include "Core/Gameplay/Component/CameraComponent.h"
 
 Game::Game()
     : Muse::Layer("Game Layer")

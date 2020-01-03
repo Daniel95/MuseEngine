@@ -1,9 +1,7 @@
 #pragma once
 
-#define _SILENCE_EXPERIMENTAL_FILESYSTEM_DEPRECATION_WARNING
-
 //STD
-#include <experimental/filesystem>
+#include <filesystem>
 #include <vector>
 #include <array>
 #include <map>
@@ -44,3 +42,9 @@
 #include <glm/mat2x2.hpp>
 #include <glm/mat3x3.hpp>
 #include <glm/mat4x4.hpp>
+
+/*
+#ifdef MUSE_PLATFORM_WINDOWS
+#include <Windows.h>
+#endif
+*/
