@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "Core/Application.h"
-#include "glm/vec3.hpp"
+#include "glm/vec4.hpp"
 
 namespace Muse
 {
@@ -23,7 +23,7 @@ protected:
 
 private:
     std::shared_ptr<Muse::Shader> m_FlatColorShader;
-    glm::vec3 m_FlatShaderColor = { 0.8, 0.2, 0.4 };
+    glm::vec4 m_FlatShaderColor = { 0.8, 0.2, 0.4, 1.0f };
 
     const float m_CameraMoveSpeed = 0.3f;
 

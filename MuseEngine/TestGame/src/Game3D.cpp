@@ -8,13 +8,13 @@
 #include "PlayerComponent.h"
 
 /*
+*/
 #include "EntryPoint.h"
 
 Muse::Application* Muse::CreateApplication()
 {
     return new Game3D();
 }
-*/
 
 void Game3D::OnStart()
 {
@@ -174,7 +174,7 @@ void Game3D::OnRender()
 
     std::shared_ptr<Muse::Shader> flatColorShader = Muse::ResourceManager::Get<Muse::Shader>("assets/shaders/FlatColor.glsl");
     flatColorShader->Bind();
-    flatColorShader->SetFloat3("u_Color", m_FlatShaderColor);
+    flatColorShader->SetFloat4("u_Color", m_FlatShaderColor);
 
     for (auto& gameObject : Muse::SceneManager::GetActiveScene()->GetGameObjects())
     {
@@ -194,12 +194,6 @@ void Game3D::OnRender()
 
 void Game3D::OnImGuiRender()
 {
-    Muse::GameObject* playerGameObject = Muse::SceneManager::GetActiveScene()->FindGameObjectOfType<PlayerComponent>();
-
-    if (playerGameObject == nullptr) { return; }
-
-    PlayerComponent* playerComponent = playerGameObject->GetComponent<PlayerComponent>();
-
     ImGui::Begin("Settings");
     ImGui::ColorEdit3("Square Color", glm::value_ptr(m_FlatShaderColor));
     ImGui::End();
