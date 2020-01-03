@@ -4,7 +4,7 @@
 class PlayerComponent : public Muse::Component
 {
 public:
-    virtual void Update(float a_DeltaTime) override;
+    virtual void OnUpdate(float a_DeltaTime) override;
 
 private:
     float m_MoveSpeed = 0.3f;

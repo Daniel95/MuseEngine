@@ -4,7 +4,7 @@
 
 #include "glm/glm.hpp"
 
-void PlayerComponent::Update(float a_DeltaTime)
+void PlayerComponent::OnUpdate(float a_DeltaTime)
 {
     if (Muse::Input::IsKeyPressed(MUSE_KEY_A))
     {

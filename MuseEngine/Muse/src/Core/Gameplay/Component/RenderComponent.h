@@ -19,8 +19,7 @@ namespace Muse
         void SetTexture(std::shared_ptr<Texture> a_Texture) { m_Texture = a_Texture; }
         std::shared_ptr<Texture> GetTexture() const { return m_Texture; }
 
-
-        virtual void Update(float a_DeltaTime) override;
+        virtual void OnUpdate(float a_DeltaTime) override;
         void OnEnable() override;
         void OnDisable() override;
 

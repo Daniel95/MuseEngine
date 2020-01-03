@@ -260,8 +260,8 @@ namespace Muse
         ASSERT(GetEditorCamera() == nullptr, "EditorCamera already exists!");
         GameObject& gameObject = AddGameObject();
 
-        gameObject.AddComponent<OrthographicCameraControllerComponent>().MakeEditorCamera();
-        //gameObject.AddComponent<CameraComponent>().MakeEditorCamera();
+        gameObject.AddComponent<CameraComponent>().MakeEditorCamera();
+        gameObject.AddComponent<OrthographicCameraControllerComponent>();
 
         return gameObject;
     }

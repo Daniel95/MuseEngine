@@ -11,8 +11,14 @@ namespace Muse
     CameraComponent::CameraComponent()
         : Component()
     {
-        SetProjectionMatrix(-1.6f, 1.6f, -0.9f, 0.9f);
         s_MainCamera = this;
+    }
+
+    void CameraComponent::SetProjection(float a_AspectRatio, float a_ZoomLevel)
+    {
+        m_AspectRatio = a_AspectRatio;
+        m_ZoomLevel = a_ZoomLevel;
+        SetProjectionMatrix(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
     }
 
     const glm::mat4& CameraComponent::GetViewMatrix() const

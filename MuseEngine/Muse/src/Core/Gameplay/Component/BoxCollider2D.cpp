@@ -8,19 +8,10 @@ namespace Muse
 {
     BoxCollider2D::BoxCollider2D()
     {
-        if (m_CollisionType != CollisionType::NONE)
+        if (m_CollisionType != CollisionType::None)
         {
             SetCollisionType(m_CollisionType);
         }
-    }
-
-    BoxCollider2D::~BoxCollider2D()
-    {
-    }
-
-    void BoxCollider2D::Update(float a_DeltaTime)
-    {
-        _ASSERT(m_CollisionType != CollisionType::NONE);
     }
 
     void BoxCollider2D::SetCollisionType(CollisionType a_CollisionType)
@@ -54,7 +45,7 @@ namespace Muse
 
     rttr::registration::enumeration<Muse::CollisionType>("CollisionType")
         (
-            rttr::value("NONE", Muse::CollisionType::NONE),
+            rttr::value("None", Muse::CollisionType::None),
             rttr::value("Player", Muse::CollisionType::Static),
             rttr::value("Enemy", Muse::CollisionType::Dynamic)
         );

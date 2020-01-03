@@ -20,16 +20,8 @@ namespace Muse
 		{
 			OnDisable();
 		}
-    }
 
-    void Component::Update(float a_DeltaTime)
-    {
-        a_DeltaTime;
-    }
-
-    void Component::FixedUpdate(float a_TimeStep)
-    {
-        a_TimeStep;
+		OnInit();
     }
 
 	void Component::Enable()
@@ -48,15 +40,6 @@ namespace Muse
     {
 		return m_GameObject->GetTransform();
     }
-
-    void Component::OnEnable()
-	{
-	}
-
-	void Component::OnDisable()
-	{
-	}
-
 }
 
 RTTR_REGISTRATION
@@ -65,6 +48,6 @@ RTTR_REGISTRATION
 		.constructor<>()
 		(
 			rttr::policy::ctor::as_raw_ptr
-		)
-		.property("Enabled", &Muse::Component::m_isEnabled);
+		);
+		//.property("Enabled", &Muse::Component::m_isEnabled);
 }

@@ -23,7 +23,7 @@ namespace Muse
         m_VA->SetIndexBuffer(m_IB);
     }
 
-    void RenderComponent::Update(float a_DeltaTime)
+    void RenderComponent::OnUpdate(float a_DeltaTime)
     {
     }
 

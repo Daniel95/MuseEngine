@@ -40,7 +40,7 @@ namespace Muse
         {
             if (component->IsEnabled())
             {
-                component->FixedUpdate(a_TimeStep);
+                component->FixedUpdate();
             }
         }
     }

@@ -5,7 +5,7 @@
 namespace Muse
 {
     class GameObject;
-    enum class CollisionType { NONE, Dynamic, Static };
+    enum class CollisionType { None, Dynamic, Static };
 
     class BoxCollider2D : public Component
     {
@@ -13,9 +13,7 @@ namespace Muse
 
     public:
         BoxCollider2D();
-        virtual ~BoxCollider2D();
-
-        virtual void Update(float a_DeltaTime) override;
+        virtual ~BoxCollider2D() = default;
 
         CollisionType GetCollisionType();
         void SetCollisionType(CollisionType a_CollisionType);

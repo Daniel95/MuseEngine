@@ -36,8 +36,6 @@ namespace Muse
         template <class T>
         T* GetComponent() const;
 
-        //void AddRawComponent(Component* a_Component) { m_Components.push_back(a_Component); };
-
         Scene* GetScene() const;
         SystemManager* GetSystemManager() const;
         TransformComponent* GetTransform() const;

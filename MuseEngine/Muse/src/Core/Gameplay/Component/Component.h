@@ -1,7 +1,6 @@
 #pragma once
 
 #include <rttr/registration>
-#include <rttr/registration_friend>
 
 namespace Muse
 {
@@ -18,21 +17,23 @@ namespace Muse
         virtual ~Component() = default;
 
         void Init(GameObject* a_GameObject);
-        virtual void Update(float a_DeltaTime);
-        virtual void FixedUpdate(float a_TimeStep);
-
+        void Update(float a_DeltaTime) { OnUpdate(a_DeltaTime); }
+        void FixedUpdate() { OnFixedUpdate(); }
 		void Enable();
         void Disable();
 
         GameObject* GetGameObject() const { return m_GameObject; }
         TransformComponent* GetTransform() const;
 		bool IsEnabled() const { return m_isEnabled; };
-
-		RTTR_REGISTRATION_FRIEND;
+        //template<typename T>
+        //T* GetComponent() { return m_GameObject->GetComponent<T>(); }
 
 	protected:
-		virtual void OnEnable();
-		virtual void OnDisable();
+        virtual void OnUpdate(float a_DeltaTime) {}
+        virtual void OnInit() {}
+        virtual void OnFixedUpdate() {}
+		virtual void OnEnable() {}
+		virtual void OnDisable() {}
 
     private:
         GameObject* m_GameObject = nullptr;

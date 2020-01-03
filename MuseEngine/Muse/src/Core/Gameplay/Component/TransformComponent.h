@@ -60,8 +60,6 @@ namespace Muse
 		const glm::vec3& RTTRGetScale() const { return m_Scale; }
 		void RTTRSetScale(const glm::vec3& a_Scale) { SetScale(a_Scale); }
 
-		RTTR_REGISTRATION_FRIEND;
-
 	private:
 		bool m_DirtyPosition = true;
 		bool m_DirtyRotation = true;
