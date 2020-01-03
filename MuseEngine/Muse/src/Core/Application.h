@@ -7,6 +7,7 @@
 
 namespace Muse
 {
+    class ResourceManager;
     class Layer;
     class GameWindow;
     class SceneManager;
@@ -62,6 +63,7 @@ namespace Muse
         bool m_Running = true;
         std::shared_ptr<Window> m_Window;
         std::shared_ptr<SceneManager> m_SceneManager;
+        std::shared_ptr<ResourceManager> m_ResourceManager;
         float m_DeltaTime = 0;
 
         ImGuiLayer* m_ImGuiLayer;

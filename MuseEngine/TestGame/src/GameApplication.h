@@ -3,17 +3,6 @@
 #include "Core/Application.h"
 #include "glm/vec3.hpp"
 
-namespace Muse
-{
-    class Texture2D;
-    class Scene;
-    class OrthographicCamera;
-    class Shader;
-    class VertexBuffer;
-    class IndexBuffer;
-    class VertexArray;
-}
-
 class GameApplication : public Muse::Application
 {
 public:

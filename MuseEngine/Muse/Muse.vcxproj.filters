@@ -186,12 +186,6 @@
     <ClInclude Include="src\Core\System\Manager\SystemManager.h">
       <Filter>src\Core\System\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\System\Resource\Resource.h">
-      <Filter>src\Core\System\Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\System\Scene\Scene.h">
-      <Filter>src\Core\System\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\Utilities\Defines.h">
       <Filter>src\Core\Utilities</Filter>
     </ClInclude>
@@ -1335,10 +1329,16 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\System\ResourceManager.h">
+    <ClInclude Include="src\Core\Resource\Resource.h">
+      <Filter>src\Core\System\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Resource\ResourceManager.h">
       <Filter>src\Core\System</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\System\SceneManager.h">
+    <ClInclude Include="src\Core\Scene\Scene.h">
+      <Filter>src\Core\System\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Scene\SceneManager.h">
       <Filter>src\Core\System</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1415,12 +1415,6 @@
     <ClCompile Include="src\Core\System\Manager\SystemManager.cpp">
       <Filter>src\Core\System\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\System\Resource\Resource.cpp">
-      <Filter>src\Core\System\Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\System\Scene\Scene.cpp">
-      <Filter>src\Core\System\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\Utilities\Log.cpp">
       <Filter>src\Core\Utilities</Filter>
     </ClCompile>
@@ -1466,10 +1460,16 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\System\ResourceManager.cpp">
+    <ClCompile Include="src\Core\Resource\Resource.cpp">
+      <Filter>src\Core\System\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Resource\ResourceManager.cpp">
       <Filter>src\Core\System</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\System\SceneManager.cpp">
+    <ClCompile Include="src\Core\Scene\Scene.cpp">
+      <Filter>src\Core\System\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Scene\SceneManager.cpp">
       <Filter>src\Core\System</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Core/System/Resource/Resource.h"
 #include "Core/Gameplay/Component/Component.h"
 #include "Core/Gameplay/Component/TransformComponent.h"
 #include "Core/Utilities/Defines.h"
@@ -13,6 +12,7 @@
 #include <deque>
 #include <string>
 #include <vector>
+#include "Core/Resource/Resource.h"
 
 namespace Muse 
 {

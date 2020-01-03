@@ -15,7 +15,9 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "Platform/OpenGL/OpenGLShader.h"
 #include "Core/Renderer/Texture.h"
-#include "Core/System/ResourceManager.h"
+#include "Core/Scene/SceneManager.h"
+#include "Core/Scene/Scene.h"
+#include "Core/Resource/ResourceManager.h"
 
 class ExampleLayer : public Muse::Layer
 {

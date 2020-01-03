@@ -34,6 +34,7 @@ namespace Muse
         Renderer::Init();
 
         m_SceneManager = std::make_shared<SceneManager>();
+        m_ResourceManager = std::make_shared<ResourceManager>();
 
         m_ImGuiLayer = new ImGuiLayer();
         PushOverlay(m_ImGuiLayer);

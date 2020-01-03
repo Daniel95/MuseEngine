@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include "Core/System/Resource/Resource.h"
+#include "Core/Resource/Resource.h"
 
 namespace Muse
 {
