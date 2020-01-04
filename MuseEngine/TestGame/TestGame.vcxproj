@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClInclude Include="src\Game2D.h" />
     <ClInclude Include="src\Game3D.h" />
+    <ClInclude Include="src\GameDefines.h" />
     <ClInclude Include="src\PlayerComponent.h" />
   </ItemGroup>
   <ItemGroup>

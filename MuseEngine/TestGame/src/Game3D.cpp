@@ -8,13 +8,15 @@
 #include "PlayerComponent.h"
 #include "Core/Resource/ResourceTest.h"
 
-/*
+#include "GameDefines.h"
+
+#ifndef GAME_2D
 #include "EntryPoint.h"
 Muse::Application* Muse::CreateApplication()
 {
     return new Game3D();
 }
-*/
+#endif
 
 void Game3D::OnStart()
 {

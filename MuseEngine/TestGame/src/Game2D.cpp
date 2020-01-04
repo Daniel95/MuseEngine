@@ -7,14 +7,15 @@
 #include "imgui/imgui.h"
 #include "PlayerComponent.h"
 
+#include "GameDefines.h"
 
-/*
-*/
+#ifdef GAME_2D
 #include "EntryPoint.h"
 Muse::Application* Muse::CreateApplication()
 {
 	return new Game2D();
 }
+#endif
 
 void Game2D::OnStart()
 {

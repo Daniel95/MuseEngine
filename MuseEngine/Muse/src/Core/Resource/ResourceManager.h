@@ -39,15 +39,15 @@ namespace Muse
         template<typename T>
         static std::shared_ptr<T> CreateResource()
         {
-            ASSERT_ENGINE(false, "Creating this resource is not supported!");
+            ASSERT_ENGINE(false, "Loading this resource is not supported!");
             return nullptr;
         }
         template<typename T>
         static std::shared_ptr<T> CreateResource(const std::string& a_VertexSource, const std::string& a_FragmentSource) { return Shader::Create(a_VertexSource, a_FragmentSource); }
         template<typename T>
         static std::shared_ptr<T> CreateResource(uint32_t a_Width, uint32_t a_Height) { return Texture::Create(a_Width, a_Height); }
-        template<typename T>
-        static std::shared_ptr<T> CreateResource(const std::string& a_SceneName) { return SceneManager::NewScene(); }
+        template<>
+        static std::shared_ptr<Scene> CreateResource() { return SceneManager::NewScene(); }
 
         template<typename T>
         static std::shared_ptr<T> LoadResource(const std::string& a_FilePath)
