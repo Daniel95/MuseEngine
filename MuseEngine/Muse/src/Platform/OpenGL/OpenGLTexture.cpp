@@ -8,7 +8,21 @@
 namespace Muse
 {
     OpenGLTexture::OpenGLTexture(uint32_t a_Width, uint32_t a_Height)
+        : m_Width(a_Width), m_Height(a_Height)
     {
+        m_InternalFormat = GL_RGBA8;
+        m_DataFormat = GL_RGBA;
+
+        ASSERT_ENGINE(m_InternalFormat & m_DataFormat, "Format not supported!");
+
+        glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererId);
+        glTextureStorage2D(m_RendererId, 1, m_InternalFormat, m_Width, m_Height);
+
+        glTextureParameteri(m_RendererId, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTextureParameteri(m_RendererId, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+        glTextureParameteri(m_RendererId, GL_TEXTURE_WRAP_S, GL_REPEAT);
+        glTextureParameteri(m_RendererId, GL_TEXTURE_WRAP_T, GL_REPEAT);
     }
 
     OpenGLTexture::OpenGLTexture(const std::string& a_Path)
@@ -24,22 +38,21 @@ namespace Muse
         m_Width = width;
         m_Height = height;
 
-        GLenum internalFormat = 0, dataFormat = 0;
         if (channels == 4)
         {
-            internalFormat = GL_RGBA8;
-            dataFormat = GL_RGBA;
+            m_InternalFormat = GL_RGBA8;
+            m_DataFormat = GL_RGBA;
         }
         else if (channels == 3)
         {
-            internalFormat = GL_RGB8;
-            dataFormat = GL_RGB;
+            m_InternalFormat = GL_RGB8;
+            m_DataFormat = GL_RGB;
         }
 
-        ASSERT_ENGINE(internalFormat & dataFormat, "Format not supported!");
+        ASSERT_ENGINE(m_InternalFormat & m_DataFormat, "Format not supported!");
 
         glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererId);
-        glTextureStorage2D(m_RendererId, 1, internalFormat, m_Width, m_Height);
+        glTextureStorage2D(m_RendererId, 1, m_InternalFormat, m_Width, m_Height);
 
         glTextureParameteri(m_RendererId, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTextureParameteri(m_RendererId, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
@@ -47,7 +60,7 @@ namespace Muse
         glTextureParameteri(m_RendererId, GL_TEXTURE_WRAP_S, GL_REPEAT);
         glTextureParameteri(m_RendererId, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
-        glTextureSubImage2D(m_RendererId, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);
+        glTextureSubImage2D(m_RendererId, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, data);
 
         stbi_image_free(data);
     }
@@ -55,6 +68,14 @@ namespace Muse
     OpenGLTexture::~OpenGLTexture()
     {
         glDeleteTextures(1, &m_RendererId);
+    }
+
+    void OpenGLTexture::SetData(void* a_Data, uint32_t a_Size)
+    {
+        uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
+
+        ASSERT_ENGINE(a_Size == m_Width * m_Height * bpp, "Data must be entire texture!");
+        glTextureSubImage2D(m_RendererId, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, a_Data);
     }
 
     void OpenGLTexture::Bind(uint32_t a_Slot) const

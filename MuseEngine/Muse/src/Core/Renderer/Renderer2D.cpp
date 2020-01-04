@@ -44,6 +44,10 @@ namespace Muse
         std::shared_ptr<IndexBuffer> quadIB = IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
         s_Data->QuadVertexArray->SetIndexBuffer(quadIB);
 
+        s_Data->WhiteTexture = ResourceManager::Create<Texture>("WhiteTexture", 1, 1);
+        uint32_t whiteTextureData = 0xffffffff;
+        s_Data->WhiteTexture->SetData(&whiteTextureData, sizeof(uint32_t));
+
         s_Data->ColoredTextureShader = ResourceManager::Load<Shader>("assets/shaders/ColoredTexture.glsl");
         s_Data->ColoredTextureShader->Bind();
         s_Data->ColoredTextureShader->SetInt("u_Texture", 0);
@@ -80,6 +84,7 @@ namespace Muse
         a_Texture->Bind();
 
         s_Data->ColoredTextureShader->Bind();
+        s_Data->ColoredTextureShader->SetFloat4("u_Color", glm::vec4(1));
         s_Data->ColoredTextureShader->SetMat4("u_Transform", a_Transform);
 
         s_Data->QuadVertexArray->Bind();
@@ -99,7 +104,7 @@ namespace Muse
 
     void Renderer2D::DrawQuad(const glm::mat4& a_Transform, const glm::vec4& a_Color)
     {
-        //s_Data->WhiteTexture->Bind();
+        s_Data->WhiteTexture->Bind();
 
         s_Data->ColoredTextureShader->Bind();
         s_Data->ColoredTextureShader->SetFloat4("u_Color", a_Color);

@@ -13,6 +13,8 @@ namespace Muse
         virtual uint32_t GetWidth() const = 0;
         virtual uint32_t GetHeight() const = 0;
 
+        virtual void SetData(void* a_Data, uint32_t a_Size) = 0;
+
         virtual void Bind(uint32_t a_Slot = 0) const = 0;
 
         static std::shared_ptr<Texture> Load(const std::string& a_Path);

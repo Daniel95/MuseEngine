@@ -9,13 +9,12 @@
 #include "Core/Resource/ResourceTest.h"
 
 /*
-*/
 #include "EntryPoint.h"
-
 Muse::Application* Muse::CreateApplication()
 {
     return new Game3D();
 }
+*/
 
 void Game3D::OnStart()
 {

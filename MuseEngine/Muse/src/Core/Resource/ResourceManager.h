@@ -103,7 +103,7 @@ namespace Muse
         ASSERT_ENGINE(a_Name.find("/") == std::string::npos, "Use Load(a_FilePath) instead of Create when trying to load a file.");
         ASSERT_ENGINE(GetLoadedResource<T>(id) == nullptr, "Resource is already created!");
 
-        std::shared_ptr<T> resource = CreateResource<T>(a_Name, a_Args ...);
+        std::shared_ptr<T> resource = CreateResource<T>(a_Args ...);
 
         std::dynamic_pointer_cast<Resource>(resource)->SetPathAndName(a_Name);
 
