@@ -9,24 +9,24 @@
 #include "Core/Resource/ResourceTest.h"
 
 /*
+*/
 #include "EntryPoint.h"
 
 Muse::Application* Muse::CreateApplication()
 {
     return new Game3D();
 }
-*/
 
 void Game3D::OnStart()
 {
-    std::shared_ptr<Muse::Scene> scene = Muse::SceneManager::NewScene();
+    std::shared_ptr<Muse::Scene> scene = Muse::ResourceManager::Create<Muse::Scene>("New Scene");
 
-    std::shared_ptr<Muse::Shader> textureShader = Muse::ResourceTest::Load<Muse::Shader>("assets/shaders/Texture.glsl");
-    std::shared_ptr<Muse::Shader> vertexColorShader = Muse::ResourceTest::Load<Muse::Shader>("assets/shaders/VertexColor.glsl");
-    m_FlatColorShader = Muse::ResourceTest::Load<Muse::Shader>("assets/shaders/FlatColor.glsl");
+    std::shared_ptr<Muse::Shader> textureShader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/Texture.glsl");
+    std::shared_ptr<Muse::Shader> vertexColorShader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/VertexColor.glsl");
+    m_FlatColorShader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/FlatColor.glsl");
 
-    std::shared_ptr<Muse::Texture> checkerboardTexture = Muse::ResourceTest::Load<Muse::Texture>("assets/textures/Checkerboard.png");
-    std::shared_ptr<Muse::Texture> raymanTexture = Muse::ResourceTest::Load<Muse::Texture>("assets/textures/Rayman.png");
+    std::shared_ptr<Muse::Texture> checkerboardTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Checkerboard.png");
+    std::shared_ptr<Muse::Texture> raymanTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Rayman.png");
 
     /*
     std::shared_ptr<Muse::Shader> textureShader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/Texture.glsl");

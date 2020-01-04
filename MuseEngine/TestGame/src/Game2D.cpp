@@ -9,12 +9,12 @@
 
 
 /*
-*/
 #include "EntryPoint.h"
 Muse::Application* Muse::CreateApplication()
 {
 	return new Game2D();
 }
+*/
 
 void Game2D::OnStart()
 {

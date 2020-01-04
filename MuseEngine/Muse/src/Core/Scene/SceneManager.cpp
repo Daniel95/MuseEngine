@@ -47,7 +47,7 @@ namespace Muse
         }
 
         const std::string newScenePath = GAME_SCENE_PATH + "NewScene.txt";
-        m_ActiveScene = ResourceManager::Load<Scene>(newScenePath);
+        m_ActiveScene = std::make_shared<Scene>();
 
         return m_ActiveScene;
     }

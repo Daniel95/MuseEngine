@@ -10,6 +10,7 @@
 #include <unordered_map>
 #include <filesystem>
 #include <fstream>
+#include "Core/Scene/SceneManager.h"
 
 namespace Muse
 {
@@ -23,7 +24,7 @@ namespace Muse
         template<typename T, typename... Args>
         static std::shared_ptr<T> Create(const std::string& a_Name, Args&& ... a_Args);
         template<typename T, typename... Args>
-        static std::shared_ptr<T> Load(const std::string & a_ResourcePath, Args&& ... a_Args);
+        static std::shared_ptr<T> Load(const std::string & a_ResourcePath);
         template<typename T>
         static std::shared_ptr<T> Get(const std::string& a_ResourcePath);
         template<typename T>
@@ -36,13 +37,30 @@ namespace Muse
 
     protected:
         template<typename T>
-        static std::shared_ptr<T> CreateResource(const std::string& a_ResourcePath);
+        static std::shared_ptr<T> CreateResource()
+        {
+            ASSERT_ENGINE(false, "Creating this resource is not supported!");
+            return nullptr;
+        }
+        template<typename T>
+        static std::shared_ptr<T> CreateResource(const std::string& a_VertexSource, const std::string& a_FragmentSource) { return Shader::Create(a_VertexSource, a_FragmentSource); }
+        template<typename T>
+        static std::shared_ptr<T> CreateResource(uint32_t a_Width, uint32_t a_Height) { return Texture::Create(a_Width, a_Height); }
+        template<typename T>
+        static std::shared_ptr<T> CreateResource(const std::string& a_SceneName) { return SceneManager::NewScene(); }
+
+        template<typename T>
+        static std::shared_ptr<T> LoadResource(const std::string& a_FilePath)
+        {
+            ASSERT_ENGINE(false, "Loading this resource is not supported!");
+            return nullptr;
+        }
         template<>
-        static std::shared_ptr<Shader> CreateResource<Shader>(const std::string& a_ResourcePath);
+        static std::shared_ptr<Shader> LoadResource<Shader>(const std::string& a_FilePath) { return Shader::Load(a_FilePath); }
         template<>
-        static std::shared_ptr<Scene> CreateResource<Scene>(const std::string& a_ResourcePath);
+        static std::shared_ptr<Texture> LoadResource<Texture>(const std::string& a_FilePath) { return Texture::Load(a_FilePath); }
         template<>
-        static std::shared_ptr<Texture> CreateResource<Texture>(const std::string& a_ResourcePath);
+        static std::shared_ptr<Scene> LoadResource<Scene>(const std::string& a_FilePath) { return SceneManager::NewScene(); }
 
         template<typename T>
         static std::shared_ptr<T> GetLoadedResource(ullong a_Id);
@@ -80,16 +98,14 @@ namespace Muse
     {
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Resource");
 
-        ullong id = T::CalculateResourceId(a_ResourcePath);
+        ullong id = T::CalculateResourceId(a_Name);
 
-        ASSERT_ENGINE(a_ResourcePath.find("/") == std::string::npos, "Use Load(a_FilePath) instead of Create when trying to load a file.");
+        ASSERT_ENGINE(a_Name.find("/") == std::string::npos, "Use Load(a_FilePath) instead of Create when trying to load a file.");
+        ASSERT_ENGINE(GetLoadedResource<T>(id) == nullptr, "Resource is already created!");
 
-        std::shared_ptr<T> resource = GetLoadedResource<T>(id);
-        ASSERT_ENGINE(resource == nullptr, "Resource is already loaded!");
+        std::shared_ptr<T> resource = CreateResource<T>(a_Name, a_Args ...);
 
-        resource = CreateResource<T>(a_ResourcePath);
-
-        std::dynamic_pointer_cast<Resource>(resource)->SetPathAndName(a_ResourcePath);
+        std::dynamic_pointer_cast<Resource>(resource)->SetPathAndName(a_Name);
 
         m_Resources.insert(std::make_pair(id, resource));
         m_RefCounters.insert(std::make_pair(id, 1));
@@ -98,18 +114,16 @@ namespace Muse
     }
 
     template<typename T, typename... Args>
-    std::shared_ptr<T> ResourceManager::Load(const std::string & a_ResourcePath, Args&&... a_Args)
+    std::shared_ptr<T> ResourceManager::Load(const std::string & a_ResourcePath)
     {
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Resource");
 
         ullong id = T::CalculateResourceId(a_ResourcePath);
 
-        //ASSERT_ENGINE(std::filesystem::exists(a_ResourcePath), "Resource path doesn't points to a file.");
+        ASSERT_ENGINE(std::filesystem::exists(a_ResourcePath), "Resource path doesn't points to a file.");
+        ASSERT_ENGINE(GetLoadedResource<T>(id) == nullptr, "Resource is already loaded!");
 
-        std::shared_ptr<T> resource = GetLoadedResource<T>(id);
-        ASSERT_ENGINE(resource == nullptr, "Resource is already loaded!");
-
-        resource = CreateResource<T>(a_ResourcePath);
+        std::shared_ptr<T> resource = LoadResource<T>(a_ResourcePath);
 
         std::dynamic_pointer_cast<Resource>(resource)->SetPathAndName(a_ResourcePath);
 
@@ -160,32 +174,5 @@ namespace Muse
 
         m_Resources.erase(id);
         m_RefCounters.erase(id);
-    }
-
-    template <typename T>
-    std::shared_ptr<T> ResourceManager::CreateResource(const std::string& a_ResourcePath)
-    {
-        static_assert(std::is_abstract<T>(), "Cannot create this abstract resource.");
-        std::shared_ptr<T> resource = std::make_shared<T>(a_ResourcePath);
-
-        return resource;
-    }
-
-    template <>
-    inline std::shared_ptr<Shader> ResourceManager::CreateResource<Shader>(const std::string& a_ResourcePath)
-    {
-        return Shader::Load(a_ResourcePath);
-    }
-
-    template <>
-    inline std::shared_ptr<Scene> ResourceManager::CreateResource<Scene>(const std::string& a_ResourcePath)
-    {
-        return std::make_shared<Scene>();
-    }
-
-    template <>
-    inline std::shared_ptr<Texture> ResourceManager::CreateResource<Texture>(const std::string& a_ResourcePath)
-    {
-        return Texture::Load(a_ResourcePath);
     }
 }
