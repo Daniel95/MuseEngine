@@ -2,6 +2,7 @@
 
 #include "Layer/LayerStack.h"
 #include "Event/ApplicationEvent.h"
+#include "Core/Instrumentor.h"
 
 #include <memory>
 

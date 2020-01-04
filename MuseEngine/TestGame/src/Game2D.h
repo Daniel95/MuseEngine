@@ -3,6 +3,8 @@
 #include "Core/Application.h"
 #include "glm/vec3.hpp"
 
+#include <vector>
+
 namespace Muse
 {
     class Texture;

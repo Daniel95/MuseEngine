@@ -9,6 +9,7 @@
 
 #include "Core/Resource/ResourceManager.h"
 #include "RenderCommand.h"
+#include "Core/Timer.h"
 
 namespace Muse
 {
@@ -104,6 +105,7 @@ namespace Muse
 
     void Renderer2D::DrawQuad(const glm::mat4& a_Transform, const glm::vec4& a_Color)
     {
+
         s_Data->WhiteTexture->Bind();
 
         s_Data->ColoredTextureShader->Bind();

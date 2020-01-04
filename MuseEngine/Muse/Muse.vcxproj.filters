@@ -1345,6 +1345,7 @@
     <ClInclude Include="src\Muse.h" />
     <ClInclude Include="src\Core\Gameplay\Component\OrthographicCameraControllerComponent.h" />
     <ClInclude Include="src\Core\Resource\ResourceTest.h" />
+    <ClInclude Include="src\Core\Instrumentor.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">

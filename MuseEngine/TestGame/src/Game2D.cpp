@@ -9,7 +9,7 @@
 
 #include "GameDefines.h"
 
-#ifdef GAME_2D
+#if GAME_2D
 #include "EntryPoint.h"
 Muse::Application* Muse::CreateApplication()
 {
@@ -22,7 +22,7 @@ void Game2D::OnStart()
     Muse::RenderCommand::Init();
     Muse::Renderer2D::Init();
 
-    std::shared_ptr<Muse::Scene> scene = Muse::SceneManager::NewScene();
+    std::shared_ptr<Muse::Scene> scene = Muse::ResourceManager::Create<Muse::Scene>("NewScene");
 
     {
         Muse::GameObject& gameObject = scene->AddGameObject();

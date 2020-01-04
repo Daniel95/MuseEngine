@@ -12,6 +12,7 @@
 #include "Utilities/Defines.h"
 
 #include "GLFW/glfw3.h"
+#include "imgui.h"
 
 namespace Muse
 {
@@ -21,6 +22,8 @@ namespace Muse
     {
         ASSERT(!s_Instance, "A instance of Application already exists!");
         s_Instance = this;
+
+        Instrumentor::Get().BeginSession("Profile");
 
         m_Window = std::unique_ptr<Window>(Window::Create());
 
@@ -54,6 +57,8 @@ namespace Muse
         m_Window->MouseButtonReleasedEvent.Unsubscribe(this);
         m_Window->MouseScrolledEvent.Unsubscribe(this);
         m_Window->MouseMovedEvent.Unsubscribe(this);
+
+        Instrumentor::Get().EndSession();
     }
 
     void Application::Start()
@@ -62,6 +67,8 @@ namespace Muse
 
         while (m_Running)
         {
+            MUSE_PROFILE_FUNCTION();
+
             if(!m_Minimized)
             {
                 Update();
@@ -81,6 +88,8 @@ namespace Muse
 
     void Application::Update()
     {
+        MUSE_PROFILE_FUNCTION();
+
         float time = static_cast<float>(glfwGetTime()); //Replace with: Platform::GetTime
         m_DeltaTime = time - m_LastFrameTime;
         m_LastFrameTime = time;
@@ -103,11 +112,15 @@ namespace Muse
 
     void Application::LateUpdate()
     {
+        MUSE_PROFILE_FUNCTION();
+
         m_LateUpdateEvent.Dispatch(m_DeltaTime);
     }
 
     void Application::ImGuiRender()
     {
+        //PROFILE_FUNCTION();
+
         m_ImGuiLayer->Begin();
 
         m_ImGuiRenderEvent.Dispatch();
@@ -117,11 +130,28 @@ namespace Muse
             layer->OnImGuiRender();
         }
 
+        /*
+        //Profiling UI
+        ImGui::Begin("Profiling");
+        for (auto& result : m_ProfileResults)
+        {
+            char label[50];
+            strcpy(label, "%.3fms ");
+            strcat(label, result.m_Name);
+
+            ImGui::Text(label, result.m_End - result.m_Start);
+        }
+        m_ProfileResults.clear();
+        ImGui::End();
+        */
+
         m_ImGuiLayer->End();
     }
 
     void Application::Render()
     {
+        MUSE_PROFILE_FUNCTION();
+
         m_RenderEvent.Dispatch();
         OnRender();
     }

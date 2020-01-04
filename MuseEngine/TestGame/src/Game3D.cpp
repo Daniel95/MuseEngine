@@ -2,7 +2,6 @@
 
 #include "Muse.h"
 
-#include "Platform/OpenGL/OpenGLShader.h"
 #include "glm/gtc/type_ptr.hpp"
 #include "imgui/imgui.h"
 #include "PlayerComponent.h"
@@ -10,7 +9,7 @@
 
 #include "GameDefines.h"
 
-#ifndef GAME_2D
+#if !GAME_2D
 #include "EntryPoint.h"
 Muse::Application* Muse::CreateApplication()
 {
@@ -28,15 +27,6 @@ void Game3D::OnStart()
 
     std::shared_ptr<Muse::Texture> checkerboardTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Checkerboard.png");
     std::shared_ptr<Muse::Texture> raymanTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Rayman.png");
-
-    /*
-    std::shared_ptr<Muse::Shader> textureShader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/Texture.glsl");
-    std::shared_ptr<Muse::Shader> vertexColorShader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/VertexColor.glsl");
-    m_FlatColorShader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/FlatColor.glsl");
-
-    std::shared_ptr<Muse::Texture> checkerboardTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Checkerboard.png");
-    std::shared_ptr<Muse::Texture> raymanTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Rayman.png");
-    */
 
     /////////////////////////////////////////////////////////////////
     //// Checkerboard ///////////////////////////////////////////////
