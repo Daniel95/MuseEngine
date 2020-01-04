@@ -8,6 +8,8 @@
 #include "Core/Renderer/Texture.h"
 
 #include <unordered_map>
+#include <filesystem>
+#include <fstream>
 
 namespace Muse
 {
@@ -18,6 +20,8 @@ namespace Muse
         RTTR_ENABLE();
 
     public:
+        template<typename T, typename... Args>
+        static std::shared_ptr<T> Create(const std::string& a_Name, Args&& ... a_Args);
         template<typename T, typename... Args>
         static std::shared_ptr<T> Load(const std::string & a_ResourcePath, Args&& ... a_Args);
         template<typename T>
@@ -72,11 +76,35 @@ namespace Muse
     }
 
     template<typename T, typename... Args>
+    std::shared_ptr<T> ResourceManager::Create(const std::string& a_Name, Args&&... a_Args)
+    {
+        static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Resource");
+
+        ullong id = T::CalculateResourceId(a_ResourcePath);
+
+        ASSERT_ENGINE(a_ResourcePath.find("/") == std::string::npos, "Use Load(a_FilePath) instead of Create when trying to load a file.");
+
+        std::shared_ptr<T> resource = GetLoadedResource<T>(id);
+        ASSERT_ENGINE(resource == nullptr, "Resource is already loaded!");
+
+        resource = CreateResource<T>(a_ResourcePath);
+
+        std::dynamic_pointer_cast<Resource>(resource)->SetPathAndName(a_ResourcePath);
+
+        m_Resources.insert(std::make_pair(id, resource));
+        m_RefCounters.insert(std::make_pair(id, 1));
+
+        return resource;
+    }
+
+    template<typename T, typename... Args>
     std::shared_ptr<T> ResourceManager::Load(const std::string & a_ResourcePath, Args&&... a_Args)
     {
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Resource");
 
         ullong id = T::CalculateResourceId(a_ResourcePath);
+
+        //ASSERT_ENGINE(std::filesystem::exists(a_ResourcePath), "Resource path doesn't points to a file.");
 
         std::shared_ptr<T> resource = GetLoadedResource<T>(id);
         ASSERT_ENGINE(resource == nullptr, "Resource is already loaded!");

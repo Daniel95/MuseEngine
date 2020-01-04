@@ -46,7 +46,6 @@ namespace Muse
         glTextureSubImage2D(m_RendererId, 0, 0, 0, m_Width, m_Height, dataFormat, GL_UNSIGNED_BYTE, data);
 
         stbi_image_free(data);
-
     }
 
     OpenGLTexture::~OpenGLTexture()

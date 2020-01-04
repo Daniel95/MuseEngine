@@ -43,11 +43,15 @@ namespace Muse
 
 	void OpenGLShader::Bind() const
 	{
+		ASSERT_ENGINE(m_IsCompiled, "This shader is not compiled yet!");
+
 		glUseProgram(m_RendererID);
 	}
 
 	void OpenGLShader::Unbind() const
 	{
+		ASSERT_ENGINE(m_IsCompiled, "This shader is not compiled yet!");
+
 		glUseProgram(0);
 	}
 

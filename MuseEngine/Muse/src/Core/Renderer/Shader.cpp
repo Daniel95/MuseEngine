@@ -6,14 +6,6 @@
 
 namespace Muse
 {
-    void Shader::Bind() const
-    {
-    }
-
-    void Shader::Unbind() const
-    {
-    }
-
     std::shared_ptr<Shader> Shader::Create(const std::string& a_FilePath)
     {
         switch (Renderer::GetAPI())
