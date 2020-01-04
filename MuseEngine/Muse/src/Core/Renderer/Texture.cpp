@@ -6,13 +6,31 @@
 
 namespace Muse
 {
-    std::shared_ptr<Texture> Texture::Create(const std::string& a_Path)
+    std::shared_ptr<Texture> Texture::Load(const std::string& a_Path)
     {
         switch (Renderer::GetAPI())
         {
             case RendererAPI::API::OpenGL:
             {
                 return std::make_shared<OpenGLTexture>(a_Path);
+            }
+            default:
+            {
+                std::string message = "RenderAPI: " + static_cast<int>(Renderer::GetAPI());
+                message.append(" is not supported!");
+                ASSERT(false, message);
+                return nullptr;
+            }
+        }
+    }
+
+    std::shared_ptr<Texture> Texture::Create(uint32_t a_Width, uint32_t a_Height)
+    {
+        switch (Renderer::GetAPI())
+        {
+            case RendererAPI::API::OpenGL:
+            {
+                return std::make_shared<OpenGLTexture>(a_Width, a_Height);
             }
             default:
             {

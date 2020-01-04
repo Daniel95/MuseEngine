@@ -1344,6 +1344,7 @@
     <ClInclude Include="src\Core\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Muse.h" />
     <ClInclude Include="src\Core\Gameplay\Component\OrthographicCameraControllerComponent.h" />
+    <ClInclude Include="src\Core\Resource\ResourceTest.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1477,5 +1478,6 @@
     </ClCompile>
     <ClCompile Include="src\Core\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\OrthographicCameraControllerComponent.cpp" />
+    <ClCompile Include="src\Core\Resource\ResourceTest.cpp" />
   </ItemGroup>
 </Project>

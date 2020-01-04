@@ -23,7 +23,8 @@ namespace Muse
 
         virtual void Compile(const std::string& a_VertexSource, const std::string& a_FragmentSource) = 0;
 
-        static std::shared_ptr<Shader> Create(const std::string& a_FilePath);
+        static std::shared_ptr<Shader> Load(const std::string& a_FilePath);
+        static std::shared_ptr<Shader> Create(const std::string& a_VertexSource, const std::string& a_FragmentSource);
 
         bool GetIsCompiled() const { return m_IsCompiled; }
 

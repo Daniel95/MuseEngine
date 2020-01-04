@@ -7,6 +7,10 @@
 
 namespace Muse
 {
+    OpenGLTexture::OpenGLTexture(uint32_t a_Width, uint32_t a_Height)
+    {
+    }
+
     OpenGLTexture::OpenGLTexture(const std::string& a_Path)
         : m_Path(a_Path)
     {

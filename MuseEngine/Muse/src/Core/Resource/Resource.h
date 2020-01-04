@@ -23,6 +23,7 @@ namespace Muse
     protected:
         std::string m_Name;
         std::string m_Path;
+        bool m_IsInitialized = false;
 
     };
 }

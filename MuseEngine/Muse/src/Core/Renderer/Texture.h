@@ -15,7 +15,8 @@ namespace Muse
 
         virtual void Bind(uint32_t a_Slot = 0) const = 0;
 
-        static std::shared_ptr<Texture> Create(const std::string& a_Path);
+        static std::shared_ptr<Texture> Load(const std::string& a_Path);
+        static std::shared_ptr<Texture> Create(uint32_t a_Width, uint32_t a_Height);
 
     };
 

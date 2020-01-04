@@ -174,7 +174,7 @@ namespace Muse
     template <>
     inline std::shared_ptr<Shader> ResourceManager::CreateResource<Shader>(const std::string& a_ResourcePath)
     {
-        return Shader::Create(a_ResourcePath);
+        return Shader::Load(a_ResourcePath);
     }
 
     template <>
@@ -186,6 +186,6 @@ namespace Muse
     template <>
     inline std::shared_ptr<Texture> ResourceManager::CreateResource<Texture>(const std::string& a_ResourcePath)
     {
-        return Texture::Create(a_ResourcePath);
+        return Texture::Load(a_ResourcePath);
     }
 }

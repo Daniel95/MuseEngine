@@ -11,6 +11,7 @@ namespace Muse
     class OpenGLShader : public Shader
     {
     public:
+        OpenGLShader(const std::string& a_VertexSource, const std::string& a_FragmentSource);
         OpenGLShader(const std::string& a_FilePath);
         virtual ~OpenGLShader();
 

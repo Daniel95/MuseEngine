@@ -178,6 +178,7 @@
     <ClInclude Include="src\Core\Renderer\Shader.h" />
     <ClInclude Include="src\Core\Renderer\Texture.h" />
     <ClInclude Include="src\Core\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Core\Resource\ResourceTest.h" />
     <ClInclude Include="src\Core\System\Manager\ISystem.h" />
     <ClInclude Include="src\Core\System\Manager\SystemID.h" />
     <ClInclude Include="src\Core\System\Manager\SystemManager.h" />
@@ -593,6 +594,7 @@
     <ClCompile Include="src\Core\Renderer\Shader.cpp" />
     <ClCompile Include="src\Core\Renderer\Texture.cpp" />
     <ClCompile Include="src\Core\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Core\Resource\ResourceTest.cpp" />
     <ClCompile Include="src\Core\System\Manager\ISystem.cpp" />
     <ClCompile Include="src\Core\System\Manager\SystemManager.cpp" />
     <ClCompile Include="src\Core\Resource\Resource.cpp" />

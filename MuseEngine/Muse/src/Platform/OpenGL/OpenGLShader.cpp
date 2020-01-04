@@ -1,5 +1,6 @@
 ﻿#include "MusePCH.h"
 #include "OpenGLShader.h"
+#include "Core/Resource/Resource.h"
 #include "glad/glad.h"
 #include "Core/Utilities/Log.h"
 #include "Core/Utilities/Defines.h"
@@ -26,6 +27,14 @@ namespace Muse
 		return 0;
 	}
 
+    OpenGLShader::OpenGLShader(const std::string& a_VertexSource, const std::string& a_FragmentSource)
+    {
+		std::unordered_map<GLenum, std::string> sources;
+		sources[GL_VERTEX_SHADER] = a_VertexSource;
+		sources[GL_FRAGMENT_SHADER] = a_FragmentSource;
+		Compile(sources);
+    }
+
 	OpenGLShader::OpenGLShader(const std::string& a_FilePath)
 	{
 		if (std::filesystem::exists(a_FilePath))
@@ -41,7 +50,7 @@ namespace Muse
 		glDeleteProgram(m_RendererID);
 	}
 
-	void OpenGLShader::Bind() const
+    void OpenGLShader::Bind() const
 	{
 		ASSERT_ENGINE(m_IsCompiled, "This shader is not compiled yet!");
 

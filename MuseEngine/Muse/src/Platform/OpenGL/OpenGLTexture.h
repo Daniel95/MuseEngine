@@ -6,6 +6,7 @@ namespace Muse
     class OpenGLTexture : public Texture2D
     {
     public:
+        OpenGLTexture(uint32_t a_Width, uint32_t a_Height);
         OpenGLTexture(const std::string& a_Path);
         virtual ~OpenGLTexture();
 
