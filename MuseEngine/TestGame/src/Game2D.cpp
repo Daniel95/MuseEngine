@@ -70,6 +70,7 @@ void Game2D::OnRender()
         { 0, 0, 0.1f },
         glm::vec2(1),
         45,
+        {0.5f, 0.5f, 0.5f, 0.5f, },
         m_Texture);
 
     Muse::Renderer2D::DrawQuad(quadProperties);
