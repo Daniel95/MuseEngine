@@ -12,10 +12,10 @@ namespace Muse
         unsigned int Width;
         unsigned int Height;
 
-        WindowProperties(const std::string& title = "Muse Engine",
-            const unsigned int width = 1280,
-            const unsigned int height = 720)
-            : Title(title), Width(width), Height(height)
+        WindowProperties(const std::string& a_Title = "Muse Engine",
+            const unsigned int a_Width = 1280,
+            const unsigned int a_Height = 720)
+            : Title(a_Title), Width(a_Width), Height(a_Height)
         {
         }
     };

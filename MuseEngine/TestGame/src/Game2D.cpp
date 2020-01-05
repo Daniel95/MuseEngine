@@ -59,12 +59,20 @@ void Game2D::OnRender()
         Muse::RenderComponent* meshComponent = gameObject->GetComponent<Muse::RenderComponent>();
         if(meshComponent != nullptr)
         {
+            const Muse::Renderer2D::QuadPropertiesTransform quadPropertiesTransform(
+                gameObject->GetTransform()->GetModelMatrix(),
+                { 0.8f, 0.2f, 0.3f, 1.0f });
 
-            Muse::Renderer2D::DrawQuad(gameObject->GetTransform()->GetModelMatrix(), { 0.8f, 0.2f, 0.3f, 1.0f });
+            Muse::Renderer2D::DrawQuad(quadPropertiesTransform);
         }
     }
+    const Muse::Renderer2D::QuadProperties quadProperties(
+        { 0, 0, 0.1f },
+        glm::vec2(1),
+        45,
+        m_Texture);
 
-    Muse::Renderer2D::DrawQuad({ 0, 0, 0.1f }, {1, 1}, m_Texture);
+    Muse::Renderer2D::DrawQuad(quadProperties);
 
 	Muse::Renderer2D::EndScene();
 }

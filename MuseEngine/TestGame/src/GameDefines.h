@@ -1,3 +1,3 @@
 #pragma once
 
-#define GAME_2D 0;
+#define GAME_2D 1;

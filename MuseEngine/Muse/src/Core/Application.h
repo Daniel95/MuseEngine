@@ -27,7 +27,7 @@ namespace Muse
         Window& GetWindow() const { return *m_Window; }
         float GetDeltaTime() const { return m_DeltaTime; }
 
-        void Start();
+        void Run();
         void Update();
         void FixedUpdate();
         void LateUpdate();

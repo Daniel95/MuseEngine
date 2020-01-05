@@ -61,9 +61,9 @@ namespace Muse
         m_Window->MouseMovedEvent.Unsubscribe(this);
     }
 
-    void Application::Start()
+    void Application::Run()
     {
-        MUSE_PROFILE_SCOPE("Application");
+        MUSE_PROFILE_FUNCTION();
 
         OnStart();
 

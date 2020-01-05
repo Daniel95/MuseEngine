@@ -75,6 +75,65 @@ namespace Muse
         MUSE_PROFILE_FUNCTION();
     }
 
+    void Renderer2D::DrawQuad(const QuadPropertiesTransform& a_QuadPropertiesTransform)
+    {
+        MUSE_PROFILE_FUNCTION();
+
+        if(a_QuadPropertiesTransform.Texture != nullptr)
+        {
+            a_QuadPropertiesTransform.Texture->Bind();
+        }
+        else
+        {
+            s_Data->WhiteTexture->Bind();
+        }
+
+        s_Data->ColoredTextureShader->Bind();
+        s_Data->ColoredTextureShader->SetFloat4("u_Color", a_QuadPropertiesTransform.Color);
+        s_Data->ColoredTextureShader->SetMat4("u_Transform", a_QuadPropertiesTransform.Transform);
+        s_Data->ColoredTextureShader->SetFloat1("u_TilingFactor", 1);
+
+        s_Data->QuadVertexArray->Bind();
+        RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
+    }
+
+    void Renderer2D::DrawQuad(const QuadProperties& a_QuadProperties)
+    {
+        MUSE_PROFILE_FUNCTION();
+
+        glm::mat4 transform;
+
+        if(a_QuadProperties.Rotation != 0)
+        {
+            transform = glm::translate(glm::mat4(1.0f), a_QuadProperties.Position)
+                * glm::rotate(glm::mat4(1.0f), a_QuadProperties.Rotation, { 0.0f, 0.0f, 1.0f })
+                * glm::scale(glm::mat4(1.0f), { a_QuadProperties.Size.x, a_QuadProperties.Size.y, 1.0f });
+        }
+        else
+        {
+            transform = glm::translate(glm::mat4(1.0f), a_QuadProperties.Position)
+                * glm::scale(glm::mat4(1.0f), { a_QuadProperties.Size.x, a_QuadProperties.Size.y, 1.0f });
+        }
+
+        if (a_QuadProperties.Texture != nullptr)
+        {
+            a_QuadProperties.Texture->Bind();
+        }
+        else
+        {
+            s_Data->WhiteTexture->Bind();
+        }
+
+        s_Data->ColoredTextureShader->Bind();
+        s_Data->ColoredTextureShader->SetFloat4("u_Color", a_QuadProperties.Color);
+        s_Data->ColoredTextureShader->SetMat4("u_Transform", transform);
+        s_Data->ColoredTextureShader->SetFloat1("u_TilingFactor", 1);
+
+        s_Data->QuadVertexArray->Bind();
+        RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
+    }
+
+    /*
     void Renderer2D::DrawQuad(const glm::vec2& a_Position, const glm::vec2& a_Size, std::shared_ptr<Texture> a_Texture)
     {
         MUSE_PROFILE_FUNCTION();
@@ -99,6 +158,7 @@ namespace Muse
         s_Data->ColoredTextureShader->Bind();
         s_Data->ColoredTextureShader->SetFloat4("u_Color", glm::vec4(1));
         s_Data->ColoredTextureShader->SetMat4("u_Transform", a_Transform);
+        s_Data->ColoredTextureShader->SetFloat1("u_TilingFactor", 1);
 
         s_Data->QuadVertexArray->Bind();
         RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
@@ -132,4 +192,5 @@ namespace Muse
         s_Data->QuadVertexArray->Bind();
         RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
     }
+    */
 }

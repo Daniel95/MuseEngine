@@ -14,7 +14,7 @@ int main(int argc, char** argv)
     LOG_ENGINE_INFO("Initialized Log!");
 
     Muse::Application* application = Muse::CreateApplication();
-    application->Start();
+    application->Run();
 
     delete application;
 
