@@ -39,9 +39,7 @@ void Game2D::OnStart()
         Muse::GameObject& gameObject = scene->AddGameObject();
         Muse::RenderComponent& renderComponent = gameObject.AddComponent<Muse::RenderComponent>();
         gameObject.GetTransform()->SetPosition({ -1, -1, 0 });
-        //BUG: setting scale will move the object.
-        //gameObject.GetTransform()->SetScale({ 3, 1, 1 });
-
+        gameObject.GetTransform()->SetScale({ 2, 1 });
     }
 
     m_Texture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
@@ -66,11 +64,12 @@ void Game2D::OnRender()
             Muse::Renderer2D::DrawQuad(quadPropertiesTransform);
         }
     }
+
     const Muse::Renderer2D::QuadProperties quadProperties(
         { 0, 0, 0.1f },
         glm::vec2(1),
         45,
-        {0.5f, 0.5f, 0.5f, 0.5f, },
+        //{ 0.5f, 0.5f, 0.5f, 0.5f },
         m_Texture);
 
     Muse::Renderer2D::DrawQuad(quadProperties);

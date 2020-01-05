@@ -121,7 +121,9 @@ namespace Muse
 
 		if (m_DirtyModel)
 		{
-			m_ModelMatrix = GetScaleMatrix() * GetRotationMatrix() * GetTranslationMatrix();
+			m_ModelMatrix = GetTranslationMatrix() * GetRotationMatrix() * GetScaleMatrix();
+
+			m_DirtyModel = false;
 		}
 
 		return m_ModelMatrix;

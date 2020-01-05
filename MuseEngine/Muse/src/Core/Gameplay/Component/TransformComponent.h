@@ -39,16 +39,14 @@ namespace Muse
 		const glm::quat & GetRotationQuat() const { return m_RotationQuaternion; }
 		void SetRotationQuat(const glm::quat& a_Rotation);
 
-		const glm::vec4& GetTranslation() const { return glm::vec4(m_Position.x, m_Position.y, m_Position.z, 1); }
-		const glm::mat4& GetTranslationMatrix() const { return m_TranslationMatrix; }
-		const glm::mat4& GetRotationMatrix() const { return m_RotationMatrix; }
-		const glm::mat4& GetScaleMatrix() const { return m_ScaleMatrix; }
-		const glm::mat4& GetModelMatrix() const { return m_ModelMatrix; }
-
 		glm::vec3 InverseTransformPoint(const glm::vec3& a_WorldPoint); //World to local point 
 		glm::vec3 InverseTransformVector(const glm::vec3& a_WorldVector); //World to local vector
 		glm::vec3 TransformPoint(const glm::vec3& a_LocalPoint); //Local to world point
 		glm::vec3 TransformVector(const glm::vec3& a_LocalVector); //Local to world vector
+
+		glm::vec3 GetForward() { return TransformVector(glm::vec3(0, 0, 1)); }
+		glm::vec3 GetUp() { return TransformVector(glm::vec3(0, 1, 0));; }
+		glm::vec3 GetRight() { return TransformVector(glm::vec3(1, 0, 0)); }
 
 		const glm::mat4& GetTranslationMatrix();
 		const glm::mat4& GetRotationMatrix();
