@@ -4,6 +4,7 @@
 #include "Core/System/Manager/SystemManager.h"
 
 #include "Core/Utilities/Log.h"
+#include "Core/Instrumentor.h"
 
 namespace Muse
 {
@@ -14,6 +15,5 @@ namespace Muse
 
     ISystem::~ISystem()
     {
-
     }
 }

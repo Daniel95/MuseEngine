@@ -10,6 +10,8 @@ namespace Muse
 
     bool WindowsInput::IsKeyPressedImpl(int a_Keycode) const
     {
+        MUSE_PROFILE_FUNCTION();
+
         const auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
         const auto state = glfwGetKey(window, a_Keycode);
         return state == static_cast<const int>(GLFW_PRESS || GLFW_REPEAT);
@@ -17,6 +19,8 @@ namespace Muse
 
     bool WindowsInput::IsMouseButtonPressedImpl(int a_Button) const
     {
+        MUSE_PROFILE_FUNCTION();
+
         const auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
         const auto state = glfwGetMouseButton(window, a_Button);
         return state == GLFW_PRESS;
@@ -24,6 +28,8 @@ namespace Muse
 
     glm::vec2 WindowsInput::GetMousePositionImpl() const
     {
+        MUSE_PROFILE_FUNCTION();
+
         const auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
         double xPos, yPos;
         glfwGetCursorPos(window, &xPos, &yPos);
@@ -33,12 +39,16 @@ namespace Muse
 
     float WindowsInput::GetMouseXImpl() const
     {
+        MUSE_PROFILE_FUNCTION();
+
         glm::vec2 mousePosition = GetMousePositionImpl();
         return mousePosition.x;
     }
 
     float WindowsInput::GetMouseYImpl() const
     {
+        MUSE_PROFILE_FUNCTION();
+
         glm::vec2 mousePosition = GetMousePositionImpl();
         return mousePosition.y;
     }

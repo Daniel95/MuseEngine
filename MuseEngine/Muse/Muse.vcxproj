@@ -572,7 +572,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp" />
-    <ClCompile Include="src\Core\Event\Event.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\BoxCollider2D.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\CameraComponent.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\Component.cpp" />

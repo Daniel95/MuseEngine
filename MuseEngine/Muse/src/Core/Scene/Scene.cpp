@@ -16,22 +16,30 @@ namespace Muse
 {
     Scene::Scene()
     {
+        MUSE_PROFILE_FUNCTION();
+
         CreateEditorCamera();
     }
 
     Scene::~Scene()
     {
+        MUSE_PROFILE_FUNCTION();
+
         Unload();
-        _ASSERT(m_GameObjectsToUpdate.size() == 0);
+        ASSERT_ENGINE(m_GameObjectsToUpdate.size() == 0, "Not all gameobjects have been destroyed!");
     }
 
     void Scene::Unload()
     {
+        MUSE_PROFILE_FUNCTION();
+
         DestroyAllGameObjects();
     }
 
     void Scene::DestroyAllGameObjects()
     {
+        MUSE_PROFILE_FUNCTION();
+
         for (GameObject* gameObject : m_GameObjectsToUpdate)
         {
             delete gameObject;
@@ -53,6 +61,8 @@ namespace Muse
 
     GameObject& Scene::AddGameObject()
     {
+        MUSE_PROFILE_FUNCTION();
+
         GameObject* gameObject = new GameObject();
         gameObject->Init(*this);
         m_GameObjectsToAdd.push_back(gameObject);
@@ -61,6 +71,8 @@ namespace Muse
 
     GameObject& Scene::AddGameObject(const glm::vec2& a_Position, const glm::vec2& a_Size)
     {
+        MUSE_PROFILE_FUNCTION();
+
         GameObject& gameObject = AddGameObject();
         gameObject.GetTransform()->SetPosition(a_Position);
         gameObject.GetTransform()->SetScale(a_Size);
@@ -69,6 +81,8 @@ namespace Muse
 
     GameObject& Scene::AddGameObject(const glm::vec3& a_Position, const glm::vec3& a_Size)
     {
+        MUSE_PROFILE_FUNCTION();
+
         GameObject& gameObject = AddGameObject();
         gameObject.GetTransform()->SetPosition(a_Position);
         gameObject.GetTransform()->SetScale(a_Size);
@@ -77,12 +91,16 @@ namespace Muse
 
     void Scene::RemoveGameObject(GameObject& a_GameObject)
     {
-        ASSERT(std::find(m_GameObjectsToRemove.begin(), m_GameObjectsToRemove.end(), &a_GameObject) == m_GameObjectsToRemove.end(), "GameObject to remove does not exists!");
+        MUSE_PROFILE_FUNCTION();
+
+        ASSERT_ENGINE(std::find(m_GameObjectsToRemove.begin(), m_GameObjectsToRemove.end(), &a_GameObject) == m_GameObjectsToRemove.end(), "GameObject to remove does not exists!");
         m_GameObjectsToRemove.push_back(&a_GameObject);
     }
 
     void Scene::Update(float a_DeltaTime)
     {
+        MUSE_PROFILE_FUNCTION();
+
         for (GameObject* gameObject : m_GameObjectsToAdd)
         {
             m_GameObjectsToUpdate.push_back(gameObject);
@@ -103,6 +121,8 @@ namespace Muse
 
     void Scene::FixedUpdate(float a_TimeStep)
     {
+        MUSE_PROFILE_FUNCTION();
+
         for (GameObject* gameObject : m_GameObjectsToUpdate)
         {
             gameObject->FixedUpdate(a_TimeStep);
@@ -111,6 +131,8 @@ namespace Muse
 
     void Scene::Deserialize(const std::string& a_Json)
     {
+        MUSE_PROFILE_FUNCTION();
+
         Unload();
 
         io::from_json(a_Json, *this);
@@ -128,16 +150,22 @@ namespace Muse
 
     std::string Scene::Serialize() const
     {
+        MUSE_PROFILE_FUNCTION();
+
         return io::to_json(*this);
     }
 
     void Scene::Save()
     {
+        MUSE_PROFILE_FUNCTION();
+
         Save(m_Path);
     }
 
     void Scene::Save(const std::string& a_Path)
     {
+        MUSE_PROFILE_FUNCTION();
+
         std::filesystem::path path{ a_Path }; //creates TestingFolder object on C:
         std::filesystem::create_directories(path.parent_path()); //add directories based on the object path (without this line it will not work)
 
@@ -154,6 +182,8 @@ namespace Muse
 
     void Scene::Load(const std::string& a_Path)
     {
+        MUSE_PROFILE_FUNCTION();
+
     #ifdef MUSE_DEBUG 
         if (!std::filesystem::exists(a_Path))
         {
@@ -171,7 +201,9 @@ namespace Muse
 
     void Scene::SaveState()
     {
-        _ASSERT(m_MaxStateSaves > 0);
+        MUSE_PROFILE_FUNCTION();
+
+        ASSERT_ENGINE(m_MaxStateSaves > 0, "Max save states cannot be zero!");
 
         while (m_CurrentStateIndex < m_States.size())
         {
@@ -199,6 +231,8 @@ namespace Muse
 
     void Scene::DestroyGameObjectImmediate(GameObject* a_GameObject)
     {
+        MUSE_PROFILE_FUNCTION();
+
         m_GameObjectsToAdd.erase(std::remove(m_GameObjectsToAdd.begin(), m_GameObjectsToAdd.end(), a_GameObject), m_GameObjectsToAdd.end());
         m_GameObjectsToUpdate.erase(std::remove(m_GameObjectsToUpdate.begin(), m_GameObjectsToUpdate.end(), a_GameObject), m_GameObjectsToUpdate.end());
 
@@ -207,6 +241,8 @@ namespace Muse
 
     void Scene::Undo()
     {
+        MUSE_PROFILE_FUNCTION();
+
         if (CanUndo())
         {
             m_CurrentStateIndex--;
@@ -219,6 +255,8 @@ namespace Muse
 
     void Scene::Redo()
     {
+        MUSE_PROFILE_FUNCTION();
+
         if (m_States.size() > 0
             && m_CurrentStateIndex < m_States.size() - 1)
         {
@@ -232,6 +270,8 @@ namespace Muse
 
     GameObject* Scene::GetEditorCamera() const
     {
+        MUSE_PROFILE_FUNCTION();
+
         GameObject* editorCameraGameObject = nullptr;
         for (GameObject* gameObject : m_GameObjectsToUpdate)
         {
@@ -250,14 +290,18 @@ namespace Muse
 
     void Scene::DestroyEditorCamera()
     {
+        MUSE_PROFILE_FUNCTION();
+
         GameObject* cameraGameObject = GetEditorCamera();
-        ASSERT(cameraGameObject != nullptr, "EditorCamera does not exists!");
+        ASSERT_ENGINE(cameraGameObject != nullptr, "EditorCamera does not exists!");
         delete cameraGameObject;
     }
 
     GameObject& Scene::CreateEditorCamera()
     {
-        ASSERT(GetEditorCamera() == nullptr, "EditorCamera already exists!");
+        MUSE_PROFILE_FUNCTION();
+
+        ASSERT_ENGINE(GetEditorCamera() == nullptr, "EditorCamera already exists!");
         GameObject& gameObject = AddGameObject();
 
         gameObject.AddComponent<CameraComponent>().MakeEditorCamera();

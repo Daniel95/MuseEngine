@@ -3,11 +3,14 @@
 #include "Platform/OpenGL/OpenGLVertexArray.h"
 #include "Core/Utilities/Defines.h"
 #include "Renderer.h"
+#include "Core/Instrumentor.h"
 
 namespace Muse
 {
     std::shared_ptr<VertexArray> VertexArray::Create()
     {
+        MUSE_PROFILE_FUNCTION();
+
         switch (Renderer::GetAPI())
         {
             case RendererAPI::API::OpenGL:

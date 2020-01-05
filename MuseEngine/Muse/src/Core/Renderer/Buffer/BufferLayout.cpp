@@ -1,10 +1,13 @@
 #include "MusePCH.h"
 #include "BufferLayout.h"
+#include "Core/Instrumentor.h"
 
 namespace Muse
 {
     void BufferLayout::CalculateOffsetAndStride()
     {
+		MUSE_PROFILE_FUNCTION();
+
 		size_t offset = 0;
 		m_Stride = 0;
 

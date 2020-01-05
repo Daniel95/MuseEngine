@@ -13,18 +13,24 @@ namespace Muse
 {
     OrthographicCameraControllerComponent::OrthographicCameraControllerComponent()
     {
+        MUSE_PROFILE_FUNCTION();
+
         Application::Get().GetWindow().MouseScrolledEvent.Subscribe(SUB_FN(OrthographicCameraControllerComponent::OnMouseScrolledEvent, std::placeholders::_1, std::placeholders::_2));
         Application::Get().GetWindow().WindowResizeEvent.Subscribe(SUB_FN(OrthographicCameraControllerComponent::OnWindowResizeEvent, std::placeholders::_1, std::placeholders::_2));
     }
 
     OrthographicCameraControllerComponent::~OrthographicCameraControllerComponent()
     {
+        MUSE_PROFILE_FUNCTION();
+
         Application::Get().GetWindow().MouseScrolledEvent.Unsubscribe(this);
         Application::Get().GetWindow().WindowResizeEvent.Unsubscribe(this);
     }
 
     void OrthographicCameraControllerComponent::OnInit()
     {
+        MUSE_PROFILE_FUNCTION();
+
         m_CameraComponent = GetGameObject()->GetComponent<CameraComponent>();
 
         ASSERT_ENGINE(m_CameraComponent != nullptr, "CameraComponent on OrthographicCameraControllerComponent GameObject is missing!");
@@ -38,6 +44,8 @@ namespace Muse
 
     void OrthographicCameraControllerComponent::OnUpdate(float a_DeltaTime)
     {
+        MUSE_PROFILE_FUNCTION();
+
         float moveSpeed = m_BaseMoveSpeed * a_DeltaTime * m_CameraComponent->GetZoomLevel();
 
         if (Input::IsKeyPressed(MUSE_KEY_A))
@@ -61,6 +69,8 @@ namespace Muse
 
     void OrthographicCameraControllerComponent::OnMouseScrolledEvent(float a_XOffset, float a_YOffset)
     {
+        MUSE_PROFILE_FUNCTION();
+
         float zoomLevel = m_CameraComponent->GetZoomLevel() - (a_YOffset * m_ZoomSpeed);
         zoomLevel = std::max(zoomLevel, m_MinZoomLevel);
         m_CameraComponent->SetProjection(m_CameraComponent->GetAspectRatio(), zoomLevel);
@@ -68,6 +78,8 @@ namespace Muse
 
     void OrthographicCameraControllerComponent::OnWindowResizeEvent(int a_Width, int a_Height)
     {
+        MUSE_PROFILE_FUNCTION();
+
         const float aspectRatio = static_cast<float>(a_Width) / static_cast<float>(a_Height);
         m_CameraComponent->SetProjection(aspectRatio, m_CameraComponent->GetZoomLevel());
     }

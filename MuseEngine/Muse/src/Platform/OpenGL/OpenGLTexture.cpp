@@ -4,12 +4,15 @@
 #include "stb_image.h"
 #include <glad/glad.h>
 #include "Core/Utilities/Defines.h"
+#include "Core/Instrumentor.h"
 
 namespace Muse
 {
     OpenGLTexture::OpenGLTexture(uint32_t a_Width, uint32_t a_Height)
         : m_Width(a_Width), m_Height(a_Height)
     {
+        MUSE_PROFILE_FUNCTION();
+
         m_InternalFormat = GL_RGBA8;
         m_DataFormat = GL_RGBA;
 
@@ -28,6 +31,8 @@ namespace Muse
     OpenGLTexture::OpenGLTexture(const std::string& a_Path)
         : m_Path(a_Path)
     {
+        MUSE_PROFILE_FUNCTION();
+
         int width, height, channels;
         stbi_set_flip_vertically_on_load(1);
         stbi_uc* data = nullptr;
@@ -67,11 +72,15 @@ namespace Muse
 
     OpenGLTexture::~OpenGLTexture()
     {
+        MUSE_PROFILE_FUNCTION();
+
         glDeleteTextures(1, &m_RendererId);
     }
 
     void OpenGLTexture::SetData(void* a_Data, uint32_t a_Size)
     {
+        MUSE_PROFILE_FUNCTION();
+
         uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
 
         ASSERT_ENGINE(a_Size == m_Width * m_Height * bpp, "Data must be entire texture!");
@@ -80,6 +89,8 @@ namespace Muse
 
     void OpenGLTexture::Bind(uint32_t a_Slot) const
     {
+        MUSE_PROFILE_FUNCTION();
+
         glBindTextureUnit(a_Slot, m_RendererId);
     }
 }

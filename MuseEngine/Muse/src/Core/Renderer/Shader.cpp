@@ -3,11 +3,14 @@
 #include "Renderer.h"
 #include "Core/Utilities/Defines.h"
 #include "Platform/OpenGL/OpenGLShader.h"
+#include "Core/Instrumentor.h"
 
 namespace Muse
 {
     std::shared_ptr<Shader> Shader::Load(const std::string& a_FilePath)
     {
+        MUSE_PROFILE_FUNCTION();
+
         switch (Renderer::GetAPI())
         {
             case RendererAPI::API::OpenGL:
@@ -26,6 +29,8 @@ namespace Muse
 
     std::shared_ptr<Shader> Shader::Create(const std::string& a_VertexSource, const std::string& a_FragmentSource)
     {
+        MUSE_PROFILE_FUNCTION();
+
         switch (Renderer::GetAPI())
         {
             case RendererAPI::API::OpenGL:

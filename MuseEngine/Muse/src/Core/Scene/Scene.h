@@ -13,6 +13,7 @@
 #include <string>
 #include <vector>
 #include "Core/Resource/Resource.h"
+#include "Core/Instrumentor.h"
 
 namespace Muse 
 {
@@ -73,6 +74,8 @@ namespace Muse
     template <typename T>
     GameObject* Scene::FindGameObjectOfType()
     {
+        MUSE_PROFILE_FUNCTION();
+
         GameObject* gameObjectOfType = nullptr;
 
         for(GameObject* gameObject : m_GameObjectsToUpdate)
@@ -89,6 +92,8 @@ namespace Muse
     template <typename T>
     const std::vector<GameObject*>& Scene::FindGameObjectsOfType()
     {
+        MUSE_PROFILE_FUNCTION();
+
         std::vector<GameObject*> gameObjectsOfType;
 
         for (GameObject* gameObject : m_GameObjectsToUpdate)

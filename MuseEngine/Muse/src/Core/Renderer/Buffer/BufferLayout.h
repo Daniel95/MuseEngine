@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include "Core/Utilities/Defines.h"
+#include "Core/Instrumentor.h"
 
 namespace Muse
 {
@@ -24,6 +25,8 @@ namespace Muse
 
     static uint32_t ShaderDataTypeSize(ShaderDataType a_ShaderDataType)
     {
+        MUSE_PROFILE_FUNCTION();
+
         switch (a_ShaderDataType)
         {
             case ShaderDataType::Float:    return 4;
@@ -57,10 +60,14 @@ namespace Muse
         BufferElement(ShaderDataType a_ShaderDataType, const std::string& a_Name, bool a_Normalized = false)
             : Type(a_ShaderDataType), Name(a_Name), Size(ShaderDataTypeSize(a_ShaderDataType)), Offset(0), Normalized(a_Normalized)
         {
+            MUSE_PROFILE_FUNCTION();
+
         }
 
         uint32_t GetNumberCount() const
         {
+            MUSE_PROFILE_FUNCTION();
+
             switch (Type)
             {
                 case ShaderDataType::Float:   return 1;
@@ -89,6 +96,8 @@ namespace Muse
          BufferLayout(const std::initializer_list<BufferElement>& a_Elements)
              : m_Elements(a_Elements)
          {
+             MUSE_PROFILE_FUNCTION();
+
              CalculateOffsetAndStride();
          }
 

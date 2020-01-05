@@ -4,59 +4,78 @@
 
 #include <glm/gtx/matrix_decompose.hpp>
 #include <glm/gtx/transform.hpp>
+#include "Core/Instrumentor.h"
 
 namespace Muse
 {
     void TransformComponent::SetPosition(const glm::vec3& a_Position)
     {
+		MUSE_PROFILE_FUNCTION();
+
 		m_DirtyPosition = m_DirtyModel = true;
 		m_Position = a_Position;
     }
 
     void TransformComponent::SetPosition(const glm::vec2& a_Position)
     {
+		MUSE_PROFILE_FUNCTION();
+
 		m_DirtyPosition = m_DirtyModel = true;
 		m_Position = glm::vec3(a_Position.x, a_Position.y, m_Position.z);
     }
 
     void TransformComponent::Move(const glm::vec3& a_Movement)
     {
+		MUSE_PROFILE_FUNCTION();
+
 		m_DirtyPosition = m_DirtyModel = true;
 		m_Position += a_Movement;
     }
 
     void TransformComponent::Move(const glm::vec2& a_Movement)
     {
+		MUSE_PROFILE_FUNCTION();
+
 		m_DirtyPosition = m_DirtyModel = true;
 		m_Position += glm::vec3(a_Movement.x, a_Movement.y, 0);
     }
 
     void TransformComponent::SetScale(const glm::vec3& a_Scale)
     {
+		MUSE_PROFILE_FUNCTION();
+
 		m_DirtyScale = m_DirtyModel = true;
 		m_Scale = a_Scale;
     }
 
     void TransformComponent::SetScale(const glm::vec2& a_Scale)
     {
+		MUSE_PROFILE_FUNCTION();
+
 		m_DirtyScale = m_DirtyModel = true;
 		m_Scale = glm::vec3(a_Scale.x, a_Scale.y, m_Scale.z);;
     }
 
     void TransformComponent::SetRotation(const glm::vec3& a_Rotation)
     {
+		MUSE_PROFILE_FUNCTION();
+
 		m_DirtyScale = m_DirtyModel = true;
 		m_Rotation = a_Rotation;
     }
 
     void TransformComponent::SetRotationQuat(const glm::quat& a_Rotation)
     {
+		MUSE_PROFILE_FUNCTION();
+
 		m_DirtyScale = m_DirtyModel = true;
 		m_RotationQuaternion = a_Rotation;
     }
 
 	const glm::mat4& TransformComponent::GetTranslationMatrix()
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		if (m_DirtyPosition)
 		{
 			m_TranslationMatrix = glm::translate(m_Position);
@@ -68,6 +87,8 @@ namespace Muse
 
 	const glm::mat4& TransformComponent::GetRotationMatrix()
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		if (m_DirtyRotation)
 		{
 			m_RotationMatrix = glm::rotate(m_Rotation.x, glm::vec3(1, 0, 0));
@@ -82,6 +103,8 @@ namespace Muse
 
 	const glm::mat4& TransformComponent::GetScaleMatrix()
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		if (m_DirtyScale)
 		{
 			m_ScaleMatrix = glm::scale(m_Scale);
@@ -94,6 +117,8 @@ namespace Muse
 
 	const glm::mat4& TransformComponent::GetModelMatrix()
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		if (m_DirtyModel)
 		{
 			m_ModelMatrix = GetScaleMatrix() * GetRotationMatrix() * GetTranslationMatrix();
@@ -104,24 +129,32 @@ namespace Muse
 
 	glm::vec3 TransformComponent::InverseTransformPoint(const glm::vec3& worldPoint)
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		const glm::vec4 transformed = glm::inverse(GetModelMatrix()) * glm::vec4(worldPoint.x, worldPoint.y, worldPoint.z, 1);
 		return glm::vec3(transformed);
 	}
 
 	glm::vec3 TransformComponent::InverseTransformVector(const glm::vec3& worldVector)
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		const glm::vec4 transformed = glm::inverse(GetModelMatrix()) * glm::vec4(worldVector.x, worldVector.y, worldVector.z, 0);
 		return glm::vec3(transformed);
 	}
 
 	glm::vec3 TransformComponent::TransformPoint(const glm::vec3& localPoint)
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		const glm::vec4 transformed = GetModelMatrix() * glm::vec4(localPoint.x, localPoint.y, localPoint.z, 1);
 		return glm::vec3(transformed);
 	}
 
 	glm::vec3 TransformComponent::TransformVector(const glm::vec3& localVector)
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		const glm::vec4 transformed = GetModelMatrix() * glm::vec4(localVector.x, localVector.y, localVector.z, 0);
 		return glm::vec3(transformed);
 	}

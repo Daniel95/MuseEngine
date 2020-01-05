@@ -4,6 +4,7 @@
 #include <unordered_map>
 
 #include "Core/Utilities/Utilities.h"
+#include "Core/Instrumentor.h"
 
 namespace Muse
 {
@@ -28,6 +29,8 @@ namespace Muse
 	template <typename ... Args>
 	void Event<Args ...>::Dispatch(Args ... a_Args)
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		for (auto pair : subscriptions)
 		{
 			pair.second(a_Args ...);
@@ -37,6 +40,8 @@ namespace Muse
 	template <typename ... Args>
 	void Event<Args ...>::Subscribe(const void* a_PointerID, const std::function<void(Args ...)>& a_Function)
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		ullong id = PointerToHash(a_PointerID);
 
 		ASSERT_ENGINE(subscriptions.count(id) == 0, "Cannot Subscribe: This ID is already subscribed to this event!");
@@ -47,6 +52,8 @@ namespace Muse
 	template <typename ... Args>
 	void Event<Args ...>::Unsubscribe(const void* a_PointerID)
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		ullong id = PointerToHash(a_PointerID);
 
 		ASSERT_ENGINE(subscriptions.count(id) != 0, "Cannot Unsubscribe: This ID not subscribed to this event!");
@@ -57,12 +64,16 @@ namespace Muse
 	template <typename ... Args>
 	const int Event<Args ...>::GetSubscriptionCount() const
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		return subscriptions.size();
 	}
 
 	template <typename ... Args>
 	ullong Event<Args ...>::PointerToHash(const void* a_PointerID)
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		const std::string name = PointerToString(a_PointerID);
 		return Muse::StringHash(name);
 	}

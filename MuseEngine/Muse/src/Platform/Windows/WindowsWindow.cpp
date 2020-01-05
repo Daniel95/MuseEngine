@@ -9,6 +9,7 @@
 #include "Platform/OpenGL/OpenGLContext.h"
 
 #include <GLFW/glfw3.h>
+#include "Core/Instrumentor.h"
 
 namespace Muse
 {
@@ -16,21 +17,29 @@ namespace Muse
 
     static void GLFWErrorCallback(const int a_Error, const char* a_Description)
     {
+        MUSE_PROFILE_FUNCTION();
+
         LOG_ENGINE_ERROR("GLFW Error ({0}): {1}", a_Error, a_Description);
     }
 
     Window* Window::Create(const WindowProperties& a_Properties)
     {
+        MUSE_PROFILE_FUNCTION();
+
         return new WindowsWindow(a_Properties);
     }
 
     WindowsWindow::WindowsWindow(const WindowProperties& a_Properties)
     {
+        MUSE_PROFILE_FUNCTION();
+
         Init(a_Properties);
     }
 
     WindowsWindow::~WindowsWindow()
     {
+        MUSE_PROFILE_FUNCTION();
+
         Shutdown();
 
         delete m_Context;
@@ -38,6 +47,8 @@ namespace Muse
 
     void WindowsWindow::Init(const WindowProperties& a_Properties)
     {
+        MUSE_PROFILE_FUNCTION();
+
         m_Title = a_Properties.Title;
         m_Width = a_Properties.Width;
         m_Height = a_Properties.Height;
@@ -60,7 +71,7 @@ namespace Muse
 
         glfwSetWindowUserPointer(m_Window, this);
 
-        SetVSync(true);
+        SetVSync(false);
 
         LOG_ENGINE_INFO("Created window {0}, ({1}, {2})", a_Properties.Title, a_Properties.Width, a_Properties.Height);
 
@@ -145,11 +156,15 @@ namespace Muse
 
     void WindowsWindow::Shutdown()
     {
+        MUSE_PROFILE_FUNCTION();
+
         glfwDestroyWindow(m_Window);
     }
 
     void WindowsWindow::OnUpdate()
     {
+        MUSE_PROFILE_FUNCTION();
+
         glfwPollEvents();
 
         m_Context->SwapBuffers();
@@ -157,6 +172,8 @@ namespace Muse
 
     void WindowsWindow::SetVSync(bool a_Enabled)
     {
+        MUSE_PROFILE_FUNCTION();
+
         if(a_Enabled)
         {
             glfwSwapInterval(1);
@@ -166,11 +183,6 @@ namespace Muse
             glfwSwapInterval(0);
         }
 
-        vSync = a_Enabled;
-    }
-
-    bool WindowsWindow::IsVSync() const
-    {
-        return vSync;
+        m_VSync = a_Enabled;
     }
 }

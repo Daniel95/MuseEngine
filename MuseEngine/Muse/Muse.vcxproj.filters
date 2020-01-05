@@ -1351,9 +1351,6 @@
     <ClCompile Include="src\Core\Application.cpp">
       <Filter>src\Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Event\Event.cpp">
-      <Filter>src\Core\Event</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\Gameplay\Component\BoxCollider2D.cpp">
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClCompile>

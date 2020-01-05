@@ -5,11 +5,14 @@
 #include "Core/Renderer/Buffer/IndexBuffer.h"
 #include "Core/Renderer/VertexArray.h"
 #include "Core/Renderer/Buffer/BufferLayout.h"
+#include "Core/Instrumentor.h"
 
 namespace Muse
 {
     void RenderComponent::SetMesh(float a_Vertices[], int a_VerticesCount, uint32_t a_Indices[], int a_IndicesCount, const BufferLayout& a_BufferLayout)
     {
+        MUSE_PROFILE_FUNCTION();
+
         m_VA = Muse::VertexArray::Create();
 
         m_VB = Muse::VertexBuffer::Create(a_Vertices, sizeof(float) * a_VerticesCount);
@@ -25,13 +28,19 @@ namespace Muse
 
     void RenderComponent::OnUpdate(float a_DeltaTime)
     {
+        MUSE_PROFILE_FUNCTION();
+
     }
 
     void RenderComponent::OnEnable()
     {
+        MUSE_PROFILE_FUNCTION();
+
     }
 
     void RenderComponent::OnDisable()
     {
+        MUSE_PROFILE_FUNCTION();
+
     }
 }

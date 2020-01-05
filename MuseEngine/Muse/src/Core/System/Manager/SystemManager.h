@@ -2,6 +2,7 @@
 
 #include <unordered_map>
 #include <vector>
+#include "Core/Instrumentor.h"
 
 namespace Muse
 {
@@ -31,6 +32,8 @@ namespace Muse
     template<typename T, typename... Targs>
     T& SystemManager::CreateSystem(Targs&& ... a_Args)
     {
+        MUSE_PROFILE_FUNCTION();
+
         static_assert(std::is_base_of<ISystem, T>::value, "Type must derive from ISystem");
 
         ISystem* system = nullptr;
@@ -46,6 +49,8 @@ namespace Muse
     template<typename T>
     T& SystemManager::GetSystem()
     {
+        MUSE_PROFILE_FUNCTION();
+
         static_assert(std::is_base_of<ISystem, T>::value, "Type must derive from ISystem");
 
         ISystem* system = nullptr;
@@ -60,6 +65,8 @@ namespace Muse
     template<typename T>
     void SystemManager::DeleteSystem()
     {
+        MUSE_PROFILE_FUNCTION();
+
         static_assert(std::is_base_of<ISystem, T>::value, "Type must derive from ISystem");
 
         if (m_Systems.find(T::ID()) != m_Systems.end())

@@ -1,6 +1,7 @@
 #include "MusePCH.h"
 
 #include "Utilities.h"
+#include "Core/Instrumentor.h"
 
 #pragma warning( push )
 #pragma warning( disable : 4706)
@@ -8,6 +9,8 @@
 // Taken from http://www.cse.yorku.ca/~oz/hash.html (public domain)
 ullong Muse::StringHash(const std::string& a_String)
 {
+    MUSE_PROFILE_FUNCTION();
+
     ullong hash = 0;
     int c;
     const char* cstr = a_String.c_str();
@@ -22,6 +25,8 @@ ullong Muse::StringHash(const std::string& a_String)
 
 std::string Muse::PointerToString(const void* a_Pointer)
 {
+    MUSE_PROFILE_FUNCTION();
+
     const void* address = static_cast<const void*>(a_Pointer);
     std::stringstream ss;
     ss << address;
@@ -30,6 +35,8 @@ std::string Muse::PointerToString(const void* a_Pointer)
 
 bool Muse::Replace(std::string& a_Str, const std::string& a_From, const std::string& a_To)
 {
+    MUSE_PROFILE_FUNCTION();
+
     size_t start_pos = a_Str.find(a_From);
     if (start_pos == std::string::npos)
     {

@@ -20,10 +20,10 @@ namespace Muse
 
     Application::Application()
     {
-        ASSERT(!s_Instance, "A instance of Application already exists!");
-        s_Instance = this;
+        MUSE_PROFILE_FUNCTION();
 
-        Instrumentor::Get().BeginSession("Profile");
+        ASSERT_ENGINE(!s_Instance, "A instance of Application already exists!");
+        s_Instance = this;
 
         m_Window = std::unique_ptr<Window>(Window::Create());
 
@@ -47,6 +47,8 @@ namespace Muse
 
     Application::~Application()
     {
+        MUSE_PROFILE_FUNCTION();
+
         SceneManager::DestroyAllGameObjects();
 
         m_Window->WindowCloseEvent.Unsubscribe(this);
@@ -57,17 +59,17 @@ namespace Muse
         m_Window->MouseButtonReleasedEvent.Unsubscribe(this);
         m_Window->MouseScrolledEvent.Unsubscribe(this);
         m_Window->MouseMovedEvent.Unsubscribe(this);
-
-        Instrumentor::Get().EndSession();
     }
 
     void Application::Start()
     {
+        MUSE_PROFILE_SCOPE("Application");
+
         OnStart();
 
         while (m_Running)
         {
-            MUSE_PROFILE_FUNCTION();
+            MUSE_PROFILE_SCOPE("Frame");
 
             if(!m_Minimized)
             {
@@ -106,6 +108,8 @@ namespace Muse
 
     void Application::FixedUpdate()
     {
+        MUSE_PROFILE_FUNCTION();
+         
         m_FixedUpdateEvent.Dispatch();
         OnFixedUpdate();
     }
@@ -119,7 +123,7 @@ namespace Muse
 
     void Application::ImGuiRender()
     {
-        //PROFILE_FUNCTION();
+        MUSE_PROFILE_FUNCTION();
 
         m_ImGuiLayer->Begin();
 
@@ -158,24 +162,32 @@ namespace Muse
 
     void Application::PushLayer(Layer* a_Layer)
     {
+        MUSE_PROFILE_FUNCTION();
+
         m_LayerStack.PushLayer(a_Layer);
         a_Layer->OnAttach();
     }
 
     void Application::PushOverlay(Layer* a_Layer)
     {
+        MUSE_PROFILE_FUNCTION();
+
         m_LayerStack.PushOverlay(a_Layer);
         a_Layer->OnAttach();
     }
 
     void Application::WindowCloseEvent()
     {
+        MUSE_PROFILE_FUNCTION();
+
         m_Running = false;
         OnWindowCloseEvent();
     }
 
     void Application::WindowResizeEvent(int a_Width, int a_Height)
     {
+        MUSE_PROFILE_FUNCTION();
+
         m_Minimized = a_Width == 0 || a_Height == 0;
 
         Renderer::OnWindowResize(a_Width, a_Height);
@@ -185,31 +197,43 @@ namespace Muse
 
     void Application::KeyPressedEvent(int a_KeyCode, int a_RepeatCount)
     {
+        MUSE_PROFILE_FUNCTION();
+
         OnKeyPressedEvent(a_KeyCode, a_RepeatCount);
     }
 
     void Application::KeyReleasedEvent(int a_KeyCode)
     {
+        MUSE_PROFILE_FUNCTION();
+
         OnKeyReleasedEvent(a_KeyCode);
     }
 
     void Application::MouseButtonPressedEvent(int a_Button)
     {
+        MUSE_PROFILE_FUNCTION();
+
         OnMouseButtonPressedEvent(a_Button);
     }
 
     void Application::MouseButtonReleasedEvent(int a_Button)
     {
+        MUSE_PROFILE_FUNCTION();
+
         OnMouseButtonReleasedEvent(a_Button);
     }
 
     void Application::MouseScrolledEvent(float a_XOffset, float a_YOffset)
     {
+        MUSE_PROFILE_FUNCTION();
+
         OnMouseScrolledEvent(a_XOffset, a_YOffset);
     }
 
     void Application::MouseMovedEvent(float a_X, float a_Y)
     {
+        MUSE_PROFILE_FUNCTION();
+
         OnMouseMovedEvent(a_X, a_Y);
     }
 }

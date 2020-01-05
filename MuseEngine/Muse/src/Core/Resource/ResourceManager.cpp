@@ -4,6 +4,7 @@
 
 #include <string>
 #include <filesystem>
+#include "Core/Instrumentor.h"
 
 namespace Muse
 {
@@ -12,6 +13,8 @@ namespace Muse
 
     void ResourceManager::CreateSaveLocation()
     {
+        MUSE_PROFILE_FUNCTION();
+
         char* pValue;
         size_t len;
         _dupenv_s(&pValue, &len, "APPDATA");
@@ -26,6 +29,8 @@ namespace Muse
 
     std::vector<std::shared_ptr<Resource>> ResourceManager::GetAllResources()
     {
+        MUSE_PROFILE_FUNCTION();
+
         std::vector<std::shared_ptr<Resource>> resources;
 
         for (std::pair<ullong, std::shared_ptr<Resource>> resource : m_Resources)

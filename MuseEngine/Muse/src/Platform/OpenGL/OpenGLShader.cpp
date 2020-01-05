@@ -8,11 +8,14 @@
 
 #include <fstream>
 #include <filesystem>
+#include "Core/Instrumentor.h"
 
 namespace Muse
 {
 	static GLenum ShaderTypeFromString(const std::string& a_Type)
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		if (a_Type == "vertex")
 		{
 			return GL_VERTEX_SHADER;
@@ -29,6 +32,8 @@ namespace Muse
 
     OpenGLShader::OpenGLShader(const std::string& a_VertexSource, const std::string& a_FragmentSource)
     {
+		MUSE_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string> sources;
 		sources[GL_VERTEX_SHADER] = a_VertexSource;
 		sources[GL_FRAGMENT_SHADER] = a_FragmentSource;
@@ -37,6 +42,8 @@ namespace Muse
 
 	OpenGLShader::OpenGLShader(const std::string& a_FilePath)
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		if (std::filesystem::exists(a_FilePath))
 		{
 			std::string source = ReadFile(a_FilePath);
@@ -47,11 +54,15 @@ namespace Muse
 
 	OpenGLShader::~OpenGLShader()
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		glDeleteProgram(m_RendererID);
 	}
 
     void OpenGLShader::Bind() const
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		ASSERT_ENGINE(m_IsCompiled, "This shader is not compiled yet!");
 
 		glUseProgram(m_RendererID);
@@ -59,6 +70,8 @@ namespace Muse
 
 	void OpenGLShader::Unbind() const
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		ASSERT_ENGINE(m_IsCompiled, "This shader is not compiled yet!");
 
 		glUseProgram(0);
@@ -67,6 +80,8 @@ namespace Muse
     ///Improvement: cache the uniform location in a map, id is a_Name.
     void OpenGLShader::SetInt(const std::string& a_Name, int a_Int)
     {
+		MUSE_PROFILE_FUNCTION();
+
 		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
 		ASSERT(location != -1, "Uniform not found!");
 		glUniform1i(location, a_Int);
@@ -74,6 +89,8 @@ namespace Muse
 
     void OpenGLShader::SetFloat1(const std::string& a_Name, float a_Float)
     {
+		MUSE_PROFILE_FUNCTION();
+
 		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
 		ASSERT(location != -1, "Uniform not found!");
 		glUniform1f(location, a_Float);
@@ -81,6 +98,8 @@ namespace Muse
 
     void OpenGLShader::SetFloat2(const std::string& a_Name, const glm::vec2& a_Float2)
     {
+		MUSE_PROFILE_FUNCTION();
+
 		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
 		ASSERT(location != -1, "Uniform not found!");
 		glUniform2f(location, a_Float2.x, a_Float2.y);
@@ -88,6 +107,8 @@ namespace Muse
 
     void OpenGLShader::SetFloat3(const std::string& a_Name, const glm::vec3& a_Float3)
     {
+		MUSE_PROFILE_FUNCTION();
+
 		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
 		ASSERT(location != -1, "Uniform not found!");
 		glUniform3f(location, a_Float3.x, a_Float3.y, a_Float3.z);
@@ -95,6 +116,8 @@ namespace Muse
 
 	void OpenGLShader::SetFloat4(const std::string& a_Name, const glm::vec4& a_Float4)
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
 		ASSERT(location != -1, "Uniform not found!");
 		glUniform4f(location, a_Float4.x, a_Float4.y, a_Float4.z, a_Float4.w);
@@ -102,6 +125,8 @@ namespace Muse
 
     void OpenGLShader::SetMat3(const std::string& a_Name, const glm::mat3& a_Mat3)
     {
+		MUSE_PROFILE_FUNCTION();
+
 		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
 		ASSERT(location != -1, "Uniform not found!");
 		glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(a_Mat3));
@@ -109,6 +134,8 @@ namespace Muse
 
 	void OpenGLShader::SetMat4(const std::string& a_Name, const glm::mat4& a_Mat4)
     {
+		MUSE_PROFILE_FUNCTION();
+
 		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
 		ASSERT(location != -1, "Uniform not found!");
 		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(a_Mat4));
@@ -116,6 +143,8 @@ namespace Muse
 
     void OpenGLShader::Compile(const std::string& a_VertexSource, const std::string& a_FragmentSource)
     {
+		MUSE_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string> sources;
 		sources[GL_VERTEX_SHADER] = a_VertexSource;
 		sources[GL_FRAGMENT_SHADER] = a_FragmentSource;
@@ -124,6 +153,8 @@ namespace Muse
 
     std::string OpenGLShader::ReadFile(const std::string& a_FilePath)
     {
+		MUSE_PROFILE_FUNCTION();
+
 		std::string result;
 		std::ifstream in(a_FilePath, std::ios::in | std::ios::binary);
 		if (in)
@@ -152,6 +183,8 @@ namespace Muse
 
 	std::unordered_map<GLenum, std::string> OpenGLShader::Preprocess(const std::string& a_Source)
     {
+		MUSE_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string> shaderSources;
 
 		const char* typeToken = "#type";
@@ -184,6 +217,8 @@ namespace Muse
 
 	void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& a_ShaderSources)
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		m_IsCompiled = true;
 
 		GLuint program = glCreateProgram();

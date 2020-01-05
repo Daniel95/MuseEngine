@@ -11,6 +11,7 @@
 #include <filesystem>
 #include <fstream>
 #include "Core/Scene/SceneManager.h"
+#include "Core/Instrumentor.h"
 
 namespace Muse
 {
@@ -76,6 +77,8 @@ namespace Muse
     template<typename T>
     std::vector<std::shared_ptr<T>> ResourceManager::GetResourcesOfType()
     {
+        MUSE_PROFILE_FUNCTION();
+
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Component");
 
         std::vector<std::shared_ptr<T>> resources;
@@ -96,6 +99,8 @@ namespace Muse
     template<typename T, typename... Args>
     std::shared_ptr<T> ResourceManager::Create(const std::string& a_Name, Args&&... a_Args)
     {
+        MUSE_PROFILE_FUNCTION();
+
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Resource");
 
         ullong id = T::CalculateResourceId(a_Name);
@@ -116,6 +121,8 @@ namespace Muse
     template<typename T, typename... Args>
     std::shared_ptr<T> ResourceManager::Load(const std::string & a_ResourcePath)
     {
+        MUSE_PROFILE_FUNCTION();
+
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Resource");
 
         ullong id = T::CalculateResourceId(a_ResourcePath);
@@ -136,6 +143,8 @@ namespace Muse
     template <typename T>
     std::shared_ptr<T> ResourceManager::Get(const std::string& a_ResourcePath)
     {
+        MUSE_PROFILE_FUNCTION();
+
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Resource");
 
         ullong id = T::CalculateResourceId(a_ResourcePath);
@@ -149,6 +158,8 @@ namespace Muse
     template <typename T>
     std::shared_ptr<T> ResourceManager::GetLoadedResource(ullong a_Id)
     {
+        MUSE_PROFILE_FUNCTION();
+
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Resource");
 
         auto it = m_Resources.find(a_Id);
@@ -166,6 +177,8 @@ namespace Muse
     template<typename T>
     void ResourceManager::UnloadResource(const std::string & a_ResourcePath)
     {
+        MUSE_PROFILE_FUNCTION();
+
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Component");
 
         ullong id = T::CalculateResourceId(a_ResourcePath);

@@ -5,17 +5,22 @@
 #include "glad/glad.h"
 #include "Core/Utilities/Defines.h"
 #include "Core/Utilities/Log.h"
+#include "Core/Instrumentor.h"
 
 namespace Muse
 {
     OpenGLContext::OpenGLContext(GLFWwindow* a_WindowHandle)
         : m_WindowHandle(a_WindowHandle)
     {
+        MUSE_PROFILE_FUNCTION();
+
         ASSERT_ENGINE(a_WindowHandle, "Handle is null!");
     }
 
     void OpenGLContext::Init()
     {
+        MUSE_PROFILE_FUNCTION();
+
         glfwMakeContextCurrent(m_WindowHandle);
         const int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
         ASSERT_ENGINE(status, "Failed to initialize Glad!");
@@ -37,6 +42,8 @@ namespace Muse
 
     void OpenGLContext::SwapBuffers()
     {
+        MUSE_PROFILE_FUNCTION();
+
         glfwSwapBuffers(m_WindowHandle);
     }
 }

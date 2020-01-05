@@ -9,7 +9,6 @@
 
 #include "Core/Resource/ResourceManager.h"
 #include "RenderCommand.h"
-#include "Core/Timer.h"
 
 namespace Muse
 {
@@ -24,6 +23,8 @@ namespace Muse
     
     void Renderer2D::Init()
     {
+        MUSE_PROFILE_FUNCTION();
+
         s_Data = new Renderer2DStorage();
         s_Data->QuadVertexArray = Muse::VertexArray::Create();
 
@@ -56,32 +57,43 @@ namespace Muse
 
     void Renderer2D::ShutDown()
     {
+        MUSE_PROFILE_FUNCTION();
+
         delete s_Data;
     }
 
     void Renderer2D::BeginScene(const CameraComponent& a_OrthographicCamera)
     {
+        MUSE_PROFILE_FUNCTION();
+
         s_Data->ColoredTextureShader->Bind();
         s_Data->ColoredTextureShader->SetMat4("u_ViewProjection", a_OrthographicCamera.GetViewProjectionMatrix());
     }
 
     void Renderer2D::EndScene()
     {
+        MUSE_PROFILE_FUNCTION();
     }
 
     void Renderer2D::DrawQuad(const glm::vec2& a_Position, const glm::vec2& a_Size, std::shared_ptr<Texture> a_Texture)
     {
+        MUSE_PROFILE_FUNCTION();
+
         DrawQuad({ a_Position.x, a_Position.y, 0.0f }, a_Size, a_Texture);
     }
 
     void Renderer2D::DrawQuad(const glm::vec3& a_Position, const glm::vec2& a_Size, std::shared_ptr<Texture> a_Texture)
     {
+        MUSE_PROFILE_FUNCTION();
+
         const glm::mat4 transform = glm::translate(glm::mat4(1.0f), a_Position) * glm::scale(glm::mat4(1.0f), { a_Size.x, a_Size.y, 1.0f });
         DrawQuad(transform, a_Texture);
     }
 
     void Renderer2D::DrawQuad(const glm::mat4& a_Transform, std::shared_ptr<Texture> a_Texture)
     {
+        MUSE_PROFILE_FUNCTION();
+
         a_Texture->Bind();
 
         s_Data->ColoredTextureShader->Bind();
@@ -94,17 +106,22 @@ namespace Muse
 
     void Renderer2D::DrawQuad(const glm::vec2& a_Position, const glm::vec2& a_Size, const glm::vec4& a_Color)
     {
+        MUSE_PROFILE_FUNCTION();
+
         DrawQuad({ a_Position.x, a_Position.y, 0.0f }, a_Size, a_Color);
     }
 
     void Renderer2D::DrawQuad(const glm::vec3& a_Position, const glm::vec2& a_Size, const glm::vec4& a_Color)
     {
+        MUSE_PROFILE_FUNCTION();
+
         const glm::mat4 transform = glm::translate(glm::mat4(1.0f), a_Position) * glm::scale(glm::mat4(1.0f), { a_Size.x, a_Size.y, 1.0f });
         DrawQuad(transform, a_Color);
     }
 
     void Renderer2D::DrawQuad(const glm::mat4& a_Transform, const glm::vec4& a_Color)
     {
+        MUSE_PROFILE_FUNCTION();
 
         s_Data->WhiteTexture->Bind();
 

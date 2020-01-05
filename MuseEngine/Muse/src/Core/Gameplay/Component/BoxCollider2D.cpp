@@ -3,11 +3,14 @@
 #include "Core/Gameplay/Component/BoxCollider2D.h"
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Gameplay/Component/TransformComponent.h"
+#include "Core/Instrumentor.h"
 
 namespace Muse
 {
     BoxCollider2D::BoxCollider2D()
     {
+        MUSE_PROFILE_FUNCTION();
+
         if (m_CollisionType != CollisionType::None)
         {
             SetCollisionType(m_CollisionType);

@@ -2,11 +2,14 @@
 
 #include "Core/Gameplay/Component/TransformComponent.h"
 #include "Core/Scene/Scene.h"
+#include "Core/Instrumentor.h"
 
 namespace Muse 
 {
     GameObject::~GameObject()
     {
+        MUSE_PROFILE_FUNCTION();
+
         for (Component* component : m_Components)
         {
             delete component;
@@ -15,6 +18,8 @@ namespace Muse
 
     void GameObject::Init(Scene& a_Scene)
     {
+        MUSE_PROFILE_FUNCTION();
+
         m_Scene = &a_Scene;
 
         if (!HasComponent<TransformComponent>())
@@ -25,6 +30,8 @@ namespace Muse
 
     void GameObject::Update(float a_DeltaTime)
     {
+        MUSE_PROFILE_FUNCTION();
+
         for (Component* component : m_Components)
         {
 			if (component->IsEnabled())
@@ -36,6 +43,8 @@ namespace Muse
 
     void GameObject::FixedUpdate(float a_TimeStep)
     {
+        MUSE_PROFILE_FUNCTION();
+
         for (Component* component : m_Components)
         {
             if (component->IsEnabled())
@@ -47,6 +56,8 @@ namespace Muse
 
     void GameObject::Destroy()
     {
+        MUSE_PROFILE_FUNCTION();
+
         if (!m_Destroyed)
         {
             m_Scene->RemoveGameObject(*this);
@@ -56,6 +67,8 @@ namespace Muse
 
     void GameObject::Enable()
     {
+        MUSE_PROFILE_FUNCTION();
+
         for (Component* component : m_Components)
         {
             component->Enable();
@@ -64,6 +77,8 @@ namespace Muse
 
     void GameObject::Disable()
     {
+        MUSE_PROFILE_FUNCTION();
+
         for (Component* component : m_Components)
         {
             component->Disable();

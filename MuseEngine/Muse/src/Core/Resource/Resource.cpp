@@ -1,11 +1,14 @@
 #include "MusePCH.h"
 
 #include "Resource.h"
+#include "Core/Instrumentor.h"
 
 namespace Muse
 {
     void Resource::SetPathAndName(const std::string& a_Path)
     {
+        MUSE_PROFILE_FUNCTION();
+
         m_Path = a_Path;
 
         /*

@@ -8,6 +8,8 @@ namespace Muse
 {
     static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType a_ShaderDataType)
     {
+        MUSE_PROFILE_FUNCTION();
+
         switch (a_ShaderDataType)
         {
             case ShaderDataType::Float:    return GL_FLOAT;
@@ -29,22 +31,30 @@ namespace Muse
 
     OpenGLVertexArray::OpenGLVertexArray()
     {
+        MUSE_PROFILE_FUNCTION();
+
         glCreateVertexArrays(1, &m_RendererId);
     }
 
     void OpenGLVertexArray::Bind() const
     {
+        MUSE_PROFILE_FUNCTION();
+
         glBindVertexArray(m_RendererId);
     }
 
     void OpenGLVertexArray::Unbind() const
     {
+        MUSE_PROFILE_FUNCTION();
+
         glBindVertexArray(0);
     }
 
     void OpenGLVertexArray::AddVertexBuffer(std::shared_ptr<VertexBuffer>& a_VertexBuffer)
     {
-        ASSERT(!a_VertexBuffer->GetLayout().GetElements().empty(), "Vertex buffer has no layout!");
+        MUSE_PROFILE_FUNCTION();
+
+        ASSERT_ENGINE(!a_VertexBuffer->GetLayout().GetElements().empty(), "Vertex buffer has no layout!");
 
         glBindVertexArray(m_RendererId);
 
@@ -70,6 +80,8 @@ namespace Muse
 
     void OpenGLVertexArray::SetIndexBuffer(std::shared_ptr<IndexBuffer>& a_IndexBuffer)
     {
+        MUSE_PROFILE_FUNCTION();
+
         glBindVertexArray(m_RendererId);
         a_IndexBuffer->Bind();
         m_IndexBuffer = a_IndexBuffer;

@@ -22,7 +22,7 @@ namespace Muse
         virtual void SetHeight(const unsigned int a_Height) override { m_Height = a_Height; }
 
         virtual void SetVSync(bool a_Enabled) override;
-        virtual bool IsVSync() const override;
+        virtual bool GetVSync() const override { return m_VSync; }
         virtual void* GetNativeWindow() const override { return m_Window; }
 
     private:
@@ -30,7 +30,7 @@ namespace Muse
         GraphicsContext* m_Context;
         std::string m_Title;
         unsigned int m_Width, m_Height;
-        bool vSync;
+        bool m_VSync;
 
         virtual void Init(const WindowProperties& a_Properties);
         virtual void Shutdown();

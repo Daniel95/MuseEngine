@@ -3,6 +3,7 @@
 #include "Core/Gameplay/Component/Component.h"
 #include "Core/Gameplay/GameObject.h"
 #include "TransformComponent.h"
+#include "Core/Instrumentor.h"
 
 namespace Muse 
 {
@@ -10,6 +11,8 @@ namespace Muse
 
     void Component::Init(GameObject* a_GameObject)
     {
+		MUSE_PROFILE_FUNCTION();
+
         m_GameObject = a_GameObject;
 
 		if (m_isEnabled)
@@ -26,12 +29,16 @@ namespace Muse
 
 	void Component::Enable()
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		m_isEnabled = true;
         OnEnable();
 	}
 
 	void Component::Disable()
 	{
+		MUSE_PROFILE_FUNCTION();
+
 		m_isEnabled = false;
         OnDisable();
 	}

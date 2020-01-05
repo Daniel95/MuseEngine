@@ -16,16 +16,22 @@ namespace Muse
 
     SceneManager::SceneManager()
     {
+        MUSE_PROFILE_FUNCTION();
+
         Application::Get().m_UpdateEvent.Subscribe(SUB_FN(SceneManager::OnUpdate, std::placeholders::_1));
     }
 
     SceneManager::~SceneManager()
     {
+        MUSE_PROFILE_FUNCTION();
+
         Application::Get().m_UpdateEvent.Unsubscribe(this);
     }
 
     void SceneManager::OnUpdate(float a_DeltaTime)
     {
+        MUSE_PROFILE_FUNCTION();
+
         if (m_SceneNameToLoad != "")
         {
             LoadSceneImmediate(m_SceneNameToLoad);
@@ -40,6 +46,8 @@ namespace Muse
 
     std::shared_ptr<Scene> SceneManager::NewScene()
     {
+        MUSE_PROFILE_FUNCTION();
+
         if (m_ActiveScene != nullptr)
         {
             const std::string oldScenePath = GAME_SCENE_PATH + m_ActiveScene->GetName() + ".txt";
@@ -54,23 +62,31 @@ namespace Muse
 
     void SceneManager::LoadScene(const std::string& a_SceneName)
     {
+        MUSE_PROFILE_FUNCTION();
+
         m_SceneNameToLoad = a_SceneName;
     }
 
     void SceneManager::ReloadScene()
     {
-        _ASSERT(m_ActiveScene != nullptr);
+        MUSE_PROFILE_FUNCTION();
+
+        ASSERT_ENGINE(m_ActiveScene != nullptr, "There is not active scene to reload!");
 
         m_SceneNameToLoad = m_ActiveScene->GetName();
     }
 
     std::shared_ptr<Scene> SceneManager::GetActiveScene()
     {
+        MUSE_PROFILE_FUNCTION();
+
         return m_ActiveScene;
     }
 
     void SceneManager::DestroyAllGameObjects()
     {
+        MUSE_PROFILE_FUNCTION();
+
         if(m_ActiveScene != nullptr)
         {
             m_ActiveScene->DestroyAllGameObjects();
@@ -79,6 +95,8 @@ namespace Muse
 
     void SceneManager::LoadSceneImmediate(const std::string& a_SceneName)
     {
+        MUSE_PROFILE_FUNCTION();
+
         if (m_ActiveScene != nullptr)
         {
             const std::string oldScenePath = GAME_SCENE_PATH + m_ActiveScene->GetName() + ".txt";

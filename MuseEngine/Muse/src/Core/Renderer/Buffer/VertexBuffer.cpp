@@ -14,6 +14,8 @@ namespace Muse
 {
     std::shared_ptr<VertexBuffer> VertexBuffer::Create(float* a_Vertices, uint32_t a_Size)
     {
+        MUSE_PROFILE_FUNCTION();
+
         switch (Renderer::GetAPI())
         {
             case RendererAPI::API::OpenGL:
