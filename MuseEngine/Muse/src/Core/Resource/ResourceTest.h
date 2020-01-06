@@ -28,7 +28,7 @@ namespace Muse
         template<typename T>
         static std::shared_ptr<T> CreateResource(uint32_t a_Width, uint32_t a_Height) { return Texture::Create(a_Width, a_Height); }
         template<typename T>
-        static std::shared_ptr<T> CreateResource(const std::string& a_SceneName) { return SceneManager::NewScene(); }
+        static std::shared_ptr<T> CreateResource(const std::string& a_SceneName) { return Scene::Create(); }
 
         template<typename T>
         static std::shared_ptr<T> LoadResource(const std::string& a_FilePath) { return nullptr; }
@@ -37,7 +37,7 @@ namespace Muse
         template<>
         static std::shared_ptr<Texture> LoadResource<Texture>(const std::string& a_FilePath) { return Texture::Load(a_FilePath); }
         template<>
-        static std::shared_ptr<Scene> LoadResource<Scene>(const std::string& a_FilePath) { return SceneManager::NewScene(); }
+        static std::shared_ptr<Scene> LoadResource<Scene>(const std::string& a_FilePath) { return Scene::Load(a_FilePath); }
 
 
         template <typename T, typename ... Args>

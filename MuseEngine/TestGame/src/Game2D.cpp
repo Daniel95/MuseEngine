@@ -22,7 +22,8 @@ void Game2D::OnStart()
     Muse::RenderCommand::Init();
     Muse::Renderer2D::Init();
 
-    std::shared_ptr<Muse::Scene> scene = Muse::ResourceManager::Create<Muse::Scene>("NewScene");
+    std::shared_ptr<Muse::Scene> scene = Muse::ResourceManager::Create<Muse::Scene>("Game2DTestScene");
+    Muse::SceneManager::SwitchScene(scene);
 
     {
         Muse::GameObject& gameObject = scene->AddGameObject();
@@ -51,6 +52,8 @@ void Game2D::OnRender()
     Muse::RenderCommand::Clear();
 
     Muse::Renderer2D::BeginScene(*Muse::CameraComponent::GetMain());
+
+    std::shared_ptr<Muse::Scene> scene = Muse::SceneManager::GetActiveScene();
 
     for (auto& gameObject : Muse::SceneManager::GetActiveScene()->GetGameObjects())
     {

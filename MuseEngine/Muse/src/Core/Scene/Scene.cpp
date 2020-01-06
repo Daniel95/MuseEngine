@@ -150,8 +150,6 @@ namespace Muse
 
     std::string Scene::Serialize() const
     {
-        MUSE_PROFILE_FUNCTION();
-
         return io::to_json(*this);
     }
 
@@ -171,7 +169,7 @@ namespace Muse
 
         DestroyEditorCamera();
 
-        std::string jsonString = Serialize();
+        std::string jsonString = Serialize();;
 
         CreateEditorCamera();
 
@@ -180,6 +178,7 @@ namespace Muse
         ofs.close();
     }
 
+    /*
     void Scene::Load(const std::string& a_Path)
     {
         MUSE_PROFILE_FUNCTION();
@@ -198,6 +197,7 @@ namespace Muse
 
         Deserialize(sceneJSON);
     }
+    */
 
     void Scene::SaveState()
     {
@@ -308,6 +308,39 @@ namespace Muse
         gameObject.AddComponent<OrthographicCameraControllerComponent>();
 
         return gameObject;
+    }
+
+    std::shared_ptr<Scene> Scene::Load(const std::string& a_FilePath)
+    {
+        MUSE_PROFILE_FUNCTION();
+
+    #ifdef MUSE_DEBUG 
+        if (!std::filesystem::exists(a_FilePath))
+        {
+            LOG_ENGINE_ERROR("Scene does not exists! {0}", a_FilePath);
+            ASSERT_ENGINE(false, "Scene does not exists!");
+        }
+    #endif
+
+        std::ifstream stream(a_FilePath);
+        std::string sceneJSON((std::istreambuf_iterator<char>(stream)),
+            std::istreambuf_iterator<char>());
+
+        std::shared_ptr<Scene> scene = std::make_shared<Scene>();
+
+        io::from_json(sceneJSON, scene);
+
+        for (GameObject* gameObject : scene->GetGameObjects())
+        {
+            gameObject->Init(*scene);
+
+            for (Component* component : gameObject->GetComponents())
+            {
+                component->Init(gameObject);
+            }
+        }
+
+        return scene;
     }
 
     //#endif

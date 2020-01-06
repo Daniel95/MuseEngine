@@ -96,7 +96,6 @@ namespace Muse
         m_DeltaTime = time - m_LastFrameTime;
         m_LastFrameTime = time;
 
-
         for (Layer* layer : m_LayerStack)
         {
             layer->OnUpdate(m_DeltaTime);
@@ -154,7 +153,7 @@ namespace Muse
 
     void Application::Render()
     {
-        MUSE_PROFILE_FUNCTION();
+        InstrumentationTimer timer("Application::Render");
 
         m_RenderEvent.Dispatch();
         OnRender();

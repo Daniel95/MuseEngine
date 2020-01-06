@@ -41,7 +41,7 @@ namespace Muse
         std::string Serialize() const;
         void Save();
         void Save(const std::string& a_Path);
-		void Load(const std::string& a_Path);
+		//void Load(const std::string& a_Path);
         void SaveState();
         void DestroyGameObjectImmediate(GameObject* a_GameObject);
         bool CanUndo() const { return m_States.size() > 0 && m_CurrentStateIndex > 0; }
@@ -57,6 +57,9 @@ namespace Muse
         GameObject* FindGameObjectOfType();
         template<typename T>
         const std::vector<GameObject*>& FindGameObjectsOfType();
+
+        static std::shared_ptr<Scene> Create() { return std::make_shared<Scene>(); }
+        static std::shared_ptr<Scene> Load(const std::string& a_FilePath);
 
     private:
         std::vector<GameObject*> m_GameObjectsToUpdate;

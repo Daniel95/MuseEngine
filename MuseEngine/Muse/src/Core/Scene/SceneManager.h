@@ -30,18 +30,20 @@ namespace Muse
 
         void OnUpdate(float a_DeltaTime);
 
-        static std::shared_ptr<Scene> NewScene();
-        static void LoadScene(const std::string& a_SceneName);
+        //static std::shared_ptr<Scene> NewScene();
+        //static void LoadScene(const std::string& a_SceneName);
+
+        static void SwitchScene(std::shared_ptr<Scene> a_NextScene);
+        static void SwitchScene(const std::string& a_SceneName);
         static void ReloadScene();
         static std::shared_ptr<Scene> GetActiveScene();
         static void DestroyAllGameObjects();
 
     private:
-        static std::string m_SceneNameToLoad;
+        static std::shared_ptr<Scene> m_SceneToSwitchTo;
         static std::shared_ptr<Scene> m_ActiveScene;
-        static bool m_InspectLoadedScenes;
 
-        static void LoadSceneImmediate(const std::string& a_SceneName);
+        static void SwitchSceneImmediate(std::shared_ptr<Scene> a_NextScene);
 
     };
 }

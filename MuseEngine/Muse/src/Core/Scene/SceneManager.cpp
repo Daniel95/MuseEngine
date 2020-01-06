@@ -10,9 +10,8 @@
 
 namespace Muse 
 {
-    std::string SceneManager::m_SceneNameToLoad = "";
     std::shared_ptr<Scene> SceneManager::m_ActiveScene = nullptr;
-    bool SceneManager::m_InspectLoadedScenes = false;
+    std::shared_ptr<Scene> SceneManager::m_SceneToSwitchTo = nullptr;
 
     SceneManager::SceneManager()
     {
@@ -32,10 +31,10 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        if (m_SceneNameToLoad != "")
+        if (m_SceneToSwitchTo != nullptr)
         {
-            LoadSceneImmediate(m_SceneNameToLoad);
-            m_SceneNameToLoad = "";
+            SwitchSceneImmediate(m_SceneToSwitchTo);
+            m_SceneToSwitchTo = nullptr;
         }
 
         if (m_ActiveScene != nullptr)
@@ -44,27 +43,26 @@ namespace Muse
         }
     }
 
-    std::shared_ptr<Scene> SceneManager::NewScene()
+    void SceneManager::SwitchScene(std::shared_ptr<Scene> a_NextScene)
     {
-        MUSE_PROFILE_FUNCTION();
+        if (m_ActiveScene != nullptr)
+        {
+            ResourceManager::UnloadResource<Scene>(m_ActiveScene->GetPath());
+        }
+
+        m_SceneToSwitchTo = a_NextScene;
+    }
+
+    void SceneManager::SwitchScene(const std::string& a_SceneName)
+    {
+        const std::shared_ptr<Scene> scene = ResourceManager::Get<Scene>(a_SceneName);
 
         if (m_ActiveScene != nullptr)
         {
-            const std::string oldScenePath = GAME_SCENE_PATH + m_ActiveScene->GetName() + ".txt";
-            ResourceManager::UnloadResource<Scene>(oldScenePath);
+            ResourceManager::UnloadResource<Scene>(m_ActiveScene->GetPath());
         }
 
-        const std::string newScenePath = GAME_SCENE_PATH + "NewScene.txt";
-        m_ActiveScene = std::make_shared<Scene>();
-
-        return m_ActiveScene;
-    }
-
-    void SceneManager::LoadScene(const std::string& a_SceneName)
-    {
-        MUSE_PROFILE_FUNCTION();
-
-        m_SceneNameToLoad = a_SceneName;
+        m_SceneToSwitchTo = scene;
     }
 
     void SceneManager::ReloadScene()
@@ -73,7 +71,7 @@ namespace Muse
 
         ASSERT_ENGINE(m_ActiveScene != nullptr, "There is not active scene to reload!");
 
-        m_SceneNameToLoad = m_ActiveScene->GetName();
+        m_SceneToSwitchTo = m_ActiveScene;
     }
 
     std::shared_ptr<Scene> SceneManager::GetActiveScene()
@@ -93,7 +91,7 @@ namespace Muse
         }
     }
 
-    void SceneManager::LoadSceneImmediate(const std::string& a_SceneName)
+    void SceneManager::SwitchSceneImmediate(std::shared_ptr<Scene> a_NextScene)
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -103,8 +101,6 @@ namespace Muse
             ResourceManager::UnloadResource<Scene>(oldScenePath);
         }
 
-        const std::string newScenePath = GAME_SCENE_PATH + a_SceneName + ".txt";
-        m_ActiveScene = ResourceManager::Load<Scene>(newScenePath);
-        m_ActiveScene->Load(newScenePath);
+        m_ActiveScene = a_NextScene;
     }
 }
