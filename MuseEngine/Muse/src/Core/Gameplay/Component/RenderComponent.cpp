@@ -41,6 +41,15 @@ namespace Muse
     void RenderComponent::OnDisable()
     {
         MUSE_PROFILE_FUNCTION();
-
     }
+}
+
+RTTR_REGISTRATION
+{
+    rttr::registration::class_<Muse::RenderComponent>("RenderComponent")
+        .constructor<>()
+        (
+            rttr::policy::ctor::as_raw_ptr
+        );
+//.property("Enabled", &Muse::Component::m_isEnabled);
 }

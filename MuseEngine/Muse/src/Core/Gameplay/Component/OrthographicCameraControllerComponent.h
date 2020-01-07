@@ -25,7 +25,9 @@ namespace Muse
 
         void OnMouseScrolledEvent(float a_XOffset, float a_YOffset);
         void OnWindowResizeEvent(int a_Width, int a_Height);
-        void OnWindowClose();
+
+        RTTR_ENABLE()
+        RTTR_REGISTRATION_FRIEND
 
     };
 }

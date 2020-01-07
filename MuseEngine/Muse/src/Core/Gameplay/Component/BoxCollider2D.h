@@ -9,20 +9,18 @@ namespace Muse
 
     class BoxCollider2D : public Component
     {
-        RTTR_ENABLE(Component);
-
     public:
         BoxCollider2D();
         virtual ~BoxCollider2D() = default;
 
-        CollisionType GetCollisionType();
+        CollisionType GetCollisionType() const;
         void SetCollisionType(CollisionType a_CollisionType);
-        CollisionType RTTRGetCollisionType();
-        void RTTRSetCollisionType(CollisionType a_CollisionType);
 
     private:
         float m_Scale = 1.f;
         CollisionType m_CollisionType;
 
+        RTTR_ENABLE(Component)
+        RTTR_REGISTRATION_FRIEND
     };
 }

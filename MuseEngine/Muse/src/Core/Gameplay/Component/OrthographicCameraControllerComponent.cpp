@@ -84,3 +84,13 @@ namespace Muse
         m_CameraComponent->SetProjection(aspectRatio, m_CameraComponent->GetZoomLevel());
     }
 }
+
+RTTR_REGISTRATION
+{
+    rttr::registration::class_<Muse::OrthographicCameraControllerComponent>("OrthographicCameraControllerComponent")
+        .constructor<>()
+        (
+            rttr::policy::ctor::as_raw_ptr
+        );
+//.property("Enabled", &Muse::Component::m_isEnabled);
+}

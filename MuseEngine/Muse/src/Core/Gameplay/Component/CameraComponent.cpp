@@ -46,3 +46,19 @@ namespace Muse
         m_ProjectionMatrix = glm::ortho(a_Left, a_Right, a_Bottom, a_Top, a_Near, a_Far);
     }
 }
+
+RTTR_REGISTRATION
+{
+    rttr::registration::class_<Muse::CameraComponent>("CameraComponent")
+        .constructor<>()
+        (
+            rttr::policy::ctor::as_raw_ptr
+        )
+        .property("m_AspectRatio", &Muse::CameraComponent::m_AspectRatio)
+        .property("m_ProjectionMatrix", &Muse::CameraComponent::m_ProjectionMatrix)
+        .property("m_ViewProjectionMatrix", &Muse::CameraComponent::m_ViewProjectionMatrix)
+        .property("m_IsEditorCamera", &Muse::CameraComponent::m_IsEditorCamera)
+        .property("m_ZoomLevel", &Muse::CameraComponent::m_ZoomLevel)
+        .property("m_AspectRatio", &Muse::CameraComponent::m_AspectRatio);
+
+}

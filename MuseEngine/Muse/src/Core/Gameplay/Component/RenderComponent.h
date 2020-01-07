@@ -32,6 +32,8 @@ namespace Muse
         std::shared_ptr<Shader> m_Shader;
         std::shared_ptr<Texture> m_Texture;
 
+        RTTR_ENABLE()
+        RTTR_REGISTRATION_FRIEND
     };
 }
 

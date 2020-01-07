@@ -7,8 +7,6 @@
 
 namespace Muse 
 {
-    class BoxCollider2D;
-
     void Component::Init(GameObject* a_GameObject)
     {
 		MUSE_PROFILE_FUNCTION();

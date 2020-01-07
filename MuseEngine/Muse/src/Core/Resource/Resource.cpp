@@ -32,6 +32,7 @@ namespace Muse
             .constructor<>()
             (
                 rttr::policy::ctor::as_raw_ptr
-            );
+            )
+            .property("m_Path", &Resource::GetPath, &Resource::SetPathAndName);
     }
 }

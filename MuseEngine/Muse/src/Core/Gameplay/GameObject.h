@@ -15,8 +15,6 @@ namespace Muse
 
 	class GameObject
 	{
-        RTTR_ENABLE();
-
 	public:
         GameObject() = default;
 		virtual ~GameObject();
@@ -37,7 +35,6 @@ namespace Muse
         T* GetComponent() const;
 
         Scene* GetScene() const;
-        SystemManager* GetSystemManager() const;
         TransformComponent* GetTransform() const;
 
         const std::vector<Component*>& GetComponents();
@@ -49,6 +46,8 @@ namespace Muse
         Scene* m_Scene;
         bool m_Destroyed = false;
 
+        RTTR_ENABLE()
+        RTTR_REGISTRATION_FRIEND
 	};
 
     template<class T>

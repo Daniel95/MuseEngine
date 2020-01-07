@@ -352,8 +352,6 @@ namespace Muse
             (
                 rttr::policy::ctor::as_raw_ptr
             )
-            .property("Name", &Scene::GetName, &Scene::SetName)
-            .property("GameObjects", &Scene::GetGameObjects, &Scene::SetGameObjects)
-        ;
+            .property("GameObjects", &Scene::GetGameObjects, &Scene::SetGameObjects);
     }
 }

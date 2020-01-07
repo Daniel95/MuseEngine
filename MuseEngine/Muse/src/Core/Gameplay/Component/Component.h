@@ -1,6 +1,8 @@
 #pragma once
 
 #include <rttr/registration>
+#include <rttr/type>
+#include <rttr/registration_friend.h>
 
 namespace Muse
 {
@@ -10,7 +12,6 @@ namespace Muse
 
     class Component
     {
-        RTTR_ENABLE();
 
     public:
         Component() = default;
@@ -28,6 +29,7 @@ namespace Muse
         //template<typename T>
         //T* GetComponent() { return m_GameObject->GetComponent<T>(); }
 
+
 	protected:
         virtual void OnUpdate(float a_DeltaTime) {}
         virtual void OnInit() {}
@@ -38,6 +40,9 @@ namespace Muse
     private:
         GameObject* m_GameObject = nullptr;
 		bool m_isEnabled = true;
+
+        RTTR_ENABLE()
+        RTTR_REGISTRATION_FRIEND
 
     };
 }

@@ -18,8 +18,8 @@ namespace glm
 		typedef mat<4, 4, T, Q> transpose_type;
 		typedef T value_type;
 
-	private:
 		col_type value[4];
+	//private:
 
 	public:
 		// -- Accesses --

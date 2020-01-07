@@ -157,6 +157,10 @@ namespace Muse
 	{
 		MUSE_PROFILE_FUNCTION();
 
+		glm::mat4 test;
+
+		test[1][1];
+
 		const glm::vec4 transformed = GetModelMatrix() * glm::vec4(localVector.x, localVector.y, localVector.z, 0);
 		return glm::vec3(transformed);
 	}
@@ -181,34 +185,20 @@ RTTR_REGISTRATION
         .property("y", &glm::vec3::y)
         .property("z", &glm::vec3::z);
 
-    /*
-
-	rttr::registration::class_<Engine::TransformComponent>("TransformComponent")
-		.constructor<>()
-		(
-			rttr::policy::ctor::as_raw_ptr
-		)
-		.property("Position", &Engine::TransformComponent::m_Position)
-		.property("Scale", &Engine::TransformComponent::m_Scale)
-		.property("Rotation", &Engine::TransformComponent::m_RotationQuaternion);
-
-	rttr::registration::class_<DXS::Quaternion>("Quaternion")
+	rttr::registration::class_<glm::vec4>("vec4")
 		.constructor<>()
 		(
 			rttr::policy::ctor::as_object
-		)
-		.property("x", &DXS::Quaternion::x)
-		.property("y", &DXS::Quaternion::y)
-		.property("z", &DXS::Quaternion::z)
-		.property("w", &DXS::Quaternion::w);
+			)
+		.property("x", &glm::vec4::x)
+		.property("y", &glm::vec4::y)
+		.property("z", &glm::vec4::z)
+		.property("z", &glm::vec4::w);
 
-	rttr::registration::class_<DXS::Vector3>("Vector3")
+	rttr::registration::class_<glm::mat4>("mat4")
 		.constructor<>()
 		(
 			rttr::policy::ctor::as_object
-		)
-		.property("x", &DXS::Vector3::x)
-		.property("y", &DXS::Vector3::y)
-		.property("z", &DXS::Vector3::z);
-    */
+			)
+		.property("value", &glm::mat4::value);
 }

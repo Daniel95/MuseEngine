@@ -13,11 +13,9 @@
 namespace Muse
 {
 	class GameObject;
-	struct DX12Matrix;
 
 	class TransformComponent : public Component
 	{
-        RTTR_ENABLE(Component);
 
 	public:
 		TransformComponent() = default;
@@ -73,5 +71,9 @@ namespace Muse
 		glm::mat4 m_RotationMatrix = glm::identity<glm::mat4>();
 		glm::mat4 m_ScaleMatrix = glm::identity<glm::mat4>();
 		glm::mat4 m_ModelMatrix = glm::identity<glm::mat4>();
+
+		RTTR_ENABLE(Component)
+		RTTR_REGISTRATION_FRIEND
+
 	};
 }

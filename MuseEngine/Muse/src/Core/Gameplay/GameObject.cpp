@@ -115,3 +115,13 @@ namespace Muse
             .property("Components", &GameObject::GetComponents, &GameObject::SetComponents);
     }
 }
+
+RTTR_REGISTRATION
+{
+    rttr::registration::class_<Muse::GameObject>("GameObject")
+        .constructor<>()
+        (
+            rttr::policy::ctor::as_raw_ptr
+        );
+//.property("Enabled", &Muse::Component::m_isEnabled);
+}

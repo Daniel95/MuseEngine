@@ -16,6 +16,7 @@ namespace Muse
         virtual ~Resource() = default;
         virtual void Reload() { }
         const std::string& GetPath() const { return m_Path; }
+        //void SetPath(const std::string& a_Path) { m_Path = a_Path; }
         const std::string& GetName() const { return m_Name; }
         void SetPathAndName(const std::string& a_Path);
         static ullong CalculateResourceId(const std::string& a_Path) { return StringHash(a_Path); }
@@ -23,7 +24,6 @@ namespace Muse
     protected:
         std::string m_Name;
         std::string m_Path;
-        bool m_IsInitialized = false;
 
     };
 }

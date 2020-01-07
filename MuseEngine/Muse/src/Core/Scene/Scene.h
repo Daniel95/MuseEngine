@@ -66,7 +66,6 @@ namespace Muse
         std::vector<GameObject*> m_GameObjectsToAdd;
         std::vector<GameObject*> m_GameObjectsToRemove;
         std::deque<std::string> m_States;
-        std::string m_Name;
         const int m_MaxStateSaves = 20;
         int m_CurrentStateIndex = 0;
 

@@ -7,12 +7,14 @@ namespace Muse
 {
     class TestComponent : public Component
     {
-        RTTR_ENABLE(Component);
-        RTTR_REGISTRATION_FRIEND;
-
     public:
         TestComponent();
         virtual ~TestComponent();
 
+    protected:
+    private:
+
+        RTTR_ENABLE(Component);
+        RTTR_REGISTRATION_FRIEND;
     };
 }
