@@ -169,6 +169,7 @@
     <ClInclude Include="src\Core\Layer\LayerStack.h" />
     <ClInclude Include="src\Core\Instrumentor.h" />
     <ClInclude Include="src\Core\Renderer\Buffer\BufferLayout.h" />
+    <ClInclude Include="src\Core\Renderer\Buffer\FrameBuffer.h" />
     <ClInclude Include="src\Core\Renderer\Buffer\IndexBuffer.h" />
     <ClInclude Include="src\Core\Renderer\Buffer\VertexBuffer.h" />
     <ClInclude Include="src\Core\Renderer\GraphicsContext.h" />
@@ -197,6 +198,7 @@
     <ClInclude Include="src\Examples\RTTRExample.h" />
     <ClInclude Include="src\Muse.h" />
     <ClInclude Include="src\MusePCH.h" />
+    <ClInclude Include="src\Platform\OpenGL\Buffer\OpenGLFrameBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\Buffer\OpenGLIndexBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\Buffer\OpenGLVertexBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
@@ -585,6 +587,7 @@
     <ClCompile Include="src\Core\Layer\Layer.cpp" />
     <ClCompile Include="src\Core\Layer\LayerStack.cpp" />
     <ClCompile Include="src\Core\Renderer\Buffer\BufferLayout.cpp" />
+    <ClCompile Include="src\Core\Renderer\Buffer\FrameBuffer.cpp" />
     <ClCompile Include="src\Core\Renderer\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="src\Core\Renderer\Buffer\VertexBuffer.cpp" />
     <ClCompile Include="src\Core\Renderer\RenderCommand.cpp" />
@@ -608,6 +611,7 @@
     <ClCompile Include="src\MusePCH.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\Buffer\OpenGLFrameBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\Buffer\OpenGLIndexBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\Buffer\OpenGLVertexBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />

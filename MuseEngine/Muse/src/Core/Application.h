@@ -15,6 +15,7 @@ namespace Muse
     class SystemManager;
     class ImGuiLayer;
     class Window;
+    class FrameBuffer;
 
 	class Application
 	{
@@ -76,6 +77,8 @@ namespace Muse
         std::shared_ptr<SceneManager> m_SceneManager;
         std::shared_ptr<ResourceManager> m_ResourceManager;
         float m_DeltaTime = 0;
+
+        std::shared_ptr<FrameBuffer> m_Framebuffer;
 
         ImGuiLayer* m_ImGuiLayer;
         LayerStack m_LayerStack;

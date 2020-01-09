@@ -1346,6 +1346,8 @@
     <ClInclude Include="src\Core\Gameplay\Component\OrthographicCameraControllerComponent.h" />
     <ClInclude Include="src\Core\Resource\ResourceTest.h" />
     <ClInclude Include="src\Core\Instrumentor.h" />
+    <ClInclude Include="src\Platform\OpenGL\Buffer\OpenGLFrameBuffer.h" />
+    <ClInclude Include="src\Core\Renderer\Buffer\FrameBuffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1477,5 +1479,7 @@
     <ClCompile Include="src\Core\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\OrthographicCameraControllerComponent.cpp" />
     <ClCompile Include="src\Core\Resource\ResourceTest.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\Buffer\OpenGLFrameBuffer.cpp" />
+    <ClCompile Include="src\Core\Renderer\Buffer\FrameBuffer.cpp" />
   </ItemGroup>
 </Project>

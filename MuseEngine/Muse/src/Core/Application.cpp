@@ -7,12 +7,16 @@
 #include "Core/Event/ApplicationEvent.h"
 #include "ImGui/ImGuiLayer.h"
 #include "Renderer/Renderer.h"
+#include "Renderer/Buffer/FrameBuffer.h"
 #include "Scene/SceneManager.h"
 #include "Resource/ResourceManager.h"
 #include "Utilities/Defines.h"
 
 #include "GLFW/glfw3.h"
 #include "imgui.h"
+#include "glad/glad.h"
+#include "Gameplay/Component/CameraComponent.h"
+
 
 namespace Muse
 {
@@ -43,6 +47,8 @@ namespace Muse
 
         m_ImGuiLayer = new ImGuiLayer();
         PushOverlay(m_ImGuiLayer);
+
+        m_Framebuffer = FrameBuffer::Create(m_Window->GetWidth(), m_Window->GetWidth(), FramebufferFormat::RGBA16F);
     }
 
     Application::~Application()
@@ -147,6 +153,71 @@ namespace Muse
         m_ProfileResults.clear();
         ImGui::End();
         */
+
+
+
+
+
+        ///Start ViewPort
+        static bool p_open = true;
+
+        static bool opt_fullscreen_persistant = true;
+        static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
+        bool opt_fullscreen = opt_fullscreen_persistant;
+
+
+
+
+        ImGui::Begin("Viewport");
+
+        /*float posX = ImGui::GetCursorScreenPos().x;
+        float posY = ImGui::GetCursorScreenPos().y;
+
+        auto [wx, wy] = Application::Get().GetWindow().GetWindowPos();
+        posX -= wx;
+        posY -= wy;
+        HZ_INFO("{0}, {1}", posX, posY);*/
+
+        auto viewportSize = ImGui::GetContentRegionAvail();
+        m_Framebuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
+        //CameraComponent::GetMain()->SetProjectionMatrix(glm::perspectiveFov(glm::radians(45.0f), viewportSize.x, viewportSize.y, 0.1f, 10000.0f));
+        //CameraComponent::GetMain()->SetViewportSize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
+        ImGui::Image((void*)m_Framebuffer->GetColorAttachmentRendererID(), viewportSize, { 0, 1 }, { 1, 0 });
+        ImGui::End();
+        /*
+        ImGui::PopStyleVar();
+
+        if (ImGui::BeginMenuBar())
+        {
+            if (ImGui::BeginMenu("Docking"))
+            {
+                // Disabling fullscreen would allow the window to be moved to the front of other windows, 
+                // which we can't undo at the moment without finer window depth/z control.
+                //ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
+
+                if (ImGui::MenuItem("Flag: NoSplit", "", (opt_flags & ImGuiDockNodeFlags_NoSplit) != 0))                 opt_flags ^= ImGuiDockNodeFlags_NoSplit;
+                if (ImGui::MenuItem("Flag: NoDockingInCentralNode", "", (opt_flags & ImGuiDockNodeFlags_NoDockingInCentralNode) != 0))  opt_flags ^= ImGuiDockNodeFlags_NoDockingInCentralNode;
+                if (ImGui::MenuItem("Flag: NoResize", "", (opt_flags & ImGuiDockNodeFlags_NoResize) != 0))                opt_flags ^= ImGuiDockNodeFlags_NoResize;
+                if (ImGui::MenuItem("Flag: PassthruDockspace", "", (opt_flags & ImGuiDockNodeFlags_PassthruCentralNode) != 0))       opt_flags ^= ImGuiDockNodeFlags_PassthruCentralNode;
+                if (ImGui::MenuItem("Flag: AutoHideTabBar", "", (opt_flags & ImGuiDockNodeFlags_AutoHideTabBar) != 0))          opt_flags ^= ImGuiDockNodeFlags_AutoHideTabBar;
+                ImGui::Separator();
+                if (ImGui::MenuItem("Close DockSpace", NULL, false, p_open != NULL))
+                    p_open = false;
+                ImGui::EndMenu();
+            }
+
+            ImGui::EndMenuBar();
+        }
+
+        ImGui::End();
+
+        */
+
+
+        ///End ViewPort
+
+
+
 
         m_ImGuiLayer->End();
     }
