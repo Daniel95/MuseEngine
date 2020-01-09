@@ -20,6 +20,7 @@ Muse::Application* Muse::CreateApplication()
 void Game3D::OnStart()
 {
     std::shared_ptr<Muse::Scene> scene = Muse::ResourceManager::Create<Muse::Scene>("New Scene");
+    Muse::SceneManager::SwitchScene(scene);
 
     std::shared_ptr<Muse::Shader> textureShader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/Texture.glsl");
     std::shared_ptr<Muse::Shader> vertexColorShader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/VertexColor.glsl");
