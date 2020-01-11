@@ -206,24 +206,22 @@ namespace Muse
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 		ImGui::Begin("Viewport");
 
-		/*float posX = ImGui::GetCursorScreenPos().x;
+        /*
+		float posX = ImGui::GetCursorScreenPos().x;
 		float posY = ImGui::GetCursorScreenPos().y;
-
-		auto [wx, wy] = Application::Get().GetWindow().GetWindowPos();
-		posX -= wx;
-		posY -= wy;
-		HZ_INFO("{0}, {1}", posX, posY);*/
-
+		glm::vec2 windowPosition = Get().GetWindow().GetWindowPosition();
+		posX -= windowPosition.x;
+		posY -= windowPosition.y;
+		//LOG_ENGINE_INFO("{0}, {1}", posX, posY);
+        */
 
 		auto viewportSize = ImGui::GetContentRegionAvail();
+        const float aspectRatio = viewportSize.x / viewportSize.y;
+        CameraComponent::GetMain()->SetProjection(aspectRatio, CameraComponent::GetMain()->GetZoomLevel());
+
 		ImGui::Image((void*)m_ViewportFramebuffer->GetColorAttachmentRendererID(), viewportSize, { 0, 1 }, { 1, 0 });
 		ImGui::End();
 		ImGui::PopStyleVar();
-
-
-
-
-
 
 
         m_ImGuiRenderEvent.Dispatch();

@@ -40,6 +40,14 @@ namespace Muse
 
     void OpenGLFrameBuffer::Resize(uint32_t a_Width, uint32_t a_Height)
     {
+        if (m_Width == a_Width && m_Height == a_Height)
+        {
+            return;
+        }
+
+        m_Width = a_Width;
+        m_Height = a_Height;
+
         if (m_RendererId)
         {
             glDeleteFramebuffers(1, &m_RendererId);

@@ -83,6 +83,12 @@ void Game2D::OnRender()
 
 void Game2D::OnImGuiRender()
 {
-    ImGui::Begin("Test");
+    ImGui::Begin("Test 1");
+    ImGui::End();
+
+    ImGui::Begin("Test 2");
+    ImGui::End();
+
+    ImGui::Begin("Test 3");
     ImGui::End();
 } 
