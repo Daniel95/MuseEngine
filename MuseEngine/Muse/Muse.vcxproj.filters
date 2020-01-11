@@ -1349,6 +1349,9 @@
     <ClInclude Include="src\Platform\OpenGL\Buffer\OpenGLFrameBuffer.h" />
     <ClInclude Include="src\Core\Renderer\Buffer\FrameBuffer.h" />
     <ClInclude Include="src\Core\Utilities\HardCodedMesh.h" />
+    <ClInclude Include="src\Editor\Editor.h" />
+    <ClInclude Include="src\Editor\FileBrowser.h" />
+    <ClInclude Include="src\Editor\ViewPort.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1482,5 +1485,8 @@
     <ClCompile Include="src\Core\Resource\ResourceTest.cpp" />
     <ClCompile Include="src\Platform\OpenGL\Buffer\OpenGLFrameBuffer.cpp" />
     <ClCompile Include="src\Core\Renderer\Buffer\FrameBuffer.cpp" />
+    <ClCompile Include="src\Editor\FileBrowser.cpp" />
+    <ClCompile Include="src\Editor\ViewPort.cpp" />
+    <ClCompile Include="src\Editor\Editor.cpp" />
   </ItemGroup>
 </Project>

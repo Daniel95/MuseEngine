@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Application.h" />
+    <ClInclude Include="src\Editor\Editor.h" />
     <ClInclude Include="src\Core\Engine.h" />
     <ClInclude Include="src\Core\Event\ApplicationEvent.h" />
     <ClInclude Include="src\Core\Event\Event.h" />
@@ -195,6 +196,8 @@
     <ClInclude Include="src\Core\Utilities\json\from_json.h" />
     <ClInclude Include="src\Core\Utilities\json\to_json.h" />
     <ClInclude Include="src\Core\Window.h" />
+    <ClInclude Include="src\Editor\FileBrowser.h" />
+    <ClInclude Include="src\Editor\ViewPort.h" />
     <ClInclude Include="src\EntryPoint.h" />
     <ClInclude Include="src\Examples\RTTRExample.h" />
     <ClInclude Include="src\Muse.h" />
@@ -609,6 +612,9 @@
     <ClCompile Include="src\Core\Utilities\Utilities.cpp" />
     <ClCompile Include="src\Core\Utilities\json\from_json.cpp" />
     <ClCompile Include="src\Core\Utilities\json\to_json.cpp" />
+    <ClCompile Include="src\Editor\Editor.cpp" />
+    <ClCompile Include="src\Editor\FileBrowser.cpp" />
+    <ClCompile Include="src\Editor\ViewPort.cpp" />
     <ClCompile Include="src\MusePCH.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
