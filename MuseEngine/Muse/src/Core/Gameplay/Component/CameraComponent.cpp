@@ -45,6 +45,13 @@ namespace Muse
 
         m_ProjectionMatrix = glm::ortho(a_Left, a_Right, a_Bottom, a_Top, a_Near, a_Far);
     }
+
+    void CameraComponent::SetProjectionMatrix(const glm::mat4& a_ProjectionMatrix)
+    {
+        MUSE_PROFILE_FUNCTION();
+
+        m_ProjectionMatrix = a_ProjectionMatrix;
+    }
 }
 
 RTTR_REGISTRATION

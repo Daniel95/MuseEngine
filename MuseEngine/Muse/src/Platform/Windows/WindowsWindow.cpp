@@ -185,4 +185,11 @@ namespace Muse
 
         m_VSync = a_Enabled;
     }
+
+    glm::vec2 WindowsWindow::GetWindowPosition() const
+    {
+        int x, y;
+        glfwGetWindowPos(m_Window, &x, &y);
+        return { x, y };
+    }
 }

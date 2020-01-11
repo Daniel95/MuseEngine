@@ -26,5 +26,6 @@ obj/
 *.idb
 *.pch
 *.ilk
+*.json
 *.vcxproj.user
 imgui.ini

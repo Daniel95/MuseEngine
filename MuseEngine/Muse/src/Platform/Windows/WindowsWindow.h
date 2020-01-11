@@ -25,6 +25,8 @@ namespace Muse
         virtual bool GetVSync() const override { return m_VSync; }
         virtual void* GetNativeWindow() const override { return m_Window; }
 
+        virtual glm::vec2 GetWindowPosition() const override;
+
     private:
         GLFWwindow* m_Window;
         GraphicsContext* m_Context;
@@ -34,5 +36,7 @@ namespace Muse
 
         virtual void Init(const WindowProperties& a_Properties);
         virtual void Shutdown();
+
+    
     };
 }

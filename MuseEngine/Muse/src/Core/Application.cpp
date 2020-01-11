@@ -16,6 +16,8 @@
 #include "imgui.h"
 #include "glad/glad.h"
 #include "Gameplay/Component/CameraComponent.h"
+#include "Renderer/RenderCommand.h"
+#include "Utilities/HardCodedMesh.h"
 
 
 namespace Muse
@@ -49,6 +51,8 @@ namespace Muse
         PushOverlay(m_ImGuiLayer);
 
         m_Framebuffer = FrameBuffer::Create(m_Window->GetWidth(), m_Window->GetWidth(), FramebufferFormat::RGBA16F);
+        m_Framebuffer->Unbind();
+        //m_Framebuffer->BindTexture();
     }
 
     Application::~Application()
@@ -82,9 +86,9 @@ namespace Muse
                 Update();
                 //FixedUpdate();
                 LateUpdate();
-                ImGuiRender();
-                m_Window->OnUpdate();
                 Render();
+                //ImGuiRender();
+                m_Window->OnUpdate();
             }
             else
             {
@@ -152,9 +156,21 @@ namespace Muse
         }
         m_ProfileResults.clear();
         ImGui::End();
+
+        float posX = ImGui::GetCursorScreenPos().x;
+        float posY = ImGui::GetCursorScreenPos().y;
+
+        glm::vec2 windowPosition = GetWindow().GetWindowPosition();
+        posX -= windowPosition.x;
+        posY -= windowPosition.y;
+        LOG_ENGINE_INFO("{0}, {1}", posX, posY);
+
+                ImGui::GetWindowDrawList()->AddImage(
+            (void*)m_Framebuffer->GetColorAttachmentRendererID(),
+            ImVec2(ImGui::GetCursorScreenPos()),
+            ImVec2(ImGui::GetCursorScreenPos().x + GetWindow().GetWidth() / 2,
+                ImGui::GetCursorScreenPos().y + GetWindow().GetHeight() / 2), ImVec2(0, 1), ImVec2(1, 0));
         */
-
-
 
 
 
@@ -166,68 +182,67 @@ namespace Muse
         bool opt_fullscreen = opt_fullscreen_persistant;
 
 
-
-
         ImGui::Begin("Viewport");
-
-        /*float posX = ImGui::GetCursorScreenPos().x;
-        float posY = ImGui::GetCursorScreenPos().y;
-
-        auto [wx, wy] = Application::Get().GetWindow().GetWindowPos();
-        posX -= wx;
-        posY -= wy;
-        HZ_INFO("{0}, {1}", posX, posY);*/
 
         auto viewportSize = ImGui::GetContentRegionAvail();
         m_Framebuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
         //CameraComponent::GetMain()->SetProjectionMatrix(glm::perspectiveFov(glm::radians(45.0f), viewportSize.x, viewportSize.y, 0.1f, 10000.0f));
         //CameraComponent::GetMain()->SetViewportSize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
         ImGui::Image((void*)m_Framebuffer->GetColorAttachmentRendererID(), viewportSize, { 0, 1 }, { 1, 0 });
-        ImGui::End();
-        /*
-        ImGui::PopStyleVar();
 
-        if (ImGui::BeginMenuBar())
-        {
-            if (ImGui::BeginMenu("Docking"))
-            {
-                // Disabling fullscreen would allow the window to be moved to the front of other windows, 
-                // which we can't undo at the moment without finer window depth/z control.
-                //ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
 
-                if (ImGui::MenuItem("Flag: NoSplit", "", (opt_flags & ImGuiDockNodeFlags_NoSplit) != 0))                 opt_flags ^= ImGuiDockNodeFlags_NoSplit;
-                if (ImGui::MenuItem("Flag: NoDockingInCentralNode", "", (opt_flags & ImGuiDockNodeFlags_NoDockingInCentralNode) != 0))  opt_flags ^= ImGuiDockNodeFlags_NoDockingInCentralNode;
-                if (ImGui::MenuItem("Flag: NoResize", "", (opt_flags & ImGuiDockNodeFlags_NoResize) != 0))                opt_flags ^= ImGuiDockNodeFlags_NoResize;
-                if (ImGui::MenuItem("Flag: PassthruDockspace", "", (opt_flags & ImGuiDockNodeFlags_PassthruCentralNode) != 0))       opt_flags ^= ImGuiDockNodeFlags_PassthruCentralNode;
-                if (ImGui::MenuItem("Flag: AutoHideTabBar", "", (opt_flags & ImGuiDockNodeFlags_AutoHideTabBar) != 0))          opt_flags ^= ImGuiDockNodeFlags_AutoHideTabBar;
-                ImGui::Separator();
-                if (ImGui::MenuItem("Close DockSpace", NULL, false, p_open != NULL))
-                    p_open = false;
-                ImGui::EndMenu();
-            }
 
-            ImGui::EndMenuBar();
-        }
 
         ImGui::End();
-
-        */
 
 
         ///End ViewPort
-
-
-
 
         m_ImGuiLayer->End();
     }
 
     void Application::Render()
     {
-        InstrumentationTimer timer("Application::Render");
+        m_Framebuffer->Resize(GetWindow().GetWidth(), GetWindow().GetHeight());
+
+        MUSE_PROFILE_FUNCTION();
+
+        //RenderCommand::SetClearColor({ 0.9f, 0.9f, 0.9f, 1 });
+        //RenderCommand::Clear();
+
+        m_Framebuffer->Bind();
+        glEnable(GL_DEPTH_TEST); // enable depth testing (is disabled for rendering screen-space quad)
+
+        OnRender();
+
+        m_Framebuffer->Unbind();
+        glDisable(GL_DEPTH_TEST); // disable depth test so screen-space quad isn't discarded due to depth test.
+
+        RenderCommand::SetClearColor({ 0.9f, 0.9f, 0.9f, 1 });
+        RenderCommand::Clear();
+
+        m_ImGuiLayer->Begin();
+
+        ImGui::Begin("Viewport");
+
+        auto viewportSize = ImGui::GetContentRegionAvail();
+        //CameraComponent::GetMain()->SetProjectionMatrix(glm::perspectiveFov(glm::radians(45.0f), viewportSize.x, viewportSize.y, 0.1f, 10000.0f));
+        //CameraComponent::GetMain()->SetViewportSize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
+        ImGui::Image((void*)m_Framebuffer->GetColorAttachmentRendererID(), viewportSize, { 0, 1 }, { 1, 0 });
+
+        ImGui::End();
+
+        m_ImGuiLayer->End();
+
+
+        /*
+        m_Framebuffer->Bind();
 
         m_RenderEvent.Dispatch();
         OnRender();
+
+        m_Framebuffer->Unbind();
+        */
     }
 
     void Application::PushLayer(Layer* a_Layer)

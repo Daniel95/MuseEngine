@@ -189,6 +189,7 @@
     <ClInclude Include="src\Core\Scene\Scene.h" />
     <ClInclude Include="src\Core\Scene\SceneManager.h" />
     <ClInclude Include="src\Core\Utilities\Defines.h" />
+    <ClInclude Include="src\Core\Utilities\HardCodedMesh.h" />
     <ClInclude Include="src\Core\Utilities\Log.h" />
     <ClInclude Include="src\Core\Utilities\Utilities.h" />
     <ClInclude Include="src\Core\Utilities\json\from_json.h" />

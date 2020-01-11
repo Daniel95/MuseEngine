@@ -1348,6 +1348,7 @@
     <ClInclude Include="src\Core\Instrumentor.h" />
     <ClInclude Include="src\Platform\OpenGL\Buffer\OpenGLFrameBuffer.h" />
     <ClInclude Include="src\Core\Renderer\Buffer\FrameBuffer.h" />
+    <ClInclude Include="src\Core\Utilities\HardCodedMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">

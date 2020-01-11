@@ -21,6 +21,7 @@ namespace Muse
 
         void SetProjection(float a_AspectRatio, float a_ZoomLevel);
         void SetProjectionMatrix(float a_Left, float a_Right, float a_Bottom, float a_Top, float a_Near = -1.0, float a_Far = 1.0);
+        void SetProjectionMatrix(const glm::mat4& a_ProjectionMatrix);
 
         static CameraComponent* GetMain() { return s_MainCamera; }
 

@@ -48,7 +48,8 @@ void Game2D::OnStart()
 
 void Game2D::OnRender()
 {
-    Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+    //Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+    Muse::RenderCommand::SetClearColor({ 0.9f, 0.9f, 0.9f, 1 });
     Muse::RenderCommand::Clear();
 
     Muse::Renderer2D::BeginScene(*Muse::CameraComponent::GetMain());

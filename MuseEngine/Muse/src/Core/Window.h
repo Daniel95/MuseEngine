@@ -4,6 +4,8 @@
 #include "Core/Event/KeyEvent.h"
 #include "Core/Event/MouseEvent.h"
 
+#include <glm/glm.hpp>
+
 namespace Muse
 {
     struct WindowProperties
@@ -47,6 +49,7 @@ namespace Muse
         virtual unsigned int GetHeight() const = 0;
         virtual void SetWidth(unsigned int a_Width) = 0;
         virtual void SetHeight(unsigned int a_Height) = 0;
+        virtual glm::vec2 GetWindowPosition() const = 0;
 
         // Window attributes
         virtual void SetVSync(bool enabled) = 0;
