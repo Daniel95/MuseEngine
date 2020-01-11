@@ -50,9 +50,7 @@ namespace Muse
         m_ImGuiLayer = new ImGuiLayer();
         PushOverlay(m_ImGuiLayer);
 
-        m_Framebuffer = FrameBuffer::Create(m_Window->GetWidth(), m_Window->GetWidth(), FramebufferFormat::RGBA16F);
-        m_Framebuffer->Unbind();
-        //m_Framebuffer->BindTexture();
+        m_ViewportFramebuffer = FrameBuffer::Create(m_Window->GetWidth(), m_Window->GetWidth(), FramebufferFormat::RGBA16F);
     }
 
     Application::~Application()
@@ -87,7 +85,7 @@ namespace Muse
                 //FixedUpdate();
                 LateUpdate();
                 Render();
-                //ImGuiRender();
+                ImGuiRender();
                 m_Window->OnUpdate();
             }
             else
@@ -143,106 +141,33 @@ namespace Muse
             layer->OnImGuiRender();
         }
 
-        /*
-        //Profiling UI
-        ImGui::Begin("Profiling");
-        for (auto& result : m_ProfileResults)
-        {
-            char label[50];
-            strcpy(label, "%.3fms ");
-            strcat(label, result.m_Name);
-
-            ImGui::Text(label, result.m_End - result.m_Start);
-        }
-        m_ProfileResults.clear();
-        ImGui::End();
-
-        float posX = ImGui::GetCursorScreenPos().x;
-        float posY = ImGui::GetCursorScreenPos().y;
-
-        glm::vec2 windowPosition = GetWindow().GetWindowPosition();
-        posX -= windowPosition.x;
-        posY -= windowPosition.y;
-        LOG_ENGINE_INFO("{0}, {1}", posX, posY);
-
-                ImGui::GetWindowDrawList()->AddImage(
-            (void*)m_Framebuffer->GetColorAttachmentRendererID(),
-            ImVec2(ImGui::GetCursorScreenPos()),
-            ImVec2(ImGui::GetCursorScreenPos().x + GetWindow().GetWidth() / 2,
-                ImGui::GetCursorScreenPos().y + GetWindow().GetHeight() / 2), ImVec2(0, 1), ImVec2(1, 0));
-        */
-
-
-
-        ///Start ViewPort
-        static bool p_open = true;
-
-        static bool opt_fullscreen_persistant = true;
-        static ImGuiDockNodeFlags opt_flags = ImGuiDockNodeFlags_None;
-        bool opt_fullscreen = opt_fullscreen_persistant;
-
-
         ImGui::Begin("Viewport");
 
         auto viewportSize = ImGui::GetContentRegionAvail();
-        m_Framebuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
+        //m_ViewportFramebuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
         //CameraComponent::GetMain()->SetProjectionMatrix(glm::perspectiveFov(glm::radians(45.0f), viewportSize.x, viewportSize.y, 0.1f, 10000.0f));
         //CameraComponent::GetMain()->SetViewportSize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
-        ImGui::Image((void*)m_Framebuffer->GetColorAttachmentRendererID(), viewportSize, { 0, 1 }, { 1, 0 });
-
-
-
+        ImGui::Image((void*)m_ViewportFramebuffer->GetColorAttachmentRendererID(), viewportSize, { 0, 1 }, { 1, 0 });
 
         ImGui::End();
-
-
-        ///End ViewPort
 
         m_ImGuiLayer->End();
     }
 
     void Application::Render()
     {
-        m_Framebuffer->Resize(GetWindow().GetWidth(), GetWindow().GetHeight());
+        m_ViewportFramebuffer->Resize(GetWindow().GetWidth(), GetWindow().GetHeight());
 
         MUSE_PROFILE_FUNCTION();
 
-        //RenderCommand::SetClearColor({ 0.9f, 0.9f, 0.9f, 1 });
-        //RenderCommand::Clear();
-
-        m_Framebuffer->Bind();
-        glEnable(GL_DEPTH_TEST); // enable depth testing (is disabled for rendering screen-space quad)
+        m_ViewportFramebuffer->Bind();
 
         OnRender();
 
-        m_Framebuffer->Unbind();
-        glDisable(GL_DEPTH_TEST); // disable depth test so screen-space quad isn't discarded due to depth test.
+        m_ViewportFramebuffer->Unbind();
 
         RenderCommand::SetClearColor({ 0.9f, 0.9f, 0.9f, 1 });
         RenderCommand::Clear();
-
-        m_ImGuiLayer->Begin();
-
-        ImGui::Begin("Viewport");
-
-        auto viewportSize = ImGui::GetContentRegionAvail();
-        //CameraComponent::GetMain()->SetProjectionMatrix(glm::perspectiveFov(glm::radians(45.0f), viewportSize.x, viewportSize.y, 0.1f, 10000.0f));
-        //CameraComponent::GetMain()->SetViewportSize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
-        ImGui::Image((void*)m_Framebuffer->GetColorAttachmentRendererID(), viewportSize, { 0, 1 }, { 1, 0 });
-
-        ImGui::End();
-
-        m_ImGuiLayer->End();
-
-
-        /*
-        m_Framebuffer->Bind();
-
-        m_RenderEvent.Dispatch();
-        OnRender();
-
-        m_Framebuffer->Unbind();
-        */
     }
 
     void Application::PushLayer(Layer* a_Layer)

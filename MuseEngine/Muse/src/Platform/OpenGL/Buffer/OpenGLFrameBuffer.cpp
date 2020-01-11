@@ -12,6 +12,8 @@ namespace Muse
 
         glGenFramebuffers(1, &m_RendererId);
         glBindFramebuffer(GL_FRAMEBUFFER, m_RendererId);
+
+        Resize(a_Width, a_Height);
     }
 
     OpenGLFrameBuffer::~OpenGLFrameBuffer()
@@ -38,15 +40,6 @@ namespace Muse
 
     void OpenGLFrameBuffer::Resize(uint32_t a_Width, uint32_t a_Height)
     {
-        /*
-        glGenTextures(1, &m_ColorAttachment);
-        glBindTexture(GL_TEXTURE_2D, m_ColorAttachment);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, a_Width, a_Height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, m_ColorAttachment, 0);
-        */
-
         if (m_RendererId)
         {
             glDeleteFramebuffers(1, &m_RendererId);

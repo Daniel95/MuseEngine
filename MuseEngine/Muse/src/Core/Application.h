@@ -78,7 +78,7 @@ namespace Muse
         std::shared_ptr<ResourceManager> m_ResourceManager;
         float m_DeltaTime = 0;
 
-        std::shared_ptr<FrameBuffer> m_Framebuffer;
+        std::shared_ptr<FrameBuffer> m_ViewportFramebuffer;
 
         ImGuiLayer* m_ImGuiLayer;
         LayerStack m_LayerStack;
