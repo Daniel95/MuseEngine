@@ -8,7 +8,7 @@ namespace Muse
 {
     Input* Input::s_Instance = new WindowsInput();
 
-    bool WindowsInput::IsKeyPressedImpl(int a_Keycode) const
+    bool WindowsInput::GetKeyDownImpl(int a_Keycode) const
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -17,7 +17,7 @@ namespace Muse
         return state == static_cast<const int>(GLFW_PRESS || GLFW_REPEAT);
     }
 
-    bool WindowsInput::IsMouseButtonPressedImpl(int a_Button) const
+    bool WindowsInput::GetMouseButtonDownImpl(int a_Button) const
     {
         MUSE_PROFILE_FUNCTION();
 

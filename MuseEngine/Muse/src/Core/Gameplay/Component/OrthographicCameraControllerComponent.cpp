@@ -48,20 +48,20 @@ namespace Muse
 
         float moveSpeed = m_BaseMoveSpeed * a_DeltaTime * m_CameraComponent->GetZoomLevel();
 
-        if (Input::IsKeyPressed(MUSE_KEY_A))
+        if (Input::GetKeyDown(MUSE_KEY_A))
         {
             GetTransform()->Move(glm::vec2(-moveSpeed, 0.0f));
         }
-        else if (Input::IsKeyPressed(MUSE_KEY_D))
+        else if (Input::GetKeyDown(MUSE_KEY_D))
         {
             GetTransform()->Move(glm::vec2(moveSpeed, 0.0f));
         }
 
-        if (Input::IsKeyPressed(MUSE_KEY_S))
+        if (Input::GetKeyDown(MUSE_KEY_S))
         {
             GetTransform()->Move(glm::vec2(0.0f, -moveSpeed));
         }
-        else if (Input::IsKeyPressed(MUSE_KEY_W))
+        else if (Input::GetKeyDown(MUSE_KEY_W))
         {
             GetTransform()->Move(glm::vec2(0.0f, moveSpeed));
         }

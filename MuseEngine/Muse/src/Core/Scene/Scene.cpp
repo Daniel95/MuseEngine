@@ -11,6 +11,9 @@
 #include <rttr/registration>
 #include <filesystem>
 #include "Core/Gameplay/Component/OrthographicCameraControllerComponent.h"
+#include "Editor/Editor.h"
+#include "Core/Input/Input.h"
+#include "Core/Input/KeyCodes.h"
 
 namespace Muse
 {
@@ -117,6 +120,25 @@ namespace Muse
             DestroyGameObjectImmediate(gameObjectToRemove);
         }
         m_GameObjectsToRemove.clear();
+
+
+                /*
+        if (Editor::GetEditorMode())
+        {
+            bool ctrlS = Input::GetKeyDown(MUSE_KEY_LEFT_CONTROL) && Input::GetKeyDown(MUSE_KEY_S);
+
+            if(ctrlS)
+            {
+                LOG_ENGINE_INFO("SAVE");
+
+                std::string filename = Editor::OpenFile("");
+                if (filename != "")
+                {
+                    LOG_ENGINE_INFO("Filename {}", filename);
+                }
+            }
+        }
+                */
     }
 
     void Scene::FixedUpdate(float a_TimeStep)

@@ -38,7 +38,12 @@ namespace Muse
     {
         for (const auto& entry : std::filesystem::directory_iterator(a_Path))
         {
-            ImGui::Text(entry.path().u8string().c_str());
+            //ImGui::Text(entry.path().u8string().c_str());
+
+            if(ImGui::Button(entry.path().u8string().c_str()))
+            {
+                LOG_ENGINE_INFO(entry.path().u8string().c_str());
+            }
 
             if (std::filesystem::is_directory(entry))
             {
