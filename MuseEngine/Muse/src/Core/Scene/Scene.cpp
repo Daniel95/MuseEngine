@@ -130,8 +130,8 @@ namespace Muse
             {
                 LOG_ENGINE_INFO("SAVE");
 
-                //std::string path = Editor::GetSavePath("txt");
-                std::string path = "D:\Dev\Muse\MuseEngine\TestGame\assets\scenes\testscene";
+                std::string path = Editor::GetSavePath("txt");
+                //std::string path = "D:\Dev\Muse\MuseEngine\TestGame\assets\scenes\testscene";
                 Save(path);
             }
         }

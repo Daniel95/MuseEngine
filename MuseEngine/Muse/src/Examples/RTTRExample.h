@@ -4,6 +4,7 @@
 
 #include <rttr/registration>
 #include "Core/Utilities/Log.h"
+#include <iostream>
 
 class SerializeTest
 {
@@ -41,7 +42,9 @@ void TestSerialization()
 
     std::string string = io::to_json(serializeObjectTest1);
 
-    LOG_ENGINE_INFO("serialized: {0}", string);
+    std::cout << string << std::endl;
+
+    //LOG_ENGINE_INFO("serialized: {0}", string);
 
 
     io::from_json(string, serializeObjectTest2);
