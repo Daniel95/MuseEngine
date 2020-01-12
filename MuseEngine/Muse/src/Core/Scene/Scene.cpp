@@ -122,7 +122,6 @@ namespace Muse
         m_GameObjectsToRemove.clear();
 
 
-                /*
         if (Editor::GetEditorMode())
         {
             bool ctrlS = Input::GetKeyDown(MUSE_KEY_LEFT_CONTROL) && Input::GetKeyDown(MUSE_KEY_S);
@@ -138,7 +137,6 @@ namespace Muse
                 }
             }
         }
-                */
     }
 
     void Scene::FixedUpdate(float a_TimeStep)

@@ -10,7 +10,7 @@ namespace Muse
 {
     class ResourceManager;
     class Layer;
-    class GameWindow;
+    class GameWindow; 
     class SceneManager;
     class SystemManager;
     class ImGuiLayer;

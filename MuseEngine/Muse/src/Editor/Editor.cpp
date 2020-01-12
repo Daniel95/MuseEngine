@@ -2,8 +2,19 @@
 #include "Editor.h"
 #include "imgui.h"
 
+#include <Commdlg.h>
+#include <Windows.h>
+#include "GLFW/glfw3.h"
+#include "Core/Application.h"
+#include "Core/Window.h"
+
+#define GLFW_EXPOSE_NATIVE_WIN32
+#include <GLFW/glfw3native.h>
+
 namespace Muse
 {
+	bool Editor::s_EditorMode = true;
+
     void Editor::StartDockSpace()
     {
 		static bool p_open = true;
@@ -75,5 +86,30 @@ namespace Muse
     void Editor::EndDockSpace()
     {
 		ImGui::End();
+    }
+
+	std::string Editor::OpenFile(const std::string& a_Filter)
+    {
+		OPENFILENAMEA ofn;       // common dialog box structure
+		CHAR szFile[260] = { 0 };       // if using TCHAR macros
+
+		// Initialize OPENFILENAME
+		ZeroMemory(&ofn, sizeof(OPENFILENAME));
+		ofn.lStructSize = sizeof(OPENFILENAME);
+		ofn.hwndOwner = glfwGetWin32Window((GLFWwindow*)Application::Get().GetWindow().GetNativeWindow());
+		ofn.lpstrFile = szFile;
+		ofn.nMaxFile = sizeof(szFile);
+		ofn.lpstrFilter = "All\0*.*\0";
+		ofn.nFilterIndex = 1;
+		ofn.lpstrFileTitle = NULL;
+		ofn.nMaxFileTitle = 0;
+		ofn.lpstrInitialDir = NULL;
+		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+		if (GetOpenFileNameA(&ofn) == TRUE)
+		{
+			return ofn.lpstrFile;
+		}
+		return std::string();
     }
 }
