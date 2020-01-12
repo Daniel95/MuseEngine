@@ -22,11 +22,9 @@ namespace Muse
 
 	class Scene : public Resource
 	{
-        RTTR_ENABLE(Resource);
-
 	public:
 		Scene();
-        ~Scene();
+        virtual ~Scene();
 
         void DestroyAllGameObjects();
         GameObject& AddGameObject();
@@ -71,6 +69,8 @@ namespace Muse
 
         void Unload();
 
+        RTTR_ENABLE(Resource)
+        RTTR_REGISTRATION_FRIEND
 	};
 
     template <typename T>

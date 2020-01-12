@@ -130,7 +130,8 @@ namespace Muse
             {
                 LOG_ENGINE_INFO("SAVE");
 
-                std::string path = Editor::GetSavePath("txt");
+                //std::string path = Editor::GetSavePath("txt");
+                std::string path = "D:\Dev\Muse\MuseEngine\TestGame\assets\scenes\testscene";
                 Save(path);
             }
         }
@@ -359,16 +360,19 @@ namespace Muse
 
         return scene;
     }
-
-    //#endif
-
-    RTTR_REGISTRATION
-    {
-        rttr::registration::class_<Scene>("Scene")
-            .constructor<>()
-            (
-                rttr::policy::ctor::as_raw_ptr
-            )
-            .property("GameObjects", &Scene::GetGameObjects, &Scene::SetGameObjects);
-    }
 }
+
+
+RTTR_REGISTRATION
+{
+    rttr::registration::class_<Muse::Scene>("Scene")
+        .constructor<>()
+        (
+            rttr::policy::ctor::as_raw_ptr
+        );
+        //.property("m_GameObjectsToUpdate", &Muse::Scene::m_GameObjectsToUpdate)
+        //.property("m_GameObjectsToAdd", &Muse::Scene::m_GameObjectsToAdd)
+        //.property("m_GameObjectsToRemove", &Muse::Scene::m_GameObjectsToRemove);
+//.property("GameObjects", &Scene::GetGameObjects, &Scene::SetGameObjects);
+}
+

@@ -2,12 +2,15 @@
 
 #include "Core/Application.h"
 #include "Core/Utilities/Log.h"
+#include "Examples/RTTRExample.h"
 
 extern Muse::Application* Muse::CreateApplication();
 
 int main(int argc, char** argv)
 {
     MUSE_PROFILE_BEGIN_SESSION("Startup", "MuseProfile.json");
+
+    TestSerialization();
 
     Muse::Log::Init();
 
