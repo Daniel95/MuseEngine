@@ -15,7 +15,7 @@ namespace Muse
         static void SetEditorMode(bool a_EditorMode) { s_EditorMode = a_EditorMode; }
 
         static std::string GetOpenPath(const std::string& a_Filter);
-        static std::wstring GetSavePath(const std::wstring& a_Filter, const std::wstring& a_Extension);
+        static std::string GetSavePath(const std::string& a_Extension);
 
     private:
         static bool s_EditorMode;

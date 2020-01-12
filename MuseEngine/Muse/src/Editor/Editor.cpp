@@ -143,56 +143,28 @@ namespace Muse
 		return std::string();
     }
 
-	/*
-    bool Editor::GetSavePath(const std::wstring& a_Filter, const std::wstring& a_Extension)
-    {
+	std::string Editor::GetSavePath(const std::string& a_Extension)
+	{
+		OPENFILENAMEA ofn;       // common dialog box structure
 		CHAR szFile[260] = { 0 };       // if using TCHAR macros
 
-		OPENFILENAME ofn = { 0 };
-
-		ofn.lStructSize = sizeof(ofn);
-		ofn.Flags = OFN_EXPLORER | OFN_PATHMUSTEXIST;
-		ofn.hInstance = GetModuleHandle(0);
+		// Initialize OPENFILENAME
+		ZeroMemory(&ofn, sizeof(OPENFILENAME));
+		ofn.lStructSize = sizeof(OPENFILENAME);
 		ofn.hwndOwner = glfwGetWin32Window((GLFWwindow*)Application::Get().GetWindow().GetNativeWindow());
-		//ofn.lpstrFile = szFile;
+		ofn.lpstrFile = szFile;
 		ofn.nMaxFile = sizeof(szFile);
+		ofn.lpstrFilter = "Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0";
 		ofn.nFilterIndex = 1;
-		ofn.lpstrFilter = L"All Files\0*.*\0\0";
-		ofn.lpstrDefExt = L"txt";
+		ofn.lpstrFileTitle = NULL;
+		ofn.nMaxFileTitle = 0;
+		ofn.lpstrInitialDir = NULL;
+		ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 
-		return GetSaveFileName(&ofn);
-    }
-    */
-
-	std::wstring Editor::GetSavePath(const std::wstring& a_Filter, const std::wstring& a_Extension)
-	{
-		OPENFILENAME ofn;
-
-		WCHAR szFileName[MAX_PATH] = L"";
-
-		ZeroMemory(&ofn, sizeof(ofn));
-
-		ofn.lStructSize = sizeof(ofn);
-		ofn.hwndOwner = NULL;
-		ofn.lpstrFilter = (LPCWSTR)L"Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0";
-		ofn.lpstrFile = szFileName;
-		ofn.nMaxFile = MAX_PATH;
-		ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
-		ofn.lpstrDefExt = (LPCWSTR)L"txt";
-
-		GetSaveFileName(&ofn);
-		wprintf(L"the path is : %s\n", ofn.lpstrFile); 
-
-		/*
-		//std::string path(ofn.lpstrFile, ofn.lpstrFile);
-
-		const WCHAR* wc = L"Hello World";
-		_bstr_t b(wc);
-		//const char* c = b;
-
-		std::string path = b;
-        */
-
-		return ofn.lpstrFile;
+		if (GetSaveFileNameA(&ofn) == TRUE)
+		{
+			return ofn.lpstrFile;
+		}
+		return std::string();
 	}
 }

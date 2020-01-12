@@ -130,11 +130,7 @@ namespace Muse
             {
                 LOG_ENGINE_INFO("SAVE");
 
-                std::wstring filter = std::to_wstring('a');
-                std::wstring ext = std::to_wstring('b');
-
-                std::string path = Editor::GetSavePath(filter, ext);
-
+                std::string path = Editor::GetSavePath("txt");
                 Save(path);
             }
         }
