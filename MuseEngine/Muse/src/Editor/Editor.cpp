@@ -3,6 +3,7 @@
 #include "imgui.h"
 
 #include <Commdlg.h>
+#include <comutil.h>
 #include <Windows.h>
 #include "GLFW/glfw3.h"
 #include "Core/Application.h"
@@ -10,6 +11,7 @@
 
 #define GLFW_EXPOSE_NATIVE_WIN32
 #include <GLFW/glfw3native.h>
+#include <codecvt>
 
 namespace Muse
 {
@@ -88,7 +90,35 @@ namespace Muse
 		ImGui::End();
     }
 
-	std::string Editor::OpenFile(const std::string& a_Filter)
+	/*
+	std::string Editor::GetOpenPath(const std::string& a_Filter)
+	{
+		CFileDialog dlg(TRUE, defaultExtension, NULL, OFN_HIDEREADONLY, "All files|*.*||");
+		if (dlg.DoModal() != IDOK)
+		{
+			//the user didn't click OK
+			return;
+		}
+		CString theFileName = dlg.GetPathName();
+
+		return 
+	}
+
+	bool Editor::GetSavePath(const std::string& a_Filter)
+	{
+		CFileDialog dlg(FALSE, defaultExtension, NULL, OFN_OVERWRITEPROMPT, "All files|*.*||");
+		if (dlg.DoModal() != IDOK)
+		{
+			//the user didn't click OK
+			return true;
+		}
+		CString theFileName = dlg.GetPathName();
+
+		return true;
+	}
+	*/
+
+	std::string Editor::GetOpenPath(const std::string& a_Filter)
     {
 		OPENFILENAMEA ofn;       // common dialog box structure
 		CHAR szFile[260] = { 0 };       // if using TCHAR macros
@@ -112,4 +142,57 @@ namespace Muse
 		}
 		return std::string();
     }
+
+	/*
+    bool Editor::GetSavePath(const std::wstring& a_Filter, const std::wstring& a_Extension)
+    {
+		CHAR szFile[260] = { 0 };       // if using TCHAR macros
+
+		OPENFILENAME ofn = { 0 };
+
+		ofn.lStructSize = sizeof(ofn);
+		ofn.Flags = OFN_EXPLORER | OFN_PATHMUSTEXIST;
+		ofn.hInstance = GetModuleHandle(0);
+		ofn.hwndOwner = glfwGetWin32Window((GLFWwindow*)Application::Get().GetWindow().GetNativeWindow());
+		//ofn.lpstrFile = szFile;
+		ofn.nMaxFile = sizeof(szFile);
+		ofn.nFilterIndex = 1;
+		ofn.lpstrFilter = L"All Files\0*.*\0\0";
+		ofn.lpstrDefExt = L"txt";
+
+		return GetSaveFileName(&ofn);
+    }
+    */
+
+	std::wstring Editor::GetSavePath(const std::wstring& a_Filter, const std::wstring& a_Extension)
+	{
+		OPENFILENAME ofn;
+
+		WCHAR szFileName[MAX_PATH] = L"";
+
+		ZeroMemory(&ofn, sizeof(ofn));
+
+		ofn.lStructSize = sizeof(ofn);
+		ofn.hwndOwner = NULL;
+		ofn.lpstrFilter = (LPCWSTR)L"Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0";
+		ofn.lpstrFile = szFileName;
+		ofn.nMaxFile = MAX_PATH;
+		ofn.Flags = OFN_EXPLORER | OFN_FILEMUSTEXIST | OFN_HIDEREADONLY;
+		ofn.lpstrDefExt = (LPCWSTR)L"txt";
+
+		GetSaveFileName(&ofn);
+		wprintf(L"the path is : %s\n", ofn.lpstrFile); 
+
+		/*
+		//std::string path(ofn.lpstrFile, ofn.lpstrFile);
+
+		const WCHAR* wc = L"Hello World";
+		_bstr_t b(wc);
+		//const char* c = b;
+
+		std::string path = b;
+        */
+
+		return ofn.lpstrFile;
+	}
 }

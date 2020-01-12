@@ -130,11 +130,12 @@ namespace Muse
             {
                 LOG_ENGINE_INFO("SAVE");
 
-                std::string filename = Editor::OpenFile("");
-                if (filename != "")
-                {
-                    LOG_ENGINE_INFO("Filename {}", filename);
-                }
+                std::wstring filter = std::to_wstring('a');
+                std::wstring ext = std::to_wstring('b');
+
+                std::string path = Editor::GetSavePath(filter, ext);
+
+                Save(path);
             }
         }
     }
