@@ -1,0 +1,11 @@
+{
+    "Gameplay": {
+        "value0": -858993460,
+        "value1": {
+            "ptr_wrapper": {
+                "id": 0
+            }
+        },
+        "value2": 99.0
+    }
+}

@@ -16,6 +16,8 @@ namespace Muse
 
 	class TransformComponent : public Component
 	{
+		RTTR_ENABLE(Component)
+		RTTR_REGISTRATION_FRIEND
 
 	public:
 		TransformComponent() = default;
@@ -55,7 +57,12 @@ namespace Muse
 		void RTTRSetPosition(const glm::vec3& a_Position) { SetPosition(a_Position); }
 		const glm::vec3& RTTRGetScale() const { return m_Scale; }
 		void RTTRSetScale(const glm::vec3& a_Scale) { SetScale(a_Scale); }
-
+		template <class Archive>
+		void serialize(Archive& ar)
+		{
+			ar(
+			);
+		}
 	private:
 		bool m_DirtyPosition = true;
 		bool m_DirtyRotation = true;
@@ -72,8 +79,6 @@ namespace Muse
 		glm::mat4 m_ScaleMatrix = glm::identity<glm::mat4>();
 		glm::mat4 m_ModelMatrix = glm::identity<glm::mat4>();
 
-		RTTR_ENABLE(Component)
-		RTTR_REGISTRATION_FRIEND
 
 	};
 }

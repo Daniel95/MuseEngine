@@ -12,6 +12,9 @@ namespace Muse
 
     class RenderComponent : public Component
     {
+        RTTR_ENABLE()
+        RTTR_REGISTRATION_FRIEND
+
     public:
         void SetMesh(float a_Vertices[], int a_VerticesCount, uint32_t a_Indices[], int a_IndicesCount, const BufferLayout& a_BufferLayout);
         void SetShader(std::shared_ptr<Shader> a_Shader) { m_Shader = a_Shader; }
@@ -24,7 +27,13 @@ namespace Muse
         void OnDisable() override;
 
         std::shared_ptr<VertexArray> GetVA() const { return m_VA; }
+        template <class Archive>
+        void serialize(Archive& ar)
+        {
+            ar(
 
+            );
+        }
     private:
         std::shared_ptr<VertexBuffer> m_VB;
         std::shared_ptr<IndexBuffer> m_IB;
@@ -32,8 +41,7 @@ namespace Muse
         std::shared_ptr<Shader> m_Shader;
         std::shared_ptr<Texture> m_Texture;
 
-        RTTR_ENABLE()
-        RTTR_REGISTRATION_FRIEND
+
     };
 }
 

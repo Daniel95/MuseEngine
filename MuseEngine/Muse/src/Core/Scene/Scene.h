@@ -35,17 +35,18 @@ namespace Muse
         void FixedUpdate(float a_TimeStep);
         const std::vector<GameObject*> & GetGameObjects() const { return m_GameObjectsToUpdate; }
         void SetGameObjects(const std::vector<GameObject*> & a_GameObjects) { m_GameObjectsToUpdate = a_GameObjects; }
-        void Deserialize(const std::string& a_Json);
-        std::string Serialize() const;
+        //void Deserialize(const std::string& a_Json);
+        //std::string Serialize() const;
         void Save();
-        void Save(const std::string& a_Path);
-		//void Load(const std::string& a_Path);
-        void SaveState();
+        void Save(const std::string& a_FilePath);
+        //void Load();
+        //void Load(const std::string& a_Path);
+        //void SaveState();
         void DestroyGameObjectImmediate(GameObject* a_GameObject);
-        bool CanUndo() const { return m_States.size() > 0 && m_CurrentStateIndex > 0; }
-        bool CanRedo() const { return m_States.size() > 0 && m_CurrentStateIndex < m_States.size() - 1; }
-        void Undo();
-        void Redo();
+        //bool CanUndo() const { return m_States.size() > 0 && m_CurrentStateIndex > 0; }
+        //bool CanRedo() const { return m_States.size() > 0 && m_CurrentStateIndex < m_States.size() - 1; }
+        //void Undo();
+        //void Redo();
         const std::string& GetName() const { return m_Name; }
         void SetName(const std::string& a_Name) { m_Name = a_Name; }
         GameObject* GetEditorCamera() const;
@@ -59,6 +60,11 @@ namespace Muse
         static std::shared_ptr<Scene> Create() { return std::make_shared<Scene>(); }
         static std::shared_ptr<Scene> Load(const std::string& a_FilePath);
 
+        template <class Archive>
+        void serialize(Archive& ar)
+        {
+            ar(m_MaxStateSaves);
+        }
     private:
         std::vector<GameObject*> m_GameObjectsToUpdate;
         std::vector<GameObject*> m_GameObjectsToAdd;
@@ -68,9 +74,6 @@ namespace Muse
         int m_CurrentStateIndex = 0;
 
         void Unload();
-
-        RTTR_ENABLE(Resource)
-        RTTR_REGISTRATION_FRIEND
 	};
 
     template <typename T>

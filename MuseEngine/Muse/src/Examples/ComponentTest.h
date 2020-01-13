@@ -10,14 +10,11 @@ namespace Muse
     class BoxCollider2D;
     class TransformComponent;
 
-    class Component
+    class ComponentTest
     {
-        RTTR_ENABLE()
-        RTTR_REGISTRATION_FRIEND
-
     public:
-        Component() = default;
-        virtual ~Component() = default;
+        ComponentTest() = default;
+        virtual ~ComponentTest() = default;
 
         void Init(GameObject* a_GameObject);
         void Update(float a_DeltaTime) { OnUpdate(a_DeltaTime); }

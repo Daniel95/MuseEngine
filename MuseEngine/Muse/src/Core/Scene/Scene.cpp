@@ -14,6 +14,7 @@
 #include "Editor/Editor.h"
 #include "Core/Input/Input.h"
 #include "Core/Input/KeyCodes.h"
+#include <cereal/archives/json.hpp>
 
 namespace Muse
 {
@@ -147,6 +148,7 @@ namespace Muse
         }
     }
 
+    /*
     void Scene::Deserialize(const std::string& a_Json)
     {
         MUSE_PROFILE_FUNCTION();
@@ -170,35 +172,51 @@ namespace Muse
     {
         return io::to_json(*this);
     }
+    */
 
     void Scene::Save()
     {
-        MUSE_PROFILE_FUNCTION();
-
         Save(m_Path);
     }
 
-    void Scene::Save(const std::string& a_Path)
+    void Scene::Save(const std::string& a_FilePath)
     {
         MUSE_PROFILE_FUNCTION();
 
-        UpdatePath(a_Path + ".txt");
+        UpdatePath(a_FilePath + ".txt");
 
         std::filesystem::path path{ m_Path }; //creates TestingFolder object on C:
         std::filesystem::create_directories(path.parent_path()); //add directories based on the object path (without this line it will not work)
+        std::ofstream ofs(path);
+
+        {
+
+            cereal::JSONOutputArchive oarchive(ofs);
+            oarchive(cereal::make_nvp(a_FilePath, *this));
+        }
+        ofs.close();
+
+        /*
+        {
+            std::ifstream fs(path);
+
+            cereal::JSONInputArchive iarchive(fs);
+            iarchive(cereal::make_nvp(a_FilePath, *this));
+
+            fs.close();
+        }
+        */
 
         DestroyEditorCamera();
-
-        std::string jsonString = Serialize();;
-
-        CreateEditorCamera();
-
-        std::ofstream ofs(path);
-        ofs << jsonString;
-        ofs.close();
     }
 
+
     /*
+    void Scene::Load()
+    {
+        Load(m_Path);
+    }
+
     void Scene::Load(const std::string& a_Path)
     {
         MUSE_PROFILE_FUNCTION();
@@ -217,7 +235,6 @@ namespace Muse
 
         Deserialize(sceneJSON);
     }
-    */
 
     void Scene::SaveState()
     {
@@ -248,6 +265,7 @@ namespace Muse
 
         LOG_ENGINE_INFO("m_CurrentStateIndex: {0}", m_CurrentStateIndex);
     }
+    */
 
     void Scene::DestroyGameObjectImmediate(GameObject* a_GameObject)
     {
@@ -259,6 +277,7 @@ namespace Muse
         delete a_GameObject;
     }
 
+    /*
     void Scene::Undo()
     {
         MUSE_PROFILE_FUNCTION();
@@ -287,6 +306,7 @@ namespace Muse
             LOG_ENGINE_INFO("m_CurrentStateIndex: {0}", m_CurrentStateIndex);
         }
     }
+    */
 
     GameObject* Scene::GetEditorCamera() const
     {
@@ -330,6 +350,7 @@ namespace Muse
         return gameObject;
     }
 
+    /*
     std::shared_ptr<Scene> Scene::Load(const std::string& a_FilePath)
     {
         MUSE_PROFILE_FUNCTION();
@@ -362,19 +383,32 @@ namespace Muse
 
         return scene;
     }
+    */
+
+    std::shared_ptr<Scene> Load(const std::string& a_FilePath)
+    {
+        std::filesystem::path path{ a_FilePath }; //creates TestingFolder object on C:
+        std::filesystem::create_directories(path.parent_path()); //add directories based on the object path (without this line it will not work)
+        std::ifstream fs(path);
+
+        std::shared_ptr<Scene> scene = std::make_shared<Scene>();
+
+        {
+            //cereal::JSONInputArchive iarchive(fs);
+            //iarchive(cereal::make_nvp(a_FilePath, scene));
+        }
+        fs.close();
+
+        for (GameObject* gameObject : scene->GetGameObjects())
+        {
+            gameObject->Init(*scene);
+
+            for (Component* component : gameObject->GetComponents())
+            {
+                component->Init(gameObject);
+            }
+        }
+
+        return scene;
+    }
 }
-
-
-RTTR_REGISTRATION
-{
-    rttr::registration::class_<Muse::Scene>("Scene")
-        .constructor<>()
-        (
-            rttr::policy::ctor::as_raw_ptr
-        )
-        .property("m_GameObjectsToUpdate", &Muse::Scene::m_GameObjectsToUpdate)
-        .property("m_GameObjectsToAdd", &Muse::Scene::m_GameObjectsToAdd)
-        .property("m_GameObjectsToRemove", &Muse::Scene::m_GameObjectsToRemove);
-//.property("GameObjects", &Scene::GetGameObjects, &Scene::SetGameObjects);
-}
-

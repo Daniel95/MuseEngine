@@ -15,6 +15,9 @@ namespace Muse
 
 	class GameObject
 	{
+        RTTR_ENABLE()
+        RTTR_REGISTRATION_FRIEND
+
 	public:
         GameObject() = default;
 		virtual ~GameObject();
@@ -41,13 +44,17 @@ namespace Muse
         void SetComponents(const std::vector<Component*>& a_Components);
         void Destroy();
 
+        template <class Archive>
+        void serialize(Archive& ar)
+        {
+            ar(
+            );
+        }
 	private:
         std::vector<Component*> m_Components;
         Scene* m_Scene;
         bool m_Destroyed = false;
 
-        RTTR_ENABLE()
-        RTTR_REGISTRATION_FRIEND
 	};
 
     template<class T>

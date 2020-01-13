@@ -7,6 +7,9 @@ namespace Muse
 
     class OrthographicCameraControllerComponent : public Component
     {
+        RTTR_ENABLE()
+        RTTR_REGISTRATION_FRIEND
+
     public:
         OrthographicCameraControllerComponent();
         virtual ~OrthographicCameraControllerComponent();
@@ -16,7 +19,15 @@ namespace Muse
         float GetMoveSpeed() const { return m_BaseMoveSpeed; }
         void SetZoomSpeed(float a_ZoomSpeed) { m_ZoomSpeed = a_ZoomSpeed; }
         float GetZoomSpeed() const { return m_ZoomSpeed; }
-
+        template <class Archive>
+        void serialize(Archive& ar)
+        {
+            ar(
+                m_BaseMoveSpeed,
+                m_ZoomSpeed,
+                m_MinZoomLevel
+            );
+        }
     private:
         float m_BaseMoveSpeed = 0.6f;
         float m_ZoomSpeed = 0.1f;
@@ -26,8 +37,6 @@ namespace Muse
         void OnMouseScrolledEvent(float a_XOffset, float a_YOffset);
         void OnWindowResizeEvent(int a_Width, int a_Height);
 
-        RTTR_ENABLE()
-        RTTR_REGISTRATION_FRIEND
 
     };
 }

@@ -202,6 +202,7 @@
     <ClInclude Include="src\Editor\ViewPort.h" />
     <ClInclude Include="src\EntryPoint.h" />
     <ClInclude Include="src\Examples\CerealExample.h" />
+    <ClInclude Include="src\Examples\ComponentTest.h" />
     <ClInclude Include="src\Examples\RTTRExample.h" />
     <ClInclude Include="src\Examples\SerializePntrTest.h" />
     <ClInclude Include="src\Examples\SerializeTest.h" />
@@ -627,6 +628,7 @@
     <ClCompile Include="src\Editor\FileBrowser.cpp" />
     <ClCompile Include="src\Editor\ViewPort.cpp" />
     <ClCompile Include="src\Examples\CerealExample.cpp" />
+    <ClCompile Include="src\Examples\ComponentTest.cpp" />
     <ClCompile Include="src\Examples\SerializePntrTest.cpp" />
     <ClCompile Include="src\Examples\SerializeTest.cpp" />
     <ClCompile Include="src\MusePCH.cpp">

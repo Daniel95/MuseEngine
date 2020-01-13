@@ -1,14 +1,13 @@
 #include "MusePCH.h"
 
-#include "Core/Gameplay/Component/Component.h"
+#include "ComponentTest.h"
 #include "Core/Gameplay/GameObject.h"
-#include "TransformComponent.h"
 #include "Core/Instrumentor.h"
 #include <cereal/archives/json.hpp>
 
 namespace Muse 
 {
-    void Component::Init(GameObject* a_GameObject)
+    void ComponentTest::Init(GameObject* a_GameObject)
     {
 		MUSE_PROFILE_FUNCTION();
 
@@ -34,14 +33,14 @@ namespace Muse
 			std::ifstream fs(path);
 
 			{
-				//cereal::JSONInputArchive iarchive(fs);
-				//iarchive(cereal::make_nvp(a_FilePath, this));
+				cereal::JSONInputArchive iarchive(fs);
+				iarchive(cereal::make_nvp(a_FilePath, this));
 			}
 			fs.close();
 		}
     }
 
-	void Component::Enable()
+	void ComponentTest::Enable()
 	{
 		MUSE_PROFILE_FUNCTION();
 
@@ -49,7 +48,7 @@ namespace Muse
         OnEnable();
 	}
 
-	void Component::Disable()
+	void ComponentTest::Disable()
 	{
 		MUSE_PROFILE_FUNCTION();
 
@@ -57,18 +56,8 @@ namespace Muse
         OnDisable();
 	}
 
-    TransformComponent* Component::GetTransform() const
+    TransformComponent* ComponentTest::GetTransform() const
     {
 		return m_GameObject->GetTransform();
     }
-}
-
-RTTR_REGISTRATION
-{
-	rttr::registration::class_<Muse::Component>("Component")
-		.constructor<>()
-		(
-			rttr::policy::ctor::as_raw_ptr
-		);
-		//.property("Enabled", &Muse::Component::m_isEnabled);
 }

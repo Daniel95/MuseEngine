@@ -6,6 +6,9 @@ namespace Muse
 {
     class CameraComponent : public Component
     {
+        RTTR_ENABLE(Component)
+        RTTR_REGISTRATION_FRIEND
+
     public:
         CameraComponent();
         virtual ~CameraComponent() = default;
@@ -25,6 +28,18 @@ namespace Muse
 
         static CameraComponent* GetMain() { return s_MainCamera; }
 
+        template <class Archive>
+        void serialize(Archive& ar)
+        {
+            ar(m_ViewMatrix,
+                m_ProjectionMatrix,
+                m_ViewProjectionMatrix,
+                m_IsEditorCamera,
+                m_ZoomLevel,
+                m_AspectRatio
+            );
+        }
+
     protected:
         virtual void OnUpdate(float a_DeltaTime) override { RecalculateViewMatrix(); }
         float m_AspectRatio = 1.6f;
@@ -38,9 +53,6 @@ namespace Muse
 
         static CameraComponent* s_MainCamera;
         void RecalculateViewMatrix();
-
-        RTTR_ENABLE(Component)
-        RTTR_REGISTRATION_FRIEND
 
     };
 }

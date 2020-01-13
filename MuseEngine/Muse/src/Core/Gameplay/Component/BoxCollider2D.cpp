@@ -4,6 +4,7 @@
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Gameplay/Component/TransformComponent.h"
 #include "Core/Instrumentor.h"
+#include <cereal/archives/json.hpp>
 
 namespace Muse
 {

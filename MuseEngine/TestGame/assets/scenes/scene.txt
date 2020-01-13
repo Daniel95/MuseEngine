@@ -1,0 +1,5 @@
+{
+    "D:\\Dev\\Muse\\MuseEngine\\TestGame\\assets\\scenes\\scene": {
+        "value0": 20
+    }
+}
