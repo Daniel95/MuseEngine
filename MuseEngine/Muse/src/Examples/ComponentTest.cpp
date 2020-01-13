@@ -4,6 +4,7 @@
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Instrumentor.h"
 #include <cereal/archives/json.hpp>
+#include "CerealExample.h"
 
 namespace Muse 
 {
@@ -34,7 +35,7 @@ namespace Muse
 
 			{
 				cereal::JSONInputArchive iarchive(fs);
-				iarchive(cereal::make_nvp(a_FilePath, this));
+				iarchive(cereal::make_nvp(a_FilePath, *this));
 			}
 			fs.close();
 		}

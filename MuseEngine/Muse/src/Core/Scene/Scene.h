@@ -63,7 +63,7 @@ namespace Muse
         template <class Archive>
         void serialize(Archive& ar)
         {
-            ar(m_MaxStateSaves);
+            ar(m_CurrentStateIndex);
         }
     private:
         std::vector<GameObject*> m_GameObjectsToUpdate;

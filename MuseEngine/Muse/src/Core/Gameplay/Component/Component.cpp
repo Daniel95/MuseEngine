@@ -24,21 +24,6 @@ namespace Muse
 		}
 
 		OnInit();
-
-
-		{
-			std::string a_FilePath = "assets/scenes/cerealComponent.txt";
-
-			std::filesystem::path path{ a_FilePath }; //creates TestingFolder object on C:
-			std::filesystem::create_directories(path.parent_path()); //add directories based on the object path (without this line it will not work)
-			std::ifstream fs(path);
-
-			{
-				//cereal::JSONInputArchive iarchive(fs);
-				//iarchive(cereal::make_nvp(a_FilePath, this));
-			}
-			fs.close();
-		}
     }
 
 	void Component::Enable()

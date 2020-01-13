@@ -28,6 +28,11 @@ namespace Muse
         //template<typename T>
         //T* GetComponent() { return m_GameObject->GetComponent<T>(); }
 
+        template <class Archive>
+        void serialize(Archive& ar)
+        {
+            ar(m_isEnabled);
+        }
 	protected:
         virtual void OnUpdate(float a_DeltaTime) {}
         virtual void OnInit() {}

@@ -196,7 +196,6 @@ namespace Muse
         }
         ofs.close();
 
-        /*
         {
             std::ifstream fs(path);
 
@@ -205,7 +204,6 @@ namespace Muse
 
             fs.close();
         }
-        */
 
         DestroyEditorCamera();
     }
@@ -395,7 +393,7 @@ namespace Muse
 
         {
             //cereal::JSONInputArchive iarchive(fs);
-            //iarchive(cereal::make_nvp(a_FilePath, scene));
+            //iarchive(cereal::make_nvp(a_FilePath, *scene.get()));
         }
         fs.close();
 
