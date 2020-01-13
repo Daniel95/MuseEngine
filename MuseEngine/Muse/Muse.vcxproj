@@ -200,6 +200,8 @@
     <ClInclude Include="src\Editor\ViewPort.h" />
     <ClInclude Include="src\EntryPoint.h" />
     <ClInclude Include="src\Examples\RTTRExample.h" />
+    <ClInclude Include="src\Examples\SerializePntrTest.h" />
+    <ClInclude Include="src\Examples\SerializeTest.h" />
     <ClInclude Include="src\Muse.h" />
     <ClInclude Include="src\MusePCH.h" />
     <ClInclude Include="src\Platform\OpenGL\Buffer\OpenGLFrameBuffer.h" />
@@ -615,6 +617,8 @@
     <ClCompile Include="src\Editor\Editor.cpp" />
     <ClCompile Include="src\Editor\FileBrowser.cpp" />
     <ClCompile Include="src\Editor\ViewPort.cpp" />
+    <ClCompile Include="src\Examples\SerializePntrTest.cpp" />
+    <ClCompile Include="src\Examples\SerializeTest.cpp" />
     <ClCompile Include="src\MusePCH.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

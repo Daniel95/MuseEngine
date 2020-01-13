@@ -1352,6 +1352,8 @@
     <ClInclude Include="src\Editor\Editor.h" />
     <ClInclude Include="src\Editor\FileBrowser.h" />
     <ClInclude Include="src\Editor\ViewPort.h" />
+    <ClInclude Include="src\Examples\SerializePntrTest.h" />
+    <ClInclude Include="src\Examples\SerializeTest.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1488,5 +1490,7 @@
     <ClCompile Include="src\Editor\FileBrowser.cpp" />
     <ClCompile Include="src\Editor\ViewPort.cpp" />
     <ClCompile Include="src\Editor\Editor.cpp" />
+    <ClCompile Include="src\Examples\SerializePntrTest.cpp" />
+    <ClCompile Include="src\Examples\SerializeTest.cpp" />
   </ItemGroup>
 </Project>
