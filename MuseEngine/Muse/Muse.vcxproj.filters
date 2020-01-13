@@ -31,23 +31,29 @@
     <Filter Include="src\Core\Renderer\Buffer">
       <UniqueIdentifier>{74ECC740-6011-17C1-895C-FC5075E015DF}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Core\Resource">
+      <UniqueIdentifier>{5C9F0E62-C8B5-0CF8-112D-98197D82DD7F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core\Scene">
+      <UniqueIdentifier>{82A83005-6E76-240B-570A-953143770070}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Core\System">
       <UniqueIdentifier>{199BDBAC-8526-4971-8E37-CC65FA41A571}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Core\System\Manager">
       <UniqueIdentifier>{43E00982-AF17-5219-B821-B63C24D87812}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Core\System\Resource">
-      <UniqueIdentifier>{500927A1-3C2E-7621-6579-5BB151FD743F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Core\System\Scene">
-      <UniqueIdentifier>{F6360C20-62A3-C71A-2B97-5F7897C2E982}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Core\Utilities">
       <UniqueIdentifier>{508A95CF-3C6E-5625-A5CE-507891D140A7}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Core\Utilities\json">
       <UniqueIdentifier>{1914C77A-854B-0F12-8E55-7335FA0B360B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core\Utilities\json - Original">
+      <UniqueIdentifier>{7BB7A7B8-67F3-AA22-D005-C319BC60533D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Editor">
+      <UniqueIdentifier>{C3F37E0D-AFAB-C05A-18B3-99B6048A5B4B}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Examples">
       <UniqueIdentifier>{5B3F7059-47A2-FFFD-F027-38B4DC69CB80}</UniqueIdentifier>
@@ -117,6 +123,9 @@
     <ClInclude Include="src\Core\Gameplay\Component\Component.h">
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Gameplay\Component\OrthographicCameraControllerComponent.h">
+      <Filter>src\Core\Gameplay\Component</Filter>
+    </ClInclude>
     <ClInclude Include="src\Core\Gameplay\Component\RenderComponent.h">
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClInclude>
@@ -141,6 +150,9 @@
     <ClInclude Include="src\Core\Input\MouseButtonCodes.h">
       <Filter>src\Core\Input</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Instrumentor.h">
+      <Filter>src\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Core\Layer\Layer.h">
       <Filter>src\Core\Layer</Filter>
     </ClInclude>
@@ -148,6 +160,9 @@
       <Filter>src\Core\Layer</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Renderer\Buffer\BufferLayout.h">
+      <Filter>src\Core\Renderer\Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Renderer\Buffer\FrameBuffer.h">
       <Filter>src\Core\Renderer\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Renderer\Buffer\IndexBuffer.h">
@@ -165,6 +180,9 @@
     <ClInclude Include="src\Core\Renderer\Renderer.h">
       <Filter>src\Core\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Renderer\Renderer2D.h">
+      <Filter>src\Core\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Core\Renderer\RendererAPI.h">
       <Filter>src\Core\Renderer</Filter>
     </ClInclude>
@@ -176,6 +194,21 @@
     </ClInclude>
     <ClInclude Include="src\Core\Renderer\VertexArray.h">
       <Filter>src\Core\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Resource\Resource.h">
+      <Filter>src\Core\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Resource\ResourceManager.h">
+      <Filter>src\Core\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Resource\ResourceTest.h">
+      <Filter>src\Core\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Scene\Scene.h">
+      <Filter>src\Core\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Scene\SceneManager.h">
+      <Filter>src\Core\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\System\Manager\ISystem.h">
       <Filter>src\Core\System\Manager</Filter>
@@ -189,11 +222,20 @@
     <ClInclude Include="src\Core\Utilities\Defines.h">
       <Filter>src\Core\Utilities</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Utilities\HardCodedMesh.h">
+      <Filter>src\Core\Utilities</Filter>
+    </ClInclude>
     <ClInclude Include="src\Core\Utilities\Log.h">
       <Filter>src\Core\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Utilities\Utilities.h">
       <Filter>src\Core\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Utilities\json - Original\from_json.h">
+      <Filter>src\Core\Utilities\json - Original</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Utilities\json - Original\to_json.h">
+      <Filter>src\Core\Utilities\json - Original</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Utilities\json\from_json.h">
       <Filter>src\Core\Utilities\json</Filter>
@@ -204,14 +246,38 @@
     <ClInclude Include="src\Core\Window.h">
       <Filter>src\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Editor\Editor.h">
+      <Filter>src\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Editor\FileBrowser.h">
+      <Filter>src\Editor</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Editor\ViewPort.h">
+      <Filter>src\Editor</Filter>
+    </ClInclude>
     <ClInclude Include="src\EntryPoint.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Examples\CerealExample.h">
+      <Filter>src\Examples</Filter>
     </ClInclude>
     <ClInclude Include="src\Examples\RTTRExample.h">
       <Filter>src\Examples</Filter>
     </ClInclude>
+    <ClInclude Include="src\Examples\SerializePntrTest.h">
+      <Filter>src\Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Examples\SerializeTest.h">
+      <Filter>src\Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Muse.h">
+      <Filter>src</Filter>
+    </ClInclude>
     <ClInclude Include="src\MusePCH.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\Buffer\OpenGLFrameBuffer.h">
+      <Filter>src\Platform\OpenGL\Buffer</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\Buffer\OpenGLIndexBuffer.h">
       <Filter>src\Platform\OpenGL\Buffer</Filter>
@@ -1329,31 +1395,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Resource\Resource.h">
-      <Filter>src\Core\System\Resource</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Resource\ResourceManager.h">
-      <Filter>src\Core\System</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Scene\Scene.h">
-      <Filter>src\Core\System\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Scene\SceneManager.h">
-      <Filter>src\Core\System</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Renderer\Renderer2D.h" />
-    <ClInclude Include="src\Muse.h" />
-    <ClInclude Include="src\Core\Gameplay\Component\OrthographicCameraControllerComponent.h" />
-    <ClInclude Include="src\Core\Resource\ResourceTest.h" />
-    <ClInclude Include="src\Core\Instrumentor.h" />
-    <ClInclude Include="src\Platform\OpenGL\Buffer\OpenGLFrameBuffer.h" />
-    <ClInclude Include="src\Core\Renderer\Buffer\FrameBuffer.h" />
-    <ClInclude Include="src\Core\Utilities\HardCodedMesh.h" />
-    <ClInclude Include="src\Editor\Editor.h" />
-    <ClInclude Include="src\Editor\FileBrowser.h" />
-    <ClInclude Include="src\Editor\ViewPort.h" />
-    <ClInclude Include="src\Examples\SerializePntrTest.h" />
-    <ClInclude Include="src\Examples\SerializeTest.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1366,6 +1407,9 @@
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Gameplay\Component\Component.cpp">
+      <Filter>src\Core\Gameplay\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Gameplay\Component\OrthographicCameraControllerComponent.cpp">
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Gameplay\Component\RenderComponent.cpp">
@@ -1395,6 +1439,9 @@
     <ClCompile Include="src\Core\Renderer\Buffer\BufferLayout.cpp">
       <Filter>src\Core\Renderer\Buffer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Renderer\Buffer\FrameBuffer.cpp">
+      <Filter>src\Core\Renderer\Buffer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Core\Renderer\Buffer\IndexBuffer.cpp">
       <Filter>src\Core\Renderer\Buffer</Filter>
     </ClCompile>
@@ -1405,6 +1452,9 @@
       <Filter>src\Core\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Renderer\Renderer.cpp">
+      <Filter>src\Core\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Renderer\Renderer2D.cpp">
       <Filter>src\Core\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Renderer\RendererAPI.cpp">
@@ -1419,6 +1469,21 @@
     <ClCompile Include="src\Core\Renderer\VertexArray.cpp">
       <Filter>src\Core\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Resource\Resource.cpp">
+      <Filter>src\Core\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Resource\ResourceManager.cpp">
+      <Filter>src\Core\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Resource\ResourceTest.cpp">
+      <Filter>src\Core\Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Scene\Scene.cpp">
+      <Filter>src\Core\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Scene\SceneManager.cpp">
+      <Filter>src\Core\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\Core\System\Manager\ISystem.cpp">
       <Filter>src\Core\System\Manager</Filter>
     </ClCompile>
@@ -1431,14 +1496,41 @@
     <ClCompile Include="src\Core\Utilities\Utilities.cpp">
       <Filter>src\Core\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Utilities\json - Original\from_json.cpp">
+      <Filter>src\Core\Utilities\json - Original</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Utilities\json - Original\to_json.cpp">
+      <Filter>src\Core\Utilities\json - Original</Filter>
+    </ClCompile>
     <ClCompile Include="src\Core\Utilities\json\from_json.cpp">
       <Filter>src\Core\Utilities\json</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Utilities\json\to_json.cpp">
       <Filter>src\Core\Utilities\json</Filter>
     </ClCompile>
+    <ClCompile Include="src\Editor\Editor.cpp">
+      <Filter>src\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Editor\FileBrowser.cpp">
+      <Filter>src\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Editor\ViewPort.cpp">
+      <Filter>src\Editor</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Examples\CerealExample.cpp">
+      <Filter>src\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Examples\SerializePntrTest.cpp">
+      <Filter>src\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Examples\SerializeTest.cpp">
+      <Filter>src\Examples</Filter>
+    </ClCompile>
     <ClCompile Include="src\MusePCH.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\Buffer\OpenGLFrameBuffer.cpp">
+      <Filter>src\Platform\OpenGL\Buffer</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\Buffer\OpenGLIndexBuffer.cpp">
       <Filter>src\Platform\OpenGL\Buffer</Filter>
@@ -1470,27 +1562,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Resource\Resource.cpp">
-      <Filter>src\Core\System\Resource</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Resource\ResourceManager.cpp">
-      <Filter>src\Core\System</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Scene\Scene.cpp">
-      <Filter>src\Core\System\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Scene\SceneManager.cpp">
-      <Filter>src\Core\System</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Renderer\Renderer2D.cpp" />
-    <ClCompile Include="src\Core\Gameplay\Component\OrthographicCameraControllerComponent.cpp" />
-    <ClCompile Include="src\Core\Resource\ResourceTest.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\Buffer\OpenGLFrameBuffer.cpp" />
-    <ClCompile Include="src\Core\Renderer\Buffer\FrameBuffer.cpp" />
-    <ClCompile Include="src\Editor\FileBrowser.cpp" />
-    <ClCompile Include="src\Editor\ViewPort.cpp" />
-    <ClCompile Include="src\Editor\Editor.cpp" />
-    <ClCompile Include="src\Examples\SerializePntrTest.cpp" />
-    <ClCompile Include="src\Examples\SerializeTest.cpp" />
   </ItemGroup>
 </Project>

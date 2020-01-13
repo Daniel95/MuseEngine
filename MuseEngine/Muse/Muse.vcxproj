@@ -77,7 +77,7 @@
       <PrecompiledHeaderFile>MusePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;MUSE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\rapidjson\include;vendor\rttr\include;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\rapidjson\include;vendor\rttr\include;vendor\stb_image;vendor\cereal\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -100,7 +100,7 @@
       <PrecompiledHeaderFile>MusePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;MUSE_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\rapidjson\include;vendor\rttr\include;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\rapidjson\include;vendor\rttr\include;vendor\stb_image;vendor\cereal\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -126,7 +126,7 @@
       <PrecompiledHeaderFile>MusePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;MUSE_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\rapidjson\include;vendor\rttr\include;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\rapidjson\include;vendor\rttr\include;vendor\stb_image;vendor\cereal\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -148,7 +148,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Core\Application.h" />
-    <ClInclude Include="src\Editor\Editor.h" />
     <ClInclude Include="src\Core\Engine.h" />
     <ClInclude Include="src\Core\Event\ApplicationEvent.h" />
     <ClInclude Include="src\Core\Event\Event.h" />
@@ -166,9 +165,9 @@
     <ClInclude Include="src\Core\Input\Input.h" />
     <ClInclude Include="src\Core\Input\KeyCodes.h" />
     <ClInclude Include="src\Core\Input\MouseButtonCodes.h" />
+    <ClInclude Include="src\Core\Instrumentor.h" />
     <ClInclude Include="src\Core\Layer\Layer.h" />
     <ClInclude Include="src\Core\Layer\LayerStack.h" />
-    <ClInclude Include="src\Core\Instrumentor.h" />
     <ClInclude Include="src\Core\Renderer\Buffer\BufferLayout.h" />
     <ClInclude Include="src\Core\Renderer\Buffer\FrameBuffer.h" />
     <ClInclude Include="src\Core\Renderer\Buffer\IndexBuffer.h" />
@@ -181,24 +180,28 @@
     <ClInclude Include="src\Core\Renderer\Shader.h" />
     <ClInclude Include="src\Core\Renderer\Texture.h" />
     <ClInclude Include="src\Core\Renderer\VertexArray.h" />
+    <ClInclude Include="src\Core\Resource\Resource.h" />
+    <ClInclude Include="src\Core\Resource\ResourceManager.h" />
     <ClInclude Include="src\Core\Resource\ResourceTest.h" />
+    <ClInclude Include="src\Core\Scene\Scene.h" />
+    <ClInclude Include="src\Core\Scene\SceneManager.h" />
     <ClInclude Include="src\Core\System\Manager\ISystem.h" />
     <ClInclude Include="src\Core\System\Manager\SystemID.h" />
     <ClInclude Include="src\Core\System\Manager\SystemManager.h" />
-    <ClInclude Include="src\Core\Resource\Resource.h" />
-    <ClInclude Include="src\Core\Resource\ResourceManager.h" />
-    <ClInclude Include="src\Core\Scene\Scene.h" />
-    <ClInclude Include="src\Core\Scene\SceneManager.h" />
     <ClInclude Include="src\Core\Utilities\Defines.h" />
     <ClInclude Include="src\Core\Utilities\HardCodedMesh.h" />
     <ClInclude Include="src\Core\Utilities\Log.h" />
     <ClInclude Include="src\Core\Utilities\Utilities.h" />
+    <ClInclude Include="src\Core\Utilities\json - Original\from_json.h" />
+    <ClInclude Include="src\Core\Utilities\json - Original\to_json.h" />
     <ClInclude Include="src\Core\Utilities\json\from_json.h" />
     <ClInclude Include="src\Core\Utilities\json\to_json.h" />
     <ClInclude Include="src\Core\Window.h" />
+    <ClInclude Include="src\Editor\Editor.h" />
     <ClInclude Include="src\Editor\FileBrowser.h" />
     <ClInclude Include="src\Editor\ViewPort.h" />
     <ClInclude Include="src\EntryPoint.h" />
+    <ClInclude Include="src\Examples\CerealExample.h" />
     <ClInclude Include="src\Examples\RTTRExample.h" />
     <ClInclude Include="src\Examples\SerializePntrTest.h" />
     <ClInclude Include="src\Examples\SerializeTest.h" />
@@ -603,20 +606,27 @@
     <ClCompile Include="src\Core\Renderer\Shader.cpp" />
     <ClCompile Include="src\Core\Renderer\Texture.cpp" />
     <ClCompile Include="src\Core\Renderer\VertexArray.cpp" />
-    <ClCompile Include="src\Core\Resource\ResourceTest.cpp" />
-    <ClCompile Include="src\Core\System\Manager\ISystem.cpp" />
-    <ClCompile Include="src\Core\System\Manager\SystemManager.cpp" />
     <ClCompile Include="src\Core\Resource\Resource.cpp" />
     <ClCompile Include="src\Core\Resource\ResourceManager.cpp" />
+    <ClCompile Include="src\Core\Resource\ResourceTest.cpp" />
     <ClCompile Include="src\Core\Scene\Scene.cpp" />
     <ClCompile Include="src\Core\Scene\SceneManager.cpp" />
+    <ClCompile Include="src\Core\System\Manager\ISystem.cpp" />
+    <ClCompile Include="src\Core\System\Manager\SystemManager.cpp" />
     <ClCompile Include="src\Core\Utilities\Log.cpp" />
     <ClCompile Include="src\Core\Utilities\Utilities.cpp" />
-    <ClCompile Include="src\Core\Utilities\json\from_json.cpp" />
-    <ClCompile Include="src\Core\Utilities\json\to_json.cpp" />
+    <ClCompile Include="src\Core\Utilities\json - Original\from_json.cpp" />
+    <ClCompile Include="src\Core\Utilities\json - Original\to_json.cpp" />
+    <ClCompile Include="src\Core\Utilities\json\from_json.cpp">
+      <ObjectFileName>$(IntDir)\from_json1.obj</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="src\Core\Utilities\json\to_json.cpp">
+      <ObjectFileName>$(IntDir)\to_json1.obj</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="src\Editor\Editor.cpp" />
     <ClCompile Include="src\Editor\FileBrowser.cpp" />
     <ClCompile Include="src\Editor\ViewPort.cpp" />
+    <ClCompile Include="src\Examples\CerealExample.cpp" />
     <ClCompile Include="src\Examples\SerializePntrTest.cpp" />
     <ClCompile Include="src\Examples\SerializeTest.cpp" />
     <ClCompile Include="src\MusePCH.cpp">

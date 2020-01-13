@@ -8,7 +8,7 @@
 #include <iostream>
 #include "SerializeTest.h"
 
-void TestSerialization()
+void TestSerializationRTTR()
 {
     SerializeTest* serializeObjectTest1 = new SerializeTest();
 

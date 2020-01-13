@@ -25,6 +25,7 @@ IncludeDir["glm"] = "Muse/vendor/glm"
 IncludeDir["stb_image"] = "Muse/vendor/stb_image"
 IncludeDir["rapidjson"] = "Muse/vendor/rapidjson/include"
 IncludeDir["rttr"] = "Muse/vendor/rttr/include"
+IncludeDir["cereal"] = "Muse/vendor/cereal/include"
 
 IncludeLibDir = {}
 IncludeLibDir["rttr"] = "Muse/vendor/rttr/lib/"
@@ -74,7 +75,8 @@ project "Muse"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.rapidjson}",
 		"%{IncludeDir.rttr}",
-		"%{IncludeDir.stb_image}"
+		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.cereal}",
 	}
 
 	libdirs 
@@ -140,6 +142,7 @@ project "TestGame"
 		"Muse/vendor",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.rttr}",
+		"%{IncludeDir.cereal}",
 	}
 
 	links
