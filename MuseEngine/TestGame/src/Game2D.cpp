@@ -25,6 +25,7 @@ void Game2D::OnStart()
     std::shared_ptr<Muse::Scene> scene = Muse::ResourceManager::Create<Muse::Scene>("Game2DTestScene");
     Muse::SceneManager::SwitchScene(scene);
 
+    /*
     {
         Muse::GameObject& gameObject = scene->AddGameObject();
         Muse::RenderComponent& renderComponent = gameObject.AddComponent<Muse::RenderComponent>();
@@ -42,6 +43,7 @@ void Game2D::OnStart()
         gameObject.GetTransform()->SetPosition({ -1, -1, 0 });
         gameObject.GetTransform()->SetScale({ 2, 1 });
     }
+    */
 
     m_Texture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
 }

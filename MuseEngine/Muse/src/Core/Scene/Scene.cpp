@@ -182,7 +182,9 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        std::filesystem::path path{ a_Path }; //creates TestingFolder object on C:
+        UpdatePath(a_Path + ".txt");
+
+        std::filesystem::path path{ m_Path }; //creates TestingFolder object on C:
         std::filesystem::create_directories(path.parent_path()); //add directories based on the object path (without this line it will not work)
 
         DestroyEditorCamera();
@@ -369,10 +371,10 @@ RTTR_REGISTRATION
         .constructor<>()
         (
             rttr::policy::ctor::as_raw_ptr
-        );
-        //.property("m_GameObjectsToUpdate", &Muse::Scene::m_GameObjectsToUpdate)
-        //.property("m_GameObjectsToAdd", &Muse::Scene::m_GameObjectsToAdd)
-        //.property("m_GameObjectsToRemove", &Muse::Scene::m_GameObjectsToRemove);
+        )
+        .property("m_GameObjectsToUpdate", &Muse::Scene::m_GameObjectsToUpdate)
+        .property("m_GameObjectsToAdd", &Muse::Scene::m_GameObjectsToAdd)
+        .property("m_GameObjectsToRemove", &Muse::Scene::m_GameObjectsToRemove);
 //.property("GameObjects", &Scene::GetGameObjects, &Scene::SetGameObjects);
 }
 

@@ -51,7 +51,9 @@ namespace Muse
 		ImGui::PopStyleVar();
 
 		if (opt_fullscreen)
+		{
 			ImGui::PopStyleVar(2);
+		}
 
 		// Dockspace
 		ImGuiIO& io = ImGui::GetIO();

@@ -33,6 +33,7 @@ namespace Muse
         template<typename T>
         static void UnloadResource(const std::string & a_ResourcePath);
         static std::vector<std::shared_ptr<Resource>> GetAllResources();
+        static void UpdateResourcePath(const std::string& a_OldResourcePath, const std::string& a_NewResourcePath);
 
         static void CreateSaveLocation();
 
@@ -110,7 +111,7 @@ namespace Muse
 
         std::shared_ptr<T> resource = CreateResource<T>(a_Args ...);
 
-        std::dynamic_pointer_cast<Resource>(resource)->SetPathAndName(a_Name);
+        std::dynamic_pointer_cast<Resource>(resource)->InitPath(a_Name);
 
         m_Resources.insert(std::make_pair(id, resource));
         m_RefCounters.insert(std::make_pair(id, 1));
@@ -132,7 +133,7 @@ namespace Muse
 
         std::shared_ptr<T> resource = LoadResource<T>(a_ResourcePath);
 
-        std::dynamic_pointer_cast<Resource>(resource)->SetPathAndName(a_ResourcePath);
+        std::dynamic_pointer_cast<Resource>(resource)->InitPath(a_ResourcePath);
 
         m_Resources.insert(std::make_pair(id, resource));
         m_RefCounters.insert(std::make_pair(id, 1));

@@ -40,4 +40,19 @@ namespace Muse
 
         return resources;
     }
+
+    void ResourceManager::UpdateResourcePath(const std::string& a_OldResourcePath, const std::string& a_NewResourcePath)
+    {
+        ullong oldId = Resource::CalculateResourceId(a_OldResourcePath);
+        ullong newId = Resource::CalculateResourceId(a_NewResourcePath);
+
+        std::shared_ptr<Resource> resource = m_Resources.at(oldId);
+        int refCount = m_RefCounters.at(oldId);
+
+        m_Resources[newId] = resource;
+        m_RefCounters[newId] = refCount;
+
+        m_Resources.erase(oldId);
+        m_RefCounters.erase(oldId);
+    }
 }

@@ -2,15 +2,37 @@
 
 #include "Resource.h"
 #include "Core/Instrumentor.h"
+#include "ResourceManager.h"
 
 namespace Muse
 {
-    void Resource::SetPathAndName(const std::string& a_Path)
+    //Init's the path used for Resource ID, also updates the name.
+    void Resource::InitPath(const std::string& a_Path)
     {
         MUSE_PROFILE_FUNCTION();
 
-        m_Path = a_Path;
+        ASSERT_ENGINE(m_Path == "", "Path already initialized, use UpdatePath!")
 
+        m_Path = a_Path;
+        m_Name = ExtractName(a_Path);
+    }
+
+    //Updates the path and change the resource ID accordingly, also updates the name.
+    void Resource::UpdatePath(const std::string& a_Path)
+    {
+        MUSE_PROFILE_FUNCTION();
+
+        ASSERT_ENGINE(m_Path != "", "Path is unitialized, use InitPath!");
+        if (a_Path == m_Path) { return; }
+
+        ResourceManager::UpdateResourcePath(m_Path, a_Path);
+
+        m_Path = a_Path;
+        m_Name = ExtractName(a_Path);
+    }
+
+    std::string Resource::ExtractName(const std::string& a_Path)
+    {
         /*
         m_Name = a_Path;
         Replace(m_Name, GAME_SCENE_PATH, "");
@@ -23,7 +45,8 @@ namespace Muse
         lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
         const auto lastDot = a_Path.rfind('.');
         const auto count = lastDot == std::string::npos ? a_Path.size() - lastSlash : lastDot - lastSlash;
-        m_Name = a_Path.substr(lastSlash, count);
+
+        return a_Path.substr(lastSlash, count);
     }
 
     RTTR_REGISTRATION
@@ -33,6 +56,6 @@ namespace Muse
             (
                 rttr::policy::ctor::as_raw_ptr
             )
-            .property("m_Path", &Resource::GetPath, &Resource::SetPathAndName);
+            .property("m_Path", &Resource::GetPath, &Resource::InitPath);
     }
 }

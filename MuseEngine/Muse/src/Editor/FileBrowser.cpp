@@ -9,7 +9,7 @@ namespace Muse
     {
         if (ImGui::Begin("FileBrowser"))
         {
-            InspectResourceFiles("assets/");
+            //InspectResourceFiles("assets/");
 
             /*
             if (ImGui::CollapsingHeader("Loaded Resources"))

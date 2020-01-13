@@ -1,0 +1,4 @@
+{
+    "Type": "Scene",
+    "m_Path": "D:\\Dev\\Muse\\MuseEngine\\TestGame\\assets\\scenes\\test.txt"
+}
