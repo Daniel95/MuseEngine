@@ -48,8 +48,8 @@ void Game3D::OnStart()
             { Muse::ShaderDataType::Float2, "a_TexCoord" },
         };
 
-        Muse::GameObject& gameObject = scene->AddGameObject();
-        Muse::RenderComponent& renderComponent = gameObject.AddComponent<Muse::RenderComponent>();
+        auto gameObject = scene->AddGameObject();
+        Muse::RenderComponent& renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
 
         renderComponent.SetMesh(vertices,
             5 * 4,
@@ -81,8 +81,8 @@ void Game3D::OnStart()
             { Muse::ShaderDataType::Float3, "a_Position" },
         };
 
-        Muse::GameObject& gameObject = scene->AddGameObject();
-        Muse::RenderComponent& renderComponent = gameObject.AddComponent<Muse::RenderComponent>();
+        auto gameObject = scene->AddGameObject();
+        Muse::RenderComponent& renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
 
         renderComponent.SetMesh(vertices,
             3 * 4,
@@ -91,7 +91,7 @@ void Game3D::OnStart()
             layout);
         renderComponent.SetShader(m_FlatColorShader);
 
-        gameObject.GetTransform()->SetPosition({ 1.1f, 0, 0 });
+        gameObject->GetTransform()->SetPosition({ 1.1f, 0, 0 });
     }
 
     /////////////////////////////////////////////////////////////////
@@ -112,8 +112,8 @@ void Game3D::OnStart()
             { Muse::ShaderDataType::Float4, "a_Color" }
         };
 
-        Muse::GameObject& gameObject = scene->AddGameObject();
-        Muse::RenderComponent& renderComponent = gameObject.AddComponent<Muse::RenderComponent>();
+        auto gameObject = scene->AddGameObject();
+        Muse::RenderComponent& renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
 
         renderComponent.SetMesh(vertices,
             3 * 7,
@@ -124,7 +124,7 @@ void Game3D::OnStart()
         renderComponent.SetShader(vertexColorShader);
 
 
-        gameObject.GetTransform()->SetPosition({ -1, 0, 0 });
+        gameObject->GetTransform()->SetPosition({ -1, 0, 0 });
     }
 
     /////////////////////////////////////////////////////////////////
@@ -146,9 +146,9 @@ void Game3D::OnStart()
             { Muse::ShaderDataType::Float2, "a_TexCoord" },
         };
 
-        Muse::GameObject& gameObject = scene->AddGameObject();
-        gameObject.AddComponent<PlayerComponent>();
-        Muse::RenderComponent& renderComponent = gameObject.AddComponent<Muse::RenderComponent>();
+        auto gameObject = scene->AddGameObject();
+        gameObject->AddComponent<PlayerComponent>();
+        Muse::RenderComponent& renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
 
         renderComponent.SetMesh(vertices,
             5 * 4,
@@ -161,7 +161,7 @@ void Game3D::OnStart()
         textureShader->Bind();
         textureShader->SetInt("u_Texture", 0);
 
-        gameObject.GetTransform()->SetPosition({ 0, 0, 1 });
+        gameObject->GetTransform()->SetPosition({ 0, 0, 1 });
     }
 }
 

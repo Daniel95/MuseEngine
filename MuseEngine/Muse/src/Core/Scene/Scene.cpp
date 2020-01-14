@@ -44,79 +44,81 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        for (GameObject* gameObject : m_GameObjectsToUpdate)
+        for (std::shared_ptr<GameObject> gameObject : m_GameObjectsToUpdate)
         {
-            delete gameObject;
+            gameObject.reset();
         }
         m_GameObjectsToUpdate.clear();
 
-        for (GameObject* gameObject : m_GameObjectsToAdd)
+        for (std::shared_ptr<GameObject> gameObject : m_GameObjectsToAdd)
         {
-            delete gameObject;
+            gameObject.reset();
         }
         m_GameObjectsToAdd.clear();
 
-        for (GameObject* gameObject : m_GameObjectsToRemove)
+        for (std::shared_ptr<GameObject> gameObject : m_GameObjectsToRemove)
         {
-            delete gameObject;
+            gameObject.reset();
         }
         m_GameObjectsToRemove.clear();
     }
 
-    GameObject& Scene::AddGameObject()
+    std::shared_ptr<GameObject> Scene::AddGameObject()
     {
         MUSE_PROFILE_FUNCTION();
 
-        GameObject* gameObject = new GameObject();
+        std::shared_ptr<GameObject> gameObject = std::make_shared<GameObject>();
         gameObject->Init(*this);
         m_GameObjectsToAdd.push_back(gameObject);
-        return *gameObject;
-    }
-
-    GameObject& Scene::AddGameObject(const glm::vec2& a_Position, const glm::vec2& a_Size)
-    {
-        MUSE_PROFILE_FUNCTION();
-
-        GameObject& gameObject = AddGameObject();
-        gameObject.GetTransform()->SetPosition(a_Position);
-        gameObject.GetTransform()->SetScale(a_Size);
         return gameObject;
     }
 
-    GameObject& Scene::AddGameObject(const glm::vec3& a_Position, const glm::vec3& a_Size)
+    std::shared_ptr<GameObject> Scene::AddGameObject(const glm::vec2& a_Position, const glm::vec2& a_Size)
     {
         MUSE_PROFILE_FUNCTION();
 
-        GameObject& gameObject = AddGameObject();
-        gameObject.GetTransform()->SetPosition(a_Position);
-        gameObject.GetTransform()->SetScale(a_Size);
+        std::shared_ptr<GameObject> gameObject = AddGameObject();
+        gameObject->GetTransform()->SetPosition(a_Position);
+        gameObject->GetTransform()->SetScale(a_Size);
         return gameObject;
     }
 
-    void Scene::RemoveGameObject(GameObject& a_GameObject)
+    std::shared_ptr<GameObject> Scene::AddGameObject(const glm::vec3& a_Position, const glm::vec3& a_Size)
     {
         MUSE_PROFILE_FUNCTION();
 
-        ASSERT_ENGINE(std::find(m_GameObjectsToRemove.begin(), m_GameObjectsToRemove.end(), &a_GameObject) == m_GameObjectsToRemove.end(), "GameObject to remove does not exists!");
-        m_GameObjectsToRemove.push_back(&a_GameObject);
+        std::shared_ptr<GameObject> gameObject = AddGameObject();
+        gameObject->GetTransform()->SetPosition(a_Position);
+        gameObject->GetTransform()->SetScale(a_Size);
+        return gameObject;
+    }
+
+    void Scene::RemoveGameObject(std::shared_ptr<GameObject> a_GameObject)
+    {
+        MUSE_PROFILE_FUNCTION();
+
+        GameObject* test;
+
+        ASSERT_ENGINE(std::find(m_GameObjectsToRemove.begin(), m_GameObjectsToRemove.end(), a_GameObject) == m_GameObjectsToRemove.end(), "GameObject to remove does not exists!");
+        m_GameObjectsToRemove.push_back(a_GameObject);
     }
 
     void Scene::Update(float a_DeltaTime)
     {
         MUSE_PROFILE_FUNCTION();
 
-        for (GameObject* gameObject : m_GameObjectsToAdd)
+        for (auto gameObject : m_GameObjectsToAdd)
         {
             m_GameObjectsToUpdate.push_back(gameObject);
         }
         m_GameObjectsToAdd.clear();
 
-        for (GameObject* gameObject : m_GameObjectsToUpdate)
+        for (auto gameObject : m_GameObjectsToUpdate)
         {
             gameObject->Update(a_DeltaTime);
         }
 
-        for (GameObject* gameObjectToRemove : m_GameObjectsToRemove)
+        for (auto gameObjectToRemove : m_GameObjectsToRemove)
         {
             DestroyGameObjectImmediate(gameObjectToRemove);
         }
@@ -142,7 +144,7 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        for (GameObject* gameObject : m_GameObjectsToUpdate)
+        for (const auto gameObject : m_GameObjectsToUpdate)
         {
             gameObject->FixedUpdate(a_TimeStep);
         }
@@ -265,14 +267,12 @@ namespace Muse
     }
     */
 
-    void Scene::DestroyGameObjectImmediate(GameObject* a_GameObject)
+    void Scene::DestroyGameObjectImmediate(std::shared_ptr<GameObject> a_GameObject)
     {
         MUSE_PROFILE_FUNCTION();
 
         m_GameObjectsToAdd.erase(std::remove(m_GameObjectsToAdd.begin(), m_GameObjectsToAdd.end(), a_GameObject), m_GameObjectsToAdd.end());
         m_GameObjectsToUpdate.erase(std::remove(m_GameObjectsToUpdate.begin(), m_GameObjectsToUpdate.end(), a_GameObject), m_GameObjectsToUpdate.end());
-
-        delete a_GameObject;
     }
 
     /*
@@ -306,12 +306,12 @@ namespace Muse
     }
     */
 
-    GameObject* Scene::GetEditorCamera() const
+    std::shared_ptr<GameObject> Scene::GetEditorCamera() const
     {
         MUSE_PROFILE_FUNCTION();
 
-        GameObject* editorCameraGameObject = nullptr;
-        for (GameObject* gameObject : m_GameObjectsToUpdate)
+        std::shared_ptr<GameObject> editorCameraGameObject = nullptr;
+        for (auto gameObject : m_GameObjectsToUpdate)
         {
             CameraComponent* camera = gameObject->GetComponent<CameraComponent>();
 
@@ -330,20 +330,21 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        GameObject* cameraGameObject = GetEditorCamera();
+        std::shared_ptr<GameObject> cameraGameObject = GetEditorCamera();
         ASSERT_ENGINE(cameraGameObject != nullptr, "EditorCamera does not exists!");
-        delete cameraGameObject;
+
+        cameraGameObject.reset();
     }
 
-    GameObject& Scene::CreateEditorCamera()
+    std::shared_ptr<GameObject> Scene::CreateEditorCamera()
     {
         MUSE_PROFILE_FUNCTION();
 
         ASSERT_ENGINE(GetEditorCamera() == nullptr, "EditorCamera already exists!");
-        GameObject& gameObject = AddGameObject();
+        std::shared_ptr<GameObject> gameObject = AddGameObject();
 
-        gameObject.AddComponent<CameraComponent>().MakeEditorCamera();
-        gameObject.AddComponent<OrthographicCameraControllerComponent>();
+        gameObject->AddComponent<CameraComponent>().MakeEditorCamera();
+        gameObject->AddComponent<OrthographicCameraControllerComponent>();
 
         return gameObject;
     }
@@ -397,7 +398,7 @@ namespace Muse
         }
         fs.close();
 
-        for (GameObject* gameObject : scene->GetGameObjects())
+        for (auto gameObject : scene->GetGameObjects())
         {
             gameObject->Init(*scene);
 

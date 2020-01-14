@@ -5,14 +5,15 @@
 #include "TransformComponent.h"
 #include "Core/Instrumentor.h"
 #include <cereal/archives/json.hpp>
+#include <utility>
 
 namespace Muse 
 {
-    void Component::Init(GameObject* a_GameObject)
+    void Component::Init(std::shared_ptr<GameObject> a_GameObject)
     {
 		MUSE_PROFILE_FUNCTION();
 
-        m_GameObject = a_GameObject;
+        m_GameObject = std::move(a_GameObject);
 
 		if (m_isEnabled)
 		{

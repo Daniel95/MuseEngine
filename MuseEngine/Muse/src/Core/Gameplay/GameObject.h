@@ -13,7 +13,7 @@ namespace Muse
     class TransformComponent;
     class SystemManager;
 
-	class GameObject
+	class GameObject : public std::enable_shared_from_this<GameObject>
 	{
         RTTR_ENABLE()
         RTTR_REGISTRATION_FRIEND
@@ -74,7 +74,7 @@ namespace Muse
         T* type = new T();
 
         Component* component = static_cast<Component*>(type);
-        component->Init(this);
+        component->Init(shared_from_this());
         m_Components.push_back(component);
 
         return *type;

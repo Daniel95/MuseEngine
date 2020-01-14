@@ -60,7 +60,7 @@ namespace Muse
 
         if (!m_Destroyed)
         {
-            m_Scene->RemoveGameObject(*this);
+            m_Scene->RemoveGameObject(shared_from_this());
             m_Destroyed = true;
         }
     }

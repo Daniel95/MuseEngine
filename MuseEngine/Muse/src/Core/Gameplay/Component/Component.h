@@ -4,6 +4,8 @@
 #include <rttr/type>
 #include <rttr/registration_friend.h>
 
+#include <memory>
+
 namespace Muse
 {
     class GameObject;
@@ -19,13 +21,13 @@ namespace Muse
         Component() = default;
         virtual ~Component() = default;
 
-        void Init(GameObject* a_GameObject);
+        void Init(std::shared_ptr<GameObject> a_GameObject);
         void Update(float a_DeltaTime) { OnUpdate(a_DeltaTime); }
         void FixedUpdate() { OnFixedUpdate(); }
 		void Enable();
         void Disable();
 
-        GameObject* GetGameObject() const { return m_GameObject; }
+        std::shared_ptr<GameObject> GetGameObject() const { return m_GameObject; }
         TransformComponent* GetTransform() const;
 		bool IsEnabled() const { return m_isEnabled; };
         //template<typename T>
@@ -44,7 +46,7 @@ namespace Muse
 		virtual void OnDisable() {}
 
     private:
-        GameObject* m_GameObject = nullptr;
+        std::shared_ptr<GameObject> m_GameObject = nullptr;
 		bool m_isEnabled = true;
 
     };
