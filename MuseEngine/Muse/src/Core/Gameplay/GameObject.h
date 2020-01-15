@@ -6,6 +6,7 @@
 #include <rttr/registration>
 
 #include <vector>
+#include <memory>
 
 namespace Muse 
 {
@@ -48,6 +49,7 @@ namespace Muse
         void serialize(Archive& ar)
         {
             ar(
+                m_Destroyed
             );
         }
 	private:

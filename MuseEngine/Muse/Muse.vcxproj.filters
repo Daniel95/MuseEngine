@@ -1396,6 +1396,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\Examples\ComponentTest.h" />
+    <ClInclude Include="src\Examples\SmartPointerExample.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1564,5 +1565,6 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Examples\ComponentTest.cpp" />
+    <ClCompile Include="src\Examples\SmartPointerExample.cpp" />
   </ItemGroup>
 </Project>

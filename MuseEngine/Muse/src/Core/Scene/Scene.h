@@ -1,19 +1,20 @@
 #pragma once
 
 #include "Core/Gameplay/Component/Component.h"
+#include "Core/Gameplay/GameObject.h"
 #include "Core/Gameplay/Component/TransformComponent.h"
 #include "Core/Utilities/Defines.h"
-#include "Core/Gameplay/GameObject.h"
+#include "Core/Resource/Resource.h"
+#include "Core/Instrumentor.h"
 
 #include <rttr/variant.h>
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
-
 #include <deque>
 #include <string>
 #include <vector>
-#include "Core/Resource/Resource.h"
-#include "Core/Instrumentor.h"
+#include <cereal/types/vector.hpp>
+#include <cereal/types/memory.hpp>
 
 namespace Muse 
 {
@@ -63,10 +64,9 @@ namespace Muse
         void serialize(Archive& ar)
         {
             ar(
-                m_CurrentStateIndex
-                //m_GameObjectsToUpdate, 
-                //m_GameObjectsToAdd,
-                //m_GameObjectsToRemove
+                m_GameObjectsToUpdate, 
+                m_GameObjectsToAdd,
+                m_GameObjectsToRemove
             );
         }
     private:

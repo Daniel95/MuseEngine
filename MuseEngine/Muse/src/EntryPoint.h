@@ -11,7 +11,7 @@ int main(int argc, char** argv)
 {
     MUSE_PROFILE_BEGIN_SESSION("Startup", "MuseProfile.json");
 
-    TestSerializationCereal();
+   //TestSerializationCereal();
 
     Muse::Log::Init();
 

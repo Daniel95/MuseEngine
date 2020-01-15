@@ -5,6 +5,10 @@
 #include <cereal/archives/binary.hpp>
 #include <cereal/archives/json.hpp>
 #include <fstream>
+#include <cereal/types/vector.hpp>
+
+#include <vector>
+#include <memory>
 
 enum class CollisionType { None, Dynamic, Static };
 
@@ -14,8 +18,6 @@ struct MyRecord
     float z;
     CollisionType m_CollisionType;
 
-
-
     template <class Archive>
     void serialize(Archive& ar)
     {
@@ -23,60 +25,21 @@ struct MyRecord
     }
 };
 
-class GameObject;
-class BoxCollider2D;
-class TransformComponent;
-
-class ComponentTest
-{
-public:
-    ComponentTest() = default;
-    virtual ~ComponentTest() = default;
-
-    void Init(GameObject* a_GameObject);
-    void Update(float a_DeltaTime) { OnUpdate(a_DeltaTime); }
-    void FixedUpdate() { OnFixedUpdate(); }
-    void Enable();
-    void Disable();
-
-    GameObject* GetGameObject() const { return m_GameObject; }
-    TransformComponent* GetTransform() const;
-    bool IsEnabled() const { return m_isEnabled; };
-    //template<typename T>
-    //T* GetComponent() { return m_GameObject->GetComponent<T>(); }
-
-protected:
-    virtual void OnUpdate(float a_DeltaTime) {}
-    virtual void OnInit() {}
-    virtual void OnFixedUpdate() {}
-    virtual void OnEnable() {}
-    virtual void OnDisable() {}
-
-private:
-    GameObject* m_GameObject = nullptr;
-    bool m_isEnabled = true;
-
-};
-
 struct SomeData
 {
     int32_t id;
-    std::shared_ptr<std::unordered_map<uint32_t, MyRecord>> data;
+    //std::shared_ptr<std::unordered_map<uint32_t, MyRecord>> data;
+    std::vector<std::shared_ptr<MyRecord>> data;
+    //std::vector<std::shared_ptr<int>> data;
 
     float test = 43;
 
-    MyRecord* m_record;
-
-    void Test(MyRecord* a_MyRecord)
-    {
-        m_record = a_MyRecord;
-    }
-
+    std::shared_ptr<MyRecord> m_record;
 
     template <class Archive>
     void serialize(Archive& ar)
     {
-        ar(id, data, test);
+        ar(data);
     }
 
     void SaveToFile()
@@ -86,7 +49,7 @@ struct SomeData
         fs.open(path);
         {
             cereal::JSONOutputArchive oarchive(fs);
-            oarchive(cereal::make_nvp("Gameplay", *this));
+            oarchive(cereal::make_nvp("Test", *this));
         }
         fs.close();
     }

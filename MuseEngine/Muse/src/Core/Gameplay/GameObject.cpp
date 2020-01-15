@@ -1,5 +1,6 @@
 #include "MusePCH.h"
 
+#include "Core/Gameplay/GameObject.h"
 #include "Core/Gameplay/Component/TransformComponent.h"
 #include "Core/Scene/Scene.h"
 #include "Core/Instrumentor.h"

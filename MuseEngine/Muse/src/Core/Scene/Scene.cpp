@@ -5,6 +5,7 @@
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Gameplay/Component/TransformComponent.h"
 #include "Core/Gameplay/Component/CameraComponent.h"
+
 #include "Core/Utilities/json/from_json.h"
 #include "Core/Utilities/json/to_json.h"
 
@@ -96,8 +97,6 @@ namespace Muse
     void Scene::RemoveGameObject(std::shared_ptr<GameObject> a_GameObject)
     {
         MUSE_PROFILE_FUNCTION();
-
-        GameObject* test;
 
         ASSERT_ENGINE(std::find(m_GameObjectsToRemove.begin(), m_GameObjectsToRemove.end(), a_GameObject) == m_GameObjectsToRemove.end(), "GameObject to remove does not exists!");
         m_GameObjectsToRemove.push_back(a_GameObject);
@@ -192,20 +191,10 @@ namespace Muse
         std::ofstream ofs(path);
 
         {
-
             cereal::JSONOutputArchive oarchive(ofs);
             oarchive(cereal::make_nvp(a_FilePath, *this));
         }
         ofs.close();
-
-        {
-            std::ifstream fs(path);
-
-            cereal::JSONInputArchive iarchive(fs);
-            iarchive(cereal::make_nvp(a_FilePath, *this));
-
-            fs.close();
-        }
 
         DestroyEditorCamera();
     }
