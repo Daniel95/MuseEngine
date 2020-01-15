@@ -184,7 +184,16 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        UpdatePath(a_FilePath + ".txt");
+        std::string txtExtension = ".txt";
+
+        if(a_FilePath.find(txtExtension) == std::string::npos)
+        {
+            UpdatePath(a_FilePath + txtExtension);
+        }
+        else
+        {
+            UpdatePath(a_FilePath);
+        }
 
         std::filesystem::path path{ m_Path }; //creates TestingFolder object on C:
         std::filesystem::create_directories(path.parent_path()); //add directories based on the object path (without this line it will not work)

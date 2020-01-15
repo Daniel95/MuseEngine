@@ -2,7 +2,6 @@
 
 #include "Core/Application.h"
 #include "Core/Utilities/Log.h"
-#include "Examples/RTTRExample.h"
 #include "Examples/CerealExample.h"
 
 extern Muse::Application* Muse::CreateApplication();
@@ -10,8 +9,6 @@ extern Muse::Application* Muse::CreateApplication();
 int main(int argc, char** argv)
 {
     MUSE_PROFILE_BEGIN_SESSION("Startup", "MuseProfile.json");
-
-   //TestSerializationCereal();
 
     Muse::Log::Init();
 
@@ -21,7 +18,6 @@ int main(int argc, char** argv)
     application->Run();
 
     delete application;
-
 
     MUSE_PROFILE_END_SESSION();
 
