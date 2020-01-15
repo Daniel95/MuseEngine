@@ -1,5 +1,4 @@
 #pragma once
-
 #include "Core/Gameplay/Component/Component.h"
 
 namespace Muse
@@ -22,6 +21,7 @@ namespace Muse
         template <class Archive>
         void serialize(Archive& ar)
         {
+            ar(cereal::make_nvp("Component", cereal::base_class<Component>(this)));
             ar(m_Scale, m_CollisionType);
         }
     private:
@@ -30,3 +30,6 @@ namespace Muse
 
     };
 }
+
+CEREAL_REGISTER_TYPE_WITH_NAME(Muse::BoxCollider2D, "BoxCollider2D")
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Muse::Component, Muse::BoxCollider2D)

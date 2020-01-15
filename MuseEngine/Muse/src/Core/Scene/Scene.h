@@ -1,8 +1,5 @@
 #pragma once
 
-#include "Core/Gameplay/Component/Component.h"
-#include "Core/Gameplay/GameObject.h"
-#include "Core/Gameplay/Component/TransformComponent.h"
 #include "Core/Utilities/Defines.h"
 #include "Core/Resource/Resource.h"
 #include "Core/Instrumentor.h"
@@ -13,16 +10,19 @@
 #include <deque>
 #include <string>
 #include <vector>
-#include <cereal/types/vector.hpp>
-#include <cereal/types/memory.hpp>
+#include "Core/Gameplay/GameObject.h"
 
 namespace Muse 
 {
+    class Component;
+    class GameObject;
+    class TransformComponent;
     class CameraComponent;
     class Application;
 
 	class Scene : public Resource
 	{
+
 	public:
 		Scene();
         virtual ~Scene();
@@ -63,10 +63,11 @@ namespace Muse
         template <class Archive>
         void serialize(Archive& ar)
         {
+            ar(cereal::make_nvp("Resource", cereal::base_class<Resource>(this)));
             ar(
-                m_GameObjectsToUpdate, 
-                m_GameObjectsToAdd,
-                m_GameObjectsToRemove
+                cereal::make_nvp("m_GameObjectsToUpdate", m_GameObjectsToUpdate),
+                cereal::make_nvp("m_GameObjectsToAdd", m_GameObjectsToAdd),
+                cereal::make_nvp("m_GameObjectsToRemove", m_GameObjectsToRemove)
             );
         }
     private:
@@ -116,3 +117,6 @@ namespace Muse
         return gameObjectsOfType;
     }
 }
+
+CEREAL_REGISTER_TYPE_WITH_NAME(Muse::Scene, "Scene")
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Muse::Resource, Muse::Scene)

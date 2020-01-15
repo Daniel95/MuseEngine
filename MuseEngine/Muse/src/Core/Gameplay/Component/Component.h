@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cereal/types/polymorphic.hpp>
+
 #include <rttr/registration>
 #include <rttr/type>
 #include <rttr/registration_friend.h>
@@ -51,3 +53,5 @@ namespace Muse
 
     };
 }
+
+CEREAL_REGISTER_TYPE_WITH_NAME(Muse::Component, "Component")

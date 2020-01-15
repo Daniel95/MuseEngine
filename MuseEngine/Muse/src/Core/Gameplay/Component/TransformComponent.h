@@ -1,5 +1,6 @@
 #pragma once
 #include "Component.h"
+#include <cereal/types/polymorphic.hpp>
 
 #pragma once
 #define GLM_ENABLE_EXPERIMENTAL
@@ -57,12 +58,18 @@ namespace Muse
 		void RTTRSetPosition(const glm::vec3& a_Position) { SetPosition(a_Position); }
 		const glm::vec3& RTTRGetScale() const { return m_Scale; }
 		void RTTRSetScale(const glm::vec3& a_Scale) { SetScale(a_Scale); }
+
+		
 		template <class Archive>
 		void serialize(Archive& ar)
 		{
+			ar(cereal::make_nvp("Component", cereal::base_class<Component>(this)));
 			ar(
+				test
 			);
 		}
+	    
+
 	private:
 		bool m_DirtyPosition = true;
 		bool m_DirtyRotation = true;
@@ -79,6 +86,9 @@ namespace Muse
 		glm::mat4 m_ScaleMatrix = glm::identity<glm::mat4>();
 		glm::mat4 m_ModelMatrix = glm::identity<glm::mat4>();
 
-
+		int test = 1;
 	};
 }
+
+CEREAL_REGISTER_TYPE_WITH_NAME(Muse::TransformComponent, "TransformComponent")
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Muse::Component, Muse::TransformComponent)

@@ -30,8 +30,9 @@ namespace Muse
         template <class Archive>
         void serialize(Archive& ar)
         {
+            ar(cereal::make_nvp("Component", cereal::base_class<Component>(this)));
             ar(
-
+                temp
             );
         }
     private:
@@ -41,7 +42,9 @@ namespace Muse
         std::shared_ptr<Shader> m_Shader;
         std::shared_ptr<Texture> m_Texture;
 
-
+        int temp;
     };
 }
 
+CEREAL_REGISTER_TYPE_WITH_NAME(Muse::RenderComponent, "RenderComponent")
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Muse::Component, Muse::RenderComponent)

@@ -5,6 +5,10 @@
 #include "Core/Scene/Scene.h"
 #include "Core/Instrumentor.h"
 
+#include <cereal/archives/json.hpp>
+#include <cereal/types/vector.hpp>
+#include <cereal/types/memory.hpp>
+
 namespace Muse 
 {
     GameObject::~GameObject()

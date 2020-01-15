@@ -10,6 +10,8 @@ int main(int argc, char** argv)
 {
     MUSE_PROFILE_BEGIN_SESSION("Startup", "MuseProfile.json");
 
+   TestSerializationCereal();
+
     Muse::Log::Init();
 
     LOG_ENGINE_INFO("Initialized Log!");
@@ -18,6 +20,7 @@ int main(int argc, char** argv)
     application->Run();
 
     delete application;
+
 
     MUSE_PROFILE_END_SESSION();
 

@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Component.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <cereal/types/polymorphic.hpp>
 
 namespace Muse
 {
@@ -31,7 +32,9 @@ namespace Muse
         template <class Archive>
         void serialize(Archive& ar)
         {
-            ar(m_ViewMatrix,
+            ar(cereal::make_nvp("Component", cereal::base_class<Component>(this)));
+            ar(
+                m_ViewMatrix,
                 m_ProjectionMatrix,
                 m_ViewProjectionMatrix,
                 m_IsEditorCamera,
@@ -57,3 +60,5 @@ namespace Muse
     };
 }
 
+CEREAL_REGISTER_TYPE_WITH_NAME(Muse::CameraComponent, "CameraComponent")
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Muse::Component, Muse::CameraComponent)

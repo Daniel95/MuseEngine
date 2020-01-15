@@ -24,6 +24,7 @@ namespace Muse
         template <class Archive>
         void serialize(Archive& ar)
         {
+            ar(cereal::make_nvp("Component", cereal::base_class<Component>(this)));
             ar(
                 m_BaseMoveSpeed,
                 m_ZoomSpeed,
@@ -41,3 +42,6 @@ namespace Muse
 
     };
 }
+
+CEREAL_REGISTER_TYPE_WITH_NAME(Muse::OrthographicCameraControllerComponent, "OrthographicCameraControllerComponent")
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Muse::Component, Muse::OrthographicCameraControllerComponent)

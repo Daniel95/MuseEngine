@@ -5,17 +5,22 @@
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Gameplay/Component/TransformComponent.h"
 #include "Core/Gameplay/Component/CameraComponent.h"
+#include "Core/Gameplay/Component/Component.h"
 
 #include "Core/Utilities/json/from_json.h"
 #include "Core/Utilities/json/to_json.h"
-
 #include <rttr/registration>
+
 #include <filesystem>
 #include "Core/Gameplay/Component/OrthographicCameraControllerComponent.h"
 #include "Editor/Editor.h"
 #include "Core/Input/Input.h"
 #include "Core/Input/KeyCodes.h"
+
 #include <cereal/archives/json.hpp>
+#include <cereal/types/vector.hpp>
+#include <cereal/types/memory.hpp>
+#include <cereal/cereal.hpp>
 
 namespace Muse
 {
@@ -391,8 +396,8 @@ namespace Muse
         std::shared_ptr<Scene> scene = std::make_shared<Scene>();
 
         {
-            //cereal::JSONInputArchive iarchive(fs);
-            //iarchive(cereal::make_nvp(a_FilePath, *scene.get()));
+            cereal::JSONInputArchive iarchive(fs);
+            iarchive(cereal::make_nvp(a_FilePath, *scene.get()));
         }
         fs.close();
 

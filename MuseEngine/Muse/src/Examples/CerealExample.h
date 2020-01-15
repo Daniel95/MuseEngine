@@ -9,37 +9,70 @@
 
 #include <vector>
 #include <memory>
+#include <cereal/types/polymorphic.hpp>
 
-enum class CollisionType { None, Dynamic, Static };
 
-struct MyRecord
+
+struct Base
 {
-    uint8_t x, y;
-    float z;
-    CollisionType m_CollisionType;
+    Base() = default;
+    virtual ~Base() = default;
+
+    std::string common;
 
     template <class Archive>
     void serialize(Archive& ar)
     {
-        ar(x, y, z, m_CollisionType);
+        ar(CEREAL_NVP(common));
     }
 };
 
-struct SomeData
+struct A : public Base
 {
-    int32_t id;
-    //std::shared_ptr<std::unordered_map<uint32_t, MyRecord>> data;
-    std::vector<std::shared_ptr<MyRecord>> data;
-    //std::vector<std::shared_ptr<int>> data;
+    A() = default;
 
-    float test = 43;
+    A(int v)
+    {
+        a = v;
+    }
 
-    std::shared_ptr<MyRecord> m_record;
+    int a;
 
     template <class Archive>
     void serialize(Archive& ar)
     {
-        ar(data);
+        ar(cereal::make_nvp("Base", cereal::base_class<Base>(this)));
+        ar(a);
+    }
+};
+
+struct B : public Base
+{
+    B() = default;
+
+    B(std::string text)
+    {
+        b = text;
+    }
+
+    std::string b;
+
+    template <class Archive>
+    void serialize(Archive& ar)
+    {
+        ar(cereal::make_nvp("Base", cereal::base_class<Base>(this)));
+        ar(b);
+    }
+};
+
+struct Config
+{
+    std::vector<std::shared_ptr<Base>> vector;
+
+    template <class Archive>
+    void serialize(Archive& ar)
+    {
+        ar(vector);
     }
 
     void SaveToFile()
@@ -63,20 +96,33 @@ struct SomeData
         if (fs.is_open())
         {
             cereal::JSONInputArchive iarchive(fs);
-            iarchive(cereal::make_nvp("Gameplay", *this));
+            iarchive(cereal::make_nvp("Test", *this));
         }
         fs.close();
     }
 };
 
+CEREAL_REGISTER_TYPE(A)
+
+CEREAL_REGISTER_TYPE_WITH_NAME(B, "ClassB")
+
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Base, A)
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Base, B)
+
 void TestSerializationCereal()
 {
-    SomeData someData1;
-    someData1.test = 99;
-    someData1.SaveToFile();
 
-    SomeData someData2;
-    someData2.LoadFromFile();
-    someData2;
+
+    Config op;
+    std::shared_ptr<Base> ptr1 = std::make_shared<A>(123);
+    std::shared_ptr<Base> ptr2 = std::make_shared<B>("foobar");
+
+    op.vector.push_back(ptr1);
+    op.vector.push_back(ptr2);
+
+    op.SaveToFile();
+
+
+    Config op2;
+    op2.LoadFromFile();
 }
-

@@ -5,6 +5,8 @@
 #include <rttr/registration>
 
 #include <string>
+#include <cereal/cereal.hpp>
+#include <cereal/types/polymorphic.hpp>
 
 namespace Muse
 {
@@ -21,13 +23,20 @@ namespace Muse
         void UpdatePath(const std::string& a_Path);
         static ullong CalculateResourceId(const std::string& a_Path) { return StringHash(a_Path); }
 
+        template <class Archive>
+        void serialize(Archive& ar)
+        {
+            ar(m_Name, m_Path);
+        }
+
     protected:
         std::string m_Name = "";
         std::string m_Path = "";
-
 
     private:
         static std::string ExtractName(const std::string& a_Path);
 
     };
 }
+
+CEREAL_REGISTER_TYPE(Muse::Resource)

@@ -1,22 +1,25 @@
 #pragma once
 
 #include "Core/Gameplay/Component/Component.h"
+#include "Core/Gameplay/Component/TransformComponent.h"
+#include "Core/Gameplay/Component/CameraComponent.h"
+
 #include "Core/Utilities/Log.h"
+#include "Core/Utilities/Defines.h"
 
 #include <rttr/registration>
+#include <rttr/registration_friend>
 
 #include <vector>
 #include <memory>
-
-#include <cereal/types/vector.hpp>
-#include <cereal/types/memory.hpp>
+#include <cereal/cereal.hpp>
+#include <cereal/types/polymorphic.hpp>
 
 namespace Muse 
 {
     class Scene;
     class TransformComponent;
     class SystemManager;
-
 	class GameObject : public std::enable_shared_from_this<GameObject>
 	{
         RTTR_ENABLE()
@@ -51,11 +54,13 @@ namespace Muse
         void serialize(Archive& ar)
         {
             ar(
-                m_Destroyed
+                //m_Destroyed
+                cereal::make_nvp("m_Components", m_Components)
             );
         }
 	private:
         std::vector<std::shared_ptr<Component>> m_Components;
+        std::vector<std::shared_ptr<Component>> m_Test;
         Scene* m_Scene;
         bool m_Destroyed = false;
 
@@ -91,9 +96,9 @@ namespace Muse
 
         std::shared_ptr<T> componentOfType = GetComponent<T>();
 
-        _ASSERT(componentOfType != nullptr);
+        ASSERT_ENGINE(componentOfType != nullptr, "Can't remove component because this component doesn't exists.");
 
-        std::shared_ptr<Component> component = std::dynamic_pointer_cast<Component>(componentOfType);
+        const std::shared_ptr<Component> component = std::dynamic_pointer_cast<Component>(componentOfType);
 
         m_Components.erase(std::remove(m_Components.begin(), m_Components.end(), component), m_Components.end());
     }
@@ -105,7 +110,7 @@ namespace Muse
 
         std::shared_ptr<T> componentOfType = nullptr;
 
-        for (const std::shared_ptr<Component>& component : m_Components)
+        for (const auto& component : m_Components)
         {
             componentOfType = std::dynamic_pointer_cast<T>(component);
 
@@ -118,3 +123,5 @@ namespace Muse
         return componentOfType;
     }
 }
+
+CEREAL_REGISTER_TYPE_WITH_NAME(Muse::GameObject, "GameObject")
