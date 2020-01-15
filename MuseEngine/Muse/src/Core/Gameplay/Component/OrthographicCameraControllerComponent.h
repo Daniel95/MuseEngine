@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "Component.h"
 
+#include <memory>
+
 namespace Muse
 {
     class CameraComponent;
@@ -32,11 +34,10 @@ namespace Muse
         float m_BaseMoveSpeed = 0.6f;
         float m_ZoomSpeed = 0.1f;
         float m_MinZoomLevel = 0.1f;
-        CameraComponent* m_CameraComponent = nullptr;
+        std::shared_ptr<CameraComponent> m_CameraComponent = nullptr;
 
         void OnMouseScrolledEvent(float a_XOffset, float a_YOffset);
         void OnWindowResizeEvent(int a_Width, int a_Height);
-
 
     };
 }

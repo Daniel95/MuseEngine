@@ -11,9 +11,9 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        for (Component* component : m_Components)
+        for (auto component : m_Components)
         {
-            delete component;
+            component.reset();
         }
     }
 
@@ -33,7 +33,7 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        for (Component* component : m_Components)
+        for (auto component : m_Components)
         {
 			if (component->IsEnabled())
 			{
@@ -46,7 +46,7 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        for (Component* component : m_Components)
+        for (auto component : m_Components)
         {
             if (component->IsEnabled())
             {
@@ -70,7 +70,7 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        for (Component* component : m_Components)
+        for (auto component : m_Components)
         {
             component->Enable();
         }
@@ -80,7 +80,7 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        for (Component* component : m_Components)
+        for (auto component : m_Components)
         {
             component->Disable();
         }
@@ -91,29 +91,14 @@ namespace Muse
         return m_Scene;
     }
 
-    TransformComponent* GameObject::GetTransform() const
+    std::shared_ptr<TransformComponent> GameObject::GetTransform() const
     {
         return GetComponent<TransformComponent>();
     }
 
-    void GameObject::SetComponents(const std::vector<Component*>& a_Components)
-    {
-        m_Components = a_Components;
-    }
-
-    const std::vector<Component*>& GameObject::GetComponents()
+    const std::vector<std::shared_ptr<Component>>& GameObject::GetComponents() const
     {
         return m_Components;
-    }
-
-    RTTR_REGISTRATION
-    {
-        rttr::registration::class_<GameObject>("GameObject")
-            .constructor<>()
-            (
-                rttr::policy::ctor::as_raw_ptr
-            )
-            .property("Components", &GameObject::GetComponents, &GameObject::SetComponents);
     }
 }
 
@@ -123,6 +108,5 @@ RTTR_REGISTRATION
         .constructor<>()
         (
             rttr::policy::ctor::as_raw_ptr
-        );
-//.property("Enabled", &Muse::Component::m_isEnabled);
+        ).property("Components", &Muse::GameObject::m_Components);
 }

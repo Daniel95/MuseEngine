@@ -27,18 +27,18 @@ void Game2D::OnStart()
 
     {
         auto gameObject = scene->AddGameObject();
-        Muse::RenderComponent& renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
+        auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
     }
 
     {
         auto gameObject = scene->AddGameObject();
-        Muse::RenderComponent& renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
+        auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
         gameObject->GetTransform()->SetPosition({ 1.1f, 0, 0 });
     }
 
     {
         auto gameObject = scene->AddGameObject();
-        Muse::RenderComponent& renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
+        auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
         gameObject->GetTransform()->SetPosition({ -1, -1, 0 });
         gameObject->GetTransform()->SetScale({ 2, 1 });
     }
@@ -58,7 +58,7 @@ void Game2D::OnRender()
 
     for (auto& gameObject : Muse::SceneManager::GetActiveScene()->GetGameObjects())
     {
-        Muse::RenderComponent* meshComponent = gameObject->GetComponent<Muse::RenderComponent>();
+        auto meshComponent = gameObject->GetComponent<Muse::RenderComponent>();
         if(meshComponent != nullptr)
         {
             const Muse::Renderer2D::QuadPropertiesTransform quadPropertiesTransform(

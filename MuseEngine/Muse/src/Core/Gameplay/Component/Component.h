@@ -28,7 +28,7 @@ namespace Muse
         void Disable();
 
         std::shared_ptr<GameObject> GetGameObject() const { return m_GameObject; }
-        TransformComponent* GetTransform() const;
+        std::shared_ptr<TransformComponent> GetTransform() const;
 		bool IsEnabled() const { return m_isEnabled; };
         //template<typename T>
         //T* GetComponent() { return m_GameObject->GetComponent<T>(); }

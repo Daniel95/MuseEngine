@@ -265,7 +265,7 @@ namespace Muse
     }
     */
 
-    void Scene::DestroyGameObjectImmediate(std::shared_ptr<GameObject> a_GameObject)
+    void Scene::DestroyGameObjectImmediate(const std::shared_ptr<GameObject> a_GameObject)
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -309,9 +309,9 @@ namespace Muse
         MUSE_PROFILE_FUNCTION();
 
         std::shared_ptr<GameObject> editorCameraGameObject = nullptr;
-        for (auto gameObject : m_GameObjectsToUpdate)
+        for (const auto gameObject : m_GameObjectsToUpdate)
         {
-            CameraComponent* camera = gameObject->GetComponent<CameraComponent>();
+            std::shared_ptr<CameraComponent> camera = gameObject->GetComponent<CameraComponent>();
 
             if (camera != nullptr
                 && camera->IsEditorCamera())
@@ -341,7 +341,7 @@ namespace Muse
         ASSERT_ENGINE(GetEditorCamera() == nullptr, "EditorCamera already exists!");
         std::shared_ptr<GameObject> gameObject = AddGameObject();
 
-        gameObject->AddComponent<CameraComponent>().MakeEditorCamera();
+        gameObject->AddComponent<CameraComponent>()->MakeEditorCamera();
         gameObject->AddComponent<OrthographicCameraControllerComponent>();
 
         return gameObject;
@@ -400,7 +400,7 @@ namespace Muse
         {
             gameObject->Init(*scene);
 
-            for (Component* component : gameObject->GetComponents())
+            for (const auto component : gameObject->GetComponents())
             {
                 component->Init(gameObject);
             }

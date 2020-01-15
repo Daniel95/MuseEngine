@@ -8,6 +8,9 @@
 #include <vector>
 #include <memory>
 
+#include <cereal/types/vector.hpp>
+#include <cereal/types/memory.hpp>
+
 namespace Muse 
 {
     class Scene;
@@ -32,17 +35,16 @@ namespace Muse
         template <class T>
         bool HasComponent();
         template <class T>
-        T& AddComponent();
+        std::shared_ptr<T> AddComponent();
         template <class T>
         void RemoveComponent();
         template <class T>
-        T* GetComponent() const;
+        std::shared_ptr<T> GetComponent() const;
 
         Scene* GetScene() const;
-        TransformComponent* GetTransform() const;
+        std::shared_ptr<TransformComponent> GetTransform() const;
 
-        const std::vector<Component*>& GetComponents();
-        void SetComponents(const std::vector<Component*>& a_Components);
+        const std::vector<std::shared_ptr<Component>>& GetComponents() const;
         void Destroy();
 
         template <class Archive>
@@ -53,7 +55,7 @@ namespace Muse
             );
         }
 	private:
-        std::vector<Component*> m_Components;
+        std::vector<std::shared_ptr<Component>> m_Components;
         Scene* m_Scene;
         bool m_Destroyed = false;
 
@@ -68,18 +70,18 @@ namespace Muse
     }
 
     template<class T>
-    T& GameObject::AddComponent()
+    std::shared_ptr<T> GameObject::AddComponent()
     {
         static_assert(std::is_base_of<Component, T>::value, "Type must derive from Component");
         _ASSERT(!HasComponent<T>());
 
-        T* type = new T();
+        std::shared_ptr<T> type = std::make_shared<T>();
 
-        Component* component = static_cast<Component*>(type);
+        std::shared_ptr<Component> component = std::dynamic_pointer_cast<Component>(type);
         component->Init(shared_from_this());
         m_Components.push_back(component);
 
-        return *type;
+        return type;
     }
 
     template<class T>
@@ -87,25 +89,25 @@ namespace Muse
     {
         static_assert(std::is_base_of<Component, T>::value, "Type must derive from Component");
 
-        T* componentOfType = GetComponent<T>();
+        std::shared_ptr<T> componentOfType = GetComponent<T>();
 
         _ASSERT(componentOfType != nullptr);
 
-        Component* component = static_cast<Component*>(componentOfType);
+        std::shared_ptr<Component> component = std::dynamic_pointer_cast<Component>(componentOfType);
 
         m_Components.erase(std::remove(m_Components.begin(), m_Components.end(), component), m_Components.end());
     }
 
     template<class T>
-    T* GameObject::GetComponent() const
+    std::shared_ptr<T> GameObject::GetComponent() const
     {
         static_assert(std::is_base_of<Component, T>::value, "Type must derive from Component");
 
-        T* componentOfType = nullptr;
+        std::shared_ptr<T> componentOfType = nullptr;
 
-        for (Component* component : m_Components)
+        for (const std::shared_ptr<Component>& component : m_Components)
         {
-            componentOfType = dynamic_cast<T*>(component);
+            componentOfType = std::dynamic_pointer_cast<T>(component);
 
             if (componentOfType != nullptr)
             {

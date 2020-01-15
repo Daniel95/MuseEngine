@@ -49,15 +49,15 @@ void Game3D::OnStart()
         };
 
         auto gameObject = scene->AddGameObject();
-        Muse::RenderComponent& renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
+        auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
 
-        renderComponent.SetMesh(vertices,
+        renderComponent->SetMesh(vertices,
             5 * 4,
             indices,
             6,
             layout);
-        renderComponent.SetShader(textureShader);
-        renderComponent.SetTexture(checkerboardTexture);
+        renderComponent->SetShader(textureShader);
+        renderComponent->SetTexture(checkerboardTexture);
 
         textureShader->Bind();
         textureShader->SetInt("u_Texture", 0);
@@ -82,14 +82,14 @@ void Game3D::OnStart()
         };
 
         auto gameObject = scene->AddGameObject();
-        Muse::RenderComponent& renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
+        auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
 
-        renderComponent.SetMesh(vertices,
+        renderComponent->SetMesh(vertices,
             3 * 4,
             indices,
             6,
             layout);
-        renderComponent.SetShader(m_FlatColorShader);
+        renderComponent->SetShader(m_FlatColorShader);
 
         gameObject->GetTransform()->SetPosition({ 1.1f, 0, 0 });
     }
@@ -113,15 +113,15 @@ void Game3D::OnStart()
         };
 
         auto gameObject = scene->AddGameObject();
-        Muse::RenderComponent& renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
+        auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
 
-        renderComponent.SetMesh(vertices,
+        renderComponent->SetMesh(vertices,
             3 * 7,
             indices,
             3,
             layout);
 
-        renderComponent.SetShader(vertexColorShader);
+        renderComponent->SetShader(vertexColorShader);
 
 
         gameObject->GetTransform()->SetPosition({ -1, 0, 0 });
@@ -148,15 +148,15 @@ void Game3D::OnStart()
 
         auto gameObject = scene->AddGameObject();
         gameObject->AddComponent<PlayerComponent>();
-        Muse::RenderComponent& renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
+        auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
 
-        renderComponent.SetMesh(vertices,
+        renderComponent->SetMesh(vertices,
             5 * 4,
             indices,
             6,
             layout);
-        renderComponent.SetShader(textureShader);
-        renderComponent.SetTexture(raymanTexture);
+        renderComponent->SetShader(textureShader);
+        renderComponent->SetTexture(raymanTexture);
 
         textureShader->Bind();
         textureShader->SetInt("u_Texture", 0);
@@ -180,7 +180,8 @@ void Game3D::OnRender()
 
     for (auto& gameObject : Muse::SceneManager::GetActiveScene()->GetGameObjects())
     {
-        Muse::RenderComponent* meshComponent = gameObject->GetComponent<Muse::RenderComponent>();
+        auto meshComponent = gameObject->GetComponent<Muse::RenderComponent>();
+
         if (meshComponent != nullptr)
         {
             if (meshComponent->GetTexture() != nullptr)

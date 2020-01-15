@@ -43,7 +43,7 @@ namespace Muse
         OnDisable();
 	}
 
-    TransformComponent* Component::GetTransform() const
+    std::shared_ptr<TransformComponent> Component::GetTransform() const
     {
 		return m_GameObject->GetTransform();
     }
