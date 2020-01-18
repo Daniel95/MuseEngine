@@ -67,9 +67,7 @@ namespace Muse
         {
             ar(cereal::make_nvp("Resource", cereal::base_class<Resource>(this)));
             ar(
-                cereal::make_nvp("m_GameObjectsToUpdate", m_GameObjectsToUpdate),
-                cereal::make_nvp("m_GameObjectsToAdd", m_GameObjectsToAdd),
-                cereal::make_nvp("m_GameObjectsToRemove", m_GameObjectsToRemove)
+                cereal::make_nvp("m_GameObjectsToUpdate", m_GameObjectsToUpdate)
             );
         }
     private:

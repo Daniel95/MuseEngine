@@ -49,10 +49,10 @@ void Game2D::OnStart()
     std::string path = "assets/scenes/testscene.txt";
     scene->Save(path);
 
-    //Muse::ResourceManager::UnloadResource<Muse::Scene>(path);
+    Muse::ResourceManager::UnloadResource<Muse::Scene>(path);
 
-    //std::shared_ptr<Muse::Scene> loadedScene = Muse::ResourceManager::Load<Muse::Scene>(path);
-    //Muse::SceneManager::SwitchScene(loadedScene);
+    std::shared_ptr<Muse::Scene> loadedScene = Muse::ResourceManager::Load<Muse::Scene>(path);
+    Muse::SceneManager::SwitchScene(loadedScene);
 }
 
 void Game2D::OnRender()

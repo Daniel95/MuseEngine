@@ -1,5 +1,5 @@
 {
-    "D:\\Dev\\Muse\\MuseEngine\\TestGame\\assets\\scenes\\testscene.txt": {
+    "assets/scenes/testscene.txt": {
         "Resource": {
             "value0": 0
         },
@@ -32,7 +32,7 @@
                                         "Component": {
                                             "value0": true
                                         },
-                                        "value0": 1.302605152130127
+                                        "value0": 1.7777777910232545
                                     }
                                 }
                             },
@@ -55,8 +55,6 @@
                     }
                 }
             }
-        ],
-        "m_GameObjectsToAdd": [],
-        "m_GameObjectsToRemove": []
+        ]
     }
 }

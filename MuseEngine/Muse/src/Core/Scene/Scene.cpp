@@ -189,6 +189,19 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
+        for (auto gameObject : m_GameObjectsToAdd)
+        {
+            m_GameObjectsToUpdate.push_back(gameObject);
+        }
+        m_GameObjectsToAdd.clear();
+
+        for (auto gameObjectToRemove : m_GameObjectsToRemove)
+        {
+            DestroyGameObjectImmediate(gameObjectToRemove);
+        }
+        m_GameObjectsToRemove.clear();
+
+
         std::string txtExtension = ".txt";
         std::string savePath = a_FilePath;
 
