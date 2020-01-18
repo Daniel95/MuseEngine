@@ -153,7 +153,6 @@
     <ClInclude Include="src\Core\Event\Event.h" />
     <ClInclude Include="src\Core\Event\KeyEvent.h" />
     <ClInclude Include="src\Core\Event\MouseEvent.h" />
-    <ClInclude Include="src\Core\Gameplay\Component\BoxCollider2D.h" />
     <ClInclude Include="src\Core\Gameplay\Component\CameraComponent.h" />
     <ClInclude Include="src\Core\Gameplay\Component\Component.h" />
     <ClInclude Include="src\Core\Gameplay\Component\OrthographicCameraControllerComponent.h" />
@@ -201,8 +200,10 @@
     <ClInclude Include="src\Editor\FileBrowser.h" />
     <ClInclude Include="src\Editor\ViewPort.h" />
     <ClInclude Include="src\EntryPoint.h" />
-    <ClInclude Include="src\Examples\CerealExample.h" />
-    <ClInclude Include="src\Examples\ComponentTest.h" />
+    <ClInclude Include="src\Examples\Cereal\A.h" />
+    <ClInclude Include="src\Examples\Cereal\B.h" />
+    <ClInclude Include="src\Examples\Cereal\Base.h" />
+    <ClInclude Include="src\Examples\Cereal\CerealExample.h" />
     <ClInclude Include="src\Examples\RTTRExample.h" />
     <ClInclude Include="src\Examples\SerializePntrTest.h" />
     <ClInclude Include="src\Examples\SerializeTest.h" />
@@ -585,7 +586,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp" />
-    <ClCompile Include="src\Core\Gameplay\Component\BoxCollider2D.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\CameraComponent.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\Component.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\OrthographicCameraControllerComponent.cpp" />
@@ -628,8 +628,10 @@
     <ClCompile Include="src\Editor\Editor.cpp" />
     <ClCompile Include="src\Editor\FileBrowser.cpp" />
     <ClCompile Include="src\Editor\ViewPort.cpp" />
-    <ClCompile Include="src\Examples\CerealExample.cpp" />
-    <ClCompile Include="src\Examples\ComponentTest.cpp" />
+    <ClCompile Include="src\Examples\Cereal\A.cpp" />
+    <ClCompile Include="src\Examples\Cereal\B.cpp" />
+    <ClCompile Include="src\Examples\Cereal\Base.cpp" />
+    <ClCompile Include="src\Examples\Cereal\CerealExample.cpp" />
     <ClCompile Include="src\Examples\SerializePntrTest.cpp" />
     <ClCompile Include="src\Examples\SerializeTest.cpp" />
     <ClCompile Include="src\Examples\SmartPointerExample.cpp" />

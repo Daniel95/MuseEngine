@@ -13,7 +13,10 @@
 #include <vector>
 #include <memory>
 #include <cereal/cereal.hpp>
+#include <cereal/types/memory.hpp>
 #include <cereal/types/polymorphic.hpp>
+
+#include "Examples/Cereal/Base.h"
 
 namespace Muse 
 {
@@ -54,13 +57,12 @@ namespace Muse
         void serialize(Archive& ar)
         {
             ar(
-                //m_Destroyed
                 cereal::make_nvp("m_Components", m_Components)
             );
         }
 	private:
         std::vector<std::shared_ptr<Component>> m_Components;
-        std::vector<std::shared_ptr<Component>> m_Test;
+        std::vector<std::shared_ptr<Base>> m_Test;
         Scene* m_Scene;
         bool m_Destroyed = false;
 

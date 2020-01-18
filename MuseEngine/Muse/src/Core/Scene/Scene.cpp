@@ -190,27 +190,25 @@ namespace Muse
         MUSE_PROFILE_FUNCTION();
 
         std::string txtExtension = ".txt";
+        std::string savePath = a_FilePath;
 
         if(a_FilePath.find(txtExtension) == std::string::npos)
         {
-            UpdatePath(a_FilePath + txtExtension);
+            savePath += txtExtension;
         }
-        else
-        {
-            UpdatePath(a_FilePath);
-        }
-
-        std::filesystem::path path{ m_Path }; //creates TestingFolder object on C:
+        
+        UpdatePath(savePath);
+        std::filesystem::path path{ savePath }; //creates TestingFolder object on C:
         std::filesystem::create_directories(path.parent_path()); //add directories based on the object path (without this line it will not work)
         std::ofstream ofs(path);
 
         {
             cereal::JSONOutputArchive oarchive(ofs);
-            oarchive(cereal::make_nvp(a_FilePath, *this));
+            oarchive(cereal::make_nvp(savePath, *this));
         }
         ofs.close();
 
-        DestroyEditorCamera();
+        //DestroyEditorCamera();
     }
 
 
@@ -387,7 +385,7 @@ namespace Muse
     }
     */
 
-    std::shared_ptr<Scene> Load(const std::string& a_FilePath)
+    std::shared_ptr<Scene> Scene::Load(const std::string& a_FilePath)
     {
         std::filesystem::path path{ a_FilePath }; //creates TestingFolder object on C:
         std::filesystem::create_directories(path.parent_path()); //add directories based on the object path (without this line it will not work)

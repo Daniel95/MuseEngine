@@ -10,7 +10,10 @@
 #include <deque>
 #include <string>
 #include <vector>
-#include "Core/Gameplay/GameObject.h"
+
+#include <cereal/cereal.hpp>
+#include <cereal/types/memory.hpp>
+#include <cereal/types/polymorphic.hpp>
 
 namespace Muse 
 {
@@ -22,7 +25,6 @@ namespace Muse
 
 	class Scene : public Resource
 	{
-
 	public:
 		Scene();
         virtual ~Scene();

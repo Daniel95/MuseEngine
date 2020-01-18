@@ -7,14 +7,18 @@
 #include <fstream>
 #include <cereal/types/vector.hpp>
 
+#include "Base.h"
+
 #include <vector>
 #include <memory>
 #include <cereal/types/polymorphic.hpp>
+#include "A.h"
+#include "B.h"
 
-
-
-struct Base
+/*
+class Base
 {
+public:
     Base() = default;
     virtual ~Base() = default;
 
@@ -27,8 +31,9 @@ struct Base
     }
 };
 
-struct A : public Base
+class A : public Base
 {
+public:
     A() = default;
 
     A(int v)
@@ -46,8 +51,9 @@ struct A : public Base
     }
 };
 
-struct B : public Base
+class B : public Base
 {
+public:
     B() = default;
 
     B(std::string text)
@@ -64,9 +70,11 @@ struct B : public Base
         ar(b);
     }
 };
+*/
 
-struct Config
+class Config
 {
+public:
     std::vector<std::shared_ptr<Base>> vector;
 
     template <class Archive>
@@ -102,17 +110,8 @@ struct Config
     }
 };
 
-CEREAL_REGISTER_TYPE(A)
-
-CEREAL_REGISTER_TYPE_WITH_NAME(B, "ClassB")
-
-CEREAL_REGISTER_POLYMORPHIC_RELATION(Base, A)
-CEREAL_REGISTER_POLYMORPHIC_RELATION(Base, B)
-
 void TestSerializationCereal()
 {
-
-
     Config op;
     std::shared_ptr<Base> ptr1 = std::make_shared<A>(123);
     std::shared_ptr<Base> ptr2 = std::make_shared<B>("foobar");

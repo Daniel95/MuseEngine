@@ -3,6 +3,9 @@
 
 #include <memory>
 
+#include <cereal/cereal.hpp>
+#include <cereal/types/memory.hpp>
+#include <cereal/types/polymorphic.hpp>
 namespace Muse
 {
     class CameraComponent;

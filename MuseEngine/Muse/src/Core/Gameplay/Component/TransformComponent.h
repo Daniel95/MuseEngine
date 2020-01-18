@@ -1,6 +1,5 @@
 #pragma once
 #include "Component.h"
-#include <cereal/types/polymorphic.hpp>
 
 #pragma once
 #define GLM_ENABLE_EXPERIMENTAL
@@ -11,6 +10,9 @@
 //#include <glm/gtx/quaternion.hpp>
 #undef countof
 
+#include <cereal/cereal.hpp>
+#include <cereal/types/memory.hpp>
+#include <cereal/types/polymorphic.hpp>
 namespace Muse
 {
 	class GameObject;
@@ -68,7 +70,6 @@ namespace Muse
 				test
 			);
 		}
-	    
 
 	private:
 		bool m_DirtyPosition = true;

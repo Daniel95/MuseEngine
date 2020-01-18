@@ -26,12 +26,13 @@ namespace Muse
         template <class Archive>
         void serialize(Archive& ar)
         {
-            ar(m_Name, m_Path);
+            ar(test);
         }
 
     protected:
         std::string m_Name = "";
         std::string m_Path = "";
+        int test = 0;
 
     private:
         static std::string ExtractName(const std::string& a_Path);

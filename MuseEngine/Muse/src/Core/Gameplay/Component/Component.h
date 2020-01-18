@@ -1,12 +1,15 @@
 #pragma once
 
-#include <cereal/types/polymorphic.hpp>
 
 #include <rttr/registration>
 #include <rttr/type>
 #include <rttr/registration_friend.h>
 
 #include <memory>
+
+#include <cereal/cereal.hpp>
+#include <cereal/types/memory.hpp>
+#include <cereal/types/polymorphic.hpp>
 
 namespace Muse
 {

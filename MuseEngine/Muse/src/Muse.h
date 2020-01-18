@@ -5,7 +5,6 @@
 
 //Gameplay
 #include "Core/Gameplay/GameObject.h"
-#include "Core/Gameplay/Component/BoxCollider2D.h"
 #include "Core/Gameplay/Component/TransformComponent.h"
 #include "Core/Gameplay/Component/CameraComponent.h"
 #include "Core/Gameplay/Component/RenderComponent.h"

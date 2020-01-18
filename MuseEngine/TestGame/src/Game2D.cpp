@@ -44,6 +44,15 @@ void Game2D::OnStart()
     }
 
     m_Texture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
+
+
+    std::string path = "assets/scenes/testscene.txt";
+    scene->Save(path);
+
+    //Muse::ResourceManager::UnloadResource<Muse::Scene>(path);
+
+    //std::shared_ptr<Muse::Scene> loadedScene = Muse::ResourceManager::Load<Muse::Scene>(path);
+    //Muse::SceneManager::SwitchScene(loadedScene);
 }
 
 void Game2D::OnRender()

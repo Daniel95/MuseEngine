@@ -3,6 +3,9 @@
 #include "Core/Gameplay/Component/Component.h"
 #include <rttr/registration_friend>
 
+#include <cereal/cereal.hpp>
+#include <cereal/types/memory.hpp>
+#include <cereal/types/polymorphic.hpp>
 namespace Muse
 {
     class TestComponent : public Component
