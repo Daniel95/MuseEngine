@@ -37,13 +37,11 @@ namespace Muse
         {
             ar(cereal::make_nvp("Component", cereal::base_class<Component>(this)));
             ar(
-                /*
                 m_ViewMatrix,
                 m_ProjectionMatrix,
                 m_ViewProjectionMatrix,
                 m_IsEditorCamera,
                 m_ZoomLevel,
-                */
                 m_AspectRatio
             );
         }

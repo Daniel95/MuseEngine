@@ -26,25 +26,24 @@ void Game2D::OnStart()
     Muse::SceneManager::SwitchScene(scene);
 
     {
-        //auto gameObject = scene->AddGameObject();
-        //auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
+        auto gameObject = scene->AddGameObject();
+        auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
     }
 
     {
-        //auto gameObject = scene->AddGameObject();
-        //auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
-        //gameObject->GetTransform()->SetPosition({ 1.1f, 0, 0 });
+        auto gameObject = scene->AddGameObject();
+        auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
+        gameObject->GetTransform()->SetPosition({ 1.1f, 0, 0 });
     }
 
     {
-        //auto gameObject = scene->AddGameObject();
-        //auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
-        //gameObject->GetTransform()->SetPosition({ -1, -1, 0 });
-        //gameObject->GetTransform()->SetScale({ 2, 1 });
+        auto gameObject = scene->AddGameObject();
+        auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
+        gameObject->GetTransform()->SetPosition({ -1, -1, 0 });
+        gameObject->GetTransform()->SetScale({ 2, 1 });
     }
 
     m_Texture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
-
 
     std::string path = "assets/scenes/testscene.txt";
     scene->Save(path);

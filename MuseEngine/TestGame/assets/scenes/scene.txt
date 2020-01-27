@@ -1,5 +1,5 @@
 {
-    ".txt": {
+    "D:\\Dev\\Muse\\MuseEngine\\TestGame\\assets\\scenes\\scene.txt": {
         "Resource": {
             "value0": 0
         },

@@ -5,31 +5,29 @@
 #include <cereal/archives/binary.hpp>
 #include <cereal/archives/json.hpp>
 #include <fstream>
-#include <cereal/types/vector.hpp>
-
-#include "Base.h"
 
 #include <vector>
 #include <memory>
 #include <cereal/types/polymorphic.hpp>
-#include "A.h"
-#include "B.h"
+#include <cereal/types/memory.hpp>
+#include <cereal/types/vector.hpp>
 
-/*
 class Base
 {
 public:
     Base() = default;
     virtual ~Base() = default;
 
-    std::string common;
+    std::string test;
 
     template <class Archive>
     void serialize(Archive& ar)
     {
-        ar(CEREAL_NVP(common));
+        ar(CEREAL_NVP(test));
     }
 };
+
+CEREAL_REGISTER_TYPE_WITH_NAME(Base, "Base")
 
 class A : public Base
 {
@@ -51,6 +49,9 @@ public:
     }
 };
 
+CEREAL_REGISTER_TYPE_WITH_NAME(A, "A")
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Base, A)
+
 class B : public Base
 {
 public:
@@ -70,7 +71,9 @@ public:
         ar(b);
     }
 };
-*/
+
+CEREAL_REGISTER_TYPE_WITH_NAME(B, "B")
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Base, B)
 
 class Config
 {

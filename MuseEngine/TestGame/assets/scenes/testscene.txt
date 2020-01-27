@@ -19,7 +19,27 @@
                                         "Component": {
                                             "value0": true
                                         },
-                                        "value0": 1
+                                        "value0": {
+                                            "value0": 0.0,
+                                            "value1": 0.0,
+                                            "value2": 0.0
+                                        },
+                                        "value1": {
+                                            "value0": 1.0,
+                                            "value1": 1.0,
+                                            "value2": 1.0
+                                        },
+                                        "value2": {
+                                            "value0": 0.0,
+                                            "value1": 0.0,
+                                            "value2": 0.0
+                                        },
+                                        "value3": {
+                                            "value0": 0.0,
+                                            "value1": 0.0,
+                                            "value2": 0.0,
+                                            "value3": 1.0
+                                        }
                                     }
                                 }
                             },
@@ -32,7 +52,87 @@
                                         "Component": {
                                             "value0": true
                                         },
-                                        "value0": 1.7777777910232545
+                                        "value0": {
+                                            "value0": {
+                                                "value0": 1.0,
+                                                "value1": 0.0,
+                                                "value2": 0.0,
+                                                "value3": 0.0
+                                            },
+                                            "value1": {
+                                                "value0": 0.0,
+                                                "value1": 1.0,
+                                                "value2": 0.0,
+                                                "value3": 0.0
+                                            },
+                                            "value2": {
+                                                "value0": 0.0,
+                                                "value1": 0.0,
+                                                "value2": 1.0,
+                                                "value3": 0.0
+                                            },
+                                            "value3": {
+                                                "value0": 0.0,
+                                                "value1": 0.0,
+                                                "value2": 0.0,
+                                                "value3": 1.0
+                                            }
+                                        },
+                                        "value1": {
+                                            "value0": {
+                                                "value0": 0.5625,
+                                                "value1": 0.0,
+                                                "value2": 0.0,
+                                                "value3": 0.0
+                                            },
+                                            "value1": {
+                                                "value0": 0.0,
+                                                "value1": 1.0,
+                                                "value2": 0.0,
+                                                "value3": 0.0
+                                            },
+                                            "value2": {
+                                                "value0": 0.0,
+                                                "value1": 0.0,
+                                                "value2": -1.0,
+                                                "value3": 0.0
+                                            },
+                                            "value3": {
+                                                "value0": -0.0,
+                                                "value1": -0.0,
+                                                "value2": -0.0,
+                                                "value3": 1.0
+                                            }
+                                        },
+                                        "value2": {
+                                            "value0": {
+                                                "value0": 1.0,
+                                                "value1": 0.0,
+                                                "value2": 0.0,
+                                                "value3": 0.0
+                                            },
+                                            "value1": {
+                                                "value0": 0.0,
+                                                "value1": 1.0,
+                                                "value2": 0.0,
+                                                "value3": 0.0
+                                            },
+                                            "value2": {
+                                                "value0": 0.0,
+                                                "value1": 0.0,
+                                                "value2": 1.0,
+                                                "value3": 0.0
+                                            },
+                                            "value3": {
+                                                "value0": 0.0,
+                                                "value1": 0.0,
+                                                "value2": 0.0,
+                                                "value3": 1.0
+                                            }
+                                        },
+                                        "value3": true,
+                                        "value4": 1.0,
+                                        "value5": 1.7777777910232545
                                     }
                                 }
                             },
@@ -48,6 +148,211 @@
                                         "value0": 0.6000000238418579,
                                         "value1": 0.10000000149011612,
                                         "value2": 0.10000000149011612
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "polymorphic_id": 1073741824,
+                "ptr_wrapper": {
+                    "id": 2147483653,
+                    "data": {
+                        "m_Components": [
+                            {
+                                "polymorphic_id": 1,
+                                "ptr_wrapper": {
+                                    "id": 2147483654,
+                                    "data": {
+                                        "Component": {
+                                            "value0": true
+                                        },
+                                        "value0": {
+                                            "value0": 0.0,
+                                            "value1": 0.0,
+                                            "value2": 0.0
+                                        },
+                                        "value1": {
+                                            "value0": 1.0,
+                                            "value1": 1.0,
+                                            "value2": 1.0
+                                        },
+                                        "value2": {
+                                            "value0": 0.0,
+                                            "value1": 0.0,
+                                            "value2": 0.0
+                                        },
+                                        "value3": {
+                                            "value0": 0.0,
+                                            "value1": 0.0,
+                                            "value2": 0.0,
+                                            "value3": 1.0
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "polymorphic_id": 2147483652,
+                                "polymorphic_name": "RenderComponent",
+                                "ptr_wrapper": {
+                                    "id": 2147483655,
+                                    "data": {
+                                        "Component": {
+                                            "value0": true
+                                        },
+                                        "value0": {
+                                            "polymorphic_id": 0
+                                        },
+                                        "value1": {
+                                            "polymorphic_id": 0
+                                        },
+                                        "value2": {
+                                            "polymorphic_id": 0
+                                        },
+                                        "value3": {
+                                            "polymorphic_id": 0
+                                        },
+                                        "value4": {
+                                            "polymorphic_id": 0
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "polymorphic_id": 1073741824,
+                "ptr_wrapper": {
+                    "id": 2147483656,
+                    "data": {
+                        "m_Components": [
+                            {
+                                "polymorphic_id": 1,
+                                "ptr_wrapper": {
+                                    "id": 2147483657,
+                                    "data": {
+                                        "Component": {
+                                            "value0": true
+                                        },
+                                        "value0": {
+                                            "value0": 1.100000023841858,
+                                            "value1": 0.0,
+                                            "value2": 0.0
+                                        },
+                                        "value1": {
+                                            "value0": 1.0,
+                                            "value1": 1.0,
+                                            "value2": 1.0
+                                        },
+                                        "value2": {
+                                            "value0": 0.0,
+                                            "value1": 0.0,
+                                            "value2": 0.0
+                                        },
+                                        "value3": {
+                                            "value0": 0.0,
+                                            "value1": 0.0,
+                                            "value2": 0.0,
+                                            "value3": 1.0
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "polymorphic_id": 4,
+                                "ptr_wrapper": {
+                                    "id": 2147483658,
+                                    "data": {
+                                        "Component": {
+                                            "value0": true
+                                        },
+                                        "value0": {
+                                            "polymorphic_id": 0
+                                        },
+                                        "value1": {
+                                            "polymorphic_id": 0
+                                        },
+                                        "value2": {
+                                            "polymorphic_id": 0
+                                        },
+                                        "value3": {
+                                            "polymorphic_id": 0
+                                        },
+                                        "value4": {
+                                            "polymorphic_id": 0
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            },
+            {
+                "polymorphic_id": 1073741824,
+                "ptr_wrapper": {
+                    "id": 2147483659,
+                    "data": {
+                        "m_Components": [
+                            {
+                                "polymorphic_id": 1,
+                                "ptr_wrapper": {
+                                    "id": 2147483660,
+                                    "data": {
+                                        "Component": {
+                                            "value0": true
+                                        },
+                                        "value0": {
+                                            "value0": -1.0,
+                                            "value1": -1.0,
+                                            "value2": 0.0
+                                        },
+                                        "value1": {
+                                            "value0": 2.0,
+                                            "value1": 1.0,
+                                            "value2": 1.0
+                                        },
+                                        "value2": {
+                                            "value0": 0.0,
+                                            "value1": 0.0,
+                                            "value2": 0.0
+                                        },
+                                        "value3": {
+                                            "value0": 0.0,
+                                            "value1": 0.0,
+                                            "value2": 0.0,
+                                            "value3": 1.0
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "polymorphic_id": 4,
+                                "ptr_wrapper": {
+                                    "id": 2147483661,
+                                    "data": {
+                                        "Component": {
+                                            "value0": true
+                                        },
+                                        "value0": {
+                                            "polymorphic_id": 0
+                                        },
+                                        "value1": {
+                                            "polymorphic_id": 0
+                                        },
+                                        "value2": {
+                                            "polymorphic_id": 0
+                                        },
+                                        "value3": {
+                                            "polymorphic_id": 0
+                                        },
+                                        "value4": {
+                                            "polymorphic_id": 0
+                                        }
                                     }
                                 }
                             }

@@ -37,22 +37,13 @@ namespace Muse
         void Update(float a_DeltaTime);
         void FixedUpdate(float a_TimeStep);
         const std::vector<std::shared_ptr<GameObject>> & GetGameObjects() const { return m_GameObjectsToUpdate; }
-        //void Deserialize(const std::string& a_Json);
-        //std::string Serialize() const;
         void Save();
         void Save(const std::string& a_FilePath);
-        //void Load();
-        //void Load(const std::string& a_Path);
-        //void SaveState();
         void DestroyGameObjectImmediate(std::shared_ptr<GameObject> a_GameObject);
-        //bool CanUndo() const { return m_States.size() > 0 && m_CurrentStateIndex > 0; }
-        //bool CanRedo() const { return m_States.size() > 0 && m_CurrentStateIndex < m_States.size() - 1; }
-        //void Undo();
-        //void Redo();
         const std::string& GetName() const { return m_Name; }
         void SetName(const std::string& a_Name) { m_Name = a_Name; }
         std::shared_ptr<GameObject> GetEditorCamera() const;
-        void DestroyEditorCamera();
+        void DestroyEditorCamera() const;
         std::shared_ptr<GameObject> CreateEditorCamera();
         template<typename T>
         std::shared_ptr<GameObject> FindGameObjectOfType();

@@ -138,7 +138,6 @@ namespace Muse
                 LOG_ENGINE_INFO("SAVE");
 
                 std::string path = Editor::GetSavePath("txt");
-                //std::string path = "D:\Dev\Muse\MuseEngine\TestGame\assets\scenes\testscene";
                 Save(path);
             }
         }
@@ -153,32 +152,6 @@ namespace Muse
             gameObject->FixedUpdate(a_TimeStep);
         }
     }
-
-    /*
-    void Scene::Deserialize(const std::string& a_Json)
-    {
-        MUSE_PROFILE_FUNCTION();
-
-        Unload();
-
-        io::from_json(a_Json, *this);
-
-        for (GameObject* gameObject : m_GameObjectsToUpdate)
-        {
-            gameObject->Init(*this);
-
-            for (Component* component : gameObject->GetComponents())
-            {
-                component->Init(gameObject);
-            }
-        }
-    }
-
-    std::string Scene::Serialize() const
-    {
-        return io::to_json(*this);
-    }
-    */
 
     void Scene::Save()
     {
@@ -224,63 +197,6 @@ namespace Muse
         //DestroyEditorCamera();
     }
 
-
-    /*
-    void Scene::Load()
-    {
-        Load(m_Path);
-    }
-
-    void Scene::Load(const std::string& a_Path)
-    {
-        MUSE_PROFILE_FUNCTION();
-
-    #ifdef MUSE_DEBUG 
-        if (!std::filesystem::exists(a_Path))
-        {
-            LOG_ENGINE_ERROR("Scene does not exists! {0}", a_Path);
-            ASSERT_ENGINE(false, "Scene does not exists!");
-        }
-    #endif
-
-        std::ifstream stream(a_Path);
-        std::string sceneJSON((std::istreambuf_iterator<char>(stream)),
-                              std::istreambuf_iterator<char>());
-
-        Deserialize(sceneJSON);
-    }
-
-    void Scene::SaveState()
-    {
-        MUSE_PROFILE_FUNCTION();
-
-        ASSERT_ENGINE(m_MaxStateSaves > 0, "Max save states cannot be zero!");
-
-        while (m_CurrentStateIndex < m_States.size())
-        {
-            m_States.pop_back(); // Remove any undo's from stack if a change has been made
-        }
-
-        DestroyEditorCamera();
-
-        std::string serialized = Serialize();
-        m_States.push_back(serialized);
-
-        CreateEditorCamera();
-
-        ASSERT_ENGINE(m_States.size() <= m_MaxStateSaves + 1, "m_States size is over the m_UndoCount");
-
-        if (m_States.size() > m_MaxStateSaves)
-        {
-            m_States.pop_front();
-        }
-
-        m_CurrentStateIndex = static_cast<int>(m_States.size());
-
-        LOG_ENGINE_INFO("m_CurrentStateIndex: {0}", m_CurrentStateIndex);
-    }
-    */
-
     void Scene::DestroyGameObjectImmediate(const std::shared_ptr<GameObject> a_GameObject)
     {
         MUSE_PROFILE_FUNCTION();
@@ -288,37 +204,6 @@ namespace Muse
         m_GameObjectsToAdd.erase(std::remove(m_GameObjectsToAdd.begin(), m_GameObjectsToAdd.end(), a_GameObject), m_GameObjectsToAdd.end());
         m_GameObjectsToUpdate.erase(std::remove(m_GameObjectsToUpdate.begin(), m_GameObjectsToUpdate.end(), a_GameObject), m_GameObjectsToUpdate.end());
     }
-
-    /*
-    void Scene::Undo()
-    {
-        MUSE_PROFILE_FUNCTION();
-
-        if (CanUndo())
-        {
-            m_CurrentStateIndex--;
-            std::string serialized = m_States.at(m_CurrentStateIndex);
-            Deserialize(serialized);
-
-            LOG_ENGINE_INFO("m_CurrentStateIndex: {0}", m_CurrentStateIndex);
-        }
-    }
-
-    void Scene::Redo()
-    {
-        MUSE_PROFILE_FUNCTION();
-
-        if (m_States.size() > 0
-            && m_CurrentStateIndex < m_States.size() - 1)
-        {
-            m_CurrentStateIndex++;
-            std::string serialized = m_States.at(m_CurrentStateIndex);
-            Deserialize(serialized);
-
-            LOG_ENGINE_INFO("m_CurrentStateIndex: {0}", m_CurrentStateIndex);
-        }
-    }
-    */
 
     std::shared_ptr<GameObject> Scene::GetEditorCamera() const
     {
@@ -340,7 +225,7 @@ namespace Muse
         return editorCameraGameObject;
     }
 
-    void Scene::DestroyEditorCamera()
+    void Scene::DestroyEditorCamera() const
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -362,41 +247,6 @@ namespace Muse
 
         return gameObject;
     }
-
-    /*
-    std::shared_ptr<Scene> Scene::Load(const std::string& a_FilePath)
-    {
-        MUSE_PROFILE_FUNCTION();
-
-    #ifdef MUSE_DEBUG 
-        if (!std::filesystem::exists(a_FilePath))
-        {
-            LOG_ENGINE_ERROR("Scene does not exists! {0}", a_FilePath);
-            ASSERT_ENGINE(false, "Scene does not exists!");
-        }
-    #endif
-
-        std::ifstream stream(a_FilePath);
-        std::string sceneJSON((std::istreambuf_iterator<char>(stream)),
-            std::istreambuf_iterator<char>());
-
-        std::shared_ptr<Scene> scene = std::make_shared<Scene>();
-
-        io::from_json(sceneJSON, scene);
-
-        for (GameObject* gameObject : scene->GetGameObjects())
-        {
-            gameObject->Init(*scene);
-
-            for (Component* component : gameObject->GetComponents())
-            {
-                component->Init(gameObject);
-            }
-        }
-
-        return scene;
-    }
-    */
 
     std::shared_ptr<Scene> Scene::Load(const std::string& a_FilePath)
     {

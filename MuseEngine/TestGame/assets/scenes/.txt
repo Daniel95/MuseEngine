@@ -1,11 +1,9 @@
 {
-    "assets/scenes/testscene.txt": {
+    ".txt": {
         "Resource": {
-            "value0": "testscene",
-            "value1": "assets/scenes/testscene.txt"
+            "value0": 0
         },
-        "m_GameObjectsToUpdate": [],
-        "m_GameObjectsToAdd": [
+        "m_GameObjectsToUpdate": [
             {
                 "polymorphic_id": 1073741824,
                 "ptr_wrapper": {
@@ -34,7 +32,7 @@
                                         "Component": {
                                             "value0": true
                                         },
-                                        "value0": 1.7777777910232545
+                                        "value0": 1.302605152130127
                                     }
                                 }
                             },
@@ -56,8 +54,55 @@
                         ]
                     }
                 }
+            },
+            {
+                "polymorphic_id": 1073741824,
+                "ptr_wrapper": {
+                    "id": 2147483653,
+                    "data": {
+                        "m_Components": [
+                            {
+                                "polymorphic_id": 1,
+                                "ptr_wrapper": {
+                                    "id": 2147483654,
+                                    "data": {
+                                        "Component": {
+                                            "value0": true
+                                        },
+                                        "value0": 1
+                                    }
+                                }
+                            },
+                            {
+                                "polymorphic_id": 2,
+                                "ptr_wrapper": {
+                                    "id": 2147483655,
+                                    "data": {
+                                        "Component": {
+                                            "value0": true
+                                        },
+                                        "value0": 1.7777777910232545
+                                    }
+                                }
+                            },
+                            {
+                                "polymorphic_id": 3,
+                                "ptr_wrapper": {
+                                    "id": 2147483656,
+                                    "data": {
+                                        "Component": {
+                                            "value0": true
+                                        },
+                                        "value0": 0.6000000238418579,
+                                        "value1": 0.10000000149011612,
+                                        "value2": 0.10000000149011612
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
             }
-        ],
-        "m_GameObjectsToRemove": []
+        ]
     }
 }

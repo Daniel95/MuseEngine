@@ -4,6 +4,7 @@
 #include <cereal/cereal.hpp>
 #include <cereal/types/memory.hpp>
 #include <cereal/types/polymorphic.hpp>
+
 namespace Muse
 {
     class Texture;
@@ -24,18 +25,22 @@ namespace Muse
         std::shared_ptr<Shader> GetShader() const { return m_Shader; }
         void SetTexture(std::shared_ptr<Texture> a_Texture) { m_Texture = a_Texture; }
         std::shared_ptr<Texture> GetTexture() const { return m_Texture; }
+        std::shared_ptr<VertexArray> GetVA() const { return m_VA; }
 
         virtual void OnUpdate(float a_DeltaTime) override;
         void OnEnable() override;
         void OnDisable() override;
 
-        std::shared_ptr<VertexArray> GetVA() const { return m_VA; }
         template <class Archive>
         void serialize(Archive& ar)
         {
             ar(cereal::make_nvp("Component", cereal::base_class<Component>(this)));
             ar(
-                temp
+                m_VB,
+                m_IB,
+                m_VA,
+                m_Shader,
+                m_Texture
             );
         }
     private:

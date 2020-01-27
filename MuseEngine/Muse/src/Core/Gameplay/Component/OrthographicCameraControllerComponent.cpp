@@ -46,7 +46,7 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        float moveSpeed = m_BaseMoveSpeed * a_DeltaTime * m_CameraComponent->GetZoomLevel();
+        const float moveSpeed = m_BaseMoveSpeed * a_DeltaTime * m_CameraComponent->GetZoomLevel();
 
         if (Input::GetKeyDown(MUSE_KEY_A))
         {

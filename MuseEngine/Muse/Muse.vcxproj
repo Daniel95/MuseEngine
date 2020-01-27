@@ -200,9 +200,6 @@
     <ClInclude Include="src\Editor\FileBrowser.h" />
     <ClInclude Include="src\Editor\ViewPort.h" />
     <ClInclude Include="src\EntryPoint.h" />
-    <ClInclude Include="src\Examples\Cereal\A.h" />
-    <ClInclude Include="src\Examples\Cereal\B.h" />
-    <ClInclude Include="src\Examples\Cereal\Base.h" />
     <ClInclude Include="src\Examples\Cereal\CerealExample.h" />
     <ClInclude Include="src\Examples\RTTRExample.h" />
     <ClInclude Include="src\Examples\SerializePntrTest.h" />
@@ -628,9 +625,6 @@
     <ClCompile Include="src\Editor\Editor.cpp" />
     <ClCompile Include="src\Editor\FileBrowser.cpp" />
     <ClCompile Include="src\Editor\ViewPort.cpp" />
-    <ClCompile Include="src\Examples\Cereal\A.cpp" />
-    <ClCompile Include="src\Examples\Cereal\B.cpp" />
-    <ClCompile Include="src\Examples\Cereal\Base.cpp" />
     <ClCompile Include="src\Examples\Cereal\CerealExample.cpp" />
     <ClCompile Include="src\Examples\SerializePntrTest.cpp" />
     <ClCompile Include="src\Examples\SerializeTest.cpp" />

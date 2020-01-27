@@ -16,8 +16,6 @@
 #include <cereal/types/memory.hpp>
 #include <cereal/types/polymorphic.hpp>
 
-#include "Examples/Cereal/Base.h"
-
 namespace Muse 
 {
     class Scene;
@@ -62,7 +60,6 @@ namespace Muse
         }
 	private:
         std::vector<std::shared_ptr<Component>> m_Components;
-        std::vector<std::shared_ptr<Base>> m_Test;
         Scene* m_Scene;
         bool m_Destroyed = false;
 
@@ -80,7 +77,7 @@ namespace Muse
     std::shared_ptr<T> GameObject::AddComponent()
     {
         static_assert(std::is_base_of<Component, T>::value, "Type must derive from Component");
-        _ASSERT(!HasComponent<T>());
+        ASSERT_ENGINE(!HasComponent<T>(), "Component already exists on this gameobject!");
 
         std::shared_ptr<T> type = std::make_shared<T>();
 
