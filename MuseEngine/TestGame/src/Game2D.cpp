@@ -7,7 +7,7 @@
 #include "imgui/imgui.h"
 #include "PlayerComponent.h"
 
-#include "GameDefines.h"
+#include "Mode.h"
 
 #if GAME_2D
 #include "EntryPoint.h"

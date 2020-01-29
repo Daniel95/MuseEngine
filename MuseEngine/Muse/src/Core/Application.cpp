@@ -156,9 +156,9 @@ namespace Muse
 
     void Application::Render()
     {
-        m_ViewportFramebuffer->Resize(GetWindow().GetWidth(), GetWindow().GetHeight());
-
         MUSE_PROFILE_FUNCTION();
+
+        m_ViewportFramebuffer->Resize(GetWindow().GetWidth(), GetWindow().GetHeight());
 
         m_ViewportFramebuffer->Bind();
 

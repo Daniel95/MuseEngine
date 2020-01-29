@@ -92,6 +92,8 @@ project "Muse"
 		"opengl32.lib",
 	}
 
+	buildoptions { "/bigobj" } 
+
 	filter "system:windows"
 		systemversion "latest"
 
@@ -149,6 +151,8 @@ project "TestGame"
 	{
 		"Muse"
 	}
+
+	buildoptions { "/bigobj" } 
 
 	filter "system:windows"
 		systemversion "latest"

@@ -1,4 +1,4 @@
-﻿#include "Game3D.h"
+﻿#include "GameRayTracer.h"
 
 #include "Muse.h"
 
@@ -9,7 +9,7 @@
 
 #include "Mode.h"
 
-#if !GAME_3D
+#if !GAME_RAYTRACER
 #include "EntryPoint.h"
 Muse::Application* Muse::CreateApplication()
 {
@@ -17,7 +17,7 @@ Muse::Application* Muse::CreateApplication()
 }
 #endif
 
-void Game3D::OnStart()
+void GameRayTracer::OnStart()
 {
     std::shared_ptr<Muse::Scene> scene = Muse::ResourceManager::Create<Muse::Scene>("New Scene");
     Muse::SceneManager::SwitchScene(scene);
@@ -165,7 +165,7 @@ void Game3D::OnStart()
     }
 }
 
-void Game3D::OnRender()
+void GameRayTracer::OnRender()
 {
     Muse::Renderer::Init();
 
@@ -195,7 +195,7 @@ void Game3D::OnRender()
     Muse::Renderer::EndScene();
 }
 
-void Game3D::OnImGuiRender()
+void GameRayTracer::OnImGuiRender()
 {
     ImGui::Begin("Settings");
     ImGui::ColorEdit3("Square Color", glm::value_ptr(m_FlatShaderColor));
