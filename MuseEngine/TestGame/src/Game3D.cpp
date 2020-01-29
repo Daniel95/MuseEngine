@@ -9,7 +9,7 @@
 
 #include "Mode.h"
 
-#if !GAME_3D
+#if GAME_3D
 #include "EntryPoint.h"
 Muse::Application* Muse::CreateApplication()
 {
