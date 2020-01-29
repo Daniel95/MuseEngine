@@ -91,6 +91,11 @@ namespace Muse
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
     }
 
+    void OpenGLFrameBuffer::SetDataF(void* a_Data, uint32_t )
+    {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, m_Width, m_Height, 0, GL_RGBA, GL_FLOAT, a_Data);
+    }
+
     void OpenGLFrameBuffer::BindTexture(uint32_t a_Slot) const
     {
         glActiveTexture(GL_TEXTURE0 + a_Slot);

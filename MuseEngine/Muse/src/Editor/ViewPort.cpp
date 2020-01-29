@@ -5,6 +5,10 @@
 
 namespace Muse
 {
+	int ViewPort::m_Width = 1280;
+	int ViewPort::m_Height = 720;
+	float ViewPort::m_AspectRatio = 1.6f;
+
 	void ViewPort::Render(uint32_t a_ColorAttachmentRendererId)
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
@@ -20,8 +24,11 @@ namespace Muse
 		*/
 
 		auto viewportSize = ImGui::GetContentRegionAvail();
-		const float aspectRatio = viewportSize.x / viewportSize.y;
-		CameraComponent::GetMain()->SetProjection(aspectRatio, CameraComponent::GetMain()->GetZoomLevel());
+
+		m_Width = viewportSize.x;
+		m_Height = viewportSize.y;
+		m_AspectRatio = viewportSize.x / viewportSize.y;
+		CameraComponent::GetMain()->SetProjection(m_AspectRatio, CameraComponent::GetMain()->GetZoomLevel());
 
 		ImGui::Image((void*)a_ColorAttachmentRendererId, viewportSize, { 0, 1 }, { 1, 0 });
 		ImGui::End();

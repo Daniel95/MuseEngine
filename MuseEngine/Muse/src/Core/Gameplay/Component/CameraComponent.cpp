@@ -67,5 +67,4 @@ RTTR_REGISTRATION
         .property("m_IsEditorCamera", &Muse::CameraComponent::m_IsEditorCamera)
         .property("m_ZoomLevel", &Muse::CameraComponent::m_ZoomLevel)
         .property("m_AspectRatio", &Muse::CameraComponent::m_AspectRatio);
-
 }

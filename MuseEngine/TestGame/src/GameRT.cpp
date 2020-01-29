@@ -9,6 +9,8 @@
 #include "Core/Window.h"
 
 #include "Mode.h"
+#include "Editor/ViewPort.h"
+#include "Core/Renderer/Buffer/FrameBuffer.h"
 
 #if GAME_RT
 #include "EntryPoint.h"
@@ -27,8 +29,8 @@ void GameRT::OnStart()
     Muse::SceneManager::SwitchScene(scene);
     m_Test = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
 
-    m_Height = GetWindow().GetHeight();
-    m_Width = GetWindow().GetWidth();
+    m_Height = m_ViewportFramebuffer->GetHeight();
+    m_Width = m_ViewportFramebuffer->GetWidth();
 
     m_ViewportTexture = Muse::ResourceManager::Create<Muse::Texture>("viewPortTexture", m_Width, m_Height);
 
@@ -50,8 +52,8 @@ void GameRT::OnRender()
 
     Muse::Renderer2D::BeginScene(*Muse::CameraComponent::GetMain());
 
-    const unsigned int height = GetWindow().GetHeight();
-    const unsigned int width = GetWindow().GetWidth();
+    const unsigned int height = Muse::ViewPort::GetHeight();
+    const unsigned int width = Muse::ViewPort::GetWidth();
     const unsigned int stride = 4;
     const uint32_t size = height * width * stride;
 
@@ -82,19 +84,25 @@ void GameRT::OnRender()
             m_ScreenData[i + 2] = color.z;
             m_ScreenData[i + 3] = 1.0f;
 
-            i += 4;
+            i += stride;
         }
     }
-    m_ViewportTexture->SetDataF(&m_ScreenData[0], size);
+    m_ViewportFramebuffer->Bind();
+    m_ViewportFramebuffer->BindTexture();
+    m_ViewportFramebuffer->SetDataF(&m_ScreenData[0], size);
+
+    /*
+    float aspectX = static_cast<float>(m_Width) / static_cast<float>(m_Height);
+    float aspectY = static_cast<float>(m_Height) / static_cast<float>(m_Width);
 
     const Muse::Renderer2D::QuadProperties quadProperties(
         { 0, 0, 0.1f },
-        glm::vec2(1),
+        glm::vec2(aspectX, aspectY),
         0,
-        //{ 0.5f, 0.5f, 0.5f, 0.5f },
         m_ViewportTexture);
 
     Muse::Renderer2D::DrawQuad(quadProperties);
+    */
 
     Muse::Renderer2D::EndScene();
 }

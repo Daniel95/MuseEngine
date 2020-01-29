@@ -43,6 +43,7 @@ namespace Muse
         LateUpdateEvent m_LateUpdateEvent;
         ImGuiRenderEvent m_ImGuiRenderEvent;
         RenderEvent m_RenderEvent;
+        std::shared_ptr<FrameBuffer> m_ViewportFramebuffer;
 
     protected:
         virtual void OnStart() = 0;
@@ -78,7 +79,6 @@ namespace Muse
         std::shared_ptr<ResourceManager> m_ResourceManager;
         float m_DeltaTime = 0;
 
-        std::shared_ptr<FrameBuffer> m_ViewportFramebuffer;
 
         ImGuiLayer* m_ImGuiLayer;
         LayerStack m_LayerStack;

@@ -19,10 +19,10 @@ namespace Muse
         uint32_t GetHeight() const override { return m_Height; }
         void Bind(uint32_t a_Slot = 0) const override;
 
-        uint32_t m_RendererId;
     private:
         std::string m_Path;
         uint32_t m_Width, m_Height;
+        uint32_t m_RendererId;
         GLenum m_InternalFormat = 0;
         GLenum m_DataFormat = 0;
     };
