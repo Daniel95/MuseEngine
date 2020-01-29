@@ -63,6 +63,48 @@ void GameRT::OnRender()
         Resize(width, height);
     }
 
+    /////////////////
+
+    std::vector<std::shared_ptr<RayHitData>> rayHitDatas;
+    std::shared_ptr<GetColorParameters> getColorParameters = std::make_shared<GetColorParameters>();
+
+    for (int y = 0; y < screenSizeY; y++)
+    {
+        for (int x = 0; x < screenSizeX; x++)
+        {
+            std::shared_ptr<Ray> ray = camera.GetLookingRay(static_cast<float>(x), static_cast<float>(y));
+
+            if (bvh != NULL)
+            {
+                bvh->RayCast(rayHitDatas, ray);
+            }
+            else
+            {
+                RayCast(rayHitDatas, ray);
+            }
+
+            if (rayHitDatas.size() > 0)
+            {
+                const std::shared_ptr<RayHitData> closestHit = GetClosestRayHitData(rayHitDatas, ray->Origin);
+                getColorParameters->RayDirection = ray->Direction;
+                getColorParameters->Bounces = 5;
+
+                const sf::Color color = closestHit->HitSceneObject->GetColor(closestHit->IntersectionPoint, getColorParameters);
+                image.setPixel(x, y, color);
+
+                rayHitDatas.clear();
+            }
+        }
+    }
+
+
+
+
+    ////////////
+
+
+
+
     /*
     glm::mat4 t = glm::mat4(1);
 
