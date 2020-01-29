@@ -13,15 +13,16 @@ namespace Muse
         virtual ~OpenGLTexture();
 
         virtual void SetData(void* a_Data, uint32_t a_Size) override;
+        virtual void SetDataF(void* a_Data, uint32_t a_Size) override;
 
         uint32_t GetWidth() const override { return m_Width; }
         uint32_t GetHeight() const override { return m_Height; }
         void Bind(uint32_t a_Slot = 0) const override;
 
+        uint32_t m_RendererId;
     private:
         std::string m_Path;
         uint32_t m_Width, m_Height;
-        uint32_t m_RendererId;
         GLenum m_InternalFormat = 0;
         GLenum m_DataFormat = 0;
     };

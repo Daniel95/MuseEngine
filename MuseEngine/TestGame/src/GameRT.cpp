@@ -25,13 +25,12 @@ void GameRT::OnStart()
 
     std::shared_ptr<Muse::Scene> scene = Muse::ResourceManager::Create<Muse::Scene>("New Scene");
     Muse::SceneManager::SwitchScene(scene);
+    m_Test = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
 
     m_Height = GetWindow().GetHeight();
     m_Width = GetWindow().GetWidth();
 
     m_ViewportTexture = Muse::ResourceManager::Create<Muse::Texture>("viewPortTexture", m_Width, m_Height);
-
-    m_Test = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
 
     m_ScreenData.resize(m_Height * m_Width * 4);
 }
@@ -53,14 +52,14 @@ void GameRT::OnRender()
 
     const unsigned int height = GetWindow().GetHeight();
     const unsigned int width = GetWindow().GetWidth();
-
-    uint32_t size = height * width * 4;
+    const unsigned int stride = 4;
+    const uint32_t size = height * width * stride;
 
     if(m_Height != height || m_Width != width)
     {
         //ASSERT(false, "Resizing not supported at the moment! (because of texture resizing not existing yet...)");
 
-        Resize(width, height);
+        //Resize(width, height);
     }
 
     /*
@@ -71,27 +70,22 @@ void GameRT::OnRender()
     glm::vec3 p0 = t * glm::vec4(-1, 1, 1, 0);
     */
 
-    //glm::vec3 color = glm::vec3(1, 0.2f, 0.2f);
+    glm::vec3 color = glm::vec3(1, 0.2f, 0.2f);
 
-    std::array<uint32_t, 4> color = { 255, 40, 40 , 255 };
-
-    for (size_t y = 0; y < height; y++)
+    int i = 0;
+    for (int y = 0; y < m_Height; ++y)
     {
-        for (size_t x = 0; x < width; x++)
+        for (int x = 0; x < m_Width; ++x)
         {
-            m_ScreenData[y * x] = color[0];
-            m_ScreenData[y * x + 1] = color[1];
-            m_ScreenData[y * x + 2] = color[2];
-            m_ScreenData[y * x + 3] = color[3];
+            m_ScreenData[i] = color.x;
+            m_ScreenData[i + 1] = color.y;
+            m_ScreenData[i + 2] = color.z;
+            m_ScreenData[i + 3] = 1.0f;
+
+            i += 4;
         }
     }
-
-    m_ViewportTexture->Bind();
-
-    //m_ViewportTexture->SetData(&m_ScreenData[0], size);
-    m_ViewportTexture->SetData((void*)m_ScreenData.data(), size);
-
-    m_ViewportTexture->Bind();
+    m_ViewportTexture->SetDataF(&m_ScreenData[0], size);
 
     const Muse::Renderer2D::QuadProperties quadProperties(
         { 0, 0, 0.1f },

@@ -14,6 +14,7 @@ namespace Muse
         virtual uint32_t GetHeight() const = 0;
 
         virtual void SetData(void* a_Data, uint32_t a_Size) = 0;
+        virtual void SetDataF(void* a_Data, uint32_t a_Size) = 0;
 
         virtual void Bind(uint32_t a_Slot = 0) const = 0;
 

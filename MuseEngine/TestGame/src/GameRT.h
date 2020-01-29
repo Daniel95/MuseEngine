@@ -6,6 +6,10 @@
 #include <vector>
 #include <array>
 
+// Display size
+#define SCREEN_WIDTH 64
+#define SCREEN_HEIGHT 32
+
 namespace Muse
 {
     class Texture;
@@ -28,8 +32,7 @@ protected:
 private:
     std::shared_ptr<Muse::Texture> m_ViewportTexture;
     std::shared_ptr<Muse::Texture> m_Test;
-    //std::vector<std::vector<std::array<uint32_t, 4>>> m_ScreenData;
-    std::vector<uint32_t> m_ScreenData;
+    std::vector<float> m_ScreenData;
 
     unsigned int m_Width, m_Height;
 
