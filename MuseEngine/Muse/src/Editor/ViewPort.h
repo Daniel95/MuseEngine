@@ -9,7 +9,7 @@ namespace Muse
 
         static int GetWidth() { return m_Width; }
         static int GetHeight() { return m_Height; }
-        static int GetAspectRatio() { return m_AspectRatio;  }
+        static float GetAspectRatio() { return m_AspectRatio;  }
 
     private:
         static int m_Width;

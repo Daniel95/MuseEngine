@@ -26,6 +26,7 @@ namespace Muse
 		virtual ~Application();
 
         Window& GetWindow() const { return *m_Window; }
+        std::shared_ptr<FrameBuffer> GetViewport() const { return m_ViewportFramebuffer; }
         float GetDeltaTime() const { return m_DeltaTime; }
 
         void Run();
@@ -43,7 +44,6 @@ namespace Muse
         LateUpdateEvent m_LateUpdateEvent;
         ImGuiRenderEvent m_ImGuiRenderEvent;
         RenderEvent m_RenderEvent;
-        std::shared_ptr<FrameBuffer> m_ViewportFramebuffer;
 
     protected:
         virtual void OnStart() = 0;
@@ -77,6 +77,7 @@ namespace Muse
         std::shared_ptr<Window> m_Window;
         std::shared_ptr<SceneManager> m_SceneManager;
         std::shared_ptr<ResourceManager> m_ResourceManager;
+        std::shared_ptr<FrameBuffer> m_ViewportFramebuffer;
         float m_DeltaTime = 0;
 
 

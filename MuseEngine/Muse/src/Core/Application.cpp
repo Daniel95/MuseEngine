@@ -158,7 +158,9 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        m_ViewportFramebuffer->Resize(GetWindow().GetWidth(), GetWindow().GetHeight());
+        //If Editor...
+        //m_ViewportFramebuffer->Resize(GetWindow().GetWidth(), GetWindow().GetHeight());
+        m_ViewportFramebuffer->Resize(ViewPort::GetWidth(), GetWindow().GetHeight());
 
         m_ViewportFramebuffer->Bind();
 

@@ -29,8 +29,8 @@ void GameRT::OnStart()
     Muse::SceneManager::SwitchScene(scene);
     m_Test = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
 
-    m_Height = m_ViewportFramebuffer->GetHeight();
-    m_Width = m_ViewportFramebuffer->GetWidth();
+    m_Height = GetViewport()->GetHeight();
+    m_Width = GetViewport()->GetWidth();
 
     m_ViewportTexture = Muse::ResourceManager::Create<Muse::Texture>("viewPortTexture", m_Width, m_Height);
 
@@ -52,16 +52,15 @@ void GameRT::OnRender()
 
     Muse::Renderer2D::BeginScene(*Muse::CameraComponent::GetMain());
 
-    const unsigned int height = Muse::ViewPort::GetHeight();
-    const unsigned int width = Muse::ViewPort::GetWidth();
+    const unsigned int height = GetViewport()->GetHeight();
+    const unsigned int width = GetViewport()->GetWidth();
+
     const unsigned int stride = 4;
     const uint32_t size = height * width * stride;
 
     if(m_Height != height || m_Width != width)
     {
-        //ASSERT(false, "Resizing not supported at the moment! (because of texture resizing not existing yet...)");
-
-        //Resize(width, height);
+        Resize(width, height);
     }
 
     /*
@@ -87,22 +86,8 @@ void GameRT::OnRender()
             i += stride;
         }
     }
-    m_ViewportFramebuffer->Bind();
-    m_ViewportFramebuffer->BindTexture();
-    m_ViewportFramebuffer->SetDataF(&m_ScreenData[0], size);
-
-    /*
-    float aspectX = static_cast<float>(m_Width) / static_cast<float>(m_Height);
-    float aspectY = static_cast<float>(m_Height) / static_cast<float>(m_Width);
-
-    const Muse::Renderer2D::QuadProperties quadProperties(
-        { 0, 0, 0.1f },
-        glm::vec2(aspectX, aspectY),
-        0,
-        m_ViewportTexture);
-
-    Muse::Renderer2D::DrawQuad(quadProperties);
-    */
+    GetViewport()->BindTexture();
+    GetViewport()->SetDataF(&m_ScreenData[0], size);
 
     Muse::Renderer2D::EndScene();
 }
@@ -114,10 +99,7 @@ void GameRT::OnImGuiRender()
 void GameRT::Resize(unsigned a_Width, unsigned a_Height)
 {
     m_ScreenData.clear();
-
-    m_ScreenData.resize(m_Height * m_Width * 4);
-
-    //Resize texture
+    m_ScreenData.resize(a_Height * a_Width * 4);
 
     m_Height = a_Height;
     m_Width = a_Width;
