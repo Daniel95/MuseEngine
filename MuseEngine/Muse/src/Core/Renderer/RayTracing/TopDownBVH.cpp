@@ -15,11 +15,11 @@ void TopDownBVH::ConstructHierarchy(std::vector<SceneObject*> & sceneObjects)
 {
 	boundingVolumes.clear();
 
-	vec3 minBounds;
-	vec3 maxBounds;
+	glm::vec3 minBounds;
+	glm::vec3 maxBounds;
 	GetWorldMinMaxBounds(minBounds, maxBounds, sceneObjects);
-	vec3 range = maxBounds - minBounds;
-	vec3 center = (minBounds + maxBounds) / 2;
+	glm::vec3 range = maxBounds - minBounds;
+	glm::vec3 center = (minBounds + maxBounds) / 2;
 
 	Box* box = new Box(center, range);
 	BoundingVolume* boundingVolume = new BoundingVolume(*box);
@@ -42,44 +42,44 @@ void TopDownBVH::ConstructHierarchy(std::vector<SceneObject*> & sceneObjects)
 void TopDownBVH::Split(BoundingVolume & parentBoundingVolume, std::vector<SceneObject*> & sceneObjectsToGroup) const
 {
 	//Start with placing two bounding volumes inside the parent bounding volume, that split the space evenly.
-	vec3 parentBoundingVolumePosition = parentBoundingVolume.boundingVolumeShape.GetTransform().GetPosition();
-	vec3 parentBoundingVolumeScale = parentBoundingVolume.boundingVolumeShape.GetTransform().GetScale();
+	glm::vec3 parentBoundingVolumePosition = parentBoundingVolume.boundingVolumeShape.GetTransform().GetPosition();
+	glm::vec3 parentBoundingVolumeScale = parentBoundingVolume.boundingVolumeShape.GetTransform().GetScale();
 
-	vec3 box1Position;
-	vec3 box2Position;
-	vec3 boxScale;
+	glm::vec3 box1Position;
+	glm::vec3 box2Position;
+	glm::vec3 boxScale;
 
-	if (parentBoundingVolumeScale.m_X >= parentBoundingVolumeScale.m_Y && 
-		parentBoundingVolumeScale.m_X >= parentBoundingVolumeScale.m_Z)
+	if (parentBoundingVolumeScale.x >= parentBoundingVolumeScale.y && 
+		parentBoundingVolumeScale.x >= parentBoundingVolumeScale.z)
 	{
-		boxScale = vec3(parentBoundingVolumeScale.m_X / 2, parentBoundingVolumeScale.m_Y, parentBoundingVolumeScale.m_Z);
-		box1Position = vec3(parentBoundingVolumePosition.m_X - parentBoundingVolumeScale.m_X / 4, parentBoundingVolumePosition.m_Y, parentBoundingVolumePosition.m_Z);
-		box2Position = vec3(parentBoundingVolumePosition.m_X + parentBoundingVolumeScale.m_X / 4, parentBoundingVolumePosition.m_Y, parentBoundingVolumePosition.m_Z);
+		boxScale = glm::vec3(parentBoundingVolumeScale.x / 2, parentBoundingVolumeScale.y, parentBoundingVolumeScale.z);
+		box1Position = glm::vec3(parentBoundingVolumePosition.x - parentBoundingVolumeScale.x / 4, parentBoundingVolumePosition.y, parentBoundingVolumePosition.z);
+		box2Position = glm::vec3(parentBoundingVolumePosition. + parentBoundingVolumeScale.x / 4, parentBoundingVolumePosition.y, parentBoundingVolumePosition.z);
 	}
-	else if (parentBoundingVolumeScale.m_Y >= parentBoundingVolumeScale.m_X && 
-		parentBoundingVolumeScale.m_Y >= parentBoundingVolumeScale.m_Z)
+	else if (parentBoundingVolumeScale.y >= parentBoundingVolumeScale.x && 
+		parentBoundingVolumeScale.y >= parentBoundingVolumeScale.z)
 	{
-		boxScale = vec3(parentBoundingVolumeScale.m_X, parentBoundingVolumeScale.m_Y / 2, parentBoundingVolumeScale.m_Z);
-		box1Position = vec3(parentBoundingVolumePosition.m_X, parentBoundingVolumePosition.m_Y - parentBoundingVolumeScale.m_Y / 4, parentBoundingVolumePosition.m_Z);
-		box2Position = vec3(parentBoundingVolumePosition.m_X, parentBoundingVolumePosition.m_Y + parentBoundingVolumeScale.m_Y / 4, parentBoundingVolumePosition.m_Z);
+		boxScale = glm::vec3(parentBoundingVolumeScale.x, parentBoundingVolumeScale.y / 2, parentBoundingVolumeScale.z);
+		box1Position = glm::vec3(parentBoundingVolumePosition.x, parentBoundingVolumePosition.y - parentBoundingVolumeScale.y / 4, parentBoundingVolumePosition.z);
+		box2Position = glm::vec3(parentBoundingVolumePosition.x, parentBoundingVolumePosition.y + parentBoundingVolumeScale.y / 4, parentBoundingVolumePosition.z);
 	}
 	else
 	{
-		boxScale = vec3(parentBoundingVolumeScale.m_X, parentBoundingVolumeScale.m_Y, parentBoundingVolumeScale.m_Z / 2);
-		box1Position = vec3(parentBoundingVolumePosition.m_X, parentBoundingVolumePosition.m_Y, parentBoundingVolumePosition.m_Z - parentBoundingVolumeScale.m_Z / 4);
-		box2Position = vec3(parentBoundingVolumePosition.m_X, parentBoundingVolumePosition.m_Y, parentBoundingVolumePosition.m_Z + parentBoundingVolumeScale.m_Z / 4);
+		boxScale = glm::vec3(parentBoundingVolumeScale.x, parentBoundingVolumeScale.y, parentBoundingVolumeScale.z / 2);
+		box1Position = glm::vec3(parentBoundingVolumePosition.x, parentBoundingVolumePosition.y, parentBoundingVolumePosition.z - parentBoundingVolumeScale.z / 4);
+		box2Position = glm::vec3(parentBoundingVolumePosition.x, parentBoundingVolumePosition.y, parentBoundingVolumePosition.z + parentBoundingVolumeScale.z / 4);
 	}
 
 	//Sort the sceneObjects over the two new boundubg volumes box spaces, and the parent boundubg volume.
 	std::vector<SceneObject*> sceneObjectsWithinbox1;
 	std::vector<SceneObject*> sceneObjectsWithinbox2;
 
-	vec3 halfBoxScale = boxScale / 2;
-	vec3 box1MinBounds = box1Position - halfBoxScale;
-	vec3 box1MaxBounds = box1Position + halfBoxScale;
+	glm::vec3 halfBoxScale = boxScale / 2.f;
+	glm::vec3 box1MinBounds = box1Position - halfBoxScale;
+	glm::vec3 box1MaxBounds = box1Position + halfBoxScale;
 
-	vec3 box2MinBounds = box2Position - halfBoxScale;
-	vec3 box2MaxBounds = box2Position + halfBoxScale;
+	glm::vec3 box2MinBounds = box2Position - halfBoxScale;
+	glm::vec3 box2MaxBounds = box2Position + halfBoxScale;
 
 	for (SceneObject* sceneObject : sceneObjectsToGroup)
 	{
@@ -137,36 +137,36 @@ void TopDownBVH::Split(BoundingVolume & parentBoundingVolume, std::vector<SceneO
 
 }
 
-bool TopDownBVH::CheckShapeOverlap(const Shape & shape, const vec3 & minBound, const vec3 & maxBound) const
+bool TopDownBVH::CheckShapeOverlap(const Shape & shape, const glm::vec3 & minBound, const glm::vec3 & maxBound) const
 {
-	vec3 shapeMinBound;
-	vec3 shapeMaxBound;
+	glm::vec3 shapeMinBound;
+	glm::vec3 shapeMaxBound;
 
 	shape.GetMinMaxBounds(shapeMinBound, shapeMaxBound);
 
-	return (shapeMaxBound.m_X >= minBound.m_X && maxBound.m_X >= shapeMinBound.m_X) &&
-		(shapeMaxBound.m_Y >= minBound.m_Y && maxBound.m_Y >= shapeMinBound.m_Y) &&
-		(shapeMaxBound.m_Z >= minBound.m_Z && maxBound.m_Z >= shapeMinBound.m_Z);
+	return (shapeMaxBound.x >= minBound.x && maxBound.x >= shapeMinBound.x) &&
+		(shapeMaxBound.y >= minBound.y && maxBound.y >= shapeMinBound.y) &&
+		(shapeMaxBound.z >= minBound.z && maxBound.z >= shapeMinBound.z);
 }
 
-void TopDownBVH::GetWorldMinMaxBounds(vec3 & minBound, vec3 & maxBound, const std::vector<SceneObject*> & sceneObjects) const
+void TopDownBVH::GetWorldMinMaxBounds(glm::vec3 & minBound, glm::vec3 & maxBound, const std::vector<SceneObject*> & sceneObjects) const
 {
-	vec3 sceneObjectMinBound;
-	vec3 sceneObjectMaxBound;
+	glm::vec3 sceneObjectMinBound;
+	glm::vec3 sceneObjectMaxBound;
 
-	minBound = vec3(std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
-	maxBound = vec3(std::numeric_limits<float>::min(), std::numeric_limits<float>::min(), std::numeric_limits<float>::min());
+	minBound = glm::vec3(std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
+	maxBound = glm::vec3(std::numeric_limits<float>::min(), std::numeric_limits<float>::min(), std::numeric_limits<float>::min());
 
 	for (SceneObject* sceneObject : sceneObjects)
 	{
 		sceneObject->GetShape().GetMinMaxBounds(sceneObjectMinBound, sceneObjectMaxBound);
 
-		minBound.m_X = std::min(sceneObjectMinBound.m_X, minBound.m_X);
-		minBound.m_Y = std::min(sceneObjectMinBound.m_Y, minBound.m_Y);
-		minBound.m_Z = std::min(sceneObjectMinBound.m_Z, minBound.m_Z);
+		minBound.x = std::min(sceneObjectMinBound.x, minBound.x);
+		minBound.y = std::min(sceneObjectMinBound.y, minBound.y);
+		minBound.z = std::min(sceneObjectMinBound.z, minBound.z);
 
-		maxBound.m_X = std::max(sceneObjectMaxBound.m_X, maxBound.m_X);
-		maxBound.m_Y = std::max(sceneObjectMaxBound.m_Y, maxBound.m_Y);
-		maxBound.m_Z = std::max(sceneObjectMaxBound.m_Z, maxBound.m_Z);
+		maxBound.x = std::max(sceneObjectMaxBound.x, maxBound.x);
+		maxBound.y = std::max(sceneObjectMaxBound.y, maxBound.y);
+		maxBound.z = std::max(sceneObjectMaxBound.z, maxBound.z);
 	}
 }

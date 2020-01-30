@@ -3,7 +3,6 @@
 #include "ReflectiveMaterial.h"
 #include "SceneObject.h"
 #include "Shape.h"
-#include "Scene.h"
 #include "RayHitData.h"
 #include "Camera.h"
 #include "MaterialHelper.h"
@@ -13,25 +12,25 @@
 #include "SpeculairMaterial.h"
 #include <cassert>
 
-ReflectiveMaterial::ReflectiveMaterial(const sf::Color & color, float speculairStrength, float reflectiveness, int maxBounces)
+ReflectiveMaterial::ReflectiveMaterial(const glm::vec3 & color, float speculairStrength, float reflectiveness, int maxBounces)
 	: BlinnPhongMaterial(color, speculairStrength), maxBounces(maxBounces), reflectiveness(reflectiveness)
 { }
 
 ReflectiveMaterial::~ReflectiveMaterial() { }
 
-sf::Color ReflectiveMaterial::GetColor(const SceneObject & sceneObject, const vec3 & point, std::shared_ptr<GetColorParameters> getColorParameters) const
+glm::vec3 ReflectiveMaterial::GetColor(const SceneObject & sceneObject, const glm::vec3 & point, std::shared_ptr<GetColorParameters> getColorParameters) const
 {
-	const sf::Color speculair = speculairMaterial.GetSpeculair(sceneObject, point, getColorParameters->RayDirection);
-	const sf::Color diffuse = diffuseMaterial.GetDiffuse(sceneObject, point);
-	const sf::Color blinnPhong = (speculair + diffuse + sceneObject.GetScene().GetAmbientLight()) * abs(1 - reflectiveness);
-	const sf::Color reflection = GetReflection(sceneObject, point, getColorParameters) * reflectiveness;
-	const sf::Color lightColor = blinnPhong + reflection;
-	const sf::Color result = color * lightColor;
+	const glm::vec3 speculair = speculairMaterial.GetSpeculair(sceneObject, point, getColorParameters->RayDirection);
+	const glm::vec3 diffuse = diffuseMaterial.GetDiffuse(sceneObject, point);
+	const glm::vec3 blinnPhong = (speculair + diffuse + sceneObject.GetScene().GetAmbientLight()) * abs(1 - reflectiveness);
+	const glm::vec3 reflection = GetReflection(sceneObject, point, getColorParameters) * reflectiveness;
+	const glm::vec3 lightColor = blinnPhong + reflection;
+	const glm::vec3 result = color * lightColor;
 
 	return result;
 }
 
-sf::Color ReflectiveMaterial::GetReflection(const SceneObject & sceneObject, const vec3 & point, std::shared_ptr<GetColorParameters> getColorParameters) const
+glm::vec3 ReflectiveMaterial::GetReflection(const SceneObject & sceneObject, const glm::vec3 & point, std::shared_ptr<GetColorParameters> getColorParameters) const
 {
 	if (getColorParameters->Bounces <= 0)
 	{
@@ -39,8 +38,8 @@ sf::Color ReflectiveMaterial::GetReflection(const SceneObject & sceneObject, con
 	}
 	getColorParameters->Bounces--;
 
-	sf::Color reflectionColor = sceneObject.GetScene().GetBackgroundColor();
-	const vec3 reflectionDirection = reflect(getColorParameters->RayDirection, sceneObject.GetNormal(point));
+	glm::vec3 reflectionColor = sceneObject.GetScene().GetBackgroundColor();
+	const glm::vec3 reflectionDirection = reflect(getColorParameters->RayDirection, sceneObject.GetNormal(point));
 
 	std::vector<SceneObject*> sceneObjects = sceneObject.GetScene().GetSceneObjects();
 	sceneObjects.erase(std::remove(sceneObjects.begin(), sceneObjects.end(), &sceneObject), sceneObjects.end());

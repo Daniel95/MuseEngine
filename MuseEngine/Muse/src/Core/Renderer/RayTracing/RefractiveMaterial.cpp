@@ -14,25 +14,25 @@
 #include "Ray.h"
 #include <cassert>
 
-RefractiveMaterial::RefractiveMaterial(const sf::Color & color, float speculairStrength, float refractiveness, float eta, int maxBounces)
+RefractiveMaterial::RefractiveMaterial(const glm::vec3 & color, float speculairStrength, float refractiveness, float eta, int maxBounces)
 	: BlinnPhongMaterial(color, speculairStrength), maxBounces(maxBounces), refractiveness(refractiveness), eta(eta)
 {}
 
 RefractiveMaterial::~RefractiveMaterial() {}
 
-sf::Color RefractiveMaterial::GetColor(const SceneObject & sceneObject, const vec3 & point, std::shared_ptr<GetColorParameters> getColorParameters) const
+glm::vec3 RefractiveMaterial::GetColor(const SceneObject & sceneObject, const glm::vec3 & point, std::shared_ptr<GetColorParameters> getColorParameters) const
 {
-	const sf::Color speculair = speculairMaterial.GetSpeculair(sceneObject, point, getColorParameters->RayDirection);
-	const sf::Color diffuse = diffuseMaterial.GetDiffuse(sceneObject, point);
-	const sf::Color blinnPhong = (speculair + diffuse + sceneObject.GetScene().GetAmbientLight()) * abs(1 - refractiveness);
-	const sf::Color refraction = GetRefraction(sceneObject, point, getColorParameters) * refractiveness;
-	const sf::Color lightColor = blinnPhong + refraction;
-	const sf::Color result = color * lightColor;
+	const glm::vec3 speculair = speculairMaterial.GetSpeculair(sceneObject, point, getColorParameters->RayDirection);
+	const glm::vec3 diffuse = diffuseMaterial.GetDiffuse(sceneObject, point);
+	const glm::vec3 blinnPhong = (speculair + diffuse + sceneObject.GetScene().GetAmbientLight()) * abs(1 - refractiveness);
+	const glm::vec3 refraction = GetRefraction(sceneObject, point, getColorParameters) * refractiveness;
+	const glm::vec3 lightColor = blinnPhong + refraction;
+	const glm::vec3 result = color * lightColor;
 
 	return result;
 }
 
-sf::Color RefractiveMaterial::GetRefraction(const SceneObject & sceneObject, const vec3 & point, std::shared_ptr<GetColorParameters> getColorParameters) const
+glm::vec3 RefractiveMaterial::GetRefraction(const SceneObject & sceneObject, const glm::vec3 & point, std::shared_ptr<GetColorParameters> getColorParameters) const
 {
 	if (getColorParameters->Bounces <= 0)
 	{
@@ -40,8 +40,8 @@ sf::Color RefractiveMaterial::GetRefraction(const SceneObject & sceneObject, con
 	}
 	getColorParameters->Bounces--;
 
-	sf::Color refractionColor = sceneObject.GetScene().GetBackgroundColor();
-	vec3 refractionDirection = refract(getColorParameters->RayDirection, sceneObject.GetNormal(point), eta);
+	glm::vec3 refractionColor = sceneObject.GetScene().GetBackgroundColor();
+    glm::vec3 refractionDirection = refract(getColorParameters->RayDirection, sceneObject.GetNormal(point), eta);
 
 	std::vector<SceneObject*> sceneObjects = sceneObject.GetScene().GetSceneObjects();
 	sceneObjects.erase(std::remove(sceneObjects.begin(), sceneObjects.end(), &sceneObject), sceneObjects.end());

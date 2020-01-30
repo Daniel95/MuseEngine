@@ -26,7 +26,7 @@ Shape & SceneObject::GetShape()
 	return ObjectShape;
 }
 
-sf::Color SceneObject::GetColor(const vec3 & point, std::shared_ptr<GetColorParameters> getColorParameters) const
+glm::vec3 SceneObject::GetColor(const glm::vec3 & point, std::shared_ptr<GetColorParameters> getColorParameters) const
 {
 	return ObjectMaterial.GetColor(*this, point, getColorParameters);
 }
@@ -35,7 +35,7 @@ std::unique_ptr<RayHitData> SceneObject::CheckRayHit(const std::shared_ptr<Ray> 
 {
 	ObjectScene.IncreaseRayCastsSendThisUpdate();
 
-	vec3 intersectionPoint;
+    glm::vec3 intersectionPoint;
 
 	if (ObjectShape.CheckRayHit(intersectionPoint, ray))
 	{
@@ -49,7 +49,7 @@ std::unique_ptr<RayHitData> SceneObject::CheckRayHit(const std::shared_ptr<Ray> 
 	}
 }
 
-vec3 SceneObject::GetNormal(const vec3 & point) const
+glm::vec3 SceneObject::GetNormal(const glm::vec3 & point) const
 {
 	return ObjectShape.GetNormal(point);
 }

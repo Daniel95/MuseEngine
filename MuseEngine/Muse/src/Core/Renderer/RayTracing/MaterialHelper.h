@@ -1,13 +1,11 @@
 #pragma once
 
 #include <vector>
-#include <SFML/Graphics.hpp>
 
-#include "MathLibrary.h"
-#include "vec3.h"
+#include <glm/glm.hpp>
 
 class SceneObject;
 class LightSource;
 
-sf::Color operator*(const sf::Color & a_Lhs, float a_Rhs);
-void FilterBlockedLights(std::vector<LightSource*>& lights, const SceneObject & sceneObject, const vec3 & point);
+glm::vec3 operator*(const glm::vec3 & a_Lhs, float a_Rhs);
+void FilterBlockedLights(std::vector<LightSource*>& lights, const SceneObject & sceneObject, const glm::vec3 & point);

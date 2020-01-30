@@ -4,19 +4,19 @@
 #include "SceneObject.h"
 #include "Ray.h"
 
-Sphere::Sphere(const vec3 & position, float radius)
-	: Shape(position, vec3(radius * 2, radius * 2, radius * 2)), radius(radius) { }
+Sphere::Sphere(const glm::vec3 & position, float radius)
+	: Shape(position, glm::vec3(radius * 2, radius * 2, radius * 2)), radius(radius) { }
 
 Sphere::~Sphere() {}
 
-bool Sphere::CheckRayHit(vec3 & intersectionPoint, const std::shared_ptr<Ray> ray) const
+bool Sphere::CheckRayHit(glm::vec3 & intersectionPoint, const std::shared_ptr<Ray> ray) const
 {
-	const vec3 raySphereOffset = transform.GetPosition() - ray->Origin;
+	const glm::vec3 raySphereOffset = transform.GetPosition() - ray->Origin;
 	const float offsetLength = ray->Direction.dot(raySphereOffset);
 
 	if (offsetLength < 0) { return false; }
 
-	const vec3 raySphereOffsetOnLine = ray->Origin + ray->Direction * offsetLength;
+	const glm::vec3 raySphereOffsetOnLine = ray->Origin + ray->Direction * offsetLength;
 
 	const float sphereLocalY = transform.GetPosition().distance(raySphereOffsetOnLine);
 
@@ -32,14 +32,14 @@ bool Sphere::CheckRayHit(vec3 & intersectionPoint, const std::shared_ptr<Ray> ra
 	return false;
 }
 
-vec3 Sphere::GetNormal(const vec3 & point) const
+glm::vec3 Sphere::GetNormal(const glm::vec3 & point) const
 {
 	return (point - transform.GetPosition()).normalized();
 }
 
-void Sphere::GetMinMaxBounds(vec3 & min, vec3 & max) const
+void Sphere::GetMinMaxBounds(glm::vec3 & min, glm::vec3 & max) const
 {
-	vec3 halfScale = transform.GetScale() / 2;
+    glm::vec3 halfScale = transform.GetScale() / 2;
 	min = transform.GetPosition() - halfScale;
 	max = transform.GetPosition() + halfScale;
 }

@@ -11,6 +11,8 @@
 #include "Mode.h"
 #include "Editor/ViewPort.h"
 #include "Core/Renderer/Buffer/FrameBuffer.h"
+#include "Core/Renderer/RayTracing/RayHitData.h"
+#include "Core/Renderer/RayTracing/GetColorParameters.h"
 
 #if GAME_RT
 #include "EntryPoint.h"

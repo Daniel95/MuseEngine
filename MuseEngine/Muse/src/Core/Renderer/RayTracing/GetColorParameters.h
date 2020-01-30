@@ -1,11 +1,10 @@
 #pragma once
 
-#include "MathLibrary.h"
-#include "vec3.h"
+#include <glm/glm.hpp>
 
 struct GetColorParameters
 {
-	vec3 RayDirection;
+    glm::vec3 RayDirection;
 	int Bounces = 0;
 };
 

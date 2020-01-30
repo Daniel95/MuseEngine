@@ -1,8 +1,5 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-
-#include "MathLibrary.h"
 #include "Transform.h"
 #include "GetColorParameters.h"
 
@@ -21,9 +18,9 @@ public:
 	const Material & GetMaterial() const;
 	Shape & GetShape();
 
-	virtual sf::Color GetColor(const vec3 & point, std::shared_ptr<GetColorParameters> getColorParameters) const;
+	virtual glm::vec3 GetColor(const glm::vec3 & point, std::shared_ptr<GetColorParameters> getColorParameters) const;
 	virtual std::unique_ptr<RayHitData> CheckRayHit(const std::shared_ptr<Ray> ray) const;
-	virtual vec3 GetNormal(const vec3 & point) const;
+	virtual glm::vec3 GetNormal(const glm::vec3 & point) const;
 
 protected:
 	const Material & ObjectMaterial;

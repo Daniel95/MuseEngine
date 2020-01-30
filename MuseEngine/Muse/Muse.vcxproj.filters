@@ -1427,7 +1427,6 @@
     <ClInclude Include="src\Core\Renderer\RayTracing\Sphere.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\SphereObject.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\TopDownBVH.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1621,6 +1620,5 @@
     <ClCompile Include="src\Core\Renderer\RayTracing\Sphere.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\SphereObject.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\TopDownBVH.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\Transform.cpp" />
   </ItemGroup>
 </Project>

@@ -1,8 +1,8 @@
 #pragma once
 
-#include <SFML/Graphics.hpp>
-
 #include "SceneObject.h"
+
+#include <glm/glm.hpp>
 
 class Material;
 class DiffuseMaterial;
@@ -12,7 +12,7 @@ class Sphere;
 class PlaneObject : public SceneObject
 {
 public:
-	PlaneObject(Scene & scene, const vec3 & position, const vec3 & size, const vec3 & lookAt, const Material & material);
+	PlaneObject(Scene & scene, const glm::vec3 & position, const glm::vec3 & size, const glm::vec3 & lookAt, const Material & material);
 	virtual ~PlaneObject();
 
 };

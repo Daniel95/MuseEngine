@@ -8,11 +8,11 @@ class SceneObject;
 class RefractiveMaterial : public BlinnPhongMaterial
 {
 public:
-	RefractiveMaterial(const sf::Color & color, float speculairStrength = 0.5f, float refractiveness = 0.5f, float eta = 0.975f, int maxBounces = 32);
+	RefractiveMaterial(const glm::vec3 & color, float speculairStrength = 0.5f, float refractiveness = 0.5f, float eta = 0.975f, int maxBounces = 32);
 	~RefractiveMaterial();
 
-	virtual sf::Color GetColor(const SceneObject & sceneObject, const vec3 & point, std::shared_ptr<GetColorParameters>getColorParameters) const override;
-	sf::Color GetRefraction(const SceneObject & sceneObject, const vec3 & point, std::shared_ptr<GetColorParameters> getColorParameters) const;
+	virtual glm::vec3 GetColor(const SceneObject & sceneObject, const glm::vec3 & point, std::shared_ptr<GetColorParameters>getColorParameters) const override;
+	glm::vec3 GetRefraction(const SceneObject & sceneObject, const glm::vec3 & point, std::shared_ptr<GetColorParameters> getColorParameters) const;
 
 private:
 	int maxBounces;

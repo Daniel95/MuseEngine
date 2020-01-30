@@ -9,32 +9,32 @@
 #include "LightSource.h"
 #include "AmbientLightSource.h"
 
-SpeculairMaterial::SpeculairMaterial(sf::Color color, float speculairStrength)
+SpeculairMaterial::SpeculairMaterial(glm::vec3 color, float speculairStrength)
 	: Material(color), speculairStrength(speculairStrength) { }
 
 SpeculairMaterial::~SpeculairMaterial() { }
 
-sf::Color SpeculairMaterial::GetColor(const SceneObject & sceneObject, const vec3 & point, std::shared_ptr<GetColorParameters> getColorParameters) const
+glm::vec3 SpeculairMaterial::GetColor(const SceneObject & sceneObject, const glm::vec3 & point, std::shared_ptr<GetColorParameters> getColorParameters) const
 {
-	const sf::Color speculair = GetSpeculair(sceneObject, point, getColorParameters->RayDirection);
-	const sf::Color combinedLights = speculair + sceneObject.GetScene().GetAmbientLight();
-	const sf::Color result = color * combinedLights;
+	const glm::vec3 speculair = GetSpeculair(sceneObject, point, getColorParameters->RayDirection);
+	const glm::vec3 combinedLights = speculair + sceneObject.GetScene().GetAmbientLight();
+	const glm::vec3 result = color * combinedLights;
 
 	return result;
 }
 
-const sf::Color SpeculairMaterial::GetSpeculair(const SceneObject & sceneObject, const vec3 & point, const vec3 & lookDirection) const
+const glm::vec3 SpeculairMaterial::GetSpeculair(const SceneObject & sceneObject, const glm::vec3 & point, const glm::vec3 & lookDirection) const
 {
 	std::vector<LightSource*> lights = sceneObject.GetScene().GetLightSources();
 
 	FilterBlockedLights(lights, sceneObject, point);
 
-	sf::Color totalSpeculair;
+	glm::vec3 totalSpeculair;
 
 	for (LightSource* light : lights)
 	{
-		const vec3 lightDirection = light->GetDirectionToPoint(point);
-		const vec3 reflectionDirection = reflect(lightDirection * -1, sceneObject.GetNormal(point));
+		const glm::vec3 lightDirection = light->GetDirectionToPoint(point);
+		const glm::vec3 reflectionDirection = reflect(lightDirection * -1, sceneObject.GetNormal(point));
 		const float speculairValue = std::pow(std::max(dot(lookDirection, reflectionDirection), 0.0f), 32.0f) * speculairStrength;
 		const float clampedspeculairStrength = std::clamp(speculairValue, 0.0f, 1.0f);
 

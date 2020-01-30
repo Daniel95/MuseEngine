@@ -3,25 +3,24 @@
 #include "BlinnPhongMaterial.h"
 #include "SceneObject.h"
 #include "Shape.h"
-#include "Scene.h"
 #include "RayHitData.h"
 #include "Camera.h"
 #include "SpeculairMaterial.h"
 #include "DiffuseMaterial.h"
-#include "Scene.h"
 #include "AmbientLightSource.h"
+#include "Core/Scene/Scene.h"
 
-BlinnPhongMaterial::BlinnPhongMaterial(const sf::Color & color, float speculairStrength)
+BlinnPhongMaterial::BlinnPhongMaterial(const glm::vec3 & color, float speculairStrength)
 	: Material(color), speculairMaterial(*new SpeculairMaterial(color, speculairStrength)), diffuseMaterial(*new DiffuseMaterial(color)) { }
 
 BlinnPhongMaterial::~BlinnPhongMaterial() { }
 
-sf::Color BlinnPhongMaterial::GetColor(const SceneObject & sceneObject, const vec3 & point, std::shared_ptr<GetColorParameters> getColorParameters) const
+glm::vec3 BlinnPhongMaterial::GetColor(const Muse::GameObject & a_gameObject, const glm::vec3 & point, std::shared_ptr<GetColorParameters> getColorParameters) const
 {
-	const sf::Color speculair = speculairMaterial.GetSpeculair(sceneObject, point, getColorParameters->RayDirection);
-	const sf::Color diffuse = diffuseMaterial.GetDiffuse(sceneObject, point);
-	const sf::Color combinedLights = speculair + diffuse + sceneObject.GetScene().GetAmbientLight();
-	const sf::Color result = color * combinedLights;
+	const glm::vec3 speculair = speculairMaterial.GetSpeculair(a_gameObject, point, getColorParameters->RayDirection);
+	const glm::vec3 diffuse = diffuseMaterial.GetDiffuse(a_gameObject, point);
+	const glm::vec3 combinedLights = speculair + diffuse + 0.1f;//a_gameObject.GetScene().GetAmbientLight();
+	const glm::vec3 result = color * combinedLights;
 
 	return result;
 }

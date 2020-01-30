@@ -3,45 +3,44 @@
 #include "DiffuseMaterial.h"
 #include "SceneObject.h"
 #include "Shape.h"
-#include "Scene.h"
 #include "RayHitData.h"
 #include "MaterialHelper.h"
 #include "LightSource.h"
 #include "AmbientLightSource.h"
 
-DiffuseMaterial::DiffuseMaterial(const sf::Color & color)
+DiffuseMaterial::DiffuseMaterial(const glm::vec3 & color)
 	: Material(color) { }
 
 DiffuseMaterial::~DiffuseMaterial() { }
 
-sf::Color DiffuseMaterial::GetColor(const SceneObject& sceneObject, const vec3 & point, std::shared_ptr<GetColorParameters> getColorParameters) const
+glm::vec3 DiffuseMaterial::GetColor(const SceneObject& sceneObject, const glm::vec3 & a_Point, std::shared_ptr<GetColorParameters> a_GetColorParameters) const
 {
-	getColorParameters;
+	a_GetColorParameters;
 
-	const sf::Color diffuse = GetDiffuse(sceneObject, point);
-	const sf::Color combinedLights = diffuse + sceneObject.GetScene().GetAmbientLight();
-	const sf::Color result = color * combinedLights;
+	const glm::vec3 diffuse = GetDiffuse(sceneObject, a_Point);
+	const glm::vec3 combinedLights = diffuse + sceneObject.GetScene().GetAmbientLight();
+	const glm::vec3 result = color * combinedLights;
 
 	return result;
 }
 
-sf::Color DiffuseMaterial::GetDiffuse(const SceneObject& sceneObject, const vec3 & point) const
+glm::vec3 DiffuseMaterial::GetDiffuse(const SceneObject& sceneObject, const glm::vec3 & point) const
 {
-	const vec3 normalDirection = sceneObject.GetNormal(point);
+	const glm::vec3 normalDirection = sceneObject.GetNormal(point);
 
 	std::vector<LightSource*> lightSources = sceneObject.GetScene().GetLightSources();
 
 	FilterBlockedLights(lightSources, sceneObject, point);
 
-	sf::Color totalDiffuse;
+	glm::vec3 totalDiffuse;
 
 	for (LightSource* lightSource : lightSources)
 	{
-		const vec3 lightPosition = lightSource->GetPosition();
-		const vec3 directionToLightSource = (lightPosition - point).normalized();
+		const glm::vec3 lightPosition = lightSource->GetPosition();
+		const glm::vec3 directionToLightSource = (lightPosition - point).normalized();
 		const float diffuseStrength = directionToLightSource.dot(normalDirection);
 		const float clampedDiffuseStrength = std::clamp(diffuseStrength, 0.0f, 1.0f);
-		const sf::Color lightColor = lightSource->GetLight(point) * clampedDiffuseStrength;
+		const glm::vec3 lightColor = lightSource->GetLight(point) * clampedDiffuseStrength;
 
 		totalDiffuse += lightColor;
 	}

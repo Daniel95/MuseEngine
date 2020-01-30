@@ -1,9 +1,9 @@
 #pragma once
 
-#include "vec3.h"
+#include <glm/glm.hpp>
 
 struct Ray
 {
-	vec3 Origin;
-	vec3 Direction;
+    glm::vec3 Origin;
+    glm::vec3 Direction;
 };

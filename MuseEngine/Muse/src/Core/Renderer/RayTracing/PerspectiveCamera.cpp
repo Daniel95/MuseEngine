@@ -2,7 +2,7 @@
 
 #include "PerspectiveCamera.h"
 
-PerspectiveCamera::PerspectiveCamera(const vec3 & position, const vec3 & lookAt, int screenSizeX, int screenSizeY, float vfov, const vec3 & up)
+PerspectiveCamera::PerspectiveCamera(const glm::vec3 & position, const glm::vec3 & lookAt, int screenSizeX, int screenSizeY, float vfov, const glm::vec3 & up)
 	: Camera(position, lookAt, screenSizeX, screenSizeY), up(up)
 {
 	direction = (lookAt - position).normalized();
@@ -28,21 +28,21 @@ const std::shared_ptr<Ray> PerspectiveCamera::GetLookingRay(float pixelX, float 
 	const float x = pixelX / static_cast<float>(screenSizeX);
 	const float y = invertedPixelY / static_cast<float>(screenSizeY);
 
-	const vec3 lookingPlanePoint = lowerLeftCorner + x * horizontal + y * vertical;
+	const glm::vec3 lookingPlanePoint = lowerLeftCorner + x * horizontal + y * vertical;
 	ray->Direction = (lookingPlanePoint - transform.GetPosition()).normalized();
 
 	return ray;
 }
 
-void PerspectiveCamera::Move(vec3 movement)
+void PerspectiveCamera::Move(glm::vec3 movement)
 {
-	movement.m_X *= -1;
+	movement.x *= -1;
 
 	Camera::Move(movement);
 	UpdateLookingPlane();
 }
 
-void PerspectiveCamera::MoveLookAt(const vec3 & movement)
+void PerspectiveCamera::MoveLookAt(const glm::vec3 & movement)
 {
 	lookAt += movement;
 	direction = (lookAt - transform.GetPosition()).normalized();
@@ -52,8 +52,8 @@ void PerspectiveCamera::MoveLookAt(const vec3 & movement)
 
 void PerspectiveCamera::UpdateLookingPlane()
 {
-	const vec3 rightDirection = (up.cross(direction)).normalized();
-	const vec3 upDirection = direction.cross(rightDirection);
+	const glm::vec3 rightDirection = (up.cross(direction)).normalized();
+	const glm::vec3 upDirection = direction.cross(rightDirection);
 	horizontal = size.m_X * rightDirection;
 	vertical = size.m_Y * upDirection;
 	lowerLeftCorner = transform.GetPosition() - horizontal * 0.5f - vertical * 0.5f + direction;
