@@ -21,10 +21,17 @@
 #include <cereal/types/vector.hpp>
 #include <cereal/types/memory.hpp>
 #include <cereal/cereal.hpp>
+#include "Core/Renderer/RayTracing/AmbientLightSource.h"
+#include "Core/Renderer/RayTracing/BVH/BVH.h"
+
+#include "Core/Renderer/RayTracing/AmbientLightSource.h"
+#include "Core/Renderer/RayTracing/BVH/BVH.h"
+#include "Core/Renderer/RayTracing/Ray.h"
 
 namespace Muse
 {
-    Scene::Scene()
+    Scene::Scene() :
+        m_AmbientLight(*new AmbientLightSource(glm::vec3(1.f, 1.f, 1.f), 1))
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -247,6 +254,56 @@ namespace Muse
 
         return gameObject;
     }
+
+    const glm::vec3& Scene::GetAmbientLight() const
+    {
+        return m_AmbientLight.GetLight(glm::vec3());
+    }
+
+    void Scene::ConstructBVH()
+    {
+        ASSERT_ENGINE(m_BVH != nullptr, "Not BVH set!");
+        m_BVH->ConstructHierarchy(m_GameObjectsToUpdate);
+        m_BVH->PrintHierarchy();
+    }
+
+    bool Scene::RayCast(const std::shared_ptr<Ray> ray, float maxDistance) const
+    {
+        return RayCast(m_GameObjectsToUpdate, ray, maxDistance);
+    }
+
+    bool Scene::RayCast(const std::vector<std::shared_ptr<GameObject>>& sceneObjectsToTest, const std::shared_ptr<Ray> ray, float maxDistance) const
+    {
+        std::vector<std::shared_ptr<RayHitData>> rayHitDatas;
+        return RayCast(rayHitDatas, sceneObjectsToTest, ray, maxDistance);
+    }
+
+    bool Scene::RayCast(std::vector<std::shared_ptr<RayHitData>>& rayHitDatas, const std::shared_ptr<Ray> ray, const float maxDistance) const
+    {
+        return RayCast(rayHitDatas, m_GameObjectsToUpdate, ray, maxDistance);
+    }
+
+    bool Scene::RayCast(std::vector<std::shared_ptr<RayHitData>>& rayHitDatas, const std::vector< std::shared_ptr<GameObject>>& sceneObjectsToTest, const std::shared_ptr<Ray> ray, const float maxDistance) const
+    {
+        for (std::shared_ptr<GameObject> sceneObject : m_GameObjectsToUpdate)
+        {
+            std::unique_ptr<RayHitData> rayHitData = sceneObject->CheckRayHit(ray);
+            if (rayHitData != NULL)
+            {
+                rayHitDatas.push_back(std::move(rayHitData));
+            }
+        }
+
+        if (maxDistance != INFINITY)
+        {
+            RemoveRayHitsOutOfDistance(rayHitDatas, ray->Origin, maxDistance);
+        }
+
+        return rayHitDatas.size() != 0;
+    }
+
+
+
 
     std::shared_ptr<Scene> Scene::Load(const std::string& a_FilePath)
     {

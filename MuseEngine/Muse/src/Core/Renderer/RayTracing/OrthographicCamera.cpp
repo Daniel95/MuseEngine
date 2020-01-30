@@ -3,36 +3,41 @@
 #include <iostream>
 
 #include "OrthographicCamera.h"
+#include "Core/Gameplay/Component/TransformComponent.h"
 
-OrthographicCamera::OrthographicCamera(const glm::vec3 & position, const glm::vec3 & lookAt, int screenSizeX, int screenSizeY, const glm::vec2 & viewPortWorldSize)
-	: Camera(position, lookAt, screenSizeX, screenSizeY), viewPortWorldSize(viewPortWorldSize)
+namespace Muse
 {
-	direction = (lookAt - position).normalized();
-	direction.y *= -1;
-}
 
-OrthographicCamera::~OrthographicCamera() { }
+	OrthographicCamera::OrthographicCamera(const glm::vec3& position, const glm::vec3& lookAt, int screenSizeX, int screenSizeY, const glm::vec2& viewPortWorldSize)
+		: Camera(position, lookAt, screenSizeX, screenSizeY), viewPortWorldSize(viewPortWorldSize)
+	{
+		direction = glm::normalize(lookAt - position);
+		direction.y *= -1;
+	}
 
-const std::shared_ptr<Ray> OrthographicCamera::GetLookingRay(float pixelX, float pixelY) const
-{
-	std::shared_ptr<Ray> ray = std::make_shared<Ray>();
+	OrthographicCamera::~OrthographicCamera() {}
 
-	ray->Origin = PixelToWorldPosition(pixelX, pixelY);
-	ray->Direction = direction;
+	const std::shared_ptr<Ray> OrthographicCamera::GetLookingRay(float pixelX, float pixelY) const
+	{
+		std::shared_ptr<Ray> ray = std::make_shared<Ray>();
 
-	return ray;
-}
+		ray->Origin = PixelToWorldPosition(pixelX, pixelY);
+		ray->Direction = direction;
 
-glm::vec3 OrthographicCamera::PixelToWorldPosition(float xPixel, float yPixel) const
-{
-	const float xProgress = xPixel / static_cast<float>(screenSizeX);
-	const float yProgress = yPixel / static_cast<float>(screenSizeY);
+		return ray;
+	}
 
-	const glm::vec3 halfViewPortSize = glm::vec3(viewPortWorldSize.m_X / 2, viewPortWorldSize.m_Y / 2, 0);
-	const glm::vec3 viewPortPosition = glm::vec3(xProgress * viewPortWorldSize.m_X, yProgress * viewPortWorldSize.m_Y, 0) - halfViewPortSize;
-    glm::vec3 viewPortWorldPosition = transform.GetPosition() + direction + viewPortPosition;
+	glm::vec3 OrthographicCamera::PixelToWorldPosition(float xPixel, float yPixel) const
+	{
+		const float xProgress = xPixel / static_cast<float>(screenSizeX);
+		const float yProgress = yPixel / static_cast<float>(screenSizeY);
 
-	viewPortWorldPosition.y *= -1;
+		const glm::vec3 halfViewPortSize = glm::vec3(viewPortWorldSize.x / 2, viewPortWorldSize.y / 2, 0);
+		const glm::vec3 viewPortPosition = glm::vec3(xProgress * viewPortWorldSize.x, yProgress * viewPortWorldSize.y, 0) - halfViewPortSize;
+		glm::vec3 viewPortWorldPosition = m_TransformComponent.GetPosition() + direction + viewPortPosition;
 
-	return viewPortWorldPosition;
+		viewPortWorldPosition.y *= -1;
+
+		return viewPortWorldPosition;
+	}
 }

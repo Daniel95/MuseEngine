@@ -2,12 +2,14 @@
 
 #include "LightSource.h"
 
-class AmbientLightSource : public LightSource
+namespace Muse
 {
-public:
-	AmbientLightSource(const glm::vec4 & color, float intensity);
-	virtual ~AmbientLightSource();
-	virtual glm::vec4 GetLight(const glm::vec3 & point) const override;
+	class AmbientLightSource : public LightSource
+	{
+	public:
+		AmbientLightSource(const glm::vec3& color, float intensity);
+		virtual ~AmbientLightSource() = default;
+		virtual glm::vec3 GetLight(const glm::vec3& point) const override;
 
-};
-
+	};
+}

@@ -37,6 +37,8 @@ void GameRT::OnStart()
     m_ViewportTexture = Muse::ResourceManager::Create<Muse::Texture>("viewPortTexture", m_Width, m_Height);
 
     m_ScreenData.resize(m_Height * m_Width * 4);
+
+    scene->ConstructBVH();
 }
 
 void GameRT::OnUpdate(float a_DeltaTime)
@@ -67,14 +69,14 @@ void GameRT::OnRender()
 
     /////////////////
 
-    std::vector<std::shared_ptr<RayHitData>> rayHitDatas;
-    std::shared_ptr<GetColorParameters> getColorParameters = std::make_shared<GetColorParameters>();
+    std::vector<std::shared_ptr<Muse::RayHitData>> rayHitDatas;
+    std::shared_ptr<Muse::GetColorParameters> getColorParameters = std::make_shared<Muse::GetColorParameters>();
 
-    for (int y = 0; y < screenSizeY; y++)
+    for (int y = 0; y < height; y++)
     {
-        for (int x = 0; x < screenSizeX; x++)
+        for (int x = 0; x < width; x++)
         {
-            std::shared_ptr<Ray> ray = camera.GetLookingRay(static_cast<float>(x), static_cast<float>(y));
+            std::shared_ptr<Muse::Ray> ray = camera.GetLookingRay(static_cast<float>(x), static_cast<float>(y));
 
             if (bvh != NULL)
             {
@@ -87,12 +89,11 @@ void GameRT::OnRender()
 
             if (rayHitDatas.size() > 0)
             {
-                const std::shared_ptr<RayHitData> closestHit = GetClosestRayHitData(rayHitDatas, ray->Origin);
+                const std::shared_ptr<Muse::RayHitData> closestHit = GetClosestRayHitData(rayHitDatas, ray->Origin);
                 getColorParameters->RayDirection = ray->Direction;
                 getColorParameters->Bounces = 5;
 
-                const sf::Color color = closestHit->HitSceneObject->GetColor(closestHit->IntersectionPoint, getColorParameters);
-                image.setPixel(x, y, color);
+                const glm::vec3 color = closestHit->HitSceneObject->GetColor(closestHit->IntersectionPoint, getColorParameters);
 
                 rayHitDatas.clear();
             }

@@ -7,6 +7,7 @@
 
 namespace Muse
 {
+    class Shape;
     class Texture;
     class Shader;
     class BufferLayout;
@@ -26,6 +27,8 @@ namespace Muse
         void SetTexture(std::shared_ptr<Texture> a_Texture) { m_Texture = a_Texture; }
         std::shared_ptr<Texture> GetTexture() const { return m_Texture; }
         std::shared_ptr<VertexArray> GetVA() const { return m_VA; }
+        Shape& GetShape() const { return m_Shape; }
+        Shape& GetNormal(const glm::vec3& a_Point) const;
 
         virtual void OnUpdate(float a_DeltaTime) override;
         void OnEnable() override;
@@ -50,7 +53,9 @@ namespace Muse
         std::shared_ptr<Shader> m_Shader;
         std::shared_ptr<Texture> m_Texture;
 
-        int temp;
+        Shape& m_Shape;
+
+
     };
 }
 

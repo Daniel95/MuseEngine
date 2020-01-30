@@ -10,18 +10,25 @@
 #include <deque>
 #include <string>
 #include <vector>
+#include <memory>
 
 #include <cereal/cereal.hpp>
 #include <cereal/types/memory.hpp>
 #include <cereal/types/polymorphic.hpp>
+#include "Core/Renderer/RayTracing/AmbientLightSource.h"
 
 namespace Muse 
 {
+    struct Ray;
+    struct RayHitData;
     class Component;
     class GameObject;
     class TransformComponent;
     class CameraComponent;
     class Application;
+    class AmbientLightSource;
+    class BVH;
+    class LightSource;
 
 	class Scene : public Resource
 	{
@@ -50,6 +57,26 @@ namespace Muse
         template<typename T>
         const std::vector<std::shared_ptr<GameObject>>& FindGameObjectsOfType();
 
+
+        const glm::vec3& GetAmbientLight() const;
+        const std::vector<LightSource*>& GetLightSources() const { return m_Lights; }
+        const glm::vec3& GetBackgroundColor() const { return m_BackgroundColor; }
+        void SetBVH(std::shared_ptr<BVH> a_BVH) { m_BVH = a_BVH; }
+        std::shared_ptr<BVH> GetBVH() const { return m_BVH; }
+        void ConstructBVH();
+        bool RayCast(const std::shared_ptr<Ray> ray, float maxDistance = INFINITY) const;
+        bool RayCast(const std::vector< std::shared_ptr<GameObject>>& sceneObjectsToTest, const std::shared_ptr<Ray> ray, float maxDistance = INFINITY) const;
+        bool RayCast(std::vector<std::shared_ptr<RayHitData>>& rayHitDatas, const std::shared_ptr<Ray> ray, float maxDistance = INFINITY) const;
+        bool RayCast(std::vector<std::shared_ptr<RayHitData>>& rayHitDatas, const std::vector< std::shared_ptr<GameObject>>& sceneObjectsToTest, const std::shared_ptr<Ray> ray, float maxDistance = INFINITY) const;
+
+
+        void IncreaseRayCastsSendThisUpdate() { m_RayCastsSendThisFrame++; }
+        int GetRayCastsSendThisUpdate() const { return m_RayCastsSendThisFrame;  }
+        void ResetRayCastsSendThisUpdate() { m_RayCastsSendThisFrame = 0; }
+        void IncreaseRayCastsHitThisUpdate() { m_RayCastsHitThisFrame++;  }
+        int GetRayCastsHitThisUpdate() const { return m_RayCastsHitThisFrame; }
+        void ResetRayCastsHitThisUpdate() { m_RayCastsHitThisFrame = 0; }
+
         static std::shared_ptr<Scene> Create() { return std::make_shared<Scene>(); }
         static std::shared_ptr<Scene> Load(const std::string& a_FilePath);
 
@@ -68,6 +95,18 @@ namespace Muse
         std::deque<std::string> m_States;
         const int m_MaxStateSaves = 20;
         int m_CurrentStateIndex = 0;
+
+        int m_RayCastsSendThisFrame = 0;
+        int m_RayCastsHitThisFrame = 0;
+
+
+        AmbientLightSource m_AmbientLight;
+        std::vector<LightSource*> m_Lights;
+        std::shared_ptr<BVH> m_BVH;
+        glm::vec3 m_BackgroundColor;
+
+
+
 
         void Unload();
 	};

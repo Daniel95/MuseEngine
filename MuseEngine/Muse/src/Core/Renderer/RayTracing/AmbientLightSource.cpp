@@ -1,15 +1,17 @@
 #include "MusePCH.h"
 
-#include "MaterialHelper.h"
 #include "AmbientLightSource.h"
 
-AmbientLightSource::AmbientLightSource(const glm::vec4 & color, float intensity)
-	: LightSource(glm::vec3(), color, intensity, INFINITY) { }
-
-AmbientLightSource::~AmbientLightSource() { }
-
-glm::vec4 AmbientLightSource::GetLight(const glm::vec3 & point) const
+namespace Muse
 {
-	point;
-	return color * intensity;
+	AmbientLightSource::AmbientLightSource(const glm::vec3& color, float intensity)
+		: LightSource(glm::vec3(), color, intensity, INFINITY)
+	{
+	}
+
+	glm::vec3 AmbientLightSource::GetLight(const glm::vec3& point) const
+	{
+		point;
+		return m_Color * m_Intensity;
+	}
 }

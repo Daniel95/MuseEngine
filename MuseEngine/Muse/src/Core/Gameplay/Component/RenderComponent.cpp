@@ -6,6 +6,7 @@
 #include "Core/Renderer/VertexArray.h"
 #include "Core/Renderer/Buffer/BufferLayout.h"
 #include "Core/Instrumentor.h"
+#include "Core/Renderer/RayTracing/Shape/Shape.h"
 
 namespace Muse
 {
@@ -24,6 +25,11 @@ namespace Muse
         //const uint32_t count = sizeof(a_Indices) / sizeof(uint32_t);
         m_IB = Muse::IndexBuffer::Create(a_Indices, a_IndicesCount);
         m_VA->SetIndexBuffer(m_IB);
+    }
+
+    Shape& RenderComponent::GetNormal(const glm::vec3& a_Point) const
+    {
+        m_Shape.GetNormal(a_Point);
     }
 
     void RenderComponent::OnUpdate(float a_DeltaTime)

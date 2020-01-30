@@ -2,22 +2,21 @@
 
 #include <glm/glm.hpp>
 
-#include "Materialhelper.h"
-
-class LightSource
+namespace Muse
 {
-public:
-	LightSource(const glm::vec3 & position, const glm::vec4& color, float intensity, float maxRange);
-	virtual ~LightSource();
-	virtual glm::vec4 GetLight(const glm::vec3 & point) const;
-	virtual glm::vec3 GetDirectionToPoint(const glm::vec3 & point) const;
-	virtual const glm::vec3 & GetPosition() const;
+	class LightSource
+	{
+	public:
+		LightSource(const glm::vec3& position, const glm::vec3& color, float intensity, float maxRange);
+		virtual ~LightSource() = default;
+		virtual glm::vec3 GetLight(const glm::vec3& point) const;
+		virtual glm::vec3 GetDirectionToPoint(const glm::vec3& point) const;
+		virtual const glm::vec3& GetPosition() const;
 
-protected:
-	glm::vec3 position;
-	float intensity;
-	float maxRange;
-	glm::vec4 color;
-
-};
-
+	protected:
+		glm::vec3 m_Position;
+		float m_Intensity;
+		float m_MaxRange;
+		glm::vec3 m_Color;
+	};
+}
