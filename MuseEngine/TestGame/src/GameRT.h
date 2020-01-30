@@ -12,6 +12,7 @@
 
 namespace Muse
 {
+    class PerspectiveCamera;
     class Texture;
     class Shader;
 }
@@ -31,8 +32,8 @@ protected:
 
 private:
     std::shared_ptr<Muse::Texture> m_ViewportTexture;
-    std::shared_ptr<Muse::Texture> m_Test;
     std::vector<float> m_ScreenData;
+    Muse::PerspectiveCamera* m_PerspectiveCamera;
 
     unsigned int m_Width, m_Height;
 

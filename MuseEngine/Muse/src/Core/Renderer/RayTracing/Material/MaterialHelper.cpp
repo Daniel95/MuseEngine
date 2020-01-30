@@ -5,6 +5,7 @@
 #include "Core/Renderer/RayTracing/LightSource.h"
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Scene/Scene.h"
+#include "Core/Gameplay/Component/RenderComponent.h"
 
 namespace Muse
 {
@@ -13,10 +14,10 @@ namespace Muse
 		return glm::vec3(a_Lhs.r * a_Rhs, a_Lhs.g * a_Rhs, a_Lhs.b * a_Rhs);
 	}
 
-	void FilterBlockedLights(std::vector<LightSource*>& lights, const GameObject& sceneObject, const glm::vec3& point)
+	void FilterBlockedLights(std::vector<LightSource*>& lights, std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point)
 	{
-		std::vector<std::shared_ptr<GameObject>> sceneObjects = sceneObject.GetScene()->GetGameObjects();
-		sceneObjects.erase(std::remove(sceneObjects.begin(), sceneObjects.end(), &sceneObject), sceneObjects.end());
+		std::vector<std::shared_ptr<RenderComponent>> renderComponents = RenderComponent::GetRenderComponents();
+		renderComponents.erase(std::remove(renderComponents.begin(), renderComponents.end(), a_RenderComponent), renderComponents.end());
 
 		for (int i = lights.size() - 1; i >= 0; i--)
 		{
@@ -28,7 +29,7 @@ namespace Muse
 			ray->Origin = point;
 			ray->Direction = directionToLightSource;
 
-			bool shadow = sceneObject.GetScene()->RayCast(sceneObjects, ray, maxDistance);
+			bool shadow = a_RenderComponent->GetGameObject()->GetScene()->RayCast(renderComponents, ray, maxDistance);
 
 			if (shadow)
 			{

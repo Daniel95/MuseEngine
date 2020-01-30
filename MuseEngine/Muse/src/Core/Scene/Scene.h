@@ -15,10 +15,10 @@
 #include <cereal/cereal.hpp>
 #include <cereal/types/memory.hpp>
 #include <cereal/types/polymorphic.hpp>
-#include "Core/Renderer/RayTracing/AmbientLightSource.h"
 
 namespace Muse 
 {
+    class RenderComponent;
     struct Ray;
     struct RayHitData;
     class Component;
@@ -43,7 +43,7 @@ namespace Muse
         void RemoveGameObject(std::shared_ptr<GameObject> a_GameObject);
         void Update(float a_DeltaTime);
         void FixedUpdate(float a_TimeStep);
-        const std::vector<std::shared_ptr<GameObject>> & GetGameObjects() const { return m_GameObjectsToUpdate; }
+        const std::vector<std::shared_ptr<GameObject>> & GetGameObjects() const { return m_GameObjects; }
         void Save();
         void Save(const std::string& a_FilePath);
         void DestroyGameObjectImmediate(std::shared_ptr<GameObject> a_GameObject);
@@ -64,10 +64,10 @@ namespace Muse
         void SetBVH(std::shared_ptr<BVH> a_BVH) { m_BVH = a_BVH; }
         std::shared_ptr<BVH> GetBVH() const { return m_BVH; }
         void ConstructBVH();
-        bool RayCast(const std::shared_ptr<Ray> ray, float maxDistance = INFINITY) const;
-        bool RayCast(const std::vector< std::shared_ptr<GameObject>>& sceneObjectsToTest, const std::shared_ptr<Ray> ray, float maxDistance = INFINITY) const;
-        bool RayCast(std::vector<std::shared_ptr<RayHitData>>& rayHitDatas, const std::shared_ptr<Ray> ray, float maxDistance = INFINITY) const;
-        bool RayCast(std::vector<std::shared_ptr<RayHitData>>& rayHitDatas, const std::vector< std::shared_ptr<GameObject>>& sceneObjectsToTest, const std::shared_ptr<Ray> ray, float maxDistance = INFINITY) const;
+        bool RayCast(std::shared_ptr<Ray> a_Ray, float a_MaxDistance = INFINITY) const;
+        bool RayCast(const std::vector< std::shared_ptr<RenderComponent>>& a_RenderComponent, const std::shared_ptr<Ray> ray, float maxDistance = INFINITY) const;
+        bool RayCast(const std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, const std::shared_ptr<Ray> ray, float maxDistance = INFINITY) const;
+        bool RayCast(std::vector<std::shared_ptr<RayHitData>> a_RayHitDatas, const std::vector< std::shared_ptr<RenderComponent>>& a_RenderComponent, const std::shared_ptr<Ray> a_Ray, float a_MaxDistance = INFINITY) const;
 
 
         void IncreaseRayCastsSendThisUpdate() { m_RayCastsSendThisFrame++; }
@@ -85,11 +85,11 @@ namespace Muse
         {
             ar(cereal::make_nvp("Resource", cereal::base_class<Resource>(this)));
             ar(
-                cereal::make_nvp("m_GameObjectsToUpdate", m_GameObjectsToUpdate)
+                cereal::make_nvp("m_GameObjects", m_GameObjects)
             );
         }
     private:
-        std::vector<std::shared_ptr<GameObject>> m_GameObjectsToUpdate;
+        std::vector<std::shared_ptr<GameObject>> m_GameObjects;
         std::vector<std::shared_ptr<GameObject>> m_GameObjectsToAdd;
         std::vector<std::shared_ptr<GameObject>> m_GameObjectsToRemove;
         std::deque<std::string> m_States;
@@ -100,7 +100,7 @@ namespace Muse
         int m_RayCastsHitThisFrame = 0;
 
 
-        AmbientLightSource m_AmbientLight;
+        AmbientLightSource& m_AmbientLight;
         std::vector<LightSource*> m_Lights;
         std::shared_ptr<BVH> m_BVH;
         glm::vec3 m_BackgroundColor;
@@ -118,7 +118,7 @@ namespace Muse
 
         std::shared_ptr<GameObject> gameObjectOfType = nullptr;
 
-        for(auto gameObject : m_GameObjectsToUpdate)
+        for(auto gameObject : m_GameObjects)
         {
             if(gameObject->HasComponent<T>())
             {
@@ -136,7 +136,7 @@ namespace Muse
 
         std::vector<std::shared_ptr<GameObject>> gameObjectsOfType;
 
-        for (auto gameObject : m_GameObjectsToUpdate)
+        for (auto gameObject : m_GameObjects)
         {
             if (gameObject->HasComponent<T>())
             {

@@ -15,8 +15,8 @@ namespace Muse
 		RefractiveMaterial(const glm::vec3& color, float speculairStrength = 0.5f, float refractiveness = 0.5f, float eta = 0.975f, int maxBounces = 32);
 		~RefractiveMaterial();
 
-		virtual glm::vec3 GetColor(const GameObject& sceneObject, const glm::vec3& point, std::shared_ptr<GetColorParameters>getColorParameters) const override;
-		glm::vec3 GetRefraction(const GameObject& sceneObject, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const;
+		virtual const glm::vec3 & GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters>getColorParameters) const override;
+		const glm::vec3 & GetRefraction(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const;
 
 	private:
 		int maxBounces;

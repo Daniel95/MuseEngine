@@ -6,9 +6,9 @@
 
 namespace Muse
 {
-    class GameObject;
+    class RenderComponent;
     class LightSource;
 
     glm::vec3 operator*(const glm::vec3& a_Lhs, float a_Rhs);
-    void FilterBlockedLights(std::vector<LightSource*>& lights, const GameObject& sceneObject, const glm::vec3& point);
+    void FilterBlockedLights(std::vector<LightSource*>& lights, std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point);
 }

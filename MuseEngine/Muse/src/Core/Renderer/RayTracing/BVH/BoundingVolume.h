@@ -4,7 +4,8 @@
 
 namespace Muse
 {
-	class Shape;
+    class RenderComponent;
+    class Shape;
 	class GameObject;
 
 	class BoundingVolume
@@ -14,8 +15,8 @@ namespace Muse
 		virtual ~BoundingVolume();
 
 		Shape& boundingVolumeShape;
-		std::vector<BoundingVolume*> childrenBoundingVolumes;
-		std::vector<GameObject*> childrenSceneObjects;
+		std::vector<BoundingVolume*> m_ChildrenBoundingVolumes;
+		std::vector<std::shared_ptr<RenderComponent>> m_RenderComponents;
 
 	};
 

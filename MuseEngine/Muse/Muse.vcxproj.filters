@@ -231,12 +231,6 @@
     <ClInclude Include="src\Core\Utilities\Utilities.h">
       <Filter>src\Core\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Utilities\json - Original\from_json.h">
-      <Filter>src\Core\Utilities\json - Original</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Utilities\json - Original\to_json.h">
-      <Filter>src\Core\Utilities\json - Original</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\Utilities\json\from_json.h">
       <Filter>src\Core\Utilities\json</Filter>
     </ClInclude>
@@ -1406,7 +1400,6 @@
     <ClInclude Include="src\Core\Renderer\RayTracing\PerspectiveCamera.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Ray.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\RayHitData.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\SceneLibrary.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Material\NormalDebugMaterial.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Material\CheckerBoardMaterial.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Material\DiffuseMaterial.h" />
@@ -1522,12 +1515,6 @@
     <ClCompile Include="src\Core\Utilities\Utilities.cpp">
       <Filter>src\Core\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Utilities\json - Original\from_json.cpp">
-      <Filter>src\Core\Utilities\json - Original</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Utilities\json - Original\to_json.cpp">
-      <Filter>src\Core\Utilities\json - Original</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\Utilities\json\from_json.cpp">
       <Filter>src\Core\Utilities\json</Filter>
     </ClCompile>
@@ -1597,7 +1584,6 @@
     <ClCompile Include="src\Core\Renderer\RayTracing\OrthographicCamera.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\RayHitData.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\SceneLibrary.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\NormalDebugMaterial.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\CheckerBoardMaterial.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\DiffuseMaterial.cpp" />

@@ -14,30 +14,30 @@ namespace Muse
 	{
 	}
 
-	bool BVH::RayCast(std::vector<std::shared_ptr<RayHitData>>& rayHitDatas, std::shared_ptr<Ray> ray, float maxDistance) const
+	bool BVH::RayCast(const std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, std::shared_ptr<Ray> a_Ray, float a_MaxDistance) const
 	{
-		assert(boundingVolumes.size() > 0);
+		ASSERT_ENGINE(boundingVolumes.size() > 0, "No bounding volumes!");
 
 		for (const BoundingVolume* boundingVolume : boundingVolumes)
 		{
-			CheckBoundingVolume(rayHitDatas, *boundingVolume, ray, maxDistance);
+			CheckBoundingVolume(a_RayHitDatas, *boundingVolume, a_Ray, a_MaxDistance);
 		}
 
-		return rayHitDatas.size() != 0;
+		return a_RayHitDatas.size() != 0;
 	}
 
-	void BVH::CheckBoundingVolume(std::vector<std::shared_ptr<RayHitData>>& rayHitDatas, const BoundingVolume& boundingVolumeToCheck, const std::shared_ptr<Ray> ray, float maxDistance) const
+	void BVH::CheckBoundingVolume(const std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, const BoundingVolume& a_BoundingVolumeToCheck, std::shared_ptr<Ray> a_Ray, float a_MaxDistance) const
 	{
 		scene.IncreaseRayCastsSendThisUpdate();
 
 		glm::vec3 intersectionPoint;
-		if (!boundingVolumeToCheck.boundingVolumeShape.CheckRayHit(intersectionPoint, ray)) { return; }
+		if (!a_BoundingVolumeToCheck.boundingVolumeShape.CheckRayHit(intersectionPoint, a_Ray)) { return; }
 
-		scene.RayCast(rayHitDatas, boundingVolumeToCheck.childrenSceneObjects, ray, maxDistance);
+		scene.RayCast(a_RayHitDatas, a_BoundingVolumeToCheck.m_RenderComponents, a_Ray, a_MaxDistance);
 
-		for (const BoundingVolume* boundingVolume : boundingVolumeToCheck.childrenBoundingVolumes)
+		for (const BoundingVolume* boundingVolume : a_BoundingVolumeToCheck.m_ChildrenBoundingVolumes)
 		{
-			CheckBoundingVolume(rayHitDatas, *boundingVolume, ray, maxDistance);
+			CheckBoundingVolume(a_RayHitDatas, *boundingVolume, a_Ray, a_MaxDistance);
 		}
 	}
 
@@ -64,21 +64,21 @@ namespace Muse
 		}
 	}
 
-	void BVH::PrintBoundingVolume(const BoundingVolume& boundingVolume, int layer, int& total) const
+	void BVH::PrintBoundingVolume(const BoundingVolume& a_BoundingVolume, int a_Layer, int& a_Total) const
 	{
-		PrintLayerSpacing(layer);
+		PrintLayerSpacing(a_Layer);
 
-		std::cout << "____________  LAYER: " << layer << std::endl;
-		PrintLayerSpacing(layer);
-		std::cout << "SceneObject Count: " << boundingVolume.childrenSceneObjects.size() << std::endl;
+		std::cout << "____________  LAYER: " << a_Layer << std::endl;
+		PrintLayerSpacing(a_Layer);
+		std::cout << "SceneObject Count: " << a_BoundingVolume.m_RenderComponents.size() << std::endl;
 		std::cout << std::endl;
 
-		layer++;
-		total++;
+		a_Layer++;
+		a_Total++;
 
-		for (const BoundingVolume* childBoundingVolume : boundingVolume.childrenBoundingVolumes)
+		for (const BoundingVolume* childBoundingVolume : a_BoundingVolume.m_ChildrenBoundingVolumes)
 		{
-			PrintBoundingVolume(*childBoundingVolume, layer, total);
+			PrintBoundingVolume(*childBoundingVolume, a_Layer, a_Total);
 		}
 	}
 }

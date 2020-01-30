@@ -8,7 +8,8 @@
 
 namespace Muse
 {
-	class GameObject;
+    class RenderComponent;
+    class GameObject;
 	class Shape;
 
 	class TopDownBVH
@@ -18,10 +19,10 @@ namespace Muse
 		TopDownBVH(Scene& scenes);
 		virtual ~TopDownBVH();
 
-		virtual void ConstructHierarchy(const std::vector<GameObject*>& a_GameObjects) override;
-		void Split(BoundingVolume& parentBoundingVolume, const std::vector<GameObject*>& sceneObjectsLeftToGroup) const;
-		bool CheckShapeOverlap(const Shape& shape, const glm::vec3& minBound, const glm::vec3& maxBound) const;
-		void GetWorldMinMaxBounds(glm::vec3& minBound, glm::vec3& maxBound, const std::vector<GameObject*>& sceneObjects) const;
+		virtual void ConstructHierarchy(const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents) override;
+		void Split(BoundingVolume& parentBoundingVolume, const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents) const;
+        static bool CheckShapeOverlap(std::shared_ptr<Shape> shape, const glm::vec3& minBound, const glm::vec3& maxBound);
+		void GetWorldMinMaxBounds(glm::vec3& minBound, glm::vec3& maxBound, const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents) const;
 
 	};
 }

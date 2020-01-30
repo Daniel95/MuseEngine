@@ -1,21 +1,20 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 
 #include <glm/glm.hpp>
 
-
 namespace Muse
 {
-
-	class SceneObject;
+    class RenderComponent;
 
 	struct RayHitData
 	{
-		RayHitData(const SceneObject* hitSceneObject, const glm::vec3 interSectionPoint);
+		RayHitData(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3 & interSectionPoint);
 
-		const SceneObject* HitSceneObject;
-		const glm::vec3 IntersectionPoint;
+		std::shared_ptr<const RenderComponent> m_RenderComponent;
+		const glm::vec3 m_IntersectionPoint;
 	};
 
 	const std::shared_ptr<RayHitData> GetClosestRayHitData(std::vector<std::shared_ptr<RayHitData>> rayHitDatas, glm::vec3 rayOrigin);

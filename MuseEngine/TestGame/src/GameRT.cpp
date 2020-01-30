@@ -13,6 +13,9 @@
 #include "Core/Renderer/Buffer/FrameBuffer.h"
 #include "Core/Renderer/RayTracing/RayHitData.h"
 #include "Core/Renderer/RayTracing/GetColorParameters.h"
+#include "Core/Renderer/RayTracing/BVH/BVH.h"
+#include "Core/Renderer/RayTracing/Ray.h"
+#include "Core/Renderer/RayTracing/PerspectiveCamera.h"
 
 #if GAME_RT
 #include "EntryPoint.h"
@@ -29,7 +32,6 @@ void GameRT::OnStart()
 
     std::shared_ptr<Muse::Scene> scene = Muse::ResourceManager::Create<Muse::Scene>("New Scene");
     Muse::SceneManager::SwitchScene(scene);
-    m_Test = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
 
     m_Height = GetViewport()->GetHeight();
     m_Width = GetViewport()->GetWidth();
@@ -38,7 +40,9 @@ void GameRT::OnStart()
 
     m_ScreenData.resize(m_Height * m_Width * 4);
 
-    scene->ConstructBVH();
+    //scene->ConstructBVH();
+
+    m_PerspectiveCamera = new Muse::PerspectiveCamera(glm::vec3(0, 1, -1), glm::vec3(0, -50, 100), m_Width, m_Height, 50);
 }
 
 void GameRT::OnUpdate(float a_DeltaTime)
@@ -67,24 +71,27 @@ void GameRT::OnRender()
         Resize(width, height);
     }
 
+    std::shared_ptr<Muse::Scene> scene = Muse::SceneManager::GetActiveScene();
+
     /////////////////
 
     std::vector<std::shared_ptr<Muse::RayHitData>> rayHitDatas;
     std::shared_ptr<Muse::GetColorParameters> getColorParameters = std::make_shared<Muse::GetColorParameters>();
 
+    int i = 0;
     for (int y = 0; y < height; y++)
     {
         for (int x = 0; x < width; x++)
         {
-            std::shared_ptr<Muse::Ray> ray = camera.GetLookingRay(static_cast<float>(x), static_cast<float>(y));
+            std::shared_ptr<Muse::Ray> ray = m_PerspectiveCamera->GetLookingRay(static_cast<float>(x), static_cast<float>(y));
 
-            if (bvh != NULL)
+            if (scene->GetBVH() != nullptr)
             {
-                bvh->RayCast(rayHitDatas, ray);
+                scene->GetBVH()->RayCast(rayHitDatas, ray);
             }
             else
             {
-                RayCast(rayHitDatas, ray);
+                scene->RayCast(rayHitDatas, ray);
             }
 
             if (rayHitDatas.size() > 0)
@@ -93,44 +100,20 @@ void GameRT::OnRender()
                 getColorParameters->RayDirection = ray->Direction;
                 getColorParameters->Bounces = 5;
 
-                const glm::vec3 color = closestHit->HitSceneObject->GetColor(closestHit->IntersectionPoint, getColorParameters);
+                const glm::vec3 color = closestHit->m_RenderComponent->GetColor(closestHit->m_IntersectionPoint, getColorParameters);
+
+                m_ScreenData[i] = color.x;
+                m_ScreenData[i + 1] = color.y;
+                m_ScreenData[i + 2] = color.z;
+                m_ScreenData[i + 3] = 1.0f;
+
+                i += stride;
 
                 rayHitDatas.clear();
             }
         }
     }
 
-
-
-
-    ////////////
-
-
-
-
-    /*
-    glm::mat4 t = glm::mat4(1);
-
-    glm::vec3 p0 = t * glm::vec4(-1, 1, 1, 0);
-    glm::vec3 p0 = t * glm::vec4(-1, 1, 1, 0);
-    glm::vec3 p0 = t * glm::vec4(-1, 1, 1, 0);
-    */
-
-    glm::vec3 color = glm::vec3(1, 0.2f, 0.2f);
-
-    int i = 0;
-    for (int y = 0; y < m_Height; ++y)
-    {
-        for (int x = 0; x < m_Width; ++x)
-        {
-            m_ScreenData[i] = color.x;
-            m_ScreenData[i + 1] = color.y;
-            m_ScreenData[i + 2] = color.z;
-            m_ScreenData[i + 3] = 1.0f;
-
-            i += stride;
-        }
-    }
     GetViewport()->BindTexture();
     GetViewport()->SetDataF(&m_ScreenData[0], size);
 

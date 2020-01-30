@@ -34,16 +34,16 @@ namespace Muse
 	{
 		MUSE_PROFILE_FUNCTION();
 
-		m_isEnabled = true;
         OnEnable();
+		m_isEnabled = true;
 	}
 
 	void Component::Disable()
 	{
 		MUSE_PROFILE_FUNCTION();
 
-		m_isEnabled = false;
         OnDisable();
+		m_isEnabled = false;
 	}
 
     std::shared_ptr<TransformComponent> Component::GetTransform() const

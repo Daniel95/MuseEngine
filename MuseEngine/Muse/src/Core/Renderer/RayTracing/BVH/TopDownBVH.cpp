@@ -15,35 +15,36 @@ namespace Muse
 
 	TopDownBVH::~TopDownBVH() {}
 
-	void TopDownBVH::ConstructHierarchy(const std::vector<GameObject*>& a_GameObjects)
+	void TopDownBVH::ConstructHierarchy(const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents)
 	{
 		boundingVolumes.clear();
 
 		glm::vec3 minBounds;
 		glm::vec3 maxBounds;
-		GetWorldMinMaxBounds(minBounds, maxBounds, a_GameObjects);
+		GetWorldMinMaxBounds(minBounds, maxBounds, a_RenderComponents);
 		glm::vec3 range = maxBounds - minBounds;
 		glm::vec3 center = (minBounds + maxBounds) / 2.f;
 
-		Box* box = new Box(center, range);
+		//Box* box = new Box(center, range);
+		Box* box = new Box();
 		BoundingVolume* boundingVolume = new BoundingVolume(*box);
 		boundingVolumes.push_back(boundingVolume);
 
-		if (a_GameObjects.size() > 2)
+		if (a_RenderComponents.size() > 2)
 		{
-			Split(*boundingVolume, a_GameObjects);
+			Split(*boundingVolume, a_RenderComponents);
 		}
 		else
 		{
-			for (GameObject* sceneObject : a_GameObjects)
+			for (std::shared_ptr<RenderComponent> sceneObject : a_RenderComponents)
 			{
-				boundingVolume->childrenSceneObjects.push_back(sceneObject);
+				boundingVolume->m_RenderComponents.push_back(sceneObject);
 			}
 		}
 
 	}
 
-	void TopDownBVH::Split(BoundingVolume& parentBoundingVolume, const std::vector<GameObject*>& sceneObjectsToGroup) const
+	void TopDownBVH::Split(BoundingVolume& parentBoundingVolume, const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents) const
 	{
 		//Start with placing two bounding volumes inside the parent bounding volume, that split the space evenly.
 		glm::vec3 parentBoundingVolumePosition = parentBoundingVolume.boundingVolumeShape.GetTransform()->GetPosition();
@@ -75,8 +76,8 @@ namespace Muse
 		}
 
 		//Sort the sceneObjects over the two new boundubg volumes box spaces, and the parent boundubg volume.
-		std::vector<GameObject*> sceneObjectsWithinbox1;
-		std::vector<GameObject*> sceneObjectsWithinbox2;
+		std::vector<std::shared_ptr<RenderComponent>> sceneObjectsWithinbox1;
+		std::vector<std::shared_ptr<RenderComponent>> sceneObjectsWithinbox2;
 
 		glm::vec3 halfBoxScale = boxScale / 2.f;
 		glm::vec3 box1MinBounds = box1Position - halfBoxScale;
@@ -85,9 +86,9 @@ namespace Muse
 		glm::vec3 box2MinBounds = box2Position - halfBoxScale;
 		glm::vec3 box2MaxBounds = box2Position + halfBoxScale;
 
-		for (GameObject* gameObject : sceneObjectsToGroup)
+		for (std::shared_ptr<RenderComponent> renderComponent : a_RenderComponents)
 		{
-			Shape& shape = gameObject->GetComponent<RenderComponent>()->GetShape();
+			std::shared_ptr<Shape> shape = renderComponent->GetShape();
 
 			bool overlapWithBoundingVolume1 = CheckShapeOverlap(shape, box1MinBounds, box1MaxBounds);
 			bool overlapWithBoundingVolume2 = CheckShapeOverlap(shape, box2MinBounds, box2MaxBounds);
@@ -96,17 +97,17 @@ namespace Muse
 
 			if (overlapWithBoundingVolume1 && overlapWithBoundingVolume2)
 			{
-				parentBoundingVolume.childrenSceneObjects.push_back(gameObject);
+				parentBoundingVolume.m_RenderComponents.push_back(renderComponent);
 			}
 			else
 			{
 				if (overlapWithBoundingVolume1)
 				{
-					sceneObjectsWithinbox1.push_back(gameObject);
+					sceneObjectsWithinbox1.push_back(renderComponent);
 				}
 				else
 				{
-					sceneObjectsWithinbox2.push_back(gameObject);
+					sceneObjectsWithinbox2.push_back(renderComponent);
 				}
 			}
 		}
@@ -115,46 +116,47 @@ namespace Muse
 		//If the bounding boxes have more then one SceneObject as child, split them as well.
 		if (sceneObjectsWithinbox1.size() > 2)
 		{
-			BoundingVolume& newBoundingVolume = *new BoundingVolume(*new Box(box1Position, boxScale));
-			parentBoundingVolume.childrenBoundingVolumes.push_back(&newBoundingVolume);
+			//BoundingVolume& newBoundingVolume = *new BoundingVolume(*new Box(box1Position, boxScale));
+			BoundingVolume& newBoundingVolume = *new BoundingVolume(*new Box());
+			parentBoundingVolume.m_ChildrenBoundingVolumes.push_back(&newBoundingVolume);
 			Split(newBoundingVolume, sceneObjectsWithinbox1);
 		}
 		else
 		{
-			for (GameObject* sceneObject : sceneObjectsWithinbox1)
+			for (std::shared_ptr<RenderComponent> sceneObject : sceneObjectsWithinbox1)
 			{
-				parentBoundingVolume.childrenSceneObjects.push_back(sceneObject);
+				parentBoundingVolume.m_RenderComponents.push_back(sceneObject);
 			}
 		}
 
 		if (sceneObjectsWithinbox2.size() > 2)
 		{
-			BoundingVolume& newBoundingVolume = *new BoundingVolume(*new Box(box2Position, boxScale));
-			parentBoundingVolume.childrenBoundingVolumes.push_back(&newBoundingVolume);
+			BoundingVolume& newBoundingVolume = *new BoundingVolume(*new Box());
+			parentBoundingVolume.m_ChildrenBoundingVolumes.push_back(&newBoundingVolume);
 			Split(newBoundingVolume, sceneObjectsWithinbox2);
 		}
 		else
 		{
-			for (GameObject* sceneObject : sceneObjectsWithinbox2)
+			for (std::shared_ptr<RenderComponent> sceneObject : sceneObjectsWithinbox2)
 			{
-				parentBoundingVolume.childrenSceneObjects.push_back(sceneObject);
+				parentBoundingVolume.m_RenderComponents.push_back(sceneObject);
 			}
 		}
 	}
 
-	bool TopDownBVH::CheckShapeOverlap(const Shape& shape, const glm::vec3& minBound, const glm::vec3& maxBound) const
-	{
+	bool TopDownBVH::CheckShapeOverlap(std::shared_ptr<Shape> shape, const glm::vec3& minBound, const glm::vec3& maxBound)
+    {
 		glm::vec3 shapeMinBound;
 		glm::vec3 shapeMaxBound;
 
-		shape.GetMinMaxBounds(shapeMinBound, shapeMaxBound);
+		shape->GetMinMaxBounds(shapeMinBound, shapeMaxBound);
 
 		return (shapeMaxBound.x >= minBound.x && maxBound.x >= shapeMinBound.x) &&
 			(shapeMaxBound.y >= minBound.y && maxBound.y >= shapeMinBound.y) &&
 			(shapeMaxBound.z >= minBound.z && maxBound.z >= shapeMinBound.z);
 	}
 
-	void TopDownBVH::GetWorldMinMaxBounds(glm::vec3& minBound, glm::vec3& maxBound, const std::vector<GameObject*>& sceneObjects) const
+	void TopDownBVH::GetWorldMinMaxBounds(glm::vec3& minBound, glm::vec3& maxBound, const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents) const
 	{
 		glm::vec3 sceneObjectMinBound;
 		glm::vec3 sceneObjectMaxBound;
@@ -162,11 +164,11 @@ namespace Muse
 		minBound = glm::vec3(std::numeric_limits<float>::max(), std::numeric_limits<float>::max(), std::numeric_limits<float>::max());
 		maxBound = glm::vec3(std::numeric_limits<float>::min(), std::numeric_limits<float>::min(), std::numeric_limits<float>::min());
 
-		for (GameObject* sceneObject : sceneObjects)
+		for (std::shared_ptr<RenderComponent> sceneObject : a_RenderComponents)
 		{
-			Shape& shape = sceneObject->GetComponent<RenderComponent>()->GetShape();
+			std::shared_ptr<Shape> shape = sceneObject->GetGameObject()->GetComponent<RenderComponent>()->GetShape();
 
-			shape.GetMinMaxBounds(sceneObjectMinBound, sceneObjectMaxBound);
+			shape->GetMinMaxBounds(sceneObjectMinBound, sceneObjectMaxBound);
 
 			minBound.x = std::min(sceneObjectMinBound.x, minBound.x);
 			minBound.y = std::min(sceneObjectMinBound.y, minBound.y);

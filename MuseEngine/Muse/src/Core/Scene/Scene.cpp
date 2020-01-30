@@ -27,6 +27,9 @@
 #include "Core/Renderer/RayTracing/AmbientLightSource.h"
 #include "Core/Renderer/RayTracing/BVH/BVH.h"
 #include "Core/Renderer/RayTracing/Ray.h"
+#include "Core/Renderer/RayTracing/AmbientLightSource.h"
+#include "Core/Gameplay/Component/RenderComponent.h"
+#include "Core/Renderer/RayTracing/RayHitData.h"
 
 namespace Muse
 {
@@ -43,7 +46,7 @@ namespace Muse
         MUSE_PROFILE_FUNCTION();
 
         Unload();
-        ASSERT_ENGINE(m_GameObjectsToUpdate.size() == 0, "Not all gameobjects have been destroyed!");
+        ASSERT_ENGINE(m_GameObjects.size() == 0, "Not all gameobjects have been destroyed!");
     }
 
     void Scene::Unload()
@@ -57,11 +60,11 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        for (std::shared_ptr<GameObject> gameObject : m_GameObjectsToUpdate)
+        for (std::shared_ptr<GameObject> gameObject : m_GameObjects)
         {
             gameObject.reset();
         }
-        m_GameObjectsToUpdate.clear();
+        m_GameObjects.clear();
 
         for (std::shared_ptr<GameObject> gameObject : m_GameObjectsToAdd)
         {
@@ -120,11 +123,11 @@ namespace Muse
 
         for (auto gameObject : m_GameObjectsToAdd)
         {
-            m_GameObjectsToUpdate.push_back(gameObject);
+            m_GameObjects.push_back(gameObject);
         }
         m_GameObjectsToAdd.clear();
 
-        for (auto gameObject : m_GameObjectsToUpdate)
+        for (auto gameObject : m_GameObjects)
         {
             gameObject->Update(a_DeltaTime);
         }
@@ -144,7 +147,7 @@ namespace Muse
             {
                 LOG_ENGINE_INFO("SAVE");
 
-                std::string path = Editor::GetSavePath("txt");
+                const std::string path = Editor::GetSavePath("txt");
                 Save(path);
             }
         }
@@ -154,7 +157,7 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        for (const auto gameObject : m_GameObjectsToUpdate)
+        for (const auto gameObject : m_GameObjects)
         {
             gameObject->FixedUpdate(a_TimeStep);
         }
@@ -171,7 +174,7 @@ namespace Muse
 
         for (auto gameObject : m_GameObjectsToAdd)
         {
-            m_GameObjectsToUpdate.push_back(gameObject);
+            m_GameObjects.push_back(gameObject);
         }
         m_GameObjectsToAdd.clear();
 
@@ -209,7 +212,7 @@ namespace Muse
         MUSE_PROFILE_FUNCTION();
 
         m_GameObjectsToAdd.erase(std::remove(m_GameObjectsToAdd.begin(), m_GameObjectsToAdd.end(), a_GameObject), m_GameObjectsToAdd.end());
-        m_GameObjectsToUpdate.erase(std::remove(m_GameObjectsToUpdate.begin(), m_GameObjectsToUpdate.end(), a_GameObject), m_GameObjectsToUpdate.end());
+        m_GameObjects.erase(std::remove(m_GameObjects.begin(), m_GameObjects.end(), a_GameObject), m_GameObjects.end());
     }
 
     std::shared_ptr<GameObject> Scene::GetEditorCamera() const
@@ -217,7 +220,7 @@ namespace Muse
         MUSE_PROFILE_FUNCTION();
 
         std::shared_ptr<GameObject> editorCameraGameObject = nullptr;
-        for (const auto gameObject : m_GameObjectsToUpdate)
+        for (const auto gameObject : m_GameObjects)
         {
             std::shared_ptr<CameraComponent> camera = gameObject->GetComponent<CameraComponent>();
 
@@ -263,34 +266,34 @@ namespace Muse
     void Scene::ConstructBVH()
     {
         ASSERT_ENGINE(m_BVH != nullptr, "Not BVH set!");
-        m_BVH->ConstructHierarchy(m_GameObjectsToUpdate);
+        m_BVH->ConstructHierarchy(RenderComponent::GetRenderComponents());
         m_BVH->PrintHierarchy();
     }
 
-    bool Scene::RayCast(const std::shared_ptr<Ray> ray, float maxDistance) const
+    bool Scene::RayCast(const std::shared_ptr<Ray> a_Ray, float a_MaxDistance) const
     {
-        return RayCast(m_GameObjectsToUpdate, ray, maxDistance);
+        return RayCast(RenderComponent::GetRenderComponents(), a_Ray, a_MaxDistance);
     }
 
-    bool Scene::RayCast(const std::vector<std::shared_ptr<GameObject>>& sceneObjectsToTest, const std::shared_ptr<Ray> ray, float maxDistance) const
+    bool Scene::RayCast(const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents, const std::shared_ptr<Ray> ray, float maxDistance) const
     {
         std::vector<std::shared_ptr<RayHitData>> rayHitDatas;
-        return RayCast(rayHitDatas, sceneObjectsToTest, ray, maxDistance);
+        return RayCast(rayHitDatas, a_RenderComponents, ray, maxDistance);
     }
 
-    bool Scene::RayCast(std::vector<std::shared_ptr<RayHitData>>& rayHitDatas, const std::shared_ptr<Ray> ray, const float maxDistance) const
+    bool Scene::RayCast(const std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, const std::shared_ptr<Ray> ray, const float maxDistance) const
     {
-        return RayCast(rayHitDatas, m_GameObjectsToUpdate, ray, maxDistance);
+        return RayCast(a_RayHitDatas, RenderComponent::GetRenderComponents(), ray, maxDistance);
     }
 
-    bool Scene::RayCast(std::vector<std::shared_ptr<RayHitData>>& rayHitDatas, const std::vector< std::shared_ptr<GameObject>>& sceneObjectsToTest, const std::shared_ptr<Ray> ray, const float maxDistance) const
+    bool Scene::RayCast(std::vector<std::shared_ptr<RayHitData>> rayHitDatas, const std::vector< std::shared_ptr<RenderComponent>>& a_RenderComponents, const std::shared_ptr<Ray> ray, const float maxDistance) const
     {
-        for (std::shared_ptr<GameObject> sceneObject : m_GameObjectsToUpdate)
+        for (std::shared_ptr<RenderComponent> sceneObject : a_RenderComponents)
         {
-            std::unique_ptr<RayHitData> rayHitData = sceneObject->CheckRayHit(ray);
-            if (rayHitData != NULL)
+            std::shared_ptr<RayHitData> rayHitData = sceneObject->CheckRayHit(ray);
+            if (rayHitData != nullptr)
             {
-                rayHitDatas.push_back(std::move(rayHitData));
+                rayHitDatas.push_back(rayHitData);
             }
         }
 
@@ -299,9 +302,8 @@ namespace Muse
             RemoveRayHitsOutOfDistance(rayHitDatas, ray->Origin, maxDistance);
         }
 
-        return rayHitDatas.size() != 0;
+        return !rayHitDatas.empty();
     }
-
 
 
 

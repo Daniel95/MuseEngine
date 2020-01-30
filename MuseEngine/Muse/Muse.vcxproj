@@ -196,7 +196,6 @@
     <ClInclude Include="src\Core\Renderer\RayTracing\RayHitData.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Material\ReflectiveMaterial.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Material\RefractiveMaterial.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\SceneLibrary.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Shape\Shape.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Material\SpeculairMaterial.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Shape\Sphere.h" />
@@ -220,8 +219,6 @@
     <ClInclude Include="src\Core\Utilities\HardCodedMesh.h" />
     <ClInclude Include="src\Core\Utilities\Log.h" />
     <ClInclude Include="src\Core\Utilities\Utilities.h" />
-    <ClInclude Include="src\Core\Utilities\json - Original\from_json.h" />
-    <ClInclude Include="src\Core\Utilities\json - Original\to_json.h" />
     <ClInclude Include="src\Core\Utilities\json\from_json.h" />
     <ClInclude Include="src\Core\Utilities\json\to_json.h" />
     <ClInclude Include="src\Core\Window.h" />
@@ -644,7 +641,6 @@
     <ClCompile Include="src\Core\Renderer\RayTracing\RayHitData.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\ReflectiveMaterial.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\RefractiveMaterial.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\SceneLibrary.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\SpeculairMaterial.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Shape\Sphere.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\BVH\TopDownBVH.cpp" />
@@ -664,8 +660,6 @@
     <ClCompile Include="src\Core\System\Manager\SystemManager.cpp" />
     <ClCompile Include="src\Core\Utilities\Log.cpp" />
     <ClCompile Include="src\Core\Utilities\Utilities.cpp" />
-    <ClCompile Include="src\Core\Utilities\json - Original\from_json.cpp" />
-    <ClCompile Include="src\Core\Utilities\json - Original\to_json.cpp" />
     <ClCompile Include="src\Core\Utilities\json\from_json.cpp">
       <ObjectFileName>$(IntDir)\from_json1.obj</ObjectFileName>
     </ClCompile>
