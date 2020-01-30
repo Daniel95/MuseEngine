@@ -16,6 +16,7 @@
 #include "Core/Renderer/RayTracing/BVH/BVH.h"
 #include "Core/Renderer/RayTracing/Ray.h"
 #include "Core/Renderer/RayTracing/PerspectiveCamera.h"
+#include "RayTracer/SceneLibraryRT.h"
 
 #if GAME_RT
 #include "EntryPoint.h"
@@ -42,7 +43,9 @@ void GameRT::OnStart()
 
     //scene->ConstructBVH();
 
-    m_PerspectiveCamera = new Muse::PerspectiveCamera(glm::vec3(0, 1, -1), glm::vec3(0, -50, 100), m_Width, m_Height, 50);
+    m_PerspectiveCamera = new Muse::PerspectiveCamera(glm::vec3(0, 0, -1), glm::vec3(0, 0, 0), m_Width, m_Height, 50);
+
+    SceneLibraryRT::MakeTestScene(scene);
 }
 
 void GameRT::OnUpdate(float a_DeltaTime)
@@ -78,6 +81,8 @@ void GameRT::OnRender()
     std::vector<std::shared_ptr<Muse::RayHitData>> rayHitDatas;
     std::shared_ptr<Muse::GetColorParameters> getColorParameters = std::make_shared<Muse::GetColorParameters>();
 
+    bool hit = false;
+
     int i = 0;
     for (int y = 0; y < height; y++)
     {
@@ -94,7 +99,7 @@ void GameRT::OnRender()
                 scene->RayCast(rayHitDatas, ray);
             }
 
-            if (rayHitDatas.size() > 0)
+            if (!rayHitDatas.empty())
             {
                 const std::shared_ptr<Muse::RayHitData> closestHit = GetClosestRayHitData(rayHitDatas, ray->Origin);
                 getColorParameters->RayDirection = ray->Direction;
@@ -110,9 +115,17 @@ void GameRT::OnRender()
                 i += stride;
 
                 rayHitDatas.clear();
+
+                hit = true;
             }
         }
     }
+
+    if(!hit)
+    {
+        LOG_INFO("No hits!");
+    }
+
 
     GetViewport()->BindTexture();
     GetViewport()->SetDataF(&m_ScreenData[0], size);

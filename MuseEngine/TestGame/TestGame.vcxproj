@@ -143,12 +143,14 @@
     <ClInclude Include="src\GameRT.h" />
     <ClInclude Include="src\Mode.h" />
     <ClInclude Include="src\PlayerComponent.h" />
+    <ClInclude Include="src\RayTracer\SceneLibraryRT.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Game2D.cpp" />
     <ClCompile Include="src\Game3D.cpp" />
     <ClCompile Include="src\GameRT.cpp" />
     <ClCompile Include="src\PlayerComponent.cpp" />
+    <ClCompile Include="src\RayTracer\SceneLibraryRT.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Muse\Muse.vcxproj">

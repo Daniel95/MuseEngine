@@ -45,7 +45,7 @@ namespace Muse
 		glm::vec3 reflectionColor = a_RenderComponent->GetGameObject()->GetScene()->GetBackgroundColor();
 		const glm::vec3 reflectionDirection = glm::reflect(getColorParameters->RayDirection, a_RenderComponent->GetNormal(point));
 
-		std::vector<std::shared_ptr<RenderComponent>> renderComponents = RenderComponent::GetRenderComponents();
+		std::vector<std::shared_ptr<RenderComponent>> renderComponents = RenderComponent::GetAll();
 		renderComponents.erase(std::remove(renderComponents.begin(), renderComponents.end(), a_RenderComponent), renderComponents.end());
 		std::vector<std::shared_ptr<RayHitData>> rayHitDatas;
 		std::shared_ptr<Ray> ray = std::make_shared<Ray>();

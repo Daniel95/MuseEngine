@@ -70,7 +70,10 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        m_RenderComponents.push_back(shared_from_this());
+        if (!IsEnabled())
+        {
+            m_RenderComponents.push_back(shared_from_this());
+        }
     }
 
     void RenderComponent::OnDisable()

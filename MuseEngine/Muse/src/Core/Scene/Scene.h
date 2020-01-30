@@ -58,6 +58,7 @@ namespace Muse
         const std::vector<std::shared_ptr<GameObject>>& FindGameObjectsOfType();
 
 
+        void SetAmbientLight(std::shared_ptr<AmbientLightSource> a_AmbientLightSource) { m_AmbientLight = a_AmbientLightSource; }
         const glm::vec3& GetAmbientLight() const;
         const std::vector<LightSource*>& GetLightSources() const { return m_Lights; }
         const glm::vec3& GetBackgroundColor() const { return m_BackgroundColor; }
@@ -65,8 +66,8 @@ namespace Muse
         std::shared_ptr<BVH> GetBVH() const { return m_BVH; }
         void ConstructBVH();
         bool RayCast(std::shared_ptr<Ray> a_Ray, float a_MaxDistance = INFINITY) const;
-        bool RayCast(const std::vector< std::shared_ptr<RenderComponent>>& a_RenderComponent, const std::shared_ptr<Ray> ray, float maxDistance = INFINITY) const;
-        bool RayCast(const std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, const std::shared_ptr<Ray> ray, float maxDistance = INFINITY) const;
+        bool RayCast(std::vector< std::shared_ptr<RenderComponent>>& a_RenderComponent, const std::shared_ptr<Ray> ray, float maxDistance = INFINITY) const;
+        bool RayCast(std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, const std::shared_ptr<Ray> ray, float maxDistance = INFINITY) const;
         bool RayCast(std::vector<std::shared_ptr<RayHitData>> a_RayHitDatas, const std::vector< std::shared_ptr<RenderComponent>>& a_RenderComponent, const std::shared_ptr<Ray> a_Ray, float a_MaxDistance = INFINITY) const;
 
 
@@ -99,14 +100,10 @@ namespace Muse
         int m_RayCastsSendThisFrame = 0;
         int m_RayCastsHitThisFrame = 0;
 
-
-        AmbientLightSource& m_AmbientLight;
+        std::shared_ptr<AmbientLightSource> m_AmbientLight;
         std::vector<LightSource*> m_Lights;
         std::shared_ptr<BVH> m_BVH;
         glm::vec3 m_BackgroundColor;
-
-
-
 
         void Unload();
 	};

@@ -49,7 +49,7 @@ namespace Muse
         void OnEnable() override;
         void OnDisable() override;
 
-        static std::vector<std::shared_ptr<RenderComponent>> GetRenderComponents() { return m_RenderComponents; }
+        static std::vector<std::shared_ptr<RenderComponent>> GetAll() { return m_RenderComponents; }
 
         template <class Archive>
         void serialize(Archive& ar)
@@ -78,7 +78,7 @@ namespace Muse
         std::shared_ptr<Shape> m_Shape;
         std::shared_ptr<Material> m_Material;
 
-        int test;
+        int test = 1;
     };
 }
 

@@ -14,7 +14,7 @@ namespace Muse
 	{
 	}
 
-	bool BVH::RayCast(const std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, std::shared_ptr<Ray> a_Ray, float a_MaxDistance) const
+	bool BVH::RayCast(std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, std::shared_ptr<Ray> a_Ray, float a_MaxDistance) const
 	{
 		ASSERT_ENGINE(boundingVolumes.size() > 0, "No bounding volumes!");
 
@@ -26,7 +26,7 @@ namespace Muse
 		return a_RayHitDatas.size() != 0;
 	}
 
-	void BVH::CheckBoundingVolume(const std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, const BoundingVolume& a_BoundingVolumeToCheck, std::shared_ptr<Ray> a_Ray, float a_MaxDistance) const
+	void BVH::CheckBoundingVolume(std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, const BoundingVolume& a_BoundingVolumeToCheck, std::shared_ptr<Ray> a_Ray, float a_MaxDistance) const
 	{
 		scene.IncreaseRayCastsSendThisUpdate();
 

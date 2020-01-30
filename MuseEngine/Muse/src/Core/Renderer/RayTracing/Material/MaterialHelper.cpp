@@ -16,7 +16,7 @@ namespace Muse
 
 	void FilterBlockedLights(std::vector<LightSource*>& lights, std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point)
 	{
-		std::vector<std::shared_ptr<RenderComponent>> renderComponents = RenderComponent::GetRenderComponents();
+		std::vector<std::shared_ptr<RenderComponent>> renderComponents = RenderComponent::GetAll();
 		renderComponents.erase(std::remove(renderComponents.begin(), renderComponents.end(), a_RenderComponent), renderComponents.end());
 
 		for (int i = lights.size() - 1; i >= 0; i--)

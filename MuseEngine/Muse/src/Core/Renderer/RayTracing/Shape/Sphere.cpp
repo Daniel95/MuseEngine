@@ -6,11 +6,6 @@
 
 namespace Muse
 {
-	Sphere::Sphere(float a_Radius)
-		: radius(a_Radius)
-	{
-	}
-
 	bool Sphere::CheckRayHit(glm::vec3& a_IntersectionPoint, const std::shared_ptr<Ray> a_Ray) const
 	{
 		const glm::vec3 raySphereOffset = GetTransform()->GetPosition() - a_Ray->Origin;
@@ -22,9 +17,9 @@ namespace Muse
 
 		const float sphereLocalY = glm::distance(GetTransform()->GetPosition(), raySphereOffsetOnLine);
 
-		if (sphereLocalY < radius)
+		if (sphereLocalY < m_Radius)
 		{
-			const float sphereLocalX = sqrt(radius * radius - sphereLocalY * sphereLocalY);
+			const float sphereLocalX = sqrt(m_Radius * m_Radius - sphereLocalY * sphereLocalY);
 			const float lengthToIntersection = offsetLength - sphereLocalX;
 			a_IntersectionPoint = a_Ray->Origin + a_Ray->Direction * lengthToIntersection;
 

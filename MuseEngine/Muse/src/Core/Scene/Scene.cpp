@@ -33,8 +33,7 @@
 
 namespace Muse
 {
-    Scene::Scene() :
-        m_AmbientLight(*new AmbientLightSource(glm::vec3(1.f, 1.f, 1.f), 1))
+    Scene::Scene()
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -260,30 +259,30 @@ namespace Muse
 
     const glm::vec3& Scene::GetAmbientLight() const
     {
-        return m_AmbientLight.GetLight(glm::vec3());
+        return m_AmbientLight->GetLight(glm::vec3());
     }
 
     void Scene::ConstructBVH()
     {
         ASSERT_ENGINE(m_BVH != nullptr, "Not BVH set!");
-        m_BVH->ConstructHierarchy(RenderComponent::GetRenderComponents());
+        m_BVH->ConstructHierarchy(RenderComponent::GetAll());
         m_BVH->PrintHierarchy();
     }
 
     bool Scene::RayCast(const std::shared_ptr<Ray> a_Ray, float a_MaxDistance) const
     {
-        return RayCast(RenderComponent::GetRenderComponents(), a_Ray, a_MaxDistance);
+        return RayCast(RenderComponent::GetAll(), a_Ray, a_MaxDistance);
     }
 
-    bool Scene::RayCast(const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents, const std::shared_ptr<Ray> ray, float maxDistance) const
+    bool Scene::RayCast(std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents, const std::shared_ptr<Ray> ray, float maxDistance) const
     {
         std::vector<std::shared_ptr<RayHitData>> rayHitDatas;
         return RayCast(rayHitDatas, a_RenderComponents, ray, maxDistance);
     }
 
-    bool Scene::RayCast(const std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, const std::shared_ptr<Ray> ray, const float maxDistance) const
+    bool Scene::RayCast(std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, const std::shared_ptr<Ray> ray, const float maxDistance) const
     {
-        return RayCast(a_RayHitDatas, RenderComponent::GetRenderComponents(), ray, maxDistance);
+        return RayCast(a_RayHitDatas, RenderComponent::GetAll(), ray, maxDistance);
     }
 
     bool Scene::RayCast(std::vector<std::shared_ptr<RayHitData>> rayHitDatas, const std::vector< std::shared_ptr<RenderComponent>>& a_RenderComponents, const std::shared_ptr<Ray> ray, const float maxDistance) const
