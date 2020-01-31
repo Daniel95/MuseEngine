@@ -43,13 +43,15 @@ void GameRT::OnStart()
 
     //scene->ConstructBVH();
 
-    m_PerspectiveCamera = new Muse::PerspectiveCamera(glm::vec3(0, 0, -1), glm::vec3(0, 0, 0), m_Width, m_Height, 50);
+    //m_PerspectiveCamera = new Muse::PerspectiveCamera(glm::vec3(0, 0, -3), glm::vec3(0, 0, 0), m_Width, m_Height, 50);
+    m_PerspectiveCamera = new Muse::PerspectiveCamera(glm::vec3(0, 0, 3), glm::vec3(0, 0, 0), m_Width, m_Height, 50);
 
     SceneLibraryRT::MakeTestScene(scene);
 }
 
 void GameRT::OnUpdate(float a_DeltaTime)
 {
+    LOG_INFO("DeltaTime: {0}", a_DeltaTime);
 }
 
 void GameRT::OnFixedUpdate()
@@ -81,9 +83,65 @@ void GameRT::OnRender()
     std::vector<std::shared_ptr<Muse::RayHitData>> rayHitDatas;
     std::shared_ptr<Muse::GetColorParameters> getColorParameters = std::make_shared<Muse::GetColorParameters>();
 
-    bool hit = false;
+
+
+    glm::mat4 T = glm::mat4(1.0f);
+
+
+    glm::vec3 p0 = T * glm::vec4(-1, 1, 1, 0); // top-left
+    glm::vec3 p1 = T * glm::vec4(1, 1, 1, 0); // top-right
+    glm::vec3 p2 = T * glm::vec4(-1, -1, 1, 0); // bottom-left
+    glm::vec3 E = T * glm::vec4(0, 0, 0, 1);
+    glm::vec3 right = p1 - p0;
+    glm::vec3 down = p2 - p0;
+
+    std::shared_ptr<Muse::Ray> ray = std::make_shared<Muse::Ray>();
+
 
     int i = 0;
+    bool hit = false;
+    for (int y = 0; y < height; y++)
+    {
+        for (int x = 0; x < width; x++)
+        {
+            float u = x / static_cast<float>(width);
+            float v = y / static_cast<float>(height);
+            ray->Origin = p0 + u * right + v * down;
+            ray->Direction = glm::normalize(ray->Origin - E);
+
+            scene->RayCast(rayHitDatas, ray);
+
+            if (!rayHitDatas.empty())
+            {
+                const std::shared_ptr<Muse::RayHitData> closestHit = GetClosestRayHitData(rayHitDatas, ray->Origin);
+                getColorParameters->RayDirection = ray->Direction;
+                getColorParameters->Bounces = 5;
+
+                const glm::vec3 color = closestHit->m_RenderComponent->GetColor(closestHit->m_IntersectionPoint, getColorParameters);
+
+                m_ScreenData[i] = color.x;
+                m_ScreenData[i + 1] = color.y;
+                m_ScreenData[i + 2] = color.z;
+                m_ScreenData[i + 3] = 1.0f;
+
+                i += stride;
+
+                rayHitDatas.clear();
+                hit = true;
+            }
+        }
+    }
+
+    if (!hit)
+    {
+        LOG_INFO("No hits!");
+    }
+
+
+
+    /*
+    bool hit = false;
+
     for (int y = 0; y < height; y++)
     {
         for (int x = 0; x < width; x++)
@@ -125,7 +183,7 @@ void GameRT::OnRender()
     {
         LOG_INFO("No hits!");
     }
-
+    */
 
     GetViewport()->BindTexture();
     GetViewport()->SetDataF(&m_ScreenData[0], size);

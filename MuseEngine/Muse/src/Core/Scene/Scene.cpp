@@ -274,37 +274,35 @@ namespace Muse
         return RayCast(RenderComponent::GetAll(), a_Ray, a_MaxDistance);
     }
 
-    bool Scene::RayCast(std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents, const std::shared_ptr<Ray> ray, float maxDistance) const
+    bool Scene::RayCast(std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents, const std::shared_ptr<Ray> a_Ray, float a_MaxDistance) const
     {
         std::vector<std::shared_ptr<RayHitData>> rayHitDatas;
-        return RayCast(rayHitDatas, a_RenderComponents, ray, maxDistance);
+        return RayCast(rayHitDatas, a_RenderComponents, a_Ray, a_MaxDistance);
     }
 
-    bool Scene::RayCast(std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, const std::shared_ptr<Ray> ray, const float maxDistance) const
+    bool Scene::RayCast(std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, const std::shared_ptr<Ray> a_Ray, const float a_MaxDistance) const
     {
-        return RayCast(a_RayHitDatas, RenderComponent::GetAll(), ray, maxDistance);
+        return RayCast(a_RayHitDatas, RenderComponent::GetAll(), a_Ray, a_MaxDistance);
     }
 
-    bool Scene::RayCast(std::vector<std::shared_ptr<RayHitData>> rayHitDatas, const std::vector< std::shared_ptr<RenderComponent>>& a_RenderComponents, const std::shared_ptr<Ray> ray, const float maxDistance) const
+    bool Scene::RayCast(std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, const std::vector< std::shared_ptr<RenderComponent>>& a_RenderComponents, const std::shared_ptr<Ray> a_Ray, const float a_MaxDistance)
     {
-        for (std::shared_ptr<RenderComponent> sceneObject : a_RenderComponents)
+        for (const std::shared_ptr<RenderComponent> renderComponent : a_RenderComponents)
         {
-            std::shared_ptr<RayHitData> rayHitData = sceneObject->CheckRayHit(ray);
+            std::shared_ptr<RayHitData> rayHitData = renderComponent->CheckRayHit(a_Ray);
             if (rayHitData != nullptr)
             {
-                rayHitDatas.push_back(rayHitData);
+                a_RayHitDatas.push_back(rayHitData);
             }
         }
 
-        if (maxDistance != INFINITY)
+        if (a_MaxDistance != INFINITY)
         {
-            RemoveRayHitsOutOfDistance(rayHitDatas, ray->Origin, maxDistance);
+            RemoveRayHitsOutOfDistance(a_RayHitDatas, a_Ray->Origin, a_MaxDistance);
         }
 
-        return !rayHitDatas.empty();
+        return !a_RayHitDatas.empty();
     }
-
-
 
     std::shared_ptr<Scene> Scene::Load(const std::string& a_FilePath)
     {

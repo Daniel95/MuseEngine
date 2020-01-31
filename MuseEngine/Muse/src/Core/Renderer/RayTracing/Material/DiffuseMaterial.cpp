@@ -24,7 +24,8 @@ namespace Muse
 		const glm::vec3 combinedLights = diffuse + a_RenderComponent->GetGameObject()->GetScene()->GetAmbientLight();
 		const glm::vec3 result = m_Color * combinedLights;
 
-		return result;
+		//return result;
+		return m_Color;
 	}
 
 	const glm::vec3 & DiffuseMaterial::GetDiffuse(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point) const

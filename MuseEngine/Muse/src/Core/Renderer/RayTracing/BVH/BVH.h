@@ -3,11 +3,9 @@
 #include <vector>
 #include <memory>
 
-
 namespace Muse
 {
     class RenderComponent;
-
     class BoundingVolume;
 	class Scene;
 	struct Ray;

@@ -7,30 +7,28 @@
 
 namespace Muse
 {
-	PerspectiveCamera::PerspectiveCamera(const glm::vec3& position, const glm::vec3& lookAt, int screenSizeX, int screenSizeY, float vfov, const glm::vec3& up)
-		: Camera(position, lookAt, screenSizeX, screenSizeY), up(up)
+	PerspectiveCamera::PerspectiveCamera(const glm::vec3& a_Position, const glm::vec3& a_LookAt, int screenSizeX, int a_ScreenSizeY, float a_Vfov, const glm::vec3& a_Up)
+		: Camera(a_Position, a_LookAt, screenSizeX, a_ScreenSizeY), up(a_Up)
 	{
-		direction = glm::normalize(lookAt - position);
+		direction = glm::normalize(a_LookAt - a_Position);
 
-		const float aspect = static_cast<float>(screenSizeX) / static_cast<float>(screenSizeY);
-		const float theta = static_cast<float>(vfov * PI / 180);
+		const float aspect = static_cast<float>(screenSizeX) / static_cast<float>(a_ScreenSizeY);
+		const float theta = static_cast<float>(a_Vfov * PI / 180);
 		size.y = tan(theta);
 		size.x = aspect * size.y;
 
 		UpdateLookingPlane();
 	}
 
-	PerspectiveCamera::~PerspectiveCamera() {}
-
-	const std::shared_ptr<Ray> PerspectiveCamera::GetLookingRay(float pixelX, float pixelY) const
+	const std::shared_ptr<Ray> PerspectiveCamera::GetLookingRay(float a_PixelX, float a_PixelY) const
 	{
 		std::shared_ptr<Ray> ray = std::make_shared<Ray>();
 
 		ray->Origin = m_TransformComponent.GetPosition();
 
-		const float invertedPixelY = abs(pixelY - static_cast<float>(screenSizeY));
+		const float invertedPixelY = abs(a_PixelY - static_cast<float>(screenSizeY));
 
-		const float x = pixelX / static_cast<float>(screenSizeX);
+		const float x = a_PixelX / static_cast<float>(screenSizeX);
 		const float y = invertedPixelY / static_cast<float>(screenSizeY);
 
 		const glm::vec3 lookingPlanePoint = lowerLeftCorner + x * horizontal + y * vertical;

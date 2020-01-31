@@ -8,6 +8,24 @@ namespace Muse
 {
 	bool Sphere::CheckRayHit(glm::vec3& a_IntersectionPoint, const std::shared_ptr<Ray> a_Ray) const
 	{
+		/*
+		glm::vec3 C = GetTransform()->GetPosition() - a_Ray->Origin;
+		float t = glm::dot(C, a_Ray->Direction);
+		glm::vec3 Q = C - t * a_Ray->Direction;
+		float p2 = glm::dot(Q, Q);
+
+		float r2 = m_Radius * m_Radius;
+
+
+		if (p2 > r2) return false; // r2 = r * r
+		t -= glm::sqrt(r2 - p2);
+		if (t <= 0) { return false; }
+
+		a_IntersectionPoint = a_Ray->Origin + a_Ray->Direction * t;
+
+		return true;
+	    */
+
 		const glm::vec3 raySphereOffset = GetTransform()->GetPosition() - a_Ray->Origin;
 		const float offsetLength = glm::dot(a_Ray->Direction, raySphereOffset);
 
@@ -36,7 +54,7 @@ namespace Muse
 
 	void Sphere::GetMinMaxBounds(glm::vec3& a_Min, glm::vec3& a_Max) const
 	{
-		glm::vec3 halfScale = GetTransform()->GetScale() / 2.f;
+        const glm::vec3 halfScale = GetTransform()->GetScale() / 2.f;
 		a_Min = GetTransform()->GetPosition() - halfScale;
 		a_Max = GetTransform()->GetPosition() + halfScale;
 	}

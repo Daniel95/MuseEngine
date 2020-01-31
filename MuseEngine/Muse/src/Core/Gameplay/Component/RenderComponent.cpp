@@ -70,20 +70,14 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        if (!IsEnabled())
-        {
-            m_RenderComponents.push_back(shared_from_this());
-        }
+        m_RenderComponents.push_back(shared_from_this());
     }
 
     void RenderComponent::OnDisable()
     {
         MUSE_PROFILE_FUNCTION();
 
-        if(IsEnabled())
-        {
-            m_RenderComponents.erase(std::remove(m_RenderComponents.begin(), m_RenderComponents.end(), shared_from_this())), m_RenderComponents.end();
-        }
+        m_RenderComponents.erase(std::remove(m_RenderComponents.begin(), m_RenderComponents.end(), shared_from_this())), m_RenderComponents.end();
     }
 }
 

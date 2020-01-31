@@ -16,14 +16,14 @@ namespace Muse
 
 	bool BVH::RayCast(std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, std::shared_ptr<Ray> a_Ray, float a_MaxDistance) const
 	{
-		ASSERT_ENGINE(boundingVolumes.size() > 0, "No bounding volumes!");
+		ASSERT_ENGINE(!boundingVolumes.empty(), "No bounding volumes!");
 
 		for (const BoundingVolume* boundingVolume : boundingVolumes)
 		{
 			CheckBoundingVolume(a_RayHitDatas, *boundingVolume, a_Ray, a_MaxDistance);
 		}
 
-		return a_RayHitDatas.size() != 0;
+		return !a_RayHitDatas.empty();
 	}
 
 	void BVH::CheckBoundingVolume(std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, const BoundingVolume& a_BoundingVolumeToCheck, std::shared_ptr<Ray> a_Ray, float a_MaxDistance) const
