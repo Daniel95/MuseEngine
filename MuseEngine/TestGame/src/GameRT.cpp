@@ -83,10 +83,7 @@ void GameRT::OnRender()
     std::vector<std::shared_ptr<Muse::RayHitData>> rayHitDatas;
     std::shared_ptr<Muse::GetColorParameters> getColorParameters = std::make_shared<Muse::GetColorParameters>();
 
-
-
     glm::mat4 T = glm::mat4(1.0f);
-
 
     glm::vec3 p0 = T * glm::vec4(-1, 1, 1, 0); // top-left
     glm::vec3 p1 = T * glm::vec4(1, 1, 1, 0); // top-right
@@ -124,11 +121,11 @@ void GameRT::OnRender()
                 m_ScreenData[i + 2] = color.z;
                 m_ScreenData[i + 3] = 1.0f;
 
-                i += stride;
 
                 rayHitDatas.clear();
                 hit = true;
             }
+            i += stride;
         }
     }
 
