@@ -100,7 +100,6 @@ void GameRT::OnRender()
 
     std::shared_ptr<Muse::Ray> ray = std::make_shared<Muse::Ray>();
 
-
     int i = 0;
     bool hit = false;
     for (int y = 0; y < height; y++)
