@@ -35,7 +35,10 @@ void GameRT::OnStart()
     Muse::SceneManager::SwitchScene(scene);
 
     m_Height = GetViewport()->GetHeight();
-    m_Width = GetViewport()->GetWidth();
+    m_Width = GetViewport()->GetHeight();
+
+    //m_Height = 512;
+    //m_Width = 512;
 
     m_ViewportTexture = Muse::ResourceManager::Create<Muse::Texture>("viewPortTexture", m_Width, m_Height);
 
@@ -67,6 +70,9 @@ void GameRT::OnRender()
 
     const unsigned int height = GetViewport()->GetHeight();
     const unsigned int width = GetViewport()->GetWidth();
+
+    //const unsigned int height = 512;
+    //const unsigned int width = 512;
 
     const unsigned int stride = 4;
     const uint32_t size = height * width * stride;

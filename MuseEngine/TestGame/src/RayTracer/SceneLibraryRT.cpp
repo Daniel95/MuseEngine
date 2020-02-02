@@ -8,9 +8,12 @@
 
 void SceneLibraryRT::MakeTestScene(std::shared_ptr<Muse::Scene> a_Scene)
 {
-	std::shared_ptr<Muse::AmbientLightSource> ambientLight = std::make_shared<Muse::AmbientLightSource>(glm::vec3(100, 149, 237), 0.15f);
+	std::shared_ptr<Muse::AmbientLightSource> ambientLight = std::make_shared<Muse::AmbientLightSource>(glm::vec3(1, 1, 1), 0.15f);
 
 	a_Scene->SetBackgroundColor(glm::vec3(1));
+
+	std::shared_ptr<Muse::LightSource> lightSource = std::make_shared<Muse::LightSource>(glm::vec3(0, 3, 1), glm::vec3(1, 1,1), 1, 10);
+	a_Scene->AddLightSource(lightSource);
 
 	auto diffuseMaterialComponent= std::make_shared<Muse::DiffuseMaterial>(glm::vec3(0.8f, 0.3f, 0.5f));
 

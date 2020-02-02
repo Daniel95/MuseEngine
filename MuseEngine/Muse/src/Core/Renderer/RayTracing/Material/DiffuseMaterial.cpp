@@ -24,21 +24,20 @@ namespace Muse
 		const glm::vec3 combinedLights = diffuse + a_RenderComponent->GetGameObject()->GetScene()->GetAmbientLight();
 		const glm::vec3 result = m_Color * combinedLights;
 
-		//return result;
-		return m_Color;
+		return result;
 	}
 
 	const glm::vec3 & DiffuseMaterial::GetDiffuse(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point) const
 	{
 		const glm::vec3 normalDirection = a_RenderComponent->GetNormal(point);
 
-		std::vector<LightSource*> lightSources = a_RenderComponent->GetGameObject()->GetScene()->GetLightSources();
+		std::vector<std::shared_ptr<LightSource>> lightSources = a_RenderComponent->GetGameObject()->GetScene()->GetLightSources();
 
 		FilterBlockedLights(lightSources, a_RenderComponent, point);
 
-		glm::vec3 totalDiffuse;
+		glm::vec3 totalDiffuse = glm::vec3(0);
 
-		for (LightSource* lightSource : lightSources)
+		for (std::shared_ptr<LightSource> lightSource : lightSources)
 		{
 			const glm::vec3 lightPosition = lightSource->GetPosition();
 			const glm::vec3 directionToLightSource = glm::normalize(lightPosition - point);

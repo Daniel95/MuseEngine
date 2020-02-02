@@ -9,9 +9,10 @@ namespace Muse
 	{
 	}
 
-	glm::vec3 AmbientLightSource::GetLight(const glm::vec3& point) const
+	const glm::vec3& AmbientLightSource::GetLight(const glm::vec3& point) const
 	{
-		point;
-		return m_Color * m_Intensity;
+		glm::vec3 light = m_Color * m_Intensity;
+
+		return light;
 	}
 }

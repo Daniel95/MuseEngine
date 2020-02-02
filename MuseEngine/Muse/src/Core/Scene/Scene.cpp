@@ -259,7 +259,7 @@ namespace Muse
 
     const glm::vec3& Scene::GetAmbientLight() const
     {
-        return m_AmbientLight->GetLight(glm::vec3());
+        return m_AmbientLight->GetLight(glm::vec3(0));
     }
 
     void Scene::ConstructBVH()

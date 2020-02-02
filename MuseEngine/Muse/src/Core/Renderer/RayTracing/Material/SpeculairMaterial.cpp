@@ -30,13 +30,13 @@ namespace Muse
 
 	const glm::vec3& SpeculairMaterial::GetSpeculair(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, const glm::vec3& lookDirection) const
 	{
-		std::vector<LightSource*> lights = a_RenderComponent->GetGameObject()->GetScene()->GetLightSources();
+		std::vector<std::shared_ptr<LightSource>> lights = a_RenderComponent->GetGameObject()->GetScene()->GetLightSources();
 
 		FilterBlockedLights(lights, a_RenderComponent, point);
 
 		glm::vec3 totalSpeculair;
 
-		for (LightSource* light : lights)
+		for (std::shared_ptr<LightSource> light : lights)
 		{
 			const glm::vec3 lightDirection = light->GetDirectionToPoint(point);
 			const glm::vec3 reflectionDirection = reflect(lightDirection * -1, a_RenderComponent->GetNormal(point));

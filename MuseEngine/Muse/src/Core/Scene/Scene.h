@@ -60,7 +60,8 @@ namespace Muse
 
         void SetAmbientLight(std::shared_ptr<AmbientLightSource> a_AmbientLightSource) { m_AmbientLight = a_AmbientLightSource; }
         const glm::vec3& GetAmbientLight() const;
-        const std::vector<LightSource*>& GetLightSources() const { return m_Lights; }
+        const std::vector<std::shared_ptr<LightSource>>& GetLightSources() const { return m_Lights; }
+        void AddLightSource(std::shared_ptr<LightSource> a_LightSource) { m_Lights.push_back(a_LightSource); }
         const glm::vec3& GetBackgroundColor() const { return m_BackgroundColor; }
         void SetBackgroundColor(const glm::vec3& a_BackgroundColor) { m_BackgroundColor = a_BackgroundColor; }
         void SetBVH(std::shared_ptr<BVH> a_BVH) { m_BVH = a_BVH; }
@@ -102,7 +103,7 @@ namespace Muse
         int m_RayCastsHitThisFrame = 0;
 
         std::shared_ptr<AmbientLightSource> m_AmbientLight;
-        std::vector<LightSource*> m_Lights;
+        std::vector<std::shared_ptr<LightSource>> m_Lights;
         std::shared_ptr<BVH> m_BVH;
         glm::vec3 m_BackgroundColor;
 
