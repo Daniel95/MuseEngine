@@ -16,7 +16,6 @@ namespace Muse
     {
 		MUSE_PROFILE_FUNCTION();
 
-		//Todo: this might not be intented...
         m_GameObject = a_GameObject;
 
 		m_Initialized = true;

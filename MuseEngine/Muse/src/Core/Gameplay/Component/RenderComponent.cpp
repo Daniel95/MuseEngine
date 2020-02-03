@@ -42,22 +42,25 @@ namespace Muse
         return m_Material->GetColor(shared_from_this(), a_Point, a_GetColorParameters);
     }
 
-    std::shared_ptr<RayHitData> RenderComponent::CheckRayHit(const std::shared_ptr<Ray> a_Ray) const
+    bool RenderComponent::CheckRayHit(RayHitData& a_RayHitData, const Ray& a_Ray) const
     {
         Scene* scene = GetGameObject()->GetScene();
 
-        scene->IncreaseRayCastsSendThisUpdate();
+        scene->IncreaseRaysSend();
 
         glm::vec3 intersectionPoint;
 
         if (m_Shape->CheckRayHit(intersectionPoint, a_Ray))
         {
-            scene->IncreaseRayCastsHitThisUpdate();
+            scene->IncreaseRaysHit();
 
-            return std::make_unique<RayHitData>(shared_from_this(), intersectionPoint);
+            a_RayHitData.m_IntersectionPoint = intersectionPoint;
+            a_RayHitData.m_RenderComponent = shared_from_this();
+
+            return true;
         }
 
-        return nullptr;
+        return false;
     }
 
     void RenderComponent::OnUpdate(float a_DeltaTime)

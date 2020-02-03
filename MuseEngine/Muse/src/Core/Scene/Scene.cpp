@@ -269,37 +269,39 @@ namespace Muse
         m_BVH->PrintHierarchy();
     }
 
-    bool Scene::RayCast(const std::shared_ptr<Ray> a_Ray, float a_MaxDistance) const
+    bool Scene::RayCast(const Ray& a_Ray, float a_MaxDistance) const
     {
-        std::vector<std::shared_ptr<RenderComponent>> renderComponents = RenderComponent::GetAll();
+        std::vector< std::shared_ptr<RenderComponent>> renderComponents = RenderComponent::GetAll();
         return RayCast(renderComponents, a_Ray, a_MaxDistance);
     }
 
-    bool Scene::RayCast(std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents, const std::shared_ptr<Ray> a_Ray, float a_MaxDistance) const
+    bool Scene::RayCast(std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents, const Ray& a_Ray, float a_MaxDistance) const
     {
-        std::vector<std::shared_ptr<RayHitData>> rayHitDatas;
+        std::vector<RayHitData> rayHitDatas;
         return RayCast(rayHitDatas, a_RenderComponents, a_Ray, a_MaxDistance);
     }
 
-    bool Scene::RayCast(std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, const std::shared_ptr<Ray> a_Ray, const float a_MaxDistance) const
+    bool Scene::RayCast(std::vector<RayHitData>& a_RayHitDatas, const Ray& a_Ray, const float a_MaxDistance) const
     {
         return RayCast(a_RayHitDatas, RenderComponent::GetAll(), a_Ray, a_MaxDistance);
     }
 
-    bool Scene::RayCast(std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, const std::vector< std::shared_ptr<RenderComponent>>& a_RenderComponents, const std::shared_ptr<Ray> a_Ray, const float a_MaxDistance)
+    bool Scene::RayCast(std::vector<RayHitData>& a_RayHitDatas, const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents, const Ray& a_Ray, const float a_MaxDistance)
     {
-        for (const std::shared_ptr<RenderComponent> renderComponent : a_RenderComponents)
+        RayHitData rayHitData;
+
+        for (std::shared_ptr<RenderComponent> renderComponent : a_RenderComponents)
         {
-            std::shared_ptr<RayHitData> rayHitData = renderComponent->CheckRayHit(a_Ray);
-            if (rayHitData != nullptr)
+            if (renderComponent->CheckRayHit(rayHitData, a_Ray))
             {
+                //Push a copy of this ray hit data
                 a_RayHitDatas.push_back(rayHitData);
             }
         }
 
         if (a_MaxDistance != INFINITY)
         {
-            RemoveRayHitsOutOfDistance(a_RayHitDatas, a_Ray->Origin, a_MaxDistance);
+            RayHitData::RemoveRayHitsOutOfDistance(a_RayHitDatas, a_Ray.Origin, a_MaxDistance);
         }
 
         return !a_RayHitDatas.empty();

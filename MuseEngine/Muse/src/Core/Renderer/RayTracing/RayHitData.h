@@ -11,13 +11,13 @@ namespace Muse
 
 	struct RayHitData
 	{
-		RayHitData(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3 & interSectionPoint);
+		//RayHitData() = default;
+		//RayHitData(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3 & a_InterSectionPoint);
+
+		static int GetClosestRayHitDataIndex(const std::vector<RayHitData>& a_RayHitDatas, const glm::vec3& a_RayOrigin);
+		static void RemoveRayHitsOutOfDistance(std::vector<RayHitData>& a_RayHitDatas, const glm::vec3& a_RayOrigin, float a_MaxDistance);
 
 		std::shared_ptr<const RenderComponent> m_RenderComponent;
-		const glm::vec3 m_IntersectionPoint;
+		glm::vec3 m_IntersectionPoint;
 	};
-
-	const std::shared_ptr<RayHitData> GetClosestRayHitData(std::vector<std::shared_ptr<RayHitData>> rayHitDatas, glm::vec3 rayOrigin);
-	const void RemoveRayHitsOutOfDistance(std::vector<std::shared_ptr<RayHitData>>& rayHitDatas, glm::vec3 rayOrigin, float maxDistance);
-
 }

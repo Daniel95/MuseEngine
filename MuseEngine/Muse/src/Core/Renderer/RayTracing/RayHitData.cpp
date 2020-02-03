@@ -5,40 +5,42 @@
 
 namespace Muse
 {
+	/*
     RayHitData::RayHitData(std::shared_ptr<const RenderComponent> a_RenderComponent,
-		const glm::vec3& interSectionPoint)
-		: m_RenderComponent(a_RenderComponent), m_IntersectionPoint(interSectionPoint)
+		const glm::vec3& a_InterSectionPoint)
+		: m_RenderComponent(a_RenderComponent), m_IntersectionPoint(a_InterSectionPoint)
     {
     }
+    */
 
-	const std::shared_ptr<RayHitData> GetClosestRayHitData(std::vector<std::shared_ptr<RayHitData>> rayHitDatas, glm::vec3 rayOrigin)
+	int RayHitData::GetClosestRayHitDataIndex(const std::vector<RayHitData>& a_RayHitDatas, const glm::vec3& a_RayOrigin)
 	{
-		std::shared_ptr<RayHitData> closestHit = NULL;
+		int closestRayHitDataIndex = 0;
 		float closestDistance = INFINITY;
 
-		for (std::shared_ptr<RayHitData> rayHitData : rayHitDatas)
+		for (size_t i = 0; i < a_RayHitDatas.size(); i++)
 		{
-			float distance = glm::distance(rayOrigin, rayHitData->m_IntersectionPoint);
+			float distance = glm::distance(a_RayOrigin, a_RayHitDatas.at(i).m_IntersectionPoint);
 
 			if (distance < closestDistance)
 			{
-				closestHit = rayHitData;
+				closestRayHitDataIndex = i;
 				closestDistance = distance;
 			}
 		}
 
-		return closestHit;
+		return closestRayHitDataIndex;
 	}
 
-	const void RemoveRayHitsOutOfDistance(std::vector<std::shared_ptr<RayHitData>>& rayHitDatas, glm::vec3 rayOrigin, float maxDistance)
+	void RayHitData::RemoveRayHitsOutOfDistance(std::vector<RayHitData>& a_RayHitDatas, const glm::vec3& a_RayOrigin, float a_MaxDistance)
 	{
-		for (int i = rayHitDatas.size() - 1; i >= 0; i--)
+		for (int i = a_RayHitDatas.size() - 1; i >= 0; i--)
 		{
-			float distance = glm::distance(rayOrigin, rayHitDatas[i]->m_IntersectionPoint);
+			float distance = glm::distance(a_RayOrigin, a_RayHitDatas.at(i).m_IntersectionPoint);
 
-			if (distance > maxDistance)
+			if (distance > a_MaxDistance)
 			{
-				rayHitDatas.erase(rayHitDatas.begin() + i);
+				a_RayHitDatas.erase(a_RayHitDatas.begin() + i);
 			}
 		}
 	}

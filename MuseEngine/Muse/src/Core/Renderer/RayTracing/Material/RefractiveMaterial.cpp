@@ -44,16 +44,17 @@ namespace Muse
 		std::vector<std::shared_ptr<RenderComponent>> renderComponents = RenderComponent::GetAll();
 		renderComponents.erase(std::remove(renderComponents.begin(), renderComponents.end(), a_RenderComponent), renderComponents.end());
 
-		std::vector<std::shared_ptr<RayHitData>> rayHitDatas;
-		std::shared_ptr<Ray> ray = std::make_shared<Ray>();
-		ray->Origin = point;
-		ray->Direction = refractionDirection;
+		std::vector<RayHitData> rayHitDatas;
+		Ray ray;
+		ray.Origin = point;
+		ray.Direction = refractionDirection;
 
 		if (a_RenderComponent->GetGameObject()->GetScene()->RayCast(rayHitDatas, renderComponents, ray))
 		{
 			getColorParameters->RayDirection = refractionDirection;
-			const std::shared_ptr<RayHitData> closestHit = GetClosestRayHitData(rayHitDatas, point);
-			refractionColor = closestHit->m_RenderComponent->GetColor(closestHit->m_IntersectionPoint, getColorParameters);
+			int closestRayHitDataIndex = RayHitData::GetClosestRayHitDataIndex(rayHitDatas, point);
+			RayHitData& closestHitData = rayHitDatas.at(closestRayHitDataIndex);
+			refractionColor = closestHitData.m_RenderComponent->GetColor(closestHitData.m_IntersectionPoint, getColorParameters);
 		}
 
 		return refractionColor;

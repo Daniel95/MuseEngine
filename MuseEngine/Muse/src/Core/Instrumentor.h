@@ -130,7 +130,7 @@ namespace Muse
 	};
 }
 
-#define MUSE_PROFILE 1
+#define MUSE_PROFILE 0
 #if MUSE_PROFILE
 #define MUSE_PROFILE_BEGIN_SESSION(name, filepath) ::Muse::Instrumentor::Get().BeginSession(name, filepath)
 #define MUSE_PROFILE_END_SESSION() ::Muse::Instrumentor::Get().EndSession()

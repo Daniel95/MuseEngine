@@ -29,6 +29,8 @@ Muse::Application* Muse::CreateApplication()
 
 void GameRT::OnStart()
 {
+    MUSE_PROFILE_FUNCTION();
+
     Muse::RenderCommand::Init();
     Muse::Renderer2D::Init();
 
@@ -37,9 +39,6 @@ void GameRT::OnStart()
 
     m_Height = GetViewport()->GetHeight();
     m_Width = GetViewport()->GetHeight();
-
-    //m_Height = 512;
-    //m_Width = 512;
 
     m_ViewportTexture = Muse::ResourceManager::Create<Muse::Texture>("viewPortTexture", m_Width, m_Height);
 
@@ -52,7 +51,6 @@ void GameRT::OnStart()
 
 void GameRT::OnUpdate(float a_DeltaTime)
 {
-    LOG_INFO("DeltaTime: {0}", a_DeltaTime);
 }
 
 void GameRT::OnFixedUpdate()
@@ -61,6 +59,8 @@ void GameRT::OnFixedUpdate()
 
 void GameRT::OnRender()
 {
+    MUSE_PROFILE_FUNCTION();
+
     Muse::RenderCommand::SetClearColor({ 1.f, 1.0f, 1.0f, 1 });
     Muse::RenderCommand::Clear();
 
@@ -70,9 +70,6 @@ void GameRT::OnRender()
 
     const unsigned int height = GetViewport()->GetHeight();
     const unsigned int width = GetViewport()->GetWidth();
-
-    //const unsigned int height = 512;
-    //const unsigned int width = 512;
 
     const unsigned int stride = 4;
     const uint32_t size = height * width * stride;
@@ -88,7 +85,7 @@ void GameRT::OnRender()
 
     const glm::vec3 backgroundColor = glm::vec3(0.1f, 0.1f, 0.1f);
 
-    std::vector<std::shared_ptr<Muse::RayHitData>> rayHitDatas;
+    std::vector<Muse::RayHitData> rayHitDatas;
     std::shared_ptr<Muse::GetColorParameters> getColorParameters = std::make_shared<Muse::GetColorParameters>();
 
     glm::mat4 T = camera->GetTransform()->GetModelMatrix();
@@ -100,7 +97,7 @@ void GameRT::OnRender()
     glm::vec3 right = p1 - p0;
     glm::vec3 down = p2 - p0;
 
-    std::shared_ptr<Muse::Ray> ray = std::make_shared<Muse::Ray>();
+    Muse::Ray ray = {};
 
     int i = 0;
     bool hit = false;
@@ -110,31 +107,30 @@ void GameRT::OnRender()
         {
             float u = x / static_cast<float>(width);
             float v = y / static_cast<float>(height);
-            ray->Origin = p0 + u * right + v * down;
-            ray->Direction = glm::normalize(ray->Origin - E);
+            ray.Origin = p0 + u * right + v * down;
+            ray.Direction = glm::normalize(ray.Origin - E);
 
             scene->RayCast(rayHitDatas, ray);
 
             if (!rayHitDatas.empty())
             {
-                const std::shared_ptr<Muse::RayHitData> closestHit = GetClosestRayHitData(rayHitDatas, ray->Origin);
-                getColorParameters->RayDirection = ray->Direction;
+                int closestRayHitDataIndex = Muse::RayHitData::GetClosestRayHitDataIndex(rayHitDatas, ray.Origin);
+                Muse::RayHitData& closestHit = rayHitDatas.at(closestRayHitDataIndex);
+                getColorParameters->RayDirection = ray.Direction;
                 getColorParameters->Bounces = 5;
 
-                const glm::vec3 color = closestHit->m_RenderComponent->GetColor(closestHit->m_IntersectionPoint, getColorParameters);
+                const glm::vec3 color = closestHit.m_RenderComponent->GetColor(closestHit.m_IntersectionPoint, getColorParameters);
 
                 m_ScreenData[i] = color.x;
                 m_ScreenData[i + 1] = color.y;
                 m_ScreenData[i + 2] = color.z;
                 m_ScreenData[i + 3] = 1.0f;
 
-
                 rayHitDatas.clear();
                 hit = true;
             }
             else
             {
-
                 m_ScreenData[i] = backgroundColor.x;
                 m_ScreenData[i + 1] = backgroundColor.y;
                 m_ScreenData[i + 2] = backgroundColor.z;
@@ -157,6 +153,29 @@ void GameRT::OnRender()
 
 void GameRT::OnImGuiRender()
 {
+    ImGui::Begin("Info");
+
+    ImGui::Text("FPS: %f", 1 / GetDeltaTime());
+
+    std::shared_ptr<Muse::Scene> scene = Muse::SceneManager::GetActiveScene();
+
+    const int raysSend = scene->GetRaysSend();
+    const int raysHit = scene->GetRaysHit();
+
+    float raysHitRate = 0;
+    if(raysSend != 0 && raysHit != 0)
+    {
+        raysHitRate = static_cast<float>(raysHit) / static_cast<float>(raysSend);
+    }
+
+    ImGui::Text("Rays send: %i", raysSend);
+    ImGui::Text("Rays hit: %i", raysHit);
+    ImGui::Text("Rays hit rate: %f", raysHitRate);
+
+    scene->ResetRaysHit();
+    scene->ResetRaysSend();
+
+    ImGui::End();
 }
 
 void GameRT::Resize(unsigned a_Width, unsigned a_Height)

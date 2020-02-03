@@ -7,7 +7,7 @@
 
 namespace Muse
 {
-	bool Sphere::CheckRayHit(glm::vec3& a_IntersectionPoint, const std::shared_ptr<Ray> a_Ray) const
+	bool Sphere::CheckRayHit(glm::vec3& a_IntersectionPoint, const Ray& a_Ray) const
 	{
 		/*
 		glm::vec3 C = GetTransform()->GetPosition() - a_Ray->Origin;
@@ -27,12 +27,12 @@ namespace Muse
 		return true;
 	    */
 
-		const glm::vec3 raySphereOffset = GetTransform()->GetPosition() - a_Ray->Origin;
-		const float offsetLength = glm::dot(a_Ray->Direction, raySphereOffset);
+		const glm::vec3 raySphereOffset = GetTransform()->GetPosition() - a_Ray.Origin;
+		const float offsetLength = glm::dot(a_Ray.Direction, raySphereOffset);
 
 		if (offsetLength < 0) { return false; }
 
-		const glm::vec3 raySphereOffsetOnLine = a_Ray->Origin + a_Ray->Direction * offsetLength;
+		const glm::vec3 raySphereOffsetOnLine = a_Ray.Origin + a_Ray.Direction * offsetLength;
 
 		const float sphereLocalY = glm::distance(GetTransform()->GetPosition(), raySphereOffsetOnLine);
 
@@ -40,7 +40,7 @@ namespace Muse
 		{
 			const float sphereLocalX = sqrt(m_Radius * m_Radius - sphereLocalY * sphereLocalY);
 			const float lengthToIntersection = offsetLength - sphereLocalX;
-			a_IntersectionPoint = a_Ray->Origin + a_Ray->Direction * lengthToIntersection;
+			a_IntersectionPoint = a_Ray.Origin + a_Ray.Direction * lengthToIntersection;
 
 			return true;
 		}

@@ -25,9 +25,9 @@ namespace Muse
 
 			const glm::vec3 directionToLightSource = glm::normalize(lightPosition - point);
 			const float maxDistance = (point - lightPosition).length();
-			std::shared_ptr<Ray> ray = std::make_shared<Ray>();
-			ray->Origin = point;
-			ray->Direction = directionToLightSource;
+			Ray ray;
+			ray.Origin = point;
+			ray.Direction = directionToLightSource;
 
 			bool shadow = a_RenderComponent->GetGameObject()->GetScene()->RayCast(renderComponents, ray, maxDistance);
 

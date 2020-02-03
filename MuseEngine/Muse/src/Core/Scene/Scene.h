@@ -68,17 +68,17 @@ namespace Muse
         std::shared_ptr<BVH> GetBVH() const { return m_BVH; }
         void ConstructBVH();
 
-        bool RayCast(std::shared_ptr<Ray> a_Ray, float a_MaxDistance = INFINITY) const;
-        bool RayCast(std::vector< std::shared_ptr<RenderComponent>>& a_RenderComponent, const std::shared_ptr<Ray> a_Ray, float a_MaxDistance = INFINITY) const;
-        bool RayCast(std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, const std::shared_ptr<Ray> a_Ray, float a_MaxDistance = INFINITY) const;
-        static bool RayCast(std::vector<std::shared_ptr<RayHitData>>& a_RayHitDatas, const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponent, std::shared_ptr<Ray> a_Ray, float a_MaxDistance = INFINITY);
+        bool RayCast(const Ray& a_Ray, float a_MaxDistance = INFINITY) const;
+        bool RayCast(std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponent, const Ray& a_Ray, float a_MaxDistance = INFINITY) const;
+        bool RayCast(std::vector<RayHitData>& a_RayHitDatas, const Ray& a_Ray, float a_MaxDistance = INFINITY) const;
+        static bool RayCast(std::vector<RayHitData>& a_RayHitDatas, const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponent, const Ray& a_Ray, float a_MaxDistance = INFINITY);
 
-        void IncreaseRayCastsSendThisUpdate() { m_RayCastsSendThisFrame++; }
-        int GetRayCastsSendThisUpdate() const { return m_RayCastsSendThisFrame;  }
-        void ResetRayCastsSendThisUpdate() { m_RayCastsSendThisFrame = 0; }
-        void IncreaseRayCastsHitThisUpdate() { m_RayCastsHitThisFrame++;  }
-        int GetRayCastsHitThisUpdate() const { return m_RayCastsHitThisFrame; }
-        void ResetRayCastsHitThisUpdate() { m_RayCastsHitThisFrame = 0; }
+        void IncreaseRaysSend() { m_RaySend++; }
+        int GetRaysSend() const { return m_RaySend;  }
+        void ResetRaysSend() { m_RaySend = 0; }
+        void IncreaseRaysHit() { m_RaysHit++;  }
+        int GetRaysHit() const { return m_RaysHit; }
+        void ResetRaysHit() { m_RaysHit = 0; }
 
         static std::shared_ptr<Scene> Create() { return std::make_shared<Scene>(); }
         static std::shared_ptr<Scene> Load(const std::string& a_FilePath);
@@ -99,8 +99,8 @@ namespace Muse
         const int m_MaxStateSaves = 20;
         int m_CurrentStateIndex = 0;
 
-        int m_RayCastsSendThisFrame = 0;
-        int m_RayCastsHitThisFrame = 0;
+        int m_RaySend = 0;
+        int m_RaysHit = 0;
 
         std::shared_ptr<AmbientLightSource> m_AmbientLight;
         std::vector<std::shared_ptr<LightSource>> m_Lights;
