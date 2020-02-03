@@ -57,7 +57,6 @@ namespace Muse
         template<typename T>
         const std::vector<std::shared_ptr<GameObject>>& FindGameObjectsOfType();
 
-
         void SetAmbientLight(std::shared_ptr<AmbientLightSource> a_AmbientLightSource) { m_AmbientLight = a_AmbientLightSource; }
         glm::vec3 GetAmbientLight() const;
         const std::vector<std::shared_ptr<LightSource>>& GetLightSources() const { return m_Lights; }

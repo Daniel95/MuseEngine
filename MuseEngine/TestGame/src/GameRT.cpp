@@ -83,16 +83,22 @@ void GameRT::OnRender()
 
     /////////////////
 
-    const glm::vec3 backgroundColor = glm::vec3(0.1f, 0.1f, 0.1f);
+    const glm::vec3 backgroundColor = scene->GetBackgroundColor();
 
     std::vector<Muse::RayHitData> rayHitDatas;
     std::shared_ptr<Muse::GetColorParameters> getColorParameters = std::make_shared<Muse::GetColorParameters>();
 
     glm::mat4 T = camera->GetTransform()->GetModelMatrix();
 
+    /*
     glm::vec3 p0 = T * glm::vec4(-1, 1, 1, 0); // top-left
     glm::vec3 p1 = T * glm::vec4(1, 1, 1, 0); // top-right
     glm::vec3 p2 = T * glm::vec4(-1, -1, 1, 0); // bottom-left
+    */
+    glm::vec3 p0 = T * glm::vec4(-1, -1, 1, 0); // top-left
+    glm::vec3 p1 = T * glm::vec4(1, -1, 1, 0); // top-right
+    glm::vec3 p2 = T * glm::vec4(-1, 1, 1, 0); // bottom-left
+
     glm::vec3 E = T * glm::vec4(0, 0, 0, 1);
     glm::vec3 right = p1 - p0;
     glm::vec3 down = p2 - p0;
@@ -131,6 +137,8 @@ void GameRT::OnRender()
             }
             else
             {
+
+
                 m_ScreenData[i] = backgroundColor.x;
                 m_ScreenData[i + 1] = backgroundColor.y;
                 m_ScreenData[i + 2] = backgroundColor.z;

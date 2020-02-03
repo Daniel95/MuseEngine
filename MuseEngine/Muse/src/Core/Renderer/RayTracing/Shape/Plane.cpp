@@ -8,20 +8,14 @@
 
 namespace Muse
 {
-
-	Plane::Plane(const glm::vec3& a_Normal)
-		: normal(a_Normal)
-	{
-	}
-
 	bool Plane::CheckRayHit(glm::vec3& intersectionPoint, const Ray& ray) const
 	{
-		const float d = glm::dot(ray.Direction, normal);
+		const float d = glm::dot(ray.Direction, m_Normal);
 
 		if (d < 0)
 		{
 			const glm::vec3 offset = GetTransform()->GetPosition() - ray.Origin;
-			const float yOffset = glm::dot(normal, offset);
+			const float yOffset = glm::dot(m_Normal, offset);
 			const float t = yOffset / d;
 
 			if (t < 0)
@@ -48,7 +42,7 @@ namespace Muse
 	glm::vec3 Plane::GetNormal(const glm::vec3& a_Point) const
 	{
 		a_Point;
-		return normal;
+		return m_Normal;
 	}
 
 	void Plane::GetMinMaxBounds(glm::vec3& a_Min, glm::vec3& a_Max) const
