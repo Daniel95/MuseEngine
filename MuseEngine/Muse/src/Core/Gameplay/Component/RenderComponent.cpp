@@ -32,7 +32,7 @@ namespace Muse
         m_VA->SetIndexBuffer(m_IB);
     }
 
-    const glm::vec3& RenderComponent::GetNormal(const glm::vec3& a_Point) const
+    glm::vec3 RenderComponent::GetNormal(const glm::vec3& a_Point) const
     {
         return m_Shape->GetNormal(a_Point);
     }

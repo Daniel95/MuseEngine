@@ -63,7 +63,7 @@ void GameRT::OnFixedUpdate()
 
 void GameRT::OnRender()
 {
-    Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+    Muse::RenderCommand::SetClearColor({ 1.f, 1.0f, 1.0f, 1 });
     Muse::RenderCommand::Clear();
 
     Muse::Renderer2D::BeginScene(*Muse::CameraComponent::GetMain());
@@ -86,6 +86,8 @@ void GameRT::OnRender()
 
     /////////////////
 
+    const glm::vec3 backgroundColor = glm::vec3(0.1f, 0.1f, 0.1f);
+
     std::vector<std::shared_ptr<Muse::RayHitData>> rayHitDatas;
     std::shared_ptr<Muse::GetColorParameters> getColorParameters = std::make_shared<Muse::GetColorParameters>();
 
@@ -102,9 +104,9 @@ void GameRT::OnRender()
 
     int i = 0;
     bool hit = false;
-    for (int y = 0; y < height; y++)
+    for (uint32_t y = 0; y < height; y++)
     {
-        for (int x = 0; x < width; x++)
+        for (uint32_t x = 0; x < width; x++)
         {
             float u = x / static_cast<float>(width);
             float v = y / static_cast<float>(height);
@@ -130,6 +132,14 @@ void GameRT::OnRender()
                 rayHitDatas.clear();
                 hit = true;
             }
+            else
+            {
+
+                m_ScreenData[i] = backgroundColor.x;
+                m_ScreenData[i + 1] = backgroundColor.y;
+                m_ScreenData[i + 2] = backgroundColor.z;
+                m_ScreenData[i + 3] = 1.0f;
+            }
             i += stride;
         }
     }
@@ -138,54 +148,6 @@ void GameRT::OnRender()
     {
         LOG_INFO("No hits!");
     }
-
-
-
-    /*
-    bool hit = false;
-
-    for (int y = 0; y < height; y++)
-    {
-        for (int x = 0; x < width; x++)
-        {
-            std::shared_ptr<Muse::Ray> ray = m_PerspectiveCamera->GetLookingRay(static_cast<float>(x), static_cast<float>(y));
-
-            if (scene->GetBVH() != nullptr)
-            {
-                scene->GetBVH()->RayCast(rayHitDatas, ray);
-            }
-            else
-            {
-                scene->RayCast(rayHitDatas, ray);
-            }
-
-            if (!rayHitDatas.empty())
-            {
-                const std::shared_ptr<Muse::RayHitData> closestHit = GetClosestRayHitData(rayHitDatas, ray->Origin);
-                getColorParameters->RayDirection = ray->Direction;
-                getColorParameters->Bounces = 5;
-
-                const glm::vec3 color = closestHit->m_RenderComponent->GetColor(closestHit->m_IntersectionPoint, getColorParameters);
-
-                m_ScreenData[i] = color.x;
-                m_ScreenData[i + 1] = color.y;
-                m_ScreenData[i + 2] = color.z;
-                m_ScreenData[i + 3] = 1.0f;
-
-                i += stride;
-
-                rayHitDatas.clear();
-
-                hit = true;
-            }
-        }
-    }
-
-    if(!hit)
-    {
-        LOG_INFO("No hits!");
-    }
-    */
 
     GetViewport()->BindTexture();
     GetViewport()->SetDataF(&m_ScreenData[0], size);

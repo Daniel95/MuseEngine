@@ -12,7 +12,7 @@ void SceneLibraryRT::MakeTestScene(std::shared_ptr<Muse::Scene> a_Scene)
 
 	a_Scene->SetBackgroundColor(glm::vec3(1));
 
-	std::shared_ptr<Muse::LightSource> lightSource = std::make_shared<Muse::LightSource>(glm::vec3(0, 3, 1), glm::vec3(1, 1,1), 1, 10);
+	std::shared_ptr<Muse::LightSource> lightSource = std::make_shared<Muse::LightSource>(glm::vec3(0, 3, 0), glm::vec3(1, 1,1), 1, 10);
 	a_Scene->AddLightSource(lightSource);
 
 	auto diffuseMaterialComponent= std::make_shared<Muse::DiffuseMaterial>(glm::vec3(0.8f, 0.3f, 0.5f));
@@ -20,9 +20,9 @@ void SceneLibraryRT::MakeTestScene(std::shared_ptr<Muse::Scene> a_Scene)
 	a_Scene->SetAmbientLight(ambientLight);
 
 	{
-		auto sphereGameObject = a_Scene->AddGameObject(glm::vec3(0, -3, 5), glm::vec3(1, 1, 1));
+		auto sphereGameObject = a_Scene->AddGameObject(glm::vec3(0, 0, 5), glm::vec3(1, 1, 1));
 		auto sphereComponent = sphereGameObject->AddComponent<Muse::Sphere>();
-		sphereComponent->SetRadius(3.f);
+		sphereComponent->SetRadius(2.f);
 
 		auto renderComponent = sphereGameObject->AddComponent<Muse::RenderComponent>();
 

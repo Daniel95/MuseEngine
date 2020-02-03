@@ -15,9 +15,7 @@ namespace Muse
 	{
 	}
 
-	CheckerBoardMaterial::~CheckerBoardMaterial() {}
-
-	const glm::vec3 & CheckerBoardMaterial::GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const
+	glm::vec3 CheckerBoardMaterial::GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const
 	{
 		const glm::vec3 speculair = m_SpeculairMaterial.GetSpeculair(a_RenderComponent, point, getColorParameters->RayDirection);
 		const glm::vec3 diffuse = m_DiffuseMaterial.GetDiffuse(a_RenderComponent, point);

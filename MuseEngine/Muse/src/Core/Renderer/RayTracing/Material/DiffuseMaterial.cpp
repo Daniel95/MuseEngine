@@ -7,43 +7,44 @@
 #include "Core/Gameplay/Component/RenderComponent.h"
 #include "Core/Scene/Scene.h"
 #include "Core/Renderer/RayTracing/LightSource.h"
+#include "Core/Scene/SceneManager.h"
+#include "Core/Renderer/RayTracing/Shape/Shape.h"
 
 namespace Muse
 {
-
 	DiffuseMaterial::DiffuseMaterial(const glm::vec3& a_Color)
-    : m_Color(a_Color)
+    : m_Color(a_Color), m_AmbientLight()
 	{
 	}
 
-	const glm::vec3 & DiffuseMaterial::GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& a_Point, std::shared_ptr<GetColorParameters> a_GetColorParameters) const
+	glm::vec3 DiffuseMaterial::GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& a_Point, std::shared_ptr<GetColorParameters> a_GetColorParameters) const
 	{
 		a_GetColorParameters;
 
 		const glm::vec3 diffuse = GetDiffuse(a_RenderComponent, a_Point);
-		const glm::vec3 combinedLights = diffuse + a_RenderComponent->GetGameObject()->GetScene()->GetAmbientLight();
+		const glm::vec3 combinedLights = diffuse + SceneManager::GetActiveScene()->GetAmbientLight();
 		const glm::vec3 result = m_Color * combinedLights;
 
 		return result;
 	}
 
-	const glm::vec3 & DiffuseMaterial::GetDiffuse(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point) const
+	glm::vec3 DiffuseMaterial::GetDiffuse(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& a_Point) const
 	{
-		const glm::vec3 normalDirection = a_RenderComponent->GetNormal(point);
+		const glm::vec3 normal = a_RenderComponent->GetNormal(a_Point);
 
-		std::vector<std::shared_ptr<LightSource>> lightSources = a_RenderComponent->GetGameObject()->GetScene()->GetLightSources();
+		std::vector<std::shared_ptr<LightSource>> lightSources = SceneManager::GetActiveScene()->GetLightSources();
 
-		FilterBlockedLights(lightSources, a_RenderComponent, point);
+		FilterBlockedLights(lightSources, a_RenderComponent, a_Point);
 
 		glm::vec3 totalDiffuse = glm::vec3(0);
 
-		for (std::shared_ptr<LightSource> lightSource : lightSources)
+		for (const std::shared_ptr<LightSource> lightSource : lightSources)
 		{
 			const glm::vec3 lightPosition = lightSource->GetPosition();
-			const glm::vec3 directionToLightSource = glm::normalize(lightPosition - point);
-			const float diffuseStrength = glm::dot(directionToLightSource, normalDirection);
+			const glm::vec3 directionToLightSource = glm::normalize(lightPosition - a_Point);
+			const float diffuseStrength = glm::dot(directionToLightSource, normal);
 			const float clampedDiffuseStrength = std::clamp(diffuseStrength, 0.0f, 1.0f);
-			const glm::vec3 lightColor = lightSource->GetLight(point) * clampedDiffuseStrength;
+			const glm::vec3 lightColor = lightSource->GetLight(a_Point) * clampedDiffuseStrength;
 
 			totalDiffuse += lightColor;
 		}

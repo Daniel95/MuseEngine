@@ -257,7 +257,7 @@ namespace Muse
         return gameObject;
     }
 
-    const glm::vec3& Scene::GetAmbientLight() const
+    glm::vec3 Scene::GetAmbientLight() const
     {
         return m_AmbientLight->GetLight(glm::vec3(0));
     }
@@ -271,7 +271,8 @@ namespace Muse
 
     bool Scene::RayCast(const std::shared_ptr<Ray> a_Ray, float a_MaxDistance) const
     {
-        return RayCast(RenderComponent::GetAll(), a_Ray, a_MaxDistance);
+        std::vector<std::shared_ptr<RenderComponent>> renderComponents = RenderComponent::GetAll();
+        return RayCast(renderComponents, a_Ray, a_MaxDistance);
     }
 
     bool Scene::RayCast(std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents, const std::shared_ptr<Ray> a_Ray, float a_MaxDistance) const

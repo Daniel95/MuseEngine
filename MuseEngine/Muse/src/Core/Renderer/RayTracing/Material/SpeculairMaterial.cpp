@@ -17,9 +17,7 @@ namespace Muse
 	{
 	}
 
-	SpeculairMaterial::~SpeculairMaterial() {}
-
-	const glm::vec3 & SpeculairMaterial::GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const
+	glm::vec3 SpeculairMaterial::GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const
 	{
 		const glm::vec3 speculair = GetSpeculair(a_RenderComponent, point, getColorParameters->RayDirection);
 		const glm::vec3 combinedLights = speculair + a_RenderComponent->GetGameObject()->GetScene()->GetAmbientLight();
@@ -28,7 +26,7 @@ namespace Muse
 		return result;
 	}
 
-	const glm::vec3& SpeculairMaterial::GetSpeculair(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, const glm::vec3& lookDirection) const
+	glm::vec3 SpeculairMaterial::GetSpeculair(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, const glm::vec3& lookDirection) const
 	{
 		std::vector<std::shared_ptr<LightSource>> lights = a_RenderComponent->GetGameObject()->GetScene()->GetLightSources();
 

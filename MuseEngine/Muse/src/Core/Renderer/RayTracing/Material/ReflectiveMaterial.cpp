@@ -22,7 +22,7 @@ namespace Muse
 
 	ReflectiveMaterial::~ReflectiveMaterial() {}
 
-	const glm::vec3 & ReflectiveMaterial::GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const
+	glm::vec3 ReflectiveMaterial::GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const
 	{
 		const glm::vec3 speculair = m_SpeculairMaterial.GetSpeculair(a_RenderComponent, point, getColorParameters->RayDirection);
 		const glm::vec3 diffuse = m_DiffuseMaterial.GetDiffuse(a_RenderComponent, point);
@@ -34,7 +34,7 @@ namespace Muse
 		return result;
 	}
 
-	const glm::vec3 & ReflectiveMaterial::GetReflection(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const
+	glm::vec3 ReflectiveMaterial::GetReflection(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const
 	{
 		if (getColorParameters->Bounces <= 0)
 		{

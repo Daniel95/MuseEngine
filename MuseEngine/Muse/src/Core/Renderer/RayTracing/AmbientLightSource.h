@@ -9,9 +9,9 @@ namespace Muse
 	class AmbientLightSource : public LightSource
 	{
 	public:
-		AmbientLightSource(const glm::vec3& color, float intensity);
+		AmbientLightSource(const glm::vec3& a_Color, float a_Intensity);
 		virtual ~AmbientLightSource() = default;
-		virtual const glm::vec3& GetLight(const glm::vec3& point) const override;
+		virtual glm::vec3 GetLight(const glm::vec3& a_Point) const override;
 
 	};
 }

@@ -3,6 +3,7 @@
 #include "Sphere.h"
 #include "Core/Gameplay/Component/TransformComponent.h"
 #include "Core/Renderer/RayTracing/Ray.h"
+#include "Core/Utilities/Log.h"
 
 namespace Muse
 {
@@ -49,7 +50,8 @@ namespace Muse
 
 	glm::vec3 Sphere::GetNormal(const glm::vec3& a_Point) const
 	{
-		return glm::normalize(a_Point - GetTransform()->GetPosition());
+		glm::vec3 n = glm::normalize(a_Point - GetTransform()->GetPosition());
+		return n;
 	}
 
 	void Sphere::GetMinMaxBounds(glm::vec3& a_Min, glm::vec3& a_Max) const
