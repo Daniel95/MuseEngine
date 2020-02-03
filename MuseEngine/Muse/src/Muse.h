@@ -43,3 +43,12 @@
 #include "Core/Event/ApplicationEvent.h"
 #include "Core/Event/KeyEvent.h"
 #include "Core/Event/MouseEvent.h"
+
+//Todo:
+//Filter blocked lights by retrieving the indexes of the non blocked lights (with a local), instead of creating sending around an std::vector
+//Fix Reflection
+//Fix intersection plane
+//Fix BVH
+//Update/Remove raytracer camera class
+//Make Material a resource
+//Update Muse.h
