@@ -286,6 +286,21 @@ namespace Muse
         return RayCast(a_RayHitDatas, RenderComponent::GetAll(), a_Ray, a_MaxDistance);
     }
 
+    bool Scene::RayCast(const Ray& a_Ray, std::shared_ptr<const RenderComponent> a_Ignore)
+    {
+        const std::vector<std::shared_ptr<RenderComponent>>& renderComponents = RenderComponent::GetAll();
+
+        for (std::shared_ptr<RenderComponent> renderComponent : renderComponents)
+        {
+            if (renderComponent != a_Ignore && renderComponent->CheckRayHit(a_Ray))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     bool Scene::RayCast(std::vector<RayHitData>& a_RayHitDatas, const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents, const Ray& a_Ray, const float a_MaxDistance)
     {
         RayHitData rayHitData;

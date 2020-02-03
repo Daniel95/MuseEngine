@@ -63,6 +63,24 @@ namespace Muse
         return false;
     }
 
+    bool RenderComponent::CheckRayHit(const Ray& a_Ray) const
+    {
+        Scene* scene = GetGameObject()->GetScene();
+
+        scene->IncreaseRaysSend();
+
+        glm::vec3 intersectionPoint;
+
+        if (m_Shape->CheckRayHit(intersectionPoint, a_Ray))
+        {
+            scene->IncreaseRaysHit();
+
+            return true;
+        }
+
+        return false;
+    }
+
     void RenderComponent::OnUpdate(float a_DeltaTime)
     {
         MUSE_PROFILE_FUNCTION();
