@@ -7,14 +7,21 @@
 
 namespace Muse
 {
-    CameraComponent* CameraComponent::s_MainCamera = nullptr;
+    std::shared_ptr<CameraComponent> CameraComponent::s_MainCamera = nullptr;
 
     CameraComponent::CameraComponent()
         : Component()
     {
         MUSE_PROFILE_FUNCTION();
+    }
 
-        s_MainCamera = this;
+    void CameraComponent::OnInit()
+    {
+        Component::OnInit();
+
+        s_MainCamera = std::shared_ptr<CameraComponent>(this);
+
+        LOG_ENGINE_INFO("Camera inited");
     }
 
     void CameraComponent::SetProjection(float a_AspectRatio, float a_ZoomLevel)

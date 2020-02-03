@@ -33,7 +33,6 @@ protected:
 private:
     std::shared_ptr<Muse::Texture> m_ViewportTexture;
     std::vector<float> m_ScreenData;
-    Muse::PerspectiveCamera* m_PerspectiveCamera;
 
     unsigned int m_Width, m_Height;
 

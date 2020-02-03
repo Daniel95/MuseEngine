@@ -17,6 +17,7 @@
 #include "Core/Renderer/RayTracing/Ray.h"
 #include "Core/Renderer/RayTracing/PerspectiveCamera.h"
 #include "RayTracer/SceneLibraryRT.h"
+#include "Core/Gameplay/Component/CameraComponent.h"
 
 #if GAME_RT
 #include "EntryPoint.h"
@@ -46,9 +47,6 @@ void GameRT::OnStart()
 
     //scene->ConstructBVH();
 
-    //m_PerspectiveCamera = new Muse::PerspectiveCamera(glm::vec3(0, 0, -3), glm::vec3(0, 0, 0), m_Width, m_Height, 50);
-    m_PerspectiveCamera = new Muse::PerspectiveCamera(glm::vec3(0, 0, 3), glm::vec3(0, 0, 0), m_Width, m_Height, 50);
-
     SceneLibraryRT::MakeTestScene(scene);
 }
 
@@ -66,7 +64,9 @@ void GameRT::OnRender()
     Muse::RenderCommand::SetClearColor({ 1.f, 1.0f, 1.0f, 1 });
     Muse::RenderCommand::Clear();
 
-    Muse::Renderer2D::BeginScene(*Muse::CameraComponent::GetMain());
+    std::shared_ptr<Muse::CameraComponent> camera = Muse::CameraComponent::GetMain();
+
+    Muse::Renderer2D::BeginScene(camera);
 
     const unsigned int height = GetViewport()->GetHeight();
     const unsigned int width = GetViewport()->GetWidth();
@@ -91,7 +91,7 @@ void GameRT::OnRender()
     std::vector<std::shared_ptr<Muse::RayHitData>> rayHitDatas;
     std::shared_ptr<Muse::GetColorParameters> getColorParameters = std::make_shared<Muse::GetColorParameters>();
 
-    glm::mat4 T = glm::mat4(1.0f);
+    glm::mat4 T = camera->GetTransform()->GetModelMatrix();
 
     glm::vec3 p0 = T * glm::vec4(-1, 1, 1, 0); // top-left
     glm::vec3 p1 = T * glm::vec4(1, 1, 1, 0); // top-right

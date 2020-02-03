@@ -16,7 +16,10 @@ namespace Muse
     {
 		MUSE_PROFILE_FUNCTION();
 
-        m_GameObject = std::move(a_GameObject);
+		//Todo: this might not be intented...
+        m_GameObject = a_GameObject;
+
+		m_Initialized = true;
 
 		if (m_isEnabled)
 		{

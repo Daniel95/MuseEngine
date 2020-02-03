@@ -52,6 +52,7 @@ namespace Muse
     private:
         std::shared_ptr<GameObject> m_GameObject = nullptr;
 		bool m_isEnabled = true;
+        bool m_Initialized = false;
 
     };
 }

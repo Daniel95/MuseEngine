@@ -6,6 +6,8 @@
 #include <cereal/types/memory.hpp>
 #include <cereal/types/polymorphic.hpp>
 
+#include <memory>
+
 namespace Muse
 {
     class CameraComponent : public Component
@@ -25,12 +27,13 @@ namespace Muse
         const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
         const glm::mat4& GetViewMatrix() const;
         const glm::mat4& GetViewProjectionMatrix() const { return m_ViewProjectionMatrix; }
+        virtual void OnInit() override;
 
         void SetProjection(float a_AspectRatio, float a_ZoomLevel);
         void SetProjectionMatrix(float a_Left, float a_Right, float a_Bottom, float a_Top, float a_Near = -1.0, float a_Far = 1.0);
         void SetProjectionMatrix(const glm::mat4& a_ProjectionMatrix);
 
-        static CameraComponent* GetMain() { return s_MainCamera; }
+        static std::shared_ptr<CameraComponent> GetMain() { return s_MainCamera; }
 
         template <class Archive>
         void serialize(Archive& ar)
@@ -57,7 +60,7 @@ namespace Muse
         bool m_IsEditorCamera = false;
         float m_ZoomLevel = 1.0f;
 
-        static CameraComponent* s_MainCamera;
+        static std::shared_ptr<CameraComponent> s_MainCamera;
         void RecalculateViewMatrix();
 
     };

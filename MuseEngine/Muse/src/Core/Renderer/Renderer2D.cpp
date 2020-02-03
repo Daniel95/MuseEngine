@@ -62,12 +62,12 @@ namespace Muse
         delete s_Data;
     }
 
-    void Renderer2D::BeginScene(const CameraComponent& a_OrthographicCamera)
+    void Renderer2D::BeginScene(std::shared_ptr<CameraComponent> a_OrthographicCamera)
     {
         MUSE_PROFILE_FUNCTION();
 
         s_Data->ColoredTextureShader->Bind();
-        s_Data->ColoredTextureShader->SetMat4("u_ViewProjection", a_OrthographicCamera.GetViewProjectionMatrix());
+        s_Data->ColoredTextureShader->SetMat4("u_ViewProjection", a_OrthographicCamera->GetViewProjectionMatrix());
     }
 
     void Renderer2D::EndScene()

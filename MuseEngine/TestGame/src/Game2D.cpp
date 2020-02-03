@@ -60,7 +60,7 @@ void Game2D::OnRender()
     Muse::RenderCommand::SetClearColor({ 0.9f, 0.9f, 0.9f, 1 });
     Muse::RenderCommand::Clear();
 
-    Muse::Renderer2D::BeginScene(*Muse::CameraComponent::GetMain());
+    Muse::Renderer2D::BeginScene(Muse::CameraComponent::GetMain());
 
     std::shared_ptr<Muse::Scene> scene = Muse::SceneManager::GetActiveScene();
 
