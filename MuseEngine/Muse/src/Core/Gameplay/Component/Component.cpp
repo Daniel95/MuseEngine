@@ -46,7 +46,7 @@ namespace Muse
 	void Component::Disable()
 	{
 		MUSE_PROFILE_FUNCTION();
-
+ 
 		m_isEnabled = false;
 		if (m_isEnabled)
 		{

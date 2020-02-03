@@ -13,7 +13,7 @@
 namespace Muse
 {
 	DiffuseMaterial::DiffuseMaterial(const glm::vec3& a_Color)
-    : m_Color(a_Color), m_AmbientLight()
+    : m_Color(a_Color)
 	{
 	}
 

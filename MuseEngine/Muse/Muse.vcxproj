@@ -642,6 +642,7 @@
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\ReflectiveMaterial.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\RefractiveMaterial.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\SpeculairMaterial.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracing\Shape\Shape.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Shape\Sphere.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\BVH\TopDownBVH.cpp" />
     <ClCompile Include="src\Core\Renderer\RenderCommand.cpp" />

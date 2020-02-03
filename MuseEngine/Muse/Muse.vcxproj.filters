@@ -1598,5 +1598,6 @@
     <ClCompile Include="src\Core\Renderer\RayTracing\Shape\Sphere.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Shape\Box.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\BVH\TopDownBVH.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracing\Shape\Shape.cpp" />
   </ItemGroup>
 </Project>

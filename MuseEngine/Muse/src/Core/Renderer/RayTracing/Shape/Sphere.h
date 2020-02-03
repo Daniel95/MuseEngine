@@ -2,12 +2,8 @@
 
 #include "Shape.h"
 
-#include <glm/glm.hpp>
-
-
 namespace Muse
 {
-
 	class SceneObject;
 
 	class Sphere : public Shape
@@ -23,6 +19,8 @@ namespace Muse
 
 	private:
 		float m_Radius = 1;
+
+		glm::vec3 testPosition;
 
 	};
 }

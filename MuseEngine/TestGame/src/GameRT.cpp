@@ -103,7 +103,7 @@ void GameRT::OnRender()
     glm::vec3 right = p1 - p0;
     glm::vec3 down = p2 - p0;
 
-    Muse::Ray ray = {};
+    Muse::Ray ray;
 
     int i = 0;
     bool hit = false;
@@ -137,8 +137,6 @@ void GameRT::OnRender()
             }
             else
             {
-
-
                 m_ScreenData[i] = backgroundColor.x;
                 m_ScreenData[i + 1] = backgroundColor.y;
                 m_ScreenData[i + 2] = backgroundColor.z;
