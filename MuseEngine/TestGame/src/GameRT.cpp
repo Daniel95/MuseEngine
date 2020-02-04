@@ -79,13 +79,20 @@ void GameRT::OnRender()
         Resize(width, height);
     }
 
+    int setAlphaColorIndex = 0;
+
+    for (uint32_t i = 0; i < height * width; i++)
+    {
+        m_ScreenData[setAlphaColorIndex + 3] = 1.0f;
+        setAlphaColorIndex += stride;
+    }
+
     std::shared_ptr<Muse::Scene> scene = Muse::SceneManager::GetActiveScene();
 
     /////////////////
 
     const glm::vec3 backgroundColor = scene->GetBackgroundColor();
 
-    //std::vector<Muse::RayHitData> rayHitDatas;
     Muse::RayHitData rayHitData;
     std::shared_ptr<Muse::GetColorParameters> getColorParameters = std::make_shared<Muse::GetColorParameters>();
 
@@ -107,7 +114,7 @@ void GameRT::OnRender()
 
     Muse::Ray ray;
 
-    int i = 0;
+    int colorIndex = 0;
     bool hit = false;
     for (uint32_t y = 0; y < height; y++)
     {
@@ -127,22 +134,27 @@ void GameRT::OnRender()
 
                 const glm::vec3 color = rayHitData.m_RenderComponent->GetColor(rayHitData.GetIntersectionPoint(), getColorParameters);
 
-                m_ScreenData[i] = color.x;
-                m_ScreenData[i + 1] = color.y;
-                m_ScreenData[i + 2] = color.z;
+                /*
+                m_ScreenData[i] = std::sqrt(color.x);
+                m_ScreenData[i + 1] = std::sqrt(color.y);
+                m_ScreenData[i + 2] = std::sqrt(color.z);
                 m_ScreenData[i + 3] = 1.0f;
+                */
+
+                m_ScreenData[colorIndex] = color.x;
+                m_ScreenData[colorIndex + 1] = color.y;
+                m_ScreenData[colorIndex + 2] = color.z;
 
                 hit = true;
             }
             else
             {
-                m_ScreenData[i] = backgroundColor.x;
-                m_ScreenData[i + 1] = backgroundColor.y;
-                m_ScreenData[i + 2] = backgroundColor.z;
-                m_ScreenData[i + 3] = 1.0f;
+                m_ScreenData[colorIndex] = backgroundColor.x;
+                m_ScreenData[colorIndex + 1] = backgroundColor.y;
+                m_ScreenData[colorIndex + 2] = backgroundColor.z;
             }
 
-            i += stride;
+            colorIndex += stride;
         }
     }
 

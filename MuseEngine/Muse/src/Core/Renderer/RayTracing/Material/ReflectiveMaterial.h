@@ -10,7 +10,7 @@ namespace Muse
 	class ReflectiveMaterial : public BlinnPhongMaterial
 	{
 	public:
-		ReflectiveMaterial(const glm::vec3& a_Color = glm::vec3(1), float a_SpeculairStrength = 0.5f, float a_Reflectiveness = 0.5f, int a_MaxBounces = 32);
+		ReflectiveMaterial(const glm::vec3& a_Color = glm::vec3(1), float a_SpeculairStrength = 0.5f, float a_Reflectiveness = 0.75f, int a_MaxBounces = 32);
 		virtual ~ReflectiveMaterial() = default;
 
 		virtual glm::vec3 GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const override;

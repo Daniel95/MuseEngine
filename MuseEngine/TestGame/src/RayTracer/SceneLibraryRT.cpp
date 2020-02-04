@@ -17,12 +17,21 @@ void SceneLibraryRT::MakeTestScene(std::shared_ptr<Muse::Scene> a_Scene)
 
 	a_Scene->SetBackgroundColor(glm::vec3(0.3f));
 
-	std::shared_ptr<Muse::LightSource> lightSource = std::make_shared<Muse::LightSource>(glm::vec3(0, 3, 0), glm::vec3(1, 1,1), 1, 15);
-	a_Scene->AddLightSource(lightSource);
+	{
+		std::shared_ptr<Muse::LightSource> lightSource = std::make_shared<Muse::LightSource>(glm::vec3(-2, 3, 0), glm::vec3(0.7, 0.f, 1.f), 1.5f, 10);
+		a_Scene->AddLightSource(lightSource);
+	}
+
+	{
+		std::shared_ptr<Muse::LightSource> lightSource = std::make_shared<Muse::LightSource>(glm::vec3(2, 3, 0), glm::vec3(0.3f, 0.6f, 0.9f), 1.5f, 10);
+		a_Scene->AddLightSource(lightSource);
+	}
+
 
 	auto diffuseMaterialComponent = std::make_shared<Muse::DiffuseMaterial>(glm::vec3(0.8f, 0.3f, 0.5f));
 	auto blinnPhongMaterialComponent = std::make_shared<Muse::BlinnPhongMaterial>(glm::vec3(0.8f, 0.3f, 0.5f));
 	auto reflectiveMaterial = std::make_shared<Muse::ReflectiveMaterial>();
+	//auto groundReflectiveMaterial = std::make_shared<Muse::ReflectiveMaterial>(glm::vec3(0), 0.5f,0.1f);
 	auto speculairMaterial = std::make_shared<Muse::SpecularMaterial>();
 	auto refractiveMaterial = std::make_shared<Muse::RefractiveMaterial>();
 	auto checkerBoardMaterial = std::make_shared<Muse::CheckerBoardMaterial>();
@@ -47,7 +56,7 @@ void SceneLibraryRT::MakeTestScene(std::shared_ptr<Muse::Scene> a_Scene)
 
 		auto renderComponent = sphereGameObject->AddComponent<Muse::RenderComponent>();
 
-		renderComponent->SetMaterial(blinnPhongMaterialComponent);
+		renderComponent->SetMaterial(refractiveMaterial);
 		renderComponent->SetShape(sphereComponent);
 	}
 
@@ -69,7 +78,7 @@ void SceneLibraryRT::MakeTestScene(std::shared_ptr<Muse::Scene> a_Scene)
 
 		auto renderComponent = planeGameObject->AddComponent<Muse::RenderComponent>();
 
-		renderComponent->SetMaterial(checkerBoardMaterial);
+		renderComponent->SetMaterial(diffuseMaterialComponent);
 		renderComponent->SetShape(planeComponent);
 	}
 }

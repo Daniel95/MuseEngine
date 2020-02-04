@@ -20,8 +20,6 @@ namespace Muse
         Component::OnInit();
 
         s_MainCamera = std::shared_ptr<CameraComponent>(this);
-
-        LOG_ENGINE_INFO("Camera inited");
     }
 
     void CameraComponent::SetProjection(float a_AspectRatio, float a_ZoomLevel)

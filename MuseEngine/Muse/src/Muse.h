@@ -45,7 +45,12 @@
 #include "Core/Event/MouseEvent.h"
 
 //Todo:
-//Only calculate shadows/lights that hit this pixel once for blinnphong material
+
+/////Engine:
+//Model loading
+
+/////Raytracer:
+//Fix plane intersection
 //calculate shadows by giving using a light area, take a random sample to one point of this light, and add the samples together
 //give each ray a random offset, add the samples together to get anti aliasing
 //sqrtf the results to make add gamma correction
@@ -57,6 +62,7 @@
 //use simd to calculate 4 rays at once.
 //Divide the raytracer into grids
 //Implement multithreading
+
 
 //to generate a bvh, use throw all the triangles of all the models in a big array with each triangle to a pointer to the material
 //check dirty for transforms to only recalculate a part of an BVH
