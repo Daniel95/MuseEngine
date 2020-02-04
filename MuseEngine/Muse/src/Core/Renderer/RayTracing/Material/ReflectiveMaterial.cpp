@@ -52,7 +52,9 @@ namespace Muse
 		if(ray.Cast(rayHitData, a_RenderComponent))
 		{
 			a_GetColorParameters->RayDirection = reflectionDirection;
-			reflectionColor = rayHitData.m_RenderComponent->GetColor(rayHitData.m_IntersectionPoint, a_GetColorParameters);
+			rayHitData.UpdateIntersectionPoint(ray);
+
+			reflectionColor = rayHitData.m_RenderComponent->GetColor(rayHitData.GetIntersectionPoint(), a_GetColorParameters);
 		}
 
 		return reflectionColor;

@@ -120,12 +120,12 @@ void GameRT::OnRender()
 
             if(ray.Cast(rayHitData))
             {
-                rayHitData.m_IntersectionPoint = ray.Origin + ray.Direction * rayHitData.m_Distane;
+                rayHitData.UpdateIntersectionPoint(ray);
 
                 getColorParameters->RayDirection = ray.Direction;
                 getColorParameters->Bounces = 5;
 
-                const glm::vec3 color = rayHitData.m_RenderComponent->GetColor(rayHitData.m_IntersectionPoint, getColorParameters);
+                const glm::vec3 color = rayHitData.m_RenderComponent->GetColor(rayHitData.GetIntersectionPoint(), getColorParameters);
 
                 m_ScreenData[i] = color.x;
                 m_ScreenData[i + 1] = color.y;

@@ -95,7 +95,7 @@ namespace Muse
             }
         }
 
-        a_RayHitData.m_Distane = closestHitDistance;
+        a_RayHitData.m_Distance = closestHitDistance;
         a_RayHitData.m_RenderComponent = closestHitRenderComponent;
 
         return closestHitRenderComponent != nullptr;

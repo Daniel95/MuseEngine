@@ -2,46 +2,21 @@
 
 #include "RayHitData.h"
 #include "Core/Gameplay/Component/RenderComponent.h"
+#include "Core/Utilities/Defines.h"
+#include "Ray.h"
 
 namespace Muse
 {
-	/*
-    RayHitData::RayHitData(std::shared_ptr<const RenderComponent> a_RenderComponent,
-		const glm::vec3& a_InterSectionPoint)
-		: m_RenderComponent(a_RenderComponent), m_IntersectionPoint(a_InterSectionPoint)
-    {
-    }
-    */
-
-	int RayHitData::GetClosestRayHitDataIndex(const std::vector<RayHitData>& a_RayHitDatas, const glm::vec3& a_RayOrigin)
+	const glm::vec3& RayHitData::GetIntersectionPoint() const
 	{
-		int closestRayHitDataIndex = 0;
-		float closestDistance = INFINITY;
+		ASSERT_ENGINE(m_IntersectionPoint != glm::vec3(std::numeric_limits<float>::max()), "IntersectionPoint has not been updated!");
 
-		for (size_t i = 0; i < a_RayHitDatas.size(); i++)
-		{
-			float distance = glm::distance(a_RayOrigin, a_RayHitDatas.at(i).m_IntersectionPoint);
-
-			if (distance < closestDistance)
-			{
-				closestRayHitDataIndex = i;
-				closestDistance = distance;
-			}
-		}
-
-		return closestRayHitDataIndex;
+		return m_IntersectionPoint;
 	}
 
-	void RayHitData::RemoveRayHitsOutOfDistance(std::vector<RayHitData>& a_RayHitDatas, const glm::vec3& a_RayOrigin, float a_MaxDistance)
+	const glm::vec3& RayHitData::UpdateIntersectionPoint(const Ray& a_Ray)
 	{
-		for (int i = a_RayHitDatas.size() - 1; i >= 0; i--)
-		{
-			float distance = glm::distance(a_RayOrigin, a_RayHitDatas.at(i).m_IntersectionPoint);
-
-			if (distance > a_MaxDistance)
-			{
-				a_RayHitDatas.erase(a_RayHitDatas.begin() + i);
-			}
-		}
+		m_IntersectionPoint = a_Ray.Origin + a_Ray.Direction * m_Distance;
+		return m_IntersectionPoint;
 	}
 }

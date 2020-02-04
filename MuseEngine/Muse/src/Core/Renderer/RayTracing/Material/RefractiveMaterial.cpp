@@ -52,7 +52,7 @@ namespace Muse
 		if (ray.Cast(rayHitData, a_RenderComponent))
 		{
 			getColorParameters->RayDirection = refractionDirection;
-			refractionColor = rayHitData.m_RenderComponent->GetColor(rayHitData.m_IntersectionPoint, getColorParameters);
+			refractionColor = rayHitData.m_RenderComponent->GetColor(rayHitData.GetIntersectionPoint(), getColorParameters);
 		}
 
 		return refractionColor;

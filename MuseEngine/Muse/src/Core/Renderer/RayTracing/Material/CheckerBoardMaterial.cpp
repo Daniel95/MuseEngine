@@ -20,7 +20,7 @@ namespace Muse
 
 	glm::vec3 CheckerBoardMaterial::GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& a_Point, std::shared_ptr<GetColorParameters> a_GetColorParameters) const
 	{
-		const glm::vec3 light =GetBlinnPhong(a_RenderComponent, a_Point, a_GetColorParameters);
+		const glm::vec3 light = GetBlinnPhong(a_RenderComponent, a_Point, a_GetColorParameters);
 
 		int gridPositionX = static_cast<int>(std::round(a_Point.x / m_GridSize));
 		int gridPositionY = static_cast<int>(std::round(a_Point.y / m_GridSize));

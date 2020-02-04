@@ -7,18 +7,20 @@
 
 namespace Muse
 {
-    class RenderComponent;
+	class RenderComponent;
+	struct Ray;
 
-	struct RayHitData
+	class RayHitData
 	{
-		//RayHitData() = default;
-		//RayHitData(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3 & a_InterSectionPoint);
-
-		static int GetClosestRayHitDataIndex(const std::vector<RayHitData>& a_RayHitDatas, const glm::vec3& a_RayOrigin);
-		static void RemoveRayHitsOutOfDistance(std::vector<RayHitData>& a_RayHitDatas, const glm::vec3& a_RayOrigin, float a_MaxDistance);
-
+	public:
 		std::shared_ptr<const RenderComponent> m_RenderComponent;
-		float m_Distane;
-		glm::vec3 m_IntersectionPoint;
+		float m_Distance;
+
+		const glm::vec3& GetIntersectionPoint() const;
+		const glm::vec3& UpdateIntersectionPoint(const Ray& a_Ray);
+
+	private:
+		glm::vec3 m_IntersectionPoint = glm::vec3(std::numeric_limits<float>::max());
+
 	};
 }
