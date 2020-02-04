@@ -10,5 +10,4 @@ namespace Muse
     class LightSource;
 
     glm::vec3 operator*(const glm::vec3& a_Lhs, float a_Rhs);
-    void FilterBlockedLights(std::vector<std::shared_ptr<LightSource>>& a_Lights, std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& a_Point);
 }

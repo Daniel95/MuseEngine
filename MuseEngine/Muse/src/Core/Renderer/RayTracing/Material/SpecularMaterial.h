@@ -8,14 +8,14 @@ namespace Muse
 {
 	class SceneObject;
 
-	class SpeculairMaterial : public Material
+	class SpecularMaterial : public Material
 	{
 	public:
-		SpeculairMaterial(glm::vec3 color, float speculairStrength = 0.5f);
-		virtual ~SpeculairMaterial() = default;
+		SpecularMaterial(glm::vec3 a_Color = glm::vec3(1), float a_SpeculairStrength = 0.5f);
+		virtual ~SpecularMaterial() = default;
 
 		virtual glm::vec3 GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const override;
-		glm::vec3 GetSpeculair(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, const glm::vec3& lookDirection) const;
+		glm::vec3 GetSpecular(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& a_Point, const glm::vec3& a_LookDirection) const;
 
 	private:
 		float m_SpeculairStrength;

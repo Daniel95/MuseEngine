@@ -1,7 +1,7 @@
 #include "MusePCH.h"
 
 #include "CheckerBoardMaterial.h"
-#include "SpeculairMaterial.h"
+#include "SpecularMaterial.h"
 #include "DiffuseMaterial.h"
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Scene/Scene.h"
@@ -17,13 +17,13 @@ namespace Muse
 
 	glm::vec3 CheckerBoardMaterial::GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const
 	{
-		const glm::vec3 speculair = m_SpeculairMaterial.GetSpeculair(a_RenderComponent, point, getColorParameters->RayDirection);
+		const glm::vec3 speculair = m_SpeculairMaterial.GetSpecular(a_RenderComponent, point, getColorParameters->RayDirection);
 		const glm::vec3 diffuse = m_DiffuseMaterial.GetDiffuse(a_RenderComponent, point);
 		const glm::vec3 combinedLights = speculair + diffuse + a_RenderComponent->GetGameObject()->GetScene()->GetAmbientLight();
 
-		int gridPositionX = static_cast<int>(round(point.x / m_GridSize));
-		int gridPositionY = static_cast<int>(round(point.y / m_GridSize));
-		int gridPositionZ = static_cast<int>(round(point.z / m_GridSize));
+		int gridPositionX = static_cast<int>(std::round(point.x / m_GridSize));
+		int gridPositionY = static_cast<int>(std::round(point.y / m_GridSize));
+		int gridPositionZ = static_cast<int>(std::round(point.z / m_GridSize));
 
 		int positionInGrid = gridPositionX + gridPositionY + gridPositionZ;
 

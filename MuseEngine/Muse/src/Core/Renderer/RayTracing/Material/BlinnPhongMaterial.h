@@ -9,7 +9,7 @@ namespace Muse
 	struct GetColorParameters;
 	class GameObject;
 	class DiffuseMaterial;
-	class SpeculairMaterial;
+	class SpecularMaterial;
 
 	class BlinnPhongMaterial : public Material
 	{
@@ -20,7 +20,7 @@ namespace Muse
 
 	protected:
 		DiffuseMaterial& m_DiffuseMaterial;
-		SpeculairMaterial& m_SpeculairMaterial;
+		SpecularMaterial& m_SpeculairMaterial;
 		glm::vec3 m_Color;
 
 	};

@@ -1406,7 +1406,6 @@
     <ClInclude Include="src\Core\Renderer\RayTracing\Material\BlinnPhongMaterial.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Material\ReflectiveMaterial.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Material\RefractiveMaterial.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\Material\SpeculairMaterial.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Material\MaterialType.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Material\MaterialHelper.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Material\Material.h" />
@@ -1417,6 +1416,7 @@
     <ClInclude Include="src\Core\Renderer\RayTracing\Shape\Sphere.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Shape\Box.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\BVH\TopDownBVH.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracing\Material\SpecularMaterial.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1590,7 +1590,6 @@
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\BlinnPhongMaterial.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\ReflectiveMaterial.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\RefractiveMaterial.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\Material\SpeculairMaterial.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\MaterialHelper.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\BVH\BoundingVolume.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\BVH\BVH.cpp" />
@@ -1600,5 +1599,6 @@
     <ClCompile Include="src\Core\Renderer\RayTracing\BVH\TopDownBVH.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Shape\Shape.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Ray.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracing\Material\SpecularMaterial.cpp" />
   </ItemGroup>
 </Project>

@@ -1,9 +1,7 @@
 #pragma once
 
-
 namespace Muse
 {
-
 	enum class MaterialType
 	{
 		Ambient,

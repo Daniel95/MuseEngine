@@ -45,16 +45,15 @@
 #include "Core/Event/MouseEvent.h"
 
 //Todo:
-//Fix Reflection
-//Filter blocked lights by retrieving the indexes of the non blocked lights (with a local), instead of creating sending around an std::vector
+//Only calculate shadows/lights that hit this pixel once for blinnphong material
 //calculate shadows by giving using a light area, take a random sample to one point of this light, and add the samples together
 //give each ray a random offset, add the samples together to get anti aliasing
-//Reset samples when moving the camera
 //sqrtf the results to make add gamma correction
 //Fix BVH
 //Update/Remove raytracer camera class
 //Make Material a resource
 //Implement pathtracer
+//Reset samples when moving the camera
 //use simd to calculate 4 rays at once.
 //Divide the raytracer into grids
 //Implement multithreading

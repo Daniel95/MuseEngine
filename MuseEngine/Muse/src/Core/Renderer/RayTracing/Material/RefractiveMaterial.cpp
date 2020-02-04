@@ -3,7 +3,7 @@
 #include "RefractiveMaterial.h"
 #include "MaterialHelper.h"
 #include "DiffuseMaterial.h"
-#include "SpeculairMaterial.h"
+#include "SpecularMaterial.h"
 #include "Core/Renderer/RayTracing/GetColorParameters.h"
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Scene/Scene.h"
@@ -14,16 +14,16 @@
 namespace Muse
 {
 	RefractiveMaterial::RefractiveMaterial(const glm::vec3& color, float speculairStrength, float refractiveness, float eta, int maxBounces)
-		: BlinnPhongMaterial(color, speculairStrength), maxBounces(maxBounces), refractiveness(refractiveness), eta(eta)
+		: BlinnPhongMaterial(color, speculairStrength), m_MaxBounces(maxBounces), m_Refractiveness(refractiveness), m_Eta(eta)
 	{
 	}
 
 	glm::vec3 RefractiveMaterial::GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const
 	{
-		const glm::vec3 speculair = m_SpeculairMaterial.GetSpeculair(a_RenderComponent, point, getColorParameters->RayDirection);
+		const glm::vec3 speculair = m_SpeculairMaterial.GetSpecular(a_RenderComponent, point, getColorParameters->RayDirection);
 		const glm::vec3 diffuse = m_DiffuseMaterial.GetDiffuse(a_RenderComponent, point);
-		const glm::vec3 blinnPhong = (speculair + diffuse + a_RenderComponent->GetGameObject()->GetScene()->GetAmbientLight()) * abs(1 - refractiveness);
-		const glm::vec3 refraction = GetRefraction(a_RenderComponent, point, getColorParameters) * refractiveness;
+		const glm::vec3 blinnPhong = (speculair + diffuse + a_RenderComponent->GetGameObject()->GetScene()->GetAmbientLight()) * abs(1 - m_Refractiveness);
+		const glm::vec3 refraction = GetRefraction(a_RenderComponent, point, getColorParameters) * m_Refractiveness;
 		const glm::vec3 lightColor = blinnPhong + refraction;
 		const glm::vec3 result = m_Color * lightColor;
 
@@ -39,7 +39,7 @@ namespace Muse
 		getColorParameters->Bounces--;
 
 		glm::vec3 refractionColor = a_RenderComponent->GetGameObject()->GetScene()->GetBackgroundColor();
-		glm::vec3 refractionDirection = glm::refract(getColorParameters->RayDirection, a_RenderComponent->GetNormal(point), eta);
+		glm::vec3 refractionDirection = glm::refract(getColorParameters->RayDirection, a_RenderComponent->GetNormal(point), m_Eta);
 
 		std::vector<std::shared_ptr<RenderComponent>> renderComponents = RenderComponent::GetAll();
 		renderComponents.erase(std::remove(renderComponents.begin(), renderComponents.end(), a_RenderComponent), renderComponents.end());

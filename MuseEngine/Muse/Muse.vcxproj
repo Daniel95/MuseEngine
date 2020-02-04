@@ -197,7 +197,7 @@
     <ClInclude Include="src\Core\Renderer\RayTracing\Material\ReflectiveMaterial.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Material\RefractiveMaterial.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Shape\Shape.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\Material\SpeculairMaterial.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracing\Material\SpecularMaterial.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Shape\Sphere.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\BVH\TopDownBVH.h" />
     <ClInclude Include="src\Core\Renderer\RenderCommand.h" />
@@ -642,7 +642,7 @@
     <ClCompile Include="src\Core\Renderer\RayTracing\RayHitData.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\ReflectiveMaterial.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\RefractiveMaterial.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\Material\SpeculairMaterial.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracing\Material\SpecularMaterial.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Shape\Shape.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Shape\Sphere.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\BVH\TopDownBVH.cpp" />
