@@ -16,7 +16,7 @@ namespace Muse
 
         const std::vector<std::shared_ptr<RenderComponent>>& renderComponents = RenderComponent::GetAll();
 
-        for (std::shared_ptr<RenderComponent> renderComponent : renderComponents)
+        for (const std::shared_ptr<RenderComponent>& renderComponent : renderComponents)
         {
             const float distance = renderComponent->CheckRayHit(*this);
 
@@ -43,7 +43,7 @@ namespace Muse
 
         const std::vector<std::shared_ptr<RenderComponent>>& renderComponents = RenderComponent::GetAll();
 
-        for (std::shared_ptr<RenderComponent> renderComponent : renderComponents)
+        for (const std::shared_ptr<RenderComponent>& renderComponent : renderComponents)
         {
             if (renderComponent == a_Ignore) { continue; }
 
@@ -76,7 +76,7 @@ namespace Muse
         float closestHitDistance = std::numeric_limits<int>::max();
         std::shared_ptr<RenderComponent> closestHitRenderComponent = nullptr;
 
-        for (std::shared_ptr<RenderComponent> renderComponent : renderComponents)
+        for (const std::shared_ptr<RenderComponent>& renderComponent : renderComponents)
         {
             if (renderComponent == a_Ignore) { continue; }
 

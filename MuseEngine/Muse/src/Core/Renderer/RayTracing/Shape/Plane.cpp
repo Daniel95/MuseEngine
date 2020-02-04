@@ -5,52 +5,18 @@
 #include "Core/Gameplay/Component/TransformComponent.h"
 #include "Core/Renderer/RayTracing/Ray.h"
 
-
 namespace Muse
 {
     float Plane::CheckRayHit(const Ray& a_Ray) const
     {
-		glm::vec3 position = GetPosition();
-
 		float denom = glm::dot(m_Normal, a_Ray.Direction);
 		if (abs(denom) > 0.0001f) // your favorite epsilon
 		{
-			float t = glm::dot(position - a_Ray.Origin, m_Normal) / denom;
-			if (t >= 0) return true; // you might want to allow an epsilon here too
+			float t = glm::dot(GetPosition() - a_Ray.Origin, m_Normal) / denom;
+			if (t >= 0) return t; // you might want to allow an epsilon here too
 		}
-		return false;
+		return -1;
     }
-
-	bool Plane::CheckRayHit(glm::vec3& intersectionPoint, const Ray& ray) const
-	{
-		const float d = glm::dot(ray.Direction, m_Normal);
-
-		if (d < 0)
-		{
-			const glm::vec3 offset = GetTransform()->GetPosition() - ray.Origin;
-			const float yOffset = glm::dot(m_Normal, offset);
-			const float t = yOffset / d;
-
-			if (t < 0)
-			{
-				return false;
-			}
-			else
-			{
-				glm::vec3 worldIntersectionPoint = GetTransform()->InverseTransformPoint(ray.Origin + (ray.Direction * t));
-
-				if (abs(worldIntersectionPoint.x) <= 0.5f
-					&& abs(worldIntersectionPoint.y) <= 0.5f
-					&& abs(worldIntersectionPoint.z) <= 0.5f)
-				{
-					intersectionPoint = GetTransform()->TransformPoint(worldIntersectionPoint);
-					return true;
-				}
-			}
-		}
-
-		return false;
-	}
 
 	glm::vec3 Plane::GetNormal(const glm::vec3& a_Point) const
 	{

@@ -91,14 +91,15 @@ void GameRT::OnRender()
 
     glm::mat4 T = camera->GetTransform()->GetModelMatrix();
 
+    glm::vec3 p0 = T * glm::vec4(-1, -1, 1, 0); // top-left
+    glm::vec3 p1 = T * glm::vec4(1, -1, 1, 0); // top-right
+    glm::vec3 p2 = T * glm::vec4(-1, 1, 1, 0); // bottom-left
+
     /*
     glm::vec3 p0 = T * glm::vec4(-1, 1, 1, 0); // top-left
     glm::vec3 p1 = T * glm::vec4(1, 1, 1, 0); // top-right
     glm::vec3 p2 = T * glm::vec4(-1, -1, 1, 0); // bottom-left
     */
-    glm::vec3 p0 = T * glm::vec4(-1, -1, 1, 0); // top-left
-    glm::vec3 p1 = T * glm::vec4(1, -1, 1, 0); // top-right
-    glm::vec3 p2 = T * glm::vec4(-1, 1, 1, 0); // bottom-left
 
     glm::vec3 E = T * glm::vec4(0, 0, 0, 1);
     glm::vec3 right = p1 - p0;
@@ -119,6 +120,8 @@ void GameRT::OnRender()
 
             if(ray.Cast(rayHitData))
             {
+                rayHitData.m_IntersectionPoint = ray.Origin + ray.Direction * rayHitData.m_Distane;
+
                 getColorParameters->RayDirection = ray.Direction;
                 getColorParameters->Bounces = 5;
 
@@ -139,34 +142,6 @@ void GameRT::OnRender()
                 m_ScreenData[i + 3] = 1.0f;
             }
 
-            /*
-            scene->RayCast(rayHitDatas, ray);
-
-            if (!rayHitDatas.empty())
-            {
-                int closestRayHitDataIndex = Muse::RayHitData::GetClosestRayHitDataIndex(rayHitDatas, ray.Origin);
-                Muse::RayHitData& closestHit = rayHitDatas.at(closestRayHitDataIndex);
-                getColorParameters->RayDirection = ray.Direction;
-                getColorParameters->Bounces = 5;
-
-                const glm::vec3 color = closestHit.m_RenderComponent->GetColor(closestHit.m_IntersectionPoint, getColorParameters);
-
-                m_ScreenData[i] = color.x;
-                m_ScreenData[i + 1] = color.y;
-                m_ScreenData[i + 2] = color.z;
-                m_ScreenData[i + 3] = 1.0f;
-
-                rayHitDatas.clear();
-                hit = true;
-            }
-            else
-            {
-                m_ScreenData[i] = backgroundColor.x;
-                m_ScreenData[i + 1] = backgroundColor.y;
-                m_ScreenData[i + 2] = backgroundColor.z;
-                m_ScreenData[i + 3] = 1.0f;
-            }
-            */
             i += stride;
         }
     }

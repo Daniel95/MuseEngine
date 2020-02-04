@@ -31,7 +31,7 @@ void SceneLibraryRT::MakeTestScene(std::shared_ptr<Muse::Scene> a_Scene)
 
 		auto renderComponent = sphereGameObject->AddComponent<Muse::RenderComponent>();
 
-		renderComponent->SetMaterial(diffuseMaterialComponent);
+		renderComponent->SetMaterial(reflectiveMaterial);
 		renderComponent->SetShape(sphereComponent);
 	}
 
@@ -57,7 +57,6 @@ void SceneLibraryRT::MakeTestScene(std::shared_ptr<Muse::Scene> a_Scene)
 		renderComponent->SetShape(sphereComponent);
 	}
 
-	/*
 	{
 		auto planeGameObject = a_Scene->AddGameObject(glm::vec3(0, -3, 5), glm::vec3(15));
 		auto planeComponent = planeGameObject->AddComponent<Muse::Plane>();
@@ -68,5 +67,4 @@ void SceneLibraryRT::MakeTestScene(std::shared_ptr<Muse::Scene> a_Scene)
 		renderComponent->SetMaterial(diffuseMaterialComponent);
 		renderComponent->SetShape(planeComponent);
 	}
-    */
 }

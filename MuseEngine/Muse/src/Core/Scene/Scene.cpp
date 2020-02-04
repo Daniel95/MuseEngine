@@ -269,61 +269,6 @@ namespace Muse
         m_BVH->PrintHierarchy();
     }
 
-    /*
-    bool Scene::RayCast(const Ray& a_Ray, float a_MaxDistance) const
-    {
-        std::vector< std::shared_ptr<RenderComponent>> renderComponents = RenderComponent::GetAll();
-        return RayCast(renderComponents, a_Ray, a_MaxDistance);
-    }
-
-    bool Scene::RayCast(std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents, const Ray& a_Ray, float a_MaxDistance) const
-    {
-        std::vector<RayHitData> rayHitDatas;
-        return RayCast(rayHitDatas, a_RenderComponents, a_Ray, a_MaxDistance);
-    }
-
-    bool Scene::RayCast(std::vector<RayHitData>& a_RayHitDatas, const Ray& a_Ray, const float a_MaxDistance) const
-    {
-        return RayCast(a_RayHitDatas, RenderComponent::GetAll(), a_Ray, a_MaxDistance);
-    }
-
-    bool Scene::RayCast(const Ray& a_Ray, std::shared_ptr<const RenderComponent> a_Ignore)
-    {
-        const std::vector<std::shared_ptr<RenderComponent>>& renderComponents = RenderComponent::GetAll();
-
-        for (std::shared_ptr<RenderComponent> renderComponent : renderComponents)
-        {
-            if (renderComponent != a_Ignore && renderComponent->CheckRayHit(a_Ray))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    bool Scene::RayCast(std::vector<RayHitData>& a_RayHitDatas, const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents, const Ray& a_Ray, const float a_MaxDistance)
-    {
-        RayHitData rayHitData;
-
-        for (std::shared_ptr<RenderComponent> renderComponent : a_RenderComponents)
-        {
-            if (renderComponent->CheckRayHit(rayHitData, a_Ray))
-            {
-                //Push a copy of this ray hit data
-                a_RayHitDatas.push_back(rayHitData);
-            }
-        }
-
-        if (a_MaxDistance != INFINITY)
-        {
-            RayHitData::RemoveRayHitsOutOfDistance(a_RayHitDatas, a_Ray.Origin, a_MaxDistance);
-        }
-
-        return !a_RayHitDatas.empty();
-    }
-    */
-
     std::shared_ptr<Scene> Scene::Load(const std::string& a_FilePath)
     {
         std::filesystem::path path{ a_FilePath }; //creates TestingFolder object on C:
