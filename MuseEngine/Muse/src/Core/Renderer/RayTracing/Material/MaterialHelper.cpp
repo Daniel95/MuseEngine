@@ -28,9 +28,7 @@ namespace Muse
 			ray.Origin = a_Point;
 			ray.Direction = directionToLightSource;
 
-			bool shadow = Scene::RayCast(ray, a_RenderComponent);
-
-			if (shadow)
+			if (ray.Cast())
 			{
 				a_Lights.erase(a_Lights.begin() + i);
 			}

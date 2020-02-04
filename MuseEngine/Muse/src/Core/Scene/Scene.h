@@ -67,11 +67,13 @@ namespace Muse
         std::shared_ptr<BVH> GetBVH() const { return m_BVH; }
         void ConstructBVH();
 
+        /*
         bool RayCast(const Ray& a_Ray, float a_MaxDistance = INFINITY) const;
         bool RayCast(std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponent, const Ray& a_Ray, float a_MaxDistance = INFINITY) const;
         bool RayCast(std::vector<RayHitData>& a_RayHitDatas, const Ray& a_Ray, float a_MaxDistance = INFINITY) const;
         static bool RayCast(const Ray& a_Ray, std::shared_ptr<const RenderComponent> a_Ignore = nullptr);
         static bool RayCast(std::vector<RayHitData>& a_RayHitDatas, const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponent, const Ray& a_Ray, float a_MaxDistance = INFINITY);
+	    */
 
         void IncreaseRaysSend() { m_RaySend++; }
         int GetRaysSend() const { return m_RaySend;  }

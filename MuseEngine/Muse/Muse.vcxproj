@@ -627,6 +627,7 @@
     <ClCompile Include="src\Core\Renderer\RayTracing\AmbientLightSource.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\BlinnPhongMaterial.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\BVH\BoundingVolume.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracing\Ray.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Shape\Box.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\BVH\BVH.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Camera.cpp" />

@@ -269,6 +269,7 @@ namespace Muse
         m_BVH->PrintHierarchy();
     }
 
+    /*
     bool Scene::RayCast(const Ray& a_Ray, float a_MaxDistance) const
     {
         std::vector< std::shared_ptr<RenderComponent>> renderComponents = RenderComponent::GetAll();
@@ -321,6 +322,7 @@ namespace Muse
 
         return !a_RayHitDatas.empty();
     }
+    */
 
     std::shared_ptr<Scene> Scene::Load(const std::string& a_FilePath)
     {

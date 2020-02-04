@@ -43,6 +43,7 @@ namespace Muse
         return m_Material->GetColor(shared_from_this(), a_Point, a_GetColorParameters);
     }
 
+    /*
     bool RenderComponent::CheckRayHit(RayHitData& a_RayHitData, const Ray& a_Ray) const
     {
 #if MUSE_PROFILE
@@ -88,6 +89,12 @@ namespace Muse
         }
 
         return false;
+    }
+    */
+
+    float RenderComponent::CheckRayHit(const Ray& a_Ray) const
+    {
+        return m_Shape->CheckRayHit(a_Ray);
     }
 
     void RenderComponent::OnUpdate(float a_DeltaTime)

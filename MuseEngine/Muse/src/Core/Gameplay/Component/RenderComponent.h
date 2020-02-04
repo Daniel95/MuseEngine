@@ -42,8 +42,10 @@ namespace Muse
         void SetMaterial(std::shared_ptr<Material> a_Material) { m_Material = a_Material; }
 
         virtual glm::vec3 GetColor(const glm::vec3& a_Point, std::shared_ptr<GetColorParameters> a_GetColorParameters) const;
-        virtual bool CheckRayHit(RayHitData& a_RayHitData, const Ray& a_Ray) const;
-        virtual bool CheckRayHit(const Ray& a_Ray) const;
+        //virtual bool CheckRayHit(RayHitData& a_RayHitData, const Ray& a_Ray) const;
+        //virtual bool CheckRayHit(const Ray& a_Ray) const;
+        //virtual bool CheckRayHit(RayHitData& a_RayHitData, const Ray& a_Ray) const;
+        virtual float CheckRayHit(const Ray& a_Ray) const;
         virtual glm::vec3 GetNormal(const glm::vec3& a_Point) const;
 
         virtual void OnUpdate(float a_DeltaTime) override;

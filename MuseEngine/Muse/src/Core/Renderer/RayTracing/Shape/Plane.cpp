@@ -8,6 +8,19 @@
 
 namespace Muse
 {
+    float Plane::CheckRayHit(const Ray& a_Ray) const
+    {
+		glm::vec3 position = GetPosition();
+
+		float denom = glm::dot(m_Normal, a_Ray.Direction);
+		if (abs(denom) > 0.0001f) // your favorite epsilon
+		{
+			float t = glm::dot(position - a_Ray.Origin, m_Normal) / denom;
+			if (t >= 0) return true; // you might want to allow an epsilon here too
+		}
+		return false;
+    }
+
 	bool Plane::CheckRayHit(glm::vec3& intersectionPoint, const Ray& ray) const
 	{
 		const float d = glm::dot(ray.Direction, m_Normal);

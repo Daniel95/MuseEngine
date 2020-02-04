@@ -13,6 +13,33 @@ namespace Muse
 		bounds[1] = glm::vec3(0.5f, 0.5f, 0.5f);
 	}
 
+    float Box::CheckRayHit(const Ray& a_Ray) const
+    {
+		/*
+		__m128 t1 = _mm_mul_ps(_mm_sub_ps(node->bmin4, O4), rD4);
+		__m128 t2 = _mm_mul_ps(_mm_sub_ps(node->bmax4, O4), rD4);
+		__m128 vmax4 = _mm_max_ps(t1, t2), vmin4 = _mm_min_ps(t1, t2);
+		float* vmax = (float*)&vmax4, * vmin = (float*)&vmin4;
+		float tmax = min(vmax[0], min(vmax[1], vmax[2]));
+		float tmin = max(vmin[0], max(vmin[1], vmin[2]));
+		return tmax >= tmin && tmax >= 0;
+	    */
+		return -1;
+    }
+
+	/*
+bool intersection( box b, ray r )
+{
+   __m128 t1 = _mm_mul_ps( _mm_sub_ps( node->bmin4, O4 ), rD4 );
+   __m128 t2 = _mm_mul_ps( _mm_sub_ps( node->bmax4, O4 ), rD4 );
+   __m128 vmax4 = _mm_max_ps( t1, t2 ), vmin4 = _mm_min_ps( t1, t2 );
+   float* vmax = (float*)&vmax4, *vmin = (float*)&vmin4;
+   float tmax = min(vmax[0], min(vmax[1], vmax[2]));
+   float tmin = max(vmin[0], max(vmin[1], vmin[2]));
+   return tmax >= tmin && tmax >= 0;
+}
+		*/
+
 	bool Box::CheckRayHit(glm::vec3& intersectionPoint, const Ray& ray) const
 	{
 		const glm::vec3 localRayDirection = GetTransform()->InverseTransformVector(ray.Direction);

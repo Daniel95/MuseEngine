@@ -18,6 +18,7 @@ namespace Muse
 		static void RemoveRayHitsOutOfDistance(std::vector<RayHitData>& a_RayHitDatas, const glm::vec3& a_RayOrigin, float a_MaxDistance);
 
 		std::shared_ptr<const RenderComponent> m_RenderComponent;
+		float m_Distane;
 		glm::vec3 m_IntersectionPoint;
 	};
 }

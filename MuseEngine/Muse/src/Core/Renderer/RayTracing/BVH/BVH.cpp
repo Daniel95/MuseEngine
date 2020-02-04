@@ -28,6 +28,7 @@ namespace Muse
 
 	void BVH::CheckBoundingVolume(std::vector<RayHitData>& a_RayHitDatas, const BoundingVolume& a_BoundingVolumeToCheck, const Ray& a_Ray, float a_MaxDistance) const
 	{
+	/*
 		scene.IncreaseRaysSend();
 
 		glm::vec3 intersectionPoint;
@@ -39,6 +40,7 @@ namespace Muse
 		{
 			CheckBoundingVolume(a_RayHitDatas, *boundingVolume, a_Ray, a_MaxDistance);
 		}
+    */
 	}
 
 	void BVH::PrintHierarchy() const

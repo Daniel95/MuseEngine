@@ -7,6 +7,19 @@
 
 namespace Muse
 {
+    float Sphere::CheckRayHit(const Ray& a_Ray) const
+    {
+		glm::vec3 C = GetPosition() - a_Ray.Origin;
+		float t = dot(C, a_Ray.Direction);
+		glm::vec3 Q = C - t * a_Ray.Direction;
+		float p2 = dot(Q, Q);
+		if (p2 > m_Radius2) return - 1; // r2 = r * r
+		t -= sqrt(m_Radius2 - p2);
+		//if ((t < ray.t) && (t > 0)) ray.t = t;
+		if (t > 0) return t;
+		return -1;
+    }
+
 	bool Sphere::CheckRayHit(glm::vec3& a_IntersectionPoint, const Ray& a_Ray) const
 	{
 		/*
@@ -63,4 +76,10 @@ namespace Muse
 		a_Min = GetTransform()->GetPosition() - halfScale;
 		a_Max = GetTransform()->GetPosition() + halfScale;
 	}
+
+    void Sphere::SetRadius(float a_Radius)
+    {
+		m_Radius = a_Radius;
+		m_Radius2 = a_Radius * a_Radius;
+    }
 }
