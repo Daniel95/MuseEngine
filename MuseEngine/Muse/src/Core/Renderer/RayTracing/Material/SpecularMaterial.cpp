@@ -8,7 +8,7 @@
 #include "Core/Gameplay/Component/RenderComponent.h"
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Renderer/RayTracing/Ray.h"
-
+#include "Core/Renderer/RayTracing/LightSource.h"
 
 namespace Muse
 {
@@ -41,17 +41,27 @@ namespace Muse
 
 			if (!ray.Cast())
 			{
-				//Todo Reuse directiontolightsource???
-				const glm::vec3 lightDirection = lightSource->GetDirectionToPoint(a_Point);
-				const glm::vec3 reflectionDirection = reflect(directionToLightSource, a_RenderComponent->GetNormal(a_Point));
-				const float speculairValue = std::pow(std::max(dot(a_LookDirection, reflectionDirection), 0.0f), 32.0f) * m_SpeculairStrength;
-				const float clampedspeculairStrength = std::clamp(speculairValue, 0.0f, 1.0f);
+				float specular = GetSpecular(a_RenderComponent->GetNormal(a_Point), a_LookDirection, directionToLightSource);
 
-				totalSpecular += lightSource->GetLight(a_Point) * clampedspeculairStrength;
+				/*
+				const glm::vec3 reflectionDirection = glm::reflect(directionToLightSource, a_RenderComponent->GetNormal(a_Point));
+				const float specularValue = std::pow(std::max(glm::dot(a_LookDirection, reflectionDirection), 0.0f), 32.0f) * m_SpeculairStrength;
+				const float clampedspeculairStrength = std::clamp(specularValue, 0.0f, 1.0f);
+			    */
+
+				totalSpecular += specular;
 			}
 		}
 
 		return totalSpecular;
 	}
 
+    float SpecularMaterial::GetSpecular(const glm::vec3& a_Normal, const glm::vec3& a_LookDirection, const glm::vec3& a_DirectionToLightSource) const
+    {
+		const glm::vec3 reflectionDirection = glm::reflect(a_DirectionToLightSource, a_Normal);
+		const float specularValue = std::pow(std::max(glm::dot(a_LookDirection, reflectionDirection), 0.0f), 32.0f) * m_SpeculairStrength;
+		const float clampedspeculairStrength = std::clamp(specularValue, 0.0f, 1.0f);
+
+		return clampedspeculairStrength;
+    }
 }

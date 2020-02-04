@@ -7,6 +7,9 @@
 #include "Core/Scene/Scene.h"
 #include "Core/Renderer/RayTracing/GetColorParameters.h"
 #include "Core/Gameplay/Component/RenderComponent.h"
+#include "Core/Scene/SceneManager.h"
+#include "Core/Renderer/RayTracing/LightSource.h"
+#include "Core/Renderer/RayTracing/Ray.h"
 
 namespace Muse
 {
@@ -15,15 +18,13 @@ namespace Muse
 	{
 	}
 
-	glm::vec3 CheckerBoardMaterial::GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const
+	glm::vec3 CheckerBoardMaterial::GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& a_Point, std::shared_ptr<GetColorParameters> a_GetColorParameters) const
 	{
-		const glm::vec3 speculair = m_SpeculairMaterial.GetSpecular(a_RenderComponent, point, getColorParameters->RayDirection);
-		const glm::vec3 diffuse = m_DiffuseMaterial.GetDiffuse(a_RenderComponent, point);
-		const glm::vec3 combinedLights = speculair + diffuse + a_RenderComponent->GetGameObject()->GetScene()->GetAmbientLight();
+		const glm::vec3 light =GetBlinnPhong(a_RenderComponent, a_Point, a_GetColorParameters);
 
-		int gridPositionX = static_cast<int>(std::round(point.x / m_GridSize));
-		int gridPositionY = static_cast<int>(std::round(point.y / m_GridSize));
-		int gridPositionZ = static_cast<int>(std::round(point.z / m_GridSize));
+		int gridPositionX = static_cast<int>(std::round(a_Point.x / m_GridSize));
+		int gridPositionY = static_cast<int>(std::round(a_Point.y / m_GridSize));
+		int gridPositionZ = static_cast<int>(std::round(a_Point.z / m_GridSize));
 
 		int positionInGrid = gridPositionX + gridPositionY + gridPositionZ;
 
@@ -31,11 +32,11 @@ namespace Muse
 
 		if (positionInGrid % 2 == 0)
 		{
-			result = m_Color * combinedLights;
+			result = m_Color * light;
 		}
 		else
 		{
-			result = m_Color2 * combinedLights;
+			result = m_Color2 * light;
 		}
 
 		return result;

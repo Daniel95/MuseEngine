@@ -5,6 +5,10 @@
 #include "DiffuseMaterial.h"
 #include "Core/Scene/Scene.h"
 #include "Core/Renderer/RayTracing/GetColorParameters.h"
+#include "Core/Scene/SceneManager.h"
+#include "Core/Renderer/RayTracing/LightSource.h"
+#include "Core/Renderer/RayTracing/Ray.h"
+#include "Core/Gameplay/Component/RenderComponent.h"
 
 namespace Muse
 {
@@ -13,13 +17,40 @@ namespace Muse
 	{
 	}
 
-	glm::vec3 BlinnPhongMaterial::GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const
+	glm::vec3 BlinnPhongMaterial::GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& a_Point, std::shared_ptr<GetColorParameters> a_GetColorParameters) const
 	{
-		const glm::vec3 speculair = m_SpeculairMaterial.GetSpecular(a_RenderComponent, point, getColorParameters->RayDirection);
-		const glm::vec3 diffuse = m_DiffuseMaterial.GetDiffuse(a_RenderComponent, point);
-		const glm::vec3 combinedLights = speculair + diffuse + 0.1f;//a_gameObject.GetScene().GetAmbientLight();
-		const glm::vec3 result = m_Color * combinedLights;
+		const glm::vec3 blinnPhong = GetBlinnPhong(a_RenderComponent, a_Point, a_GetColorParameters);
+		const glm::vec3 result = m_Color * blinnPhong;
 
 		return result;
 	}
+
+    glm::vec3 BlinnPhongMaterial::GetBlinnPhong(std::shared_ptr<const RenderComponent> a_RenderComponent,
+        const glm::vec3& a_Point, std::shared_ptr<GetColorParameters> a_GetColorParameters) const
+    {
+		glm::vec3 specularAndDiffuse = glm::vec3(0);
+		glm::vec3 normal = a_RenderComponent->GetNormal(a_Point);
+
+		const std::vector<std::shared_ptr<LightSource>>& lightSources = SceneManager::GetActiveScene()->GetLightSources();
+
+		for (const std::shared_ptr<LightSource>& lightSource : lightSources)
+		{
+			const glm::vec3 lightPosition = lightSource->GetPosition();
+			const glm::vec3 directionToLightSource = glm::normalize(lightPosition - a_Point);
+			Ray ray{ a_Point, directionToLightSource };
+			glm::vec3 light = lightSource->GetLight(a_Point);
+
+			if (!ray.Cast())
+			{
+				float specular = m_SpeculairMaterial.GetSpecular(normal, a_GetColorParameters->RayDirection, directionToLightSource);
+				float diffuseT = m_DiffuseMaterial.GetDiffuse(normal, directionToLightSource);
+
+				specularAndDiffuse += (specular + diffuseT) * light;
+			}
+		}
+
+		const glm::vec3 combinedLights = specularAndDiffuse + SceneManager::GetActiveScene()->GetAmbientLight();
+
+		return combinedLights;
+    }
 }

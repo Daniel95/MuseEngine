@@ -56,4 +56,12 @@ namespace Muse
 
 		return totalDiffuse;
 	}
+
+	float DiffuseMaterial::GetDiffuse(const glm::vec3& a_Normal, const glm::vec3& a_DirectionToLightSource)
+	{
+		const float diffuseStrength = glm::dot(a_DirectionToLightSource, a_Normal);
+		const float clampedDiffuseStrength = std::clamp(diffuseStrength, 0.0f, 1.0f);
+
+		return clampedDiffuseStrength;
+	}
 }

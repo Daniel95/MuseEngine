@@ -6,7 +6,8 @@
 
 namespace Muse
 {
-	class SceneObject;
+    class LightSource;
+    class SceneObject;
 
 	class SpecularMaterial : public Material
 	{
@@ -16,11 +17,11 @@ namespace Muse
 
 		virtual glm::vec3 GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const override;
 		glm::vec3 GetSpecular(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& a_Point, const glm::vec3& a_LookDirection) const;
+		float GetSpecular(const glm::vec3& a_Normal, const glm::vec3& a_LookDirection, const glm::vec3& a_DirectionToLightSource) const;
 
 	private:
 		float m_SpeculairStrength;
 		glm::vec3 m_Color;
 
 	};
-
 }
