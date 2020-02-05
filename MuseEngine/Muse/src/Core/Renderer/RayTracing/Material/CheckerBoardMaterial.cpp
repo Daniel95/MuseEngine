@@ -23,22 +23,18 @@ namespace Muse
 		const glm::vec3 light = GetBlinnPhong(a_RenderComponent, a_Point, a_GetColorParameters);
 
 		int gridPositionX = static_cast<int>(std::round(a_Point.x / m_GridSize));
-		int gridPositionY = static_cast<int>(std::round(a_Point.y / m_GridSize));
+		//int gridPositionY = static_cast<int>(std::round(a_Point.y / m_GridSize));
 		int gridPositionZ = static_cast<int>(std::round(a_Point.z / m_GridSize));
 
-		int positionInGrid = gridPositionX + gridPositionY + gridPositionZ;
+		int positionInGrid = gridPositionX + gridPositionZ;
 
-		glm::vec3 result;
+		glm::vec3 result = m_Color2;
 
 		if (positionInGrid % 2 == 0)
 		{
-			result = m_Color * light;
-		}
-		else
-		{
-			result = m_Color2 * light;
+			result = m_Color;
 		}
 
-		return result;
+		return result * light;
 	}
 }

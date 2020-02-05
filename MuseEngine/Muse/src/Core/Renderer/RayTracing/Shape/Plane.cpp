@@ -10,11 +10,10 @@ namespace Muse
     float Plane::CheckRayHit(const Ray& a_Ray) const
     {
 		float denom = glm::dot(m_Normal, a_Ray.Direction);
-		//if (std::abs(denom) > 0) // your favorite epsilon
-		if (denom < glm::epsilon<float>())
+		if (denom < 0)
 		{
 			float t = glm::dot(GetPosition() - a_Ray.Origin, m_Normal) / denom;
-			if (t >= 0) return t; // you might want to allow an epsilon here too
+			if (t >= 0) return t; 
 		}
 		return -1;
     }
