@@ -17,7 +17,7 @@ namespace Muse
 	{
 	}
 
-	glm::vec3 BlinnPhongMaterial::GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& a_Point, std::shared_ptr<GetColorParameters> a_GetColorParameters) const
+	glm::vec3 BlinnPhongMaterial::GetColor(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, const std::shared_ptr<GetColorParameters>& a_GetColorParameters) const
 	{
 		const glm::vec3 blinnPhong = GetBlinnPhong(a_RenderComponent, a_Point, a_GetColorParameters);
 		const glm::vec3 result = m_Color * blinnPhong;
@@ -26,19 +26,24 @@ namespace Muse
 	}
 
     glm::vec3 BlinnPhongMaterial::GetBlinnPhong(std::shared_ptr<const RenderComponent> a_RenderComponent,
-        const glm::vec3& a_Point, std::shared_ptr<GetColorParameters> a_GetColorParameters) const
+        const glm::vec3& a_Point, const std::shared_ptr<GetColorParameters>& a_GetColorParameters) const
     {
 		glm::vec3 specularAndDiffuse = glm::vec3(0);
 		glm::vec3 normal = a_RenderComponent->GetNormal(a_Point);
 
 		const std::vector<std::shared_ptr<LightSource>>& lightSources = SceneManager::GetActiveScene()->GetLightSources();
 
+		Ray ray{ a_Point };
+
 		for (const std::shared_ptr<LightSource>& lightSource : lightSources)
 		{
 			const glm::vec3 lightPosition = lightSource->GetPosition();
 			const glm::vec3 directionToLightSource = glm::normalize(lightPosition - a_Point);
-			Ray ray{ a_Point, directionToLightSource };
 			glm::vec3 light = lightSource->GetLight(a_Point);
+
+			ray.Direction = directionToLightSource;
+
+
 
 			if (!ray.Cast())
 			{

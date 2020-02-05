@@ -33,7 +33,7 @@ namespace Muse
         return false;
     }
 
-    bool Ray::Cast(std::shared_ptr<const RenderComponent> a_Ignore, float a_MaxDistance) const
+    bool Ray::Cast(const std::shared_ptr<const RenderComponent>& a_Ignore, float a_MaxDistance) const
     {
     #if MUSE_PROFILE
         std::shared_ptr<Scene> scene = SceneManager::GetActiveScene();
@@ -63,7 +63,7 @@ namespace Muse
         return false;
     }
 
-    bool Ray::Cast(RayHitData& a_RayHitData, std::shared_ptr<const RenderComponent> a_Ignore, float a_MaxDistance) const
+    bool Ray::Cast(RayHitData& a_RayHitData, const std::shared_ptr<const RenderComponent>& a_Ignore, float a_MaxDistance) const
     {
     #if MUSE_PROFILE
         std::shared_ptr<Scene> scene = SceneManager::GetActiveScene();
@@ -100,33 +100,4 @@ namespace Muse
 
         return closestHitRenderComponent != nullptr;
     }
-
-    /*
-    bool Ray::Cast(std::vector<RayHitData>& a_RayHitDatas, float a_MaxDistance)
-    {
-        return Cast(a_RayHitDatas, RenderComponent::GetAll(), a_MaxDistance);
-    }
-
-    bool Ray::Cast(std::vector<RayHitData>& a_RayHitDatas,
-        const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents, float a_MaxDistance)
-    {
-        RayHitData rayHitData;
-
-        for (std::shared_ptr<RenderComponent> renderComponent : a_RenderComponents)
-        {
-            if (renderComponent->CheckRayHit(rayHitData, *this))
-            {
-                //Push a copy of this ray hit data
-                a_RayHitDatas.push_back(rayHitData);
-            }
-        }
-
-        if (a_MaxDistance != INFINITY)
-        {
-            RayHitData::RemoveRayHitsOutOfDistance(a_RayHitDatas, Origin, a_MaxDistance);
-        }
-
-        return !a_RayHitDatas.empty();
-    }
-    */
 }

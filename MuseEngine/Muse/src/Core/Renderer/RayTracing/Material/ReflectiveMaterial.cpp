@@ -21,19 +21,19 @@ namespace Muse
 	{
 	}
 
-	glm::vec3 ReflectiveMaterial::GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const
+	glm::vec3 ReflectiveMaterial::GetColor(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, const std::shared_ptr<GetColorParameters>& a_GetColorParameters) const
 	{
-		const glm::vec3 speculair = m_SpeculairMaterial.GetSpecular(a_RenderComponent, point, getColorParameters->RayDirection);
-		const glm::vec3 diffuse = m_DiffuseMaterial.GetDiffuse(a_RenderComponent, point);
+		const glm::vec3 speculair = m_SpeculairMaterial.GetSpecular(a_RenderComponent, a_Point, a_GetColorParameters->RayDirection);
+		const glm::vec3 diffuse = m_DiffuseMaterial.GetDiffuse(a_RenderComponent, a_Point);
 		const glm::vec3 blinnPhong = (speculair + diffuse + a_RenderComponent->GetGameObject()->GetScene()->GetAmbientLight()) * abs(1 - reflectiveness);
-		const glm::vec3 reflection = GetReflection(a_RenderComponent, point, getColorParameters) * reflectiveness;
+		const glm::vec3 reflection = GetReflection(a_RenderComponent, a_Point, a_GetColorParameters) * reflectiveness;
 		const glm::vec3 lightColor = blinnPhong + reflection;
 		const glm::vec3 result = m_Color * lightColor;
 
 		return result;
 	}
 
-	glm::vec3 ReflectiveMaterial::GetReflection(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& a_Point, std::shared_ptr<GetColorParameters> a_GetColorParameters) const
+	glm::vec3 ReflectiveMaterial::GetReflection(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, const std::shared_ptr<GetColorParameters>& a_GetColorParameters) const
 	{
 		if (a_GetColorParameters->Bounces <= 0)
 		{

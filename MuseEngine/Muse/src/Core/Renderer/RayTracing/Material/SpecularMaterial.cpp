@@ -18,16 +18,16 @@ namespace Muse
 	{
 	}
 
-	glm::vec3 SpecularMaterial::GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const
+	glm::vec3 SpecularMaterial::GetColor(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, const std::shared_ptr<GetColorParameters>& a_GetColorParameters) const
 	{
-		const glm::vec3 speculair = GetSpecular(a_RenderComponent, point, getColorParameters->RayDirection);
+		const glm::vec3 speculair = GetSpecular(a_RenderComponent, a_Point, a_GetColorParameters->RayDirection);
 		const glm::vec3 combinedLights = speculair + a_RenderComponent->GetGameObject()->GetScene()->GetAmbientLight();
 		const glm::vec3 result = m_Color * combinedLights;
 
 		return result;
 	}
 
-	glm::vec3 SpecularMaterial::GetSpecular(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& a_Point, const glm::vec3& a_LookDirection) const
+	glm::vec3 SpecularMaterial::GetSpecular(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, const glm::vec3& a_LookDirection) const
 	{
 		const std::vector<std::shared_ptr<LightSource>>& lightSources = a_RenderComponent->GetGameObject()->GetScene()->GetLightSources();
 

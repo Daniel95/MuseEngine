@@ -13,8 +13,8 @@ namespace Muse
 		ReflectiveMaterial(const glm::vec3& a_Color = glm::vec3(1), float a_SpeculairStrength = 0.5f, float a_Reflectiveness = 0.75f, int a_MaxBounces = 32);
 		virtual ~ReflectiveMaterial() = default;
 
-		virtual glm::vec3 GetColor(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& point, std::shared_ptr<GetColorParameters> getColorParameters) const override;
-		glm::vec3 GetReflection(std::shared_ptr<const RenderComponent> a_RenderComponent, const glm::vec3& a_Point, std::shared_ptr<GetColorParameters> a_GetColorParameters) const;
+		virtual glm::vec3 GetColor(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, const std::shared_ptr<GetColorParameters>& a_GetColorParameters) const override;
+		glm::vec3 GetReflection(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, const std::shared_ptr<GetColorParameters>& a_GetColorParameters) const;
 
 	private:
 		int maxBounces;
