@@ -88,15 +88,24 @@ void GamePT::OnRender()
 
     /////////////////
 
-    const glm::vec3 backgroundColor = scene->GetBackgroundColor();
 
-    glm::mat4 T = camera->GetTransform()->GetModelMatrix();
 
-    glm::vec3 p0 = T * glm::vec4(-1, -1, 1, 0); // top-left
-    glm::vec3 p1 = T * glm::vec4(1, -1, 1, 0); // top-right
-    glm::vec3 p2 = T * glm::vec4(-1, 1, 1, 0); // bottom-left
+    glm::mat4 newCameraTransform = camera->GetTransform()->GetModelMatrix();
 
-    glm::vec3 E = T * glm::vec4(0, 0, 0, 1);
+    if(newCameraTransform != cameraTransform)
+    {
+        m_Buffer.clear();
+        m_Buffer.resize(height * width * 4);
+        m_Frames = 0;
+    }
+    cameraTransform = newCameraTransform;
+    m_Frames++;
+
+    glm::vec3 p0 = cameraTransform * glm::vec4(-1, -1, 1, 0); // top-left
+    glm::vec3 p1 = cameraTransform * glm::vec4(1, -1, 1, 0); // top-right
+    glm::vec3 p2 = cameraTransform * glm::vec4(-1, 1, 1, 0); // bottom-left
+
+    glm::vec3 E = cameraTransform * glm::vec4(0, 0, 0, 1);
     glm::vec3 right = p1 - p0;
     glm::vec3 down = p2 - p0;
 
@@ -116,9 +125,13 @@ void GamePT::OnRender()
 
             const glm::vec3 color = Sample(ray);
 
-            m_ScreenData[colorIndex] = color.x;
-            m_ScreenData[colorIndex + 1] = color.y;
-            m_ScreenData[colorIndex + 2] = color.z;
+            m_Buffer[colorIndex] += color.x;
+            m_Buffer[colorIndex + 1] += color.y;
+            m_Buffer[colorIndex + 2] += color.z;
+
+            m_ScreenData[colorIndex] = m_Buffer[colorIndex] / m_Frames;
+            m_ScreenData[colorIndex + 1] = m_Buffer[colorIndex + 1] / m_Frames;
+            m_ScreenData[colorIndex + 2] = m_Buffer[colorIndex + 2] / m_Frames;
 
             colorIndex += stride;
         }
@@ -131,6 +144,7 @@ void GamePT::OnRender()
 
     GetViewport()->BindTexture();
     GetViewport()->SetDataF(&m_ScreenData[0], size);
+
 
     Muse::Renderer2D::EndScene();
 }
@@ -166,6 +180,9 @@ void GamePT::Resize(unsigned a_Width, unsigned a_Height)
 {
     m_ScreenData.clear();
     m_ScreenData.resize(a_Height * a_Width * 4);
+
+    m_Buffer.clear();
+    m_Buffer.resize(a_Height * a_Width * 4);
 
     m_Height = a_Height;
     m_Width = a_Width;
@@ -205,11 +222,13 @@ glm::vec3 GamePT::AddNoiseOnAngle(float a_Min, float a_Max)
     float yNoise = Random(a_Min, a_Max);
     float zNoise = Random(a_Min, a_Max);
 
+    float pi2 = 2 * glm::pi<float>();
+
     // Convert Angle to Vector3
     glm::vec3 noise = glm::vec3(
-        glm::sin(2 * glm::pi<float>() * xNoise / 360),
-        glm::sin(2 * glm::pi<float>() * yNoise / 360),
-        glm::sin(2 * glm::pi<float>() * zNoise / 360)
+        glm::sin(pi2 * xNoise / 360),
+        glm::sin(pi2 * yNoise / 360),
+        glm::sin(pi2 * zNoise / 360)
     );
     return noise;
 }

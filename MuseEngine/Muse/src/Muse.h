@@ -52,7 +52,7 @@
 //Transform support rotations
 
 /////Raytracer:
-//Fix plane intersection
+//Refactor materials. Make materials data only and put calculates somewhere else.
 //calculate shadows by giving using a light area, take a random sample to one point of this light, and add the samples together
 //give each ray a random offset, add the samples together to get anti aliasing
 //sqrtf the results to make add gamma correction

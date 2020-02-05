@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "Core/Application.h"
-#include "glm/vec4.hpp"
+#include "glm/glm.hpp"
 
 #include <vector>
 #include <array>
@@ -33,11 +33,14 @@ protected:
 
 private:
     std::vector<float> m_ScreenData;
+    std::vector<float> m_Buffer;
     unsigned int m_Width, m_Height;
-    glm::vec3 m_BackgroundColor = glm::vec3(1);
+    glm::vec3 m_BackgroundColor = glm::vec3(0);
     Muse::RayHitData m_RayHitData;
     Muse::GetColorParameters m_GetColorParameters;
     bool m_Hit = false;
+    int m_Frames = 0;
+    glm::mat4 cameraTransform;
 
     void Resize(unsigned int a_Width, unsigned int a_Height);
     glm::vec3 Sample(const Muse::Ray& a_Ray);
