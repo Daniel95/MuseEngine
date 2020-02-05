@@ -55,12 +55,6 @@ namespace Muse
 		const glm::mat4& GetRotationMatrix();
 		const glm::mat4& GetScaleMatrix();
 		const glm::mat4& GetModelMatrix();
-
-		const glm::vec3& RTTRGetPosition() const { return m_Position; }
-		void RTTRSetPosition(const glm::vec3& a_Position) { SetPosition(a_Position); }
-		const glm::vec3& RTTRGetScale() const { return m_Scale; }
-		void RTTRSetScale(const glm::vec3& a_Scale) { SetScale(a_Scale); }
-
 		
 		template <class Archive>
 		void serialize(Archive& ar)

@@ -48,6 +48,8 @@
 
 /////Engine:
 //Model loading
+//GLM make vec's and mat's conversion to string
+//Transform support rotations
 
 /////Raytracer:
 //Fix plane intersection
