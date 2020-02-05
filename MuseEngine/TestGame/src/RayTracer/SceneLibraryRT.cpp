@@ -23,10 +23,9 @@ void SceneLibraryRT::MakeTestScene(std::shared_ptr<Muse::Scene> a_Scene)
 	}
 
 	{
-		std::shared_ptr<Muse::LightSource> lightSource = std::make_shared<Muse::LightSource>(glm::vec3(2, 3, 0), glm::vec3(0.3f, 0.6f, 0.9f), 1.5f, 10);
-		a_Scene->AddLightSource(lightSource);
+		//std::shared_ptr<Muse::LightSource> lightSource = std::make_shared<Muse::LightSource>(glm::vec3(2, 3, 0), glm::vec3(0.3f, 0.6f, 0.9f), 1.5f, 10);
+		//a_Scene->AddLightSource(lightSource);
 	}
-
 
 	auto diffuseMaterialComponent = std::make_shared<Muse::DiffuseMaterial>(glm::vec3(0.8f, 0.3f, 0.5f));
 	auto blinnPhongMaterialComponent = std::make_shared<Muse::BlinnPhongMaterial>(glm::vec3(0.8f, 0.3f, 0.5f));
@@ -78,7 +77,7 @@ void SceneLibraryRT::MakeTestScene(std::shared_ptr<Muse::Scene> a_Scene)
 
 		auto renderComponent = planeGameObject->AddComponent<Muse::RenderComponent>();
 
-		renderComponent->SetMaterial(diffuseMaterialComponent);
+		renderComponent->SetMaterial(checkerBoardMaterial);
 		renderComponent->SetShape(planeComponent);
 	}
 }

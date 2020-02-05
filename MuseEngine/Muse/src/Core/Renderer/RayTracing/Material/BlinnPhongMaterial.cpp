@@ -43,7 +43,7 @@ namespace Muse
 			if (!ray.Cast())
 			{
 				float specular = m_SpeculairMaterial.GetSpecular(normal, a_GetColorParameters->RayDirection, directionToLightSource);
-				float diffuseT = m_DiffuseMaterial.GetDiffuse(normal, directionToLightSource);
+				float diffuseT = DiffuseMaterial::GetDiffuse(normal, directionToLightSource);
 
 				specularAndDiffuse += (specular + diffuseT) * light;
 			}

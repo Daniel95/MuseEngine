@@ -30,6 +30,7 @@
 #include "Core/Renderer/RayTracing/AmbientLightSource.h"
 #include "Core/Gameplay/Component/RenderComponent.h"
 #include "Core/Renderer/RayTracing/RayHitData.h"
+#include "Core/Gameplay/Component/PerspectiveCameraControllerComponent.h"
 
 namespace Muse
 {
@@ -252,7 +253,7 @@ namespace Muse
         std::shared_ptr<GameObject> gameObject = AddGameObject();
 
         gameObject->AddComponent<CameraComponent>()->MakeEditorCamera();
-        gameObject->AddComponent<OrthographicCameraControllerComponent>();
+        gameObject->AddComponent<PerspectiveCameraControllerComponent>();
 
         return gameObject;
     }

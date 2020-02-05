@@ -20,21 +20,15 @@ namespace Muse
 		UpdateLookingPlane();
 	}
 
-	const std::shared_ptr<Ray> PerspectiveCamera::GetLookingRay(float a_PixelX, float a_PixelY) const
+	void PerspectiveCamera::GetLookingRay(Ray& ray, float a_PixelX, float a_PixelY) const
 	{
-		std::shared_ptr<Ray> ray = std::make_shared<Ray>();
-
-		ray->Origin = m_TransformComponent.GetPosition();
-
-		const float invertedPixelY = abs(a_PixelY - static_cast<float>(screenSizeY));
+		ray.Origin = m_TransformComponent.GetPosition();
 
 		const float x = a_PixelX / static_cast<float>(screenSizeX);
-		const float y = invertedPixelY / static_cast<float>(screenSizeY);
+		const float y = a_PixelY / static_cast<float>(screenSizeY);
 
 		const glm::vec3 lookingPlanePoint = lowerLeftCorner + x * horizontal + y * vertical;
-		ray->Direction = glm::normalize(lookingPlanePoint - m_TransformComponent.GetPosition());
-
-		return ray;
+		ray.Direction = glm::normalize(lookingPlanePoint - m_TransformComponent.GetPosition());
 	}
 
 	void PerspectiveCamera::Move(glm::vec3 movement)

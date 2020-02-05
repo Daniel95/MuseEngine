@@ -13,7 +13,7 @@ namespace Muse
 	public:
 		Camera(const glm::vec3 & position, const glm::vec3 & lookAt, int screenSizeX, int screenSizeY);
 		virtual ~Camera() = default;
-		virtual const std::shared_ptr<Ray> GetLookingRay(float pixelX, float pixelY) const = 0;
+		virtual void GetLookingRay(Ray& a_Ray, float pixelX, float pixelY) const = 0;
 		void GetScreenSize(int & xSize, int & ySize) const;
 		virtual void Move(glm::vec3 movement);
 		virtual void MoveLookAt(const glm::vec3 & movement);

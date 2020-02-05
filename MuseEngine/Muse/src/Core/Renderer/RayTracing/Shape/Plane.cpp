@@ -7,20 +7,20 @@
 
 namespace Muse
 {
-
-	/*
     float Plane::CheckRayHit(const Ray& a_Ray) const
     {
 		float denom = glm::dot(m_Normal, a_Ray.Direction);
-		if (std::abs(denom) > glm::epsilon<float>()) // your favorite epsilon
+		//if (std::abs(denom) > 0) // your favorite epsilon
+		if (denom < 0)
+
 		{
 			float t = glm::dot(GetPosition() - a_Ray.Origin, m_Normal) / denom;
 			if (t >= 0) return t; // you might want to allow an epsilon here too
 		}
 		return -1;
     }
-    */
 
+			/*
 	float Plane::CheckRayHit(const Ray& a_Ray) const
 	{
 		const float d = glm::dot(a_Ray.Direction, m_Normal);
@@ -36,7 +36,6 @@ namespace Muse
 			{
 				return t;
 			}
-			/*
 			else
 			{
 				glm::vec3 worldIntersectionPoint = GetTransform()->InverseTransformPoint(a_Ray.Origin + (a_Ray.Direction * t));
@@ -49,11 +48,11 @@ namespace Muse
 					return true;
 				}
 			}
-		    */
 		}
 
 		return -1;
 	}
+		    */
 
 
 	glm::vec3 Plane::GetNormal(const glm::vec3& a_Point) const

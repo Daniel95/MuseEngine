@@ -40,11 +40,11 @@ void GameRT::OnStart()
     m_Height = GetViewport()->GetHeight();
     m_Width = GetViewport()->GetHeight();
 
-    m_ViewportTexture = Muse::ResourceManager::Create<Muse::Texture>("viewPortTexture", m_Width, m_Height);
-
     m_ScreenData.resize(m_Height * m_Width * 4);
 
     //scene->ConstructBVH();
+
+    m_PerspectiveCamera = new Muse::PerspectiveCamera(glm::vec3(0), glm::vec3(0, 0, 1), m_Width, m_Height, 60);
 
     SceneLibraryRT::MakeTestScene(scene);
 }
@@ -102,12 +102,6 @@ void GameRT::OnRender()
     glm::vec3 p1 = T * glm::vec4(1, -1, 1, 0); // top-right
     glm::vec3 p2 = T * glm::vec4(-1, 1, 1, 0); // bottom-left
 
-    /*
-    glm::vec3 p0 = T * glm::vec4(-1, 1, 1, 0); // top-left
-    glm::vec3 p1 = T * glm::vec4(1, 1, 1, 0); // top-right
-    glm::vec3 p2 = T * glm::vec4(-1, -1, 1, 0); // bottom-left
-    */
-
     glm::vec3 E = T * glm::vec4(0, 0, 0, 1);
     glm::vec3 right = p1 - p0;
     glm::vec3 down = p2 - p0;
@@ -122,8 +116,10 @@ void GameRT::OnRender()
         {
             float u = x / static_cast<float>(width);
             float v = y / static_cast<float>(height);
-            ray.Origin = p0 + u * right + v * down;
+
+            ray.Origin = p0 + u * right + v * down + E;
             ray.Direction = glm::normalize(ray.Origin - E);
+
 
             if(ray.Cast(rayHitData))
             {
@@ -133,13 +129,6 @@ void GameRT::OnRender()
                 getColorParameters->Bounces = 5;
 
                 const glm::vec3 color = rayHitData.m_RenderComponent->GetColor(rayHitData.GetIntersectionPoint(), getColorParameters);
-
-                /*
-                m_ScreenData[i] = std::sqrt(color.x);
-                m_ScreenData[i + 1] = std::sqrt(color.y);
-                m_ScreenData[i + 2] = std::sqrt(color.z);
-                m_ScreenData[i + 3] = 1.0f;
-                */
 
                 m_ScreenData[colorIndex] = color.x;
                 m_ScreenData[colorIndex + 1] = color.y;

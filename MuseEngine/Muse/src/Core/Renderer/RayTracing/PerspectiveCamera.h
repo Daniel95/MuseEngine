@@ -10,7 +10,7 @@ namespace Muse
 	{
 	public:
 		PerspectiveCamera(const glm::vec3& a_Position, const glm::vec3& a_LookAt, int screenSizeX, int a_ScreenSizeY, float a_Vfov, const glm::vec3& a_Up = glm::vec3(0, 1, 0));
-		virtual const std::shared_ptr<Ray> GetLookingRay(float a_PixelX, float a_PixelY) const override;
+		virtual void GetLookingRay(Ray& a_Ray, float a_PixelX, float a_PixelY) const override;
 		virtual void Move(glm::vec3 movement) override;
 		virtual void MoveLookAt(const glm::vec3& movement);
 

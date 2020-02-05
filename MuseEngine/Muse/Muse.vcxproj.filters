@@ -1417,6 +1417,7 @@
     <ClInclude Include="src\Core\Renderer\RayTracing\Shape\Box.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\BVH\TopDownBVH.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Material\SpecularMaterial.h" />
+    <ClInclude Include="src\Core\Gameplay\Component\PerspectiveCameraControllerComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1600,5 +1601,6 @@
     <ClCompile Include="src\Core\Renderer\RayTracing\Shape\Shape.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Ray.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\SpecularMaterial.cpp" />
+    <ClCompile Include="src\Core\Gameplay\Component\PerspectiveCameraControllerComponent.cpp" />
   </ItemGroup>
 </Project>

@@ -5,6 +5,7 @@
 
 #include <vector>
 #include <array>
+#include "Core/Renderer/RayTracing/PerspectiveCamera.h"
 
 // Display size
 #define SCREEN_WIDTH 64
@@ -31,8 +32,8 @@ protected:
     virtual void OnImGuiRender() override;
 
 private:
-    std::shared_ptr<Muse::Texture> m_ViewportTexture;
     std::vector<float> m_ScreenData;
+    Muse::PerspectiveCamera* m_PerspectiveCamera;
 
     unsigned int m_Width, m_Height;
 
