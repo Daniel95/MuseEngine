@@ -140,6 +140,7 @@
   <ItemGroup>
     <ClInclude Include="src\Game2D.h" />
     <ClInclude Include="src\Game3D.h" />
+    <ClInclude Include="src\GamePT.h" />
     <ClInclude Include="src\GameRT.h" />
     <ClInclude Include="src\Mode.h" />
     <ClInclude Include="src\PlayerComponent.h" />
@@ -148,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="src\Game2D.cpp" />
     <ClCompile Include="src\Game3D.cpp" />
+    <ClCompile Include="src\GamePT.cpp" />
     <ClCompile Include="src\GameRT.cpp" />
     <ClCompile Include="src\PlayerComponent.cpp" />
     <ClCompile Include="src\RayTracer\SceneLibraryRT.cpp" />

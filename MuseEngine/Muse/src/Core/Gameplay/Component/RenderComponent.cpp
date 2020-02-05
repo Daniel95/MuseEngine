@@ -42,7 +42,7 @@ namespace Muse
         return m_Shape->GetNormal(a_Point);
     }
 
-    glm::vec3 RenderComponent::GetColor(const glm::vec3& a_Point, const std::shared_ptr<GetColorParameters>& a_GetColorParameters) const
+    glm::vec3 RenderComponent::GetColor(const glm::vec3& a_Point, GetColorParameters& a_GetColorParameters) const
     {
         return m_Material->GetColor(shared_from_this(), a_Point, a_GetColorParameters);
     }

@@ -11,7 +11,7 @@ namespace Muse
 	{
 	}
 
-	glm::vec3 NormalDebugMaterial::GetColor(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, const std::shared_ptr<GetColorParameters>& a_GetColorParameters) const
+	glm::vec3 NormalDebugMaterial::GetColor(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, GetColorParameters& a_GetColorParameters) const
 	{
 		a_GetColorParameters;
 

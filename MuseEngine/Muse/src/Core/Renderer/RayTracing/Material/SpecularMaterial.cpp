@@ -18,9 +18,9 @@ namespace Muse
 	{
 	}
 
-	glm::vec3 SpecularMaterial::GetColor(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, const std::shared_ptr<GetColorParameters>& a_GetColorParameters) const
+	glm::vec3 SpecularMaterial::GetColor(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, GetColorParameters& a_GetColorParameters) const
 	{
-		const glm::vec3 speculair = GetSpecular(a_RenderComponent, a_Point, a_GetColorParameters->RayDirection);
+		const glm::vec3 speculair = GetSpecular(a_RenderComponent, a_Point, a_GetColorParameters.RayDirection);
 		const glm::vec3 combinedLights = speculair + a_RenderComponent->GetGameObject()->GetScene()->GetAmbientLight();
 		const glm::vec3 result = m_Color * combinedLights;
 

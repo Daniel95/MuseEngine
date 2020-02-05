@@ -41,7 +41,7 @@ namespace Muse
         void SetShape(std::shared_ptr<Shape> a_Material) { m_Shape = a_Material; }
         void SetMaterial(std::shared_ptr<Material> a_Material) { m_Material = a_Material; }
 
-        virtual glm::vec3 GetColor(const glm::vec3& a_Point, const std::shared_ptr<GetColorParameters>& a_GetColorParameters) const;
+        virtual glm::vec3 GetColor(const glm::vec3& a_Point, GetColorParameters& a_GetColorParameters) const;
         //virtual bool CheckRayHit(RayHitData& a_RayHitData, const Ray& a_Ray) const;
         //virtual bool CheckRayHit(const Ray& a_Ray) const;
         //virtual bool CheckRayHit(RayHitData& a_RayHitData, const Ray& a_Ray) const;

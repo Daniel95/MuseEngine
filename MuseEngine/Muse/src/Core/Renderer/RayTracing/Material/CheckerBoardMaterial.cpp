@@ -18,7 +18,7 @@ namespace Muse
 	{
 	}
 
-	glm::vec3 CheckerBoardMaterial::GetColor(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, const std::shared_ptr<GetColorParameters>& a_GetColorParameters) const
+	glm::vec3 CheckerBoardMaterial::GetColor(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, GetColorParameters& a_GetColorParameters) const
 	{
 		const glm::vec3 light = GetBlinnPhong(a_RenderComponent, a_Point, a_GetColorParameters);
 

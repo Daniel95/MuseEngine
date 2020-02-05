@@ -17,7 +17,7 @@ namespace Muse
 	{
 	}
 
-	glm::vec3 BlinnPhongMaterial::GetColor(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, const std::shared_ptr<GetColorParameters>& a_GetColorParameters) const
+	glm::vec3 BlinnPhongMaterial::GetColor(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, GetColorParameters& a_GetColorParameters) const
 	{
 		const glm::vec3 blinnPhong = GetBlinnPhong(a_RenderComponent, a_Point, a_GetColorParameters);
 		const glm::vec3 result = m_Color * blinnPhong;
@@ -25,8 +25,8 @@ namespace Muse
 		return result;
 	}
 
-    glm::vec3 BlinnPhongMaterial::GetBlinnPhong(std::shared_ptr<const RenderComponent> a_RenderComponent,
-        const glm::vec3& a_Point, const std::shared_ptr<GetColorParameters>& a_GetColorParameters) const
+    glm::vec3 BlinnPhongMaterial::GetBlinnPhong(const std::shared_ptr<const RenderComponent>& a_RenderComponent,
+        const glm::vec3& a_Point, GetColorParameters& a_GetColorParameters) const
     {
 		glm::vec3 specularAndDiffuse = glm::vec3(0);
 		glm::vec3 normal = a_RenderComponent->GetNormal(a_Point);
@@ -47,7 +47,7 @@ namespace Muse
 
 			if (!ray.Cast())
 			{
-				float specular = m_SpeculairMaterial.GetSpecular(normal, a_GetColorParameters->RayDirection, directionToLightSource);
+				float specular = m_SpeculairMaterial.GetSpecular(normal, a_GetColorParameters.RayDirection, directionToLightSource);
 				float diffuseT = DiffuseMaterial::GetDiffuse(normal, directionToLightSource);
 
 				specularAndDiffuse += (specular + diffuseT) * light;

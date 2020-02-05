@@ -190,8 +190,6 @@
     <ClInclude Include="src\Core\Renderer\RayTracing\Material\MaterialHelper.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Material\MaterialType.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Material\NormalDebugMaterial.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\OrthographicCamera.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\PerspectiveCamera.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Shape\Plane.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\Ray.h" />
     <ClInclude Include="src\Core\Renderer\RayTracing\RayHitData.h" />
@@ -638,8 +636,6 @@
     <ClCompile Include="src\Core\Renderer\RayTracing\LightSource.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\MaterialHelper.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\NormalDebugMaterial.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\OrthographicCamera.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\PerspectiveCamera.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Shape\Plane.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\RayHitData.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracing\Material\ReflectiveMaterial.cpp" />

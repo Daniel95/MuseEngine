@@ -5,19 +5,20 @@
 
 #include <vector>
 #include <array>
+#include "Core/Renderer/RayTracing/RayHitData.h"
 
 namespace Muse
 {
-    class PerspectiveCamera;
+    struct Ray;
     class Texture;
     class Shader;
 }
 
-class GameRT : public Muse::Application
+class GamePT : public Muse::Application
 {
 public:
-    GameRT() = default;
-    virtual ~GameRT() = default;
+    GamePT() = default;
+    virtual ~GamePT() = default;
 
 protected:
     virtual void OnStart() override;
@@ -28,8 +29,11 @@ protected:
 
 private:
     std::vector<float> m_ScreenData;
-
     unsigned int m_Width, m_Height;
 
     void Resize(unsigned int a_Width, unsigned int a_Height);
+    glm::vec3 Sample(const Muse::Ray& a_Ray);
+
+    Muse::RayHitData rayHitData;
+
 };

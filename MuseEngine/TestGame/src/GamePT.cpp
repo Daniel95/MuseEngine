@@ -1,4 +1,4 @@
-﻿#include "GameRT.h"
+﻿#include "GamePT.h"
 
 #include "Muse.h"
 
@@ -18,15 +18,15 @@
 #include "RayTracer/SceneLibraryRT.h"
 #include "Core/Gameplay/Component/CameraComponent.h"
 
-#if GAME_RT
+#if GAME_PT
 #include "EntryPoint.h"
 Muse::Application* Muse::CreateApplication()
 {
-    return new GameRT();
+    return new GamePT();
 }
 #endif
 
-void GameRT::OnStart()
+void GamePT::OnStart()
 {
     MUSE_PROFILE_FUNCTION();
 
@@ -46,15 +46,15 @@ void GameRT::OnStart()
     SceneLibraryRT::MakeTestScene(scene);
 }
 
-void GameRT::OnUpdate(float a_DeltaTime)
+void GamePT::OnUpdate(float a_DeltaTime)
 {
 }
 
-void GameRT::OnFixedUpdate()
+void GamePT::OnFixedUpdate()
 {
 }
 
-void GameRT::OnRender()
+void GamePT::OnRender()
 {
     MUSE_PROFILE_FUNCTION();
 
@@ -71,7 +71,7 @@ void GameRT::OnRender()
     const unsigned int stride = 4;
     const uint32_t size = height * width * stride;
 
-    if(m_Height != height || m_Width != width)
+    if (m_Height != height || m_Width != width)
     {
         Resize(width, height);
     }
@@ -91,7 +91,7 @@ void GameRT::OnRender()
     const glm::vec3 backgroundColor = scene->GetBackgroundColor();
 
     Muse::RayHitData rayHitData;
-    Muse::GetColorParameters getColorParameters;
+    std::shared_ptr<Muse::GetColorParameters> getColorParameters = std::make_shared<Muse::GetColorParameters>();
 
     glm::mat4 T = camera->GetTransform()->GetModelMatrix();
 
@@ -117,28 +117,11 @@ void GameRT::OnRender()
             ray.Origin = p0 + u * right + v * down + E;
             ray.Direction = glm::normalize(ray.Origin - E);
 
+            const glm::vec3 color = Sample(ray);
 
-            if(ray.Cast(rayHitData))
-            {
-                rayHitData.UpdateIntersectionPoint(ray);
-
-                getColorParameters.RayDirection = ray.Direction;
-                getColorParameters.Bounces = 5;
-
-                const glm::vec3 color = rayHitData.m_RenderComponent->GetColor(rayHitData.GetIntersectionPoint(), getColorParameters);
-
-                m_ScreenData[colorIndex] = color.x;
-                m_ScreenData[colorIndex + 1] = color.y;
-                m_ScreenData[colorIndex + 2] = color.z;
-
-                hit = true;
-            }
-            else
-            {
-                m_ScreenData[colorIndex] = backgroundColor.x;
-                m_ScreenData[colorIndex + 1] = backgroundColor.y;
-                m_ScreenData[colorIndex + 2] = backgroundColor.z;
-            }
+            m_ScreenData[colorIndex] = color.x;
+            m_ScreenData[colorIndex + 1] = color.y;
+            m_ScreenData[colorIndex + 2] = color.z;
 
             colorIndex += stride;
         }
@@ -155,7 +138,7 @@ void GameRT::OnRender()
     Muse::Renderer2D::EndScene();
 }
 
-void GameRT::OnImGuiRender()
+void GamePT::OnImGuiRender()
 {
     ImGui::Begin("Info");
 
@@ -167,7 +150,7 @@ void GameRT::OnImGuiRender()
     const int raysHit = scene->GetRaysHit();
 
     float raysHitRate = 0;
-    if(raysSend != 0 && raysHit != 0)
+    if (raysSend != 0 && raysHit != 0)
     {
         raysHitRate = static_cast<float>(raysHit) / static_cast<float>(raysSend);
     }
@@ -182,7 +165,7 @@ void GameRT::OnImGuiRender()
     ImGui::End();
 }
 
-void GameRT::Resize(unsigned a_Width, unsigned a_Height)
+void GamePT::Resize(unsigned a_Width, unsigned a_Height)
 {
     m_ScreenData.clear();
     m_ScreenData.resize(a_Height * a_Width * 4);
@@ -190,3 +173,29 @@ void GameRT::Resize(unsigned a_Width, unsigned a_Height)
     m_Height = a_Height;
     m_Width = a_Width;
 }
+
+glm::vec3 GamePT::Sample(const Muse::Ray& a_Ray)
+{
+    Muse::RayHitData rayHitData;
+    return glm::vec3(0);
+
+    /*
+    a_Ray.Cast()
+
+
+    // trace ray
+    I, N, material = Trace(ray);
+    // terminate if ray left the scene
+    if (ray.NOHIT) return BLACK;
+    // terminate if we hit a light source
+    if (material.isLight) return material.emittance;
+    // continue in random direction
+    R = DiffuseReflection(N);
+    Ray newRay(I, R);
+    // update throughput
+    BRDF = material.albedo / PI;
+    Ei = Sample(newRay) * dot(N, R); // irradiance
+    return PI * 2.0f * BRDF * Ei;
+    */
+}
+
