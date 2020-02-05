@@ -54,6 +54,8 @@ namespace Muse
         PushOverlay(m_ImGuiLayer);
 
         m_ViewportFramebuffer = FrameBuffer::Create(m_Window->GetWidth(), m_Window->GetWidth(), FramebufferFormat::RGBA16F);
+
+        std::srand(0);
     }
 
     Application::~Application()

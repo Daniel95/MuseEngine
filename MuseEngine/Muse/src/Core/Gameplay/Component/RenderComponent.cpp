@@ -47,6 +47,11 @@ namespace Muse
         return m_Material->GetColor(shared_from_this(), a_Point, a_GetColorParameters);
     }
 
+    glm::vec3 RenderComponent::GetColor() const
+    {
+        return m_Material->GetColor();
+    }
+
     float RenderComponent::CheckRayHit(const Ray& a_Ray) const
     {
         return m_Shape->CheckRayHit(a_Ray);

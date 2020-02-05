@@ -56,5 +56,4 @@ namespace Muse
 
 		return refractionColor;
 	}
-
 }

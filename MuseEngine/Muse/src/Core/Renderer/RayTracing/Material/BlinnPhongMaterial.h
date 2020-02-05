@@ -2,10 +2,8 @@
 
 #include "Material.h"
 
-
 namespace Muse
 {
-
 	struct GetColorParameters;
 	class GameObject;
 	class DiffuseMaterial;
@@ -18,6 +16,7 @@ namespace Muse
 		virtual ~BlinnPhongMaterial() = default;
 		virtual glm::vec3 GetColor(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, GetColorParameters& a_GetColorParameters) const override;
 		glm::vec3 GetBlinnPhong(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, GetColorParameters& a_GetColorParameters) const;
+		virtual const glm::vec3& GetColor() override { return m_Color; };
 
 	protected:
 		DiffuseMaterial& m_DiffuseMaterial;

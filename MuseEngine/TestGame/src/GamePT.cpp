@@ -43,7 +43,7 @@ void GamePT::OnStart()
 
     //scene->ConstructBVH();
 
-    SceneLibraryRT::MakeTestScene(scene);
+    SceneLibraryRT::MakePTBenchmarkScene(scene);
 }
 
 void GamePT::OnUpdate(float a_DeltaTime)
@@ -90,9 +90,6 @@ void GamePT::OnRender()
 
     const glm::vec3 backgroundColor = scene->GetBackgroundColor();
 
-    Muse::RayHitData rayHitData;
-    std::shared_ptr<Muse::GetColorParameters> getColorParameters = std::make_shared<Muse::GetColorParameters>();
-
     glm::mat4 T = camera->GetTransform()->GetModelMatrix();
 
     glm::vec3 p0 = T * glm::vec4(-1, -1, 1, 0); // top-left
@@ -104,9 +101,9 @@ void GamePT::OnRender()
     glm::vec3 down = p2 - p0;
 
     Muse::Ray ray;
+    m_Hit = false;
 
     int colorIndex = 0;
-    bool hit = false;
     for (uint32_t y = 0; y < height; y++)
     {
         for (uint32_t x = 0; x < width; x++)
@@ -127,7 +124,7 @@ void GamePT::OnRender()
         }
     }
 
-    if (!hit)
+    if (!m_Hit)
     {
         LOG_INFO("No hits!");
     }
@@ -176,26 +173,50 @@ void GamePT::Resize(unsigned a_Width, unsigned a_Height)
 
 glm::vec3 GamePT::Sample(const Muse::Ray& a_Ray)
 {
-    Muse::RayHitData rayHitData;
-    return glm::vec3(0);
+    if(!a_Ray.Cast(m_RayHitData))
+    {
+        return m_BackgroundColor;
+    }
 
-    /*
-    a_Ray.Cast()
+    if (m_RayHitData.m_RenderComponent->GetisLight()) return m_RayHitData.m_RenderComponent->GetLightColor();
 
+    m_Hit = true;
 
-    // trace ray
-    I, N, material = Trace(ray);
-    // terminate if ray left the scene
-    if (ray.NOHIT) return BLACK;
-    // terminate if we hit a light source
-    if (material.isLight) return material.emittance;
-    // continue in random direction
-    R = DiffuseReflection(N);
-    Ray newRay(I, R);
-    // update throughput
-    BRDF = material.albedo / PI;
-    Ei = Sample(newRay) * dot(N, R); // irradiance
-    return PI * 2.0f * BRDF * Ei;
-    */
+    m_GetColorParameters.RayDirection = a_Ray.Direction;
+    m_GetColorParameters.Bounces = 5;
+
+    glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
+    glm::vec3 normal = m_RayHitData.m_RenderComponent->GetNormal(intersectionPoint);
+    glm::vec3 diffuseReflection = normal + AddNoiseOnAngle(0, 180);
+
+    Muse::Ray newRay{ intersectionPoint, diffuseReflection };
+
+    glm::vec3 brdf = m_RayHitData.m_RenderComponent->GetColor() / glm::pi<float>();
+
+    glm::vec3 ei = Sample(newRay) * glm::dot(normal, diffuseReflection);
+    glm::vec3 result = glm::pi<float>() * 2.0f * brdf * ei;
+    return result;
 }
 
+glm::vec3 GamePT::AddNoiseOnAngle(float a_Min, float a_Max)
+{
+    // Find random angle between min & max inclusive
+    float xNoise = Random(a_Min, a_Max);
+    float yNoise = Random(a_Min, a_Max);
+    float zNoise = Random(a_Min, a_Max);
+
+    // Convert Angle to Vector3
+    glm::vec3 noise = glm::vec3(
+        glm::sin(2 * glm::pi<float>() * xNoise / 360),
+        glm::sin(2 * glm::pi<float>() * yNoise / 360),
+        glm::sin(2 * glm::pi<float>() * zNoise / 360)
+    );
+    return noise;
+}
+
+float GamePT::Random(float a_Min, float a_Max)
+{
+    float range = a_Max - a_Min;
+
+    return range * GamePT::Random() + a_Min;
+}

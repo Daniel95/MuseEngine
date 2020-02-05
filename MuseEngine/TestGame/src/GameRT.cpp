@@ -43,7 +43,7 @@ void GameRT::OnStart()
 
     //scene->ConstructBVH();
 
-    SceneLibraryRT::MakeTestScene(scene);
+    SceneLibraryRT::MakeRTBenchmarkScene(scene);
 }
 
 void GameRT::OnUpdate(float a_DeltaTime)

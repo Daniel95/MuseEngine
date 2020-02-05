@@ -9,6 +9,7 @@ namespace Muse {
 class SceneLibraryRT
 {
 public:
-    static void MakeTestScene(std::shared_ptr<Muse::Scene> a_Scene);
+    static void MakeRTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene);
+    static void MakePTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene);
 
 };

@@ -15,6 +15,7 @@ namespace Muse
 
 		virtual glm::vec3 GetColor(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, GetColorParameters& a_GetColorParameters) const override;
 		glm::vec3 GetReflection(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, GetColorParameters& a_GetColorParameters) const;
+		virtual const glm::vec3& GetColor() override { return m_Color; };
 
 	private:
 		int maxBounces;

@@ -41,12 +41,18 @@ namespace Muse
         void SetShape(std::shared_ptr<Shape> a_Material) { m_Shape = a_Material; }
         void SetMaterial(std::shared_ptr<Material> a_Material) { m_Material = a_Material; }
 
+        //Raytracing
         virtual glm::vec3 GetColor(const glm::vec3& a_Point, GetColorParameters& a_GetColorParameters) const;
-        //virtual bool CheckRayHit(RayHitData& a_RayHitData, const Ray& a_Ray) const;
-        //virtual bool CheckRayHit(const Ray& a_Ray) const;
-        //virtual bool CheckRayHit(RayHitData& a_RayHitData, const Ray& a_Ray) const;
+        glm::vec3 GetColor() const;
         virtual float CheckRayHit(const Ray& a_Ray) const;
         virtual glm::vec3 GetNormal(const glm::vec3& a_Point) const;
+        bool GetisLight() const { return m_IsLight; }
+        const glm::vec3& GetLightColor() const { return m_LightColor; }
+        void SetLight(const glm::vec3& a_LightColor)
+        {
+            m_IsLight = true;
+            m_LightColor = a_LightColor;
+        };
 
         virtual void OnUpdate(float a_DeltaTime) override;
         void OnEnable() override;
@@ -77,6 +83,8 @@ namespace Muse
         std::shared_ptr<VertexArray> m_VA;
         std::shared_ptr<Shader> m_Shader;
         std::shared_ptr<Texture> m_Texture;
+        bool m_IsLight;
+        glm::vec3 m_LightColor = glm::vec3(1);
 
         std::shared_ptr<Shape> m_Shape;
         std::shared_ptr<Material> m_Material;
