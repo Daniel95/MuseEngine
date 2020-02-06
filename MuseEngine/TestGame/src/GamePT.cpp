@@ -110,7 +110,6 @@ void GamePT::OnRender()
     glm::vec3 down = p2 - p0;
 
     Muse::Ray ray;
-    m_Hit = false;
 
     int colorIndex = 0;
     for (uint32_t y = 0; y < height; y++)
@@ -140,16 +139,8 @@ void GamePT::OnRender()
         }
     }
 
-    /*
-    if (!m_Hit)
-    {
-        LOG_INFO("No hits!");
-    }
-    */
-
     GetViewport()->BindTexture();
     GetViewport()->SetDataF(&m_ScreenData[0], size);
-
 
     Muse::Renderer2D::EndScene();
 }
@@ -236,6 +227,8 @@ glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray)
         return m_BackgroundColor;
     }
 
+    glm::vec3 materialColor = m_RayHitData.m_RenderComponent->GetColor();
+
     glm::vec3 brdf = m_RayHitData.m_RenderComponent->GetColor() / glm::pi<float>();
 
     glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
@@ -244,21 +237,19 @@ glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray)
 
     glm::vec3 lightPosition = glm::vec3(0, 5, 0);
 
-
-
     glm::vec3 directionToLight = lightPosition - intersectionPoint;
     float distanceToLight = glm::distance(lightPosition, intersectionPoint);
     glm::vec3 lightNormal = glm::vec3(0, -1, 0);
 
     Muse::Ray lightRay{ intersectionPoint, directionToLight };
 
-    glm::vec3 light;
+    glm::vec3 light = glm::vec3(0);
 
     glm::vec3 lightColor = glm::vec3(1);
 
     glm::vec3 normal = m_RayHitData.m_RenderComponent->GetNormal(intersectionPoint);
 
-    if(glm::dot(m_RayHitData.m_RenderComponent->GetNormal(intersectionPoint), directionToLight) > 0 &&
+    if(glm::dot(normal, directionToLight) > 0 &&
         glm::dot(lightNormal, -directionToLight))
     {
         if(lightRay.Cast(distanceToLight))
@@ -269,9 +260,14 @@ glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray)
         }
     }
 
+    float surivalRate = std::max(std::max(materialColor.x, materialColor.y), materialColor.z);
 
+    if(Random() > surivalRate)
+    {
+        return m_BackgroundColor;
+    }
 
-
+    brdf /= surivalRate;
 
     glm::vec3 diffuseReflection = RandomDirectionInHemisphere(normal);
 
@@ -280,50 +276,6 @@ glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray)
     glm::vec3 ei = Sample(newRay) * glm::dot(normal, diffuseReflection);
     glm::vec3 result = glm::pi<float>() * 2.0f * brdf * ei + light;
     return result;
-}
-
-/*
-Color Sample( Ray ray )
-{
-    // trace ray
-    I, N, material = Trace( ray );
-    BRDF = material.albedo / PI;
-    // terminate if ray left the scene
-    if (ray.NOHIT) return BLACK;
-    // terminate if we hit a light source
-    if (material.isLight) return BLACK;
-    // sample a random light source
-    L, Nl, dist, A = RandomPointOnLight();
-    Ray lr( I, L, dist );
-    if (N∙L > 0 && Nl∙-L > 0) if (!Trace( lr ))
-    {
-    solidAngle = ((Nl∙-L) * A) / dist2;
-    Ld = lightColor * solidAngle * BRDF * N∙L;
-    }
-    // continue random walk
-    R = DiffuseReflection( N );
-    Ray r( I, R );
-    Ei = Sample( r ) * (N∙R);
-    return PI * 2.0f * BRDF * Ei + Ld;
-}
-*/
-
-glm::vec3 GamePT::AddNoiseOnAngle(float a_Min, float a_Max)
-{
-    // Find random angle between min & max inclusive
-    float xNoise = Random(a_Min, a_Max);
-    float yNoise = Random(a_Min, a_Max);
-    float zNoise = Random(a_Min, a_Max);
-
-    const float pi2 = 2 * glm::pi<float>();
-
-    // Convert Angle to Vector3
-    glm::vec3 noise = glm::vec3(
-        glm::sin(pi2 * xNoise / 360),
-        glm::sin(pi2 * yNoise / 360),
-        glm::sin(pi2 * zNoise / 360)
-    );
-    return noise;
 }
 
 glm::vec3 GamePT::RandomDirectionInHemisphere(const glm::vec3& a_Normal)
@@ -363,4 +315,15 @@ float GamePT::Random(float a_Min, float a_Max)
     float range = a_Max - a_Min;
 
     return range * GamePT::Random() + a_Min;
+}
+
+glm::vec3 GamePT::CosineWeightedDiffuseReflection(const glm::vec3& origin) const
+{
+    glm::vec3 Nt, Nb;
+    rng.createCoordinateSystem(normal, Nt, Nb);
+    const float r1 = rng.Rand(1.0f);
+    const float r2 = rng.Rand(1.0f);
+    const vec3 sample = cosineWeightedSample(r1, r2);
+    const vec3 dir = rng.localToWorld(sample, Nt, Nb, normal);
+    return { origin + EPSILON * dir, dir };
 }
