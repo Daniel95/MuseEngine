@@ -123,6 +123,8 @@ void GamePT::OnRender()
             ray.Origin = p0 + u * right + v * down + E;
             ray.Direction = glm::normalize(ray.Origin - E);
 
+            m_FrameRayCount = 0;
+
             const glm::vec3 color = Sample(ray);
 
             m_Buffer[colorIndex] += color.x;
@@ -190,7 +192,9 @@ void GamePT::Resize(unsigned a_Width, unsigned a_Height)
 
 glm::vec3 GamePT::Sample(const Muse::Ray& a_Ray)
 {
-    if(!a_Ray.Cast(m_RayHitData))
+    m_FrameRayCount++;
+
+    if(!a_Ray.Cast(m_RayHitData) || m_FrameRayCount >= m_FrameRayMax)
     {
         return m_BackgroundColor;
     }

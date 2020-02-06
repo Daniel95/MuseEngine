@@ -40,6 +40,8 @@ private:
     Muse::GetColorParameters m_GetColorParameters;
     bool m_Hit = false;
     int m_Frames = 0;
+    const int m_FrameRayMax = 32;
+    int m_FrameRayCount = 0;
     glm::mat4 cameraTransform;
 
     void Resize(unsigned int a_Width, unsigned int a_Height);
