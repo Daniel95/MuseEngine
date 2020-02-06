@@ -10,6 +10,8 @@
 #include "Core/Renderer/RayTracing/Material/CheckerBoardMaterial.h"
 #include "Core/Renderer/RayTracing/Material/SpecularMaterial.h"
 #include "Core/Renderer/RayTracing/Material/RefractiveMaterial.h"
+#include "Core/Renderer/RayTracing/Shape/Box.h"
+#include "Core/Renderer/RayTracing/Material/NormalDebugMaterial.h"
 
 void SceneLibraryRT::MakeRTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 {
@@ -34,6 +36,7 @@ void SceneLibraryRT::MakeRTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 	auto speculairMaterial = std::make_shared<Muse::SpecularMaterial>();
 	auto refractiveMaterial = std::make_shared<Muse::RefractiveMaterial>();
 	auto checkerBoardMaterial = std::make_shared<Muse::CheckerBoardMaterial>();
+	auto normalDebugMaterial = std::make_shared<Muse::NormalDebugMaterial>();
 
 	a_Scene->SetAmbientLight(ambientLight);
 
@@ -78,6 +81,17 @@ void SceneLibraryRT::MakeRTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 		auto renderComponent = planeGameObject->AddComponent<Muse::RenderComponent>();
 
 		renderComponent->SetMaterial(checkerBoardMaterial);
+		renderComponent->SetShape(planeComponent);
+	}
+
+	{
+		auto planeGameObject = a_Scene->AddGameObject(glm::vec3(-2, 4, 5), glm::vec3(2));
+		planeGameObject->GetTransform()->SetRotation(glm::vec3(23, 5, 88));
+		auto planeComponent = planeGameObject->AddComponent<Muse::Box>();
+
+		auto renderComponent = planeGameObject->AddComponent<Muse::RenderComponent>();
+
+		renderComponent->SetMaterial(normalDebugMaterial);
 		renderComponent->SetShape(planeComponent);
 	}
 }

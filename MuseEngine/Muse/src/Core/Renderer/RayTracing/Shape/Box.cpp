@@ -24,19 +24,75 @@ namespace Muse
 
     float Box::CheckRayHit(const Ray& a_Ray) const
     {
-		/*
+		const glm::vec3 localRayDirection = GetTransform()->InverseTransformVector(a_Ray.Direction);
+		const glm::vec3 localRayOrigin = GetTransform()->InverseTransformPoint(a_Ray.Origin);
+		//const glm::vec3 localRayDirection = a_Ray.Direction;
+		//const glm::vec3 localRayOrigin = a_Ray.Origin;
 
+		float tmin = (bounds[0].x - localRayOrigin.x) / localRayDirection.x;
+		float tmax = (bounds[1].x - localRayOrigin.x) / localRayDirection.x;
 
-		__m128 t1 = _mm_mul_ps(_mm_sub_ps(simd4, O4), rD4);
-		__m128 t2 = _mm_mul_ps(_mm_sub_ps(node->bmax4, O4), rD4);
-		__m128 vmax4 = _mm_max_ps(t1, t2), vmin4 = _mm_min_ps(t1, t2);
-		float* vmax = (float*)&vmax4, * vmin = (float*)&vmin4;
-		float tmax = std::min(vmax[0], std::min(vmax[1], vmax[2]));
-		float tmin = std::max(vmin[0], std::max(vmin[1], vmin[2]));
-		return tmax >= tmin && tmax >= 0;
-	    */
+		if (tmin > tmax)
+		{
+			std::swap(tmin, tmax);
+		}
 
-		return -1;
+		float tymin = (bounds[0].y - localRayOrigin.y) / localRayDirection.y;
+		float tymax = (bounds[1].y - localRayOrigin.y) / localRayDirection.y;
+
+		if (tymin > tymax)
+		{
+			std::swap(tymin, tymax);
+		}
+
+		if ((tmin > tymax) || (tymin > tmax))
+		{
+			return -1;
+		}
+
+		if (tymin > tmin)
+		{
+			tmin = tymin;
+		}
+
+		if (tymax < tmax)
+		{
+			tmax = tymax;
+		}
+
+		float tzmin = (bounds[0].z - localRayOrigin.z) / localRayDirection.z;
+		float tzmax = (bounds[1].z - localRayOrigin.z) / localRayDirection.z;
+
+		if (tzmin > tzmax)
+		{
+			std::swap(tzmin, tzmax);
+		}
+
+		if ((tmin > tzmax) || (tzmin > tmax))
+		{
+			return -1;
+		}
+
+		if (tzmin > tmin)
+		{
+			tmin = tzmin;
+		}
+
+		if (tzmax < tmax)
+		{
+			tmax = tzmax;
+		}
+
+		if (tmin < 0)
+		{
+			tmin = tmax;
+			if (tmin < 0)
+			{
+				return -1;
+			}
+		}
+
+		return tmin;
     }
 
 	/*
