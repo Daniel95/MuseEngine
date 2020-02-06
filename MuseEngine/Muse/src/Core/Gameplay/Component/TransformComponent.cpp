@@ -157,10 +157,6 @@ namespace Muse
 	{
 		MUSE_PROFILE_FUNCTION();
 
-		glm::mat4 test;
-
-		test[1][1];
-
 		const glm::vec4 transformed = GetModelMatrix() * glm::vec4(localVector.x, localVector.y, localVector.z, 0);
 		return glm::vec3(transformed);
 	}

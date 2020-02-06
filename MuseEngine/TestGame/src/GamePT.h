@@ -49,4 +49,22 @@ private:
     glm::vec3 SampleNEE(const Muse::Ray& a_Ray);
     static glm::vec3 RandomDirectionInHemisphere(const glm::vec3& a_Normal);
 
+    glm::vec3 CosineWeightedDiffuseReflection() const
+    {
+        float r0 = Random(), r1 = Random();
+        float r = sqrt(r0);
+        float theta = 2 * PI * r1;
+        float x = r * cosf(theta);
+        float y = r * sinf(theta);
+        return glm::vec3(x, y, sqrt(1 - r0));
+    }
+
+    glm::vec3 TransformToTangent(const glm::vec3& normal, const glm::vec3& vector) const
+    {
+        const glm::vec3 w = abs(normal.x > 0.99f) ? glm::vec3(0, 1, 0) : glm::vec3(1, 0, 0);
+        const glm::vec3 t = normalize(cross(normal, w));
+        const glm::vec3 b = cross(t, normal);
+        return (vector * t, vector * b, vector * normal);
+    }
+
 };

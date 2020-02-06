@@ -111,7 +111,7 @@ void SceneLibraryRT::MakePTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 	a_Scene->SetAmbientLight(ambientLight);
 
 	{
-		auto sphereGameObject = a_Scene->AddGameObject(glm::vec3(0, 0, 5), glm::vec3(1, 1, 1));
+		auto sphereGameObject = a_Scene->AddGameObject(glm::vec3(0, -1, 5), glm::vec3(1, 1, 1));
 		auto sphereComponent = sphereGameObject->AddComponent<Muse::Sphere>();
 		sphereComponent->SetRadius(1.f);
 
@@ -122,7 +122,7 @@ void SceneLibraryRT::MakePTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 	}
 
 	{
-		auto sphereGameObject = a_Scene->AddGameObject(glm::vec3(-3, 0, 5), glm::vec3(1, 1, 1));
+		auto sphereGameObject = a_Scene->AddGameObject(glm::vec3(-3, -2, 5), glm::vec3(1, 1, 1));
 		auto sphereComponent = sphereGameObject->AddComponent<Muse::Sphere>();
 		sphereComponent->SetRadius(1.f);
 
@@ -133,7 +133,7 @@ void SceneLibraryRT::MakePTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 	}
 
 	{
-		auto sphereGameObject = a_Scene->AddGameObject(glm::vec3(3, 0, 5), glm::vec3(1, 1, 1));
+		auto sphereGameObject = a_Scene->AddGameObject(glm::vec3(3, -3, 5), glm::vec3(1, 1, 1));
 		auto sphereComponent = sphereGameObject->AddComponent<Muse::Sphere>();
 		sphereComponent->SetRadius(1.f);
 
@@ -143,7 +143,7 @@ void SceneLibraryRT::MakePTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 		renderComponent->SetShape(sphereComponent);
 	}
 
-	MakePtSkyBox(a_Scene, 15, 10, 15);
+	MakePtSkyBox(a_Scene, 15, 7, 15);
 }
 
 void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_Width, float a_Height, float a_Length)
