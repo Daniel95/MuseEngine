@@ -149,14 +149,14 @@ void SceneLibraryRT::MakePTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_Width, float a_Height, float a_Length)
 {
 	float x = a_Width / 2;
-	//float y = a_Height / 2;
+	float y = a_Height / 2;
 	float z = a_Length / 2;
 
 	auto greenDiffuseMaterialComponent = std::make_shared<Muse::DiffuseMaterial>(glm::vec3(0.f, 1.f, 0.f));
 	auto checkerBoardMaterial = std::make_shared<Muse::CheckerBoardMaterial>();
 
 	{
-		auto planeGameObject = a_Scene->AddGameObject(glm::vec3(x, 5, 0), glm::vec3(15));
+		auto planeGameObject = a_Scene->AddGameObject(glm::vec3(x, 0, 0), glm::vec3(15));
 		auto planeComponent = planeGameObject->AddComponent<Muse::Plane>();
 		planeComponent->SetNormal(glm::vec3(-1, 0, 0));
 
@@ -178,7 +178,7 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 	}
 
 	{
-		auto planeGameObject = a_Scene->AddGameObject(glm::vec3(0, a_Height, 0), glm::vec3(15));
+		auto planeGameObject = a_Scene->AddGameObject(glm::vec3(0, y, 0), glm::vec3(15));
 		auto planeComponent = planeGameObject->AddComponent<Muse::Plane>();
 		planeComponent->SetNormal(glm::vec3(0, -1, 0));
 
@@ -186,10 +186,11 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 
 		renderComponent->SetMaterial(checkerBoardMaterial);
 		renderComponent->SetShape(planeComponent);
+		renderComponent->SetLight(glm::vec3(1));
 	}
 
 	{
-		auto planeGameObject = a_Scene->AddGameObject(glm::vec3(0, 0, 0), glm::vec3(15));
+		auto planeGameObject = a_Scene->AddGameObject(glm::vec3(0, -y, 0), glm::vec3(15));
 		auto planeComponent = planeGameObject->AddComponent<Muse::Plane>();
 		planeComponent->SetNormal(glm::vec3(0, 1, 0));
 
@@ -199,7 +200,6 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 		renderComponent->SetShape(planeComponent);
 	}
 
-	/*
 	{
 		auto planeGameObject = a_Scene->AddGameObject(glm::vec3(0, 0, -z), glm::vec3(15));
 		auto planeComponent = planeGameObject->AddComponent<Muse::Plane>();
@@ -221,5 +221,4 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 		renderComponent->SetMaterial(greenDiffuseMaterialComponent);
 		renderComponent->SetShape(planeComponent);
 	}
-    */
 }

@@ -22,7 +22,7 @@ public:
     virtual ~GamePT() = default;
 
     static float Random(float a_Min, float a_Max);
-    static float Random() { return static_cast<double>(rand()) / RAND_MAX + 1; }
+    static float Random() { return static_cast<float>(rand()) / RAND_MAX; }
 
 protected:
     virtual void OnStart() override;
@@ -40,13 +40,13 @@ private:
     Muse::GetColorParameters m_GetColorParameters;
     bool m_Hit = false;
     int m_Frames = 0;
-    const int m_FrameRayMax = 32;
+    const int m_FrameRayMax = 3;
     int m_FrameRayCount = 0;
     glm::mat4 cameraTransform;
 
     void Resize(unsigned int a_Width, unsigned int a_Height);
     glm::vec3 Sample(const Muse::Ray& a_Ray);
     static glm::vec3 AddNoiseOnAngle(float a_Min, float a_Max);
-
+    static glm::vec3 RandomDirectionInHemisphere(const glm::vec3& a_Normal);
 
 };

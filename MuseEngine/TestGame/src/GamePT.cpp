@@ -208,7 +208,8 @@ glm::vec3 GamePT::Sample(const Muse::Ray& a_Ray)
 
     glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
     glm::vec3 normal = m_RayHitData.m_RenderComponent->GetNormal(intersectionPoint);
-    glm::vec3 diffuseReflection = normal + AddNoiseOnAngle(0, 180);
+    //glm::vec3 diffuseReflection = normal + AddNoiseOnAngle(0, 180);
+    glm::vec3 diffuseReflection = RandomDirectionInHemisphere(normal);
 
     Muse::Ray newRay{ intersectionPoint, diffuseReflection };
 
@@ -226,7 +227,7 @@ glm::vec3 GamePT::AddNoiseOnAngle(float a_Min, float a_Max)
     float yNoise = Random(a_Min, a_Max);
     float zNoise = Random(a_Min, a_Max);
 
-    float pi2 = 2 * glm::pi<float>();
+    const float pi2 = 2 * glm::pi<float>();
 
     // Convert Angle to Vector3
     glm::vec3 noise = glm::vec3(
@@ -235,6 +236,38 @@ glm::vec3 GamePT::AddNoiseOnAngle(float a_Min, float a_Max)
         glm::sin(pi2 * zNoise / 360)
     );
     return noise;
+}
+
+glm::vec3 GamePT::RandomDirectionInHemisphere(const glm::vec3& a_Normal)
+{
+    glm::vec3 hemisphere;
+
+    float azimuth = Random() * glm::pi<float>() * 2.0f;
+    hemisphere.y = Random();
+
+    float sin_elevation = sqrtf(1 - hemisphere.y * hemisphere.y);
+    hemisphere.x = sin_elevation * cos(azimuth);
+    hemisphere.z = sin_elevation * sin(azimuth);
+
+    glm::vec3 Nt;
+    glm::vec3 Nb;
+
+    if (fabs(a_Normal.x) > fabs(a_Normal.y))
+    {
+        Nt = glm::normalize(glm::vec3(a_Normal.z, 0, -a_Normal.x));
+    }
+    else
+    {
+        Nt = glm::normalize(glm::vec3(0, -a_Normal.z, a_Normal.y));
+    }
+    Nb = glm::cross( a_Normal, Nt);
+
+    glm::vec3 randomDirection(
+        hemisphere.x * Nb.x + hemisphere.y * a_Normal.x + hemisphere.z * Nt.x
+        , hemisphere.x * Nb.y + hemisphere.y * a_Normal.y + hemisphere.z * Nt.y
+        , hemisphere.x * Nb.z + hemisphere.y * a_Normal.z + hemisphere.z * Nt.z);
+
+    return randomDirection;
 }
 
 float GamePT::Random(float a_Min, float a_Max)
