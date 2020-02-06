@@ -227,9 +227,19 @@ glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray)
         return m_BackgroundColor;
     }
 
+
     glm::vec3 materialColor = m_RayHitData.m_RenderComponent->GetColor();
+    float surivalRate = std::max(std::max(materialColor.x, materialColor.y), materialColor.z);
+
+    if (Random() > surivalRate)
+    {
+        return m_BackgroundColor;
+    }
 
     glm::vec3 brdf = m_RayHitData.m_RenderComponent->GetColor() / glm::pi<float>();
+    brdf /= surivalRate;
+
+
 
     glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
 
@@ -260,14 +270,6 @@ glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray)
         }
     }
 
-    float surivalRate = std::max(std::max(materialColor.x, materialColor.y), materialColor.z);
-
-    if(Random() > surivalRate)
-    {
-        return m_BackgroundColor;
-    }
-
-    brdf /= surivalRate;
 
     glm::vec3 diffuseReflection = RandomDirectionInHemisphere(normal);
 
@@ -317,6 +319,7 @@ float GamePT::Random(float a_Min, float a_Max)
     return range * GamePT::Random() + a_Min;
 }
 
+/*
 glm::vec3 GamePT::CosineWeightedDiffuseReflection(const glm::vec3& origin) const
 {
     glm::vec3 Nt, Nb;
@@ -327,3 +330,4 @@ glm::vec3 GamePT::CosineWeightedDiffuseReflection(const glm::vec3& origin) const
     const vec3 dir = rng.localToWorld(sample, Nt, Nb, normal);
     return { origin + EPSILON * dir, dir };
 }
+*/

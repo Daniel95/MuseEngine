@@ -47,7 +47,6 @@ private:
     void Resize(unsigned int a_Width, unsigned int a_Height);
     glm::vec3 Sample(const Muse::Ray& a_Ray);
     glm::vec3 SampleNEE(const Muse::Ray& a_Ray);
-    static glm::vec3 AddNoiseOnAngle(float a_Min, float a_Max);
     static glm::vec3 RandomDirectionInHemisphere(const glm::vec3& a_Normal);
 
 };
