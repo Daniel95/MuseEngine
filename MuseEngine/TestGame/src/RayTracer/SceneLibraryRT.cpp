@@ -152,7 +152,7 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 	float y = a_Height / 2;
 	float z = a_Length / 2;
 
-	auto greenDiffuseMaterialComponent = std::make_shared<Muse::DiffuseMaterial>(glm::vec3(0.f, 1.f, 0.f));
+	auto whiteDiffuseMaterialComponent = std::make_shared<Muse::DiffuseMaterial>(glm::vec3(0.5f, 0.5f, 0.5f));
 	auto checkerBoardMaterial = std::make_shared<Muse::CheckerBoardMaterial>();
 
 	{
@@ -162,7 +162,7 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 
 		auto renderComponent = planeGameObject->AddComponent<Muse::RenderComponent>();
 
-		renderComponent->SetMaterial(greenDiffuseMaterialComponent);
+		renderComponent->SetMaterial(whiteDiffuseMaterialComponent);
 		renderComponent->SetShape(planeComponent);
 	}
 
@@ -173,7 +173,7 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 
 		auto renderComponent = planeGameObject->AddComponent<Muse::RenderComponent>();
 
-		renderComponent->SetMaterial(greenDiffuseMaterialComponent);
+		renderComponent->SetMaterial(whiteDiffuseMaterialComponent);
 		renderComponent->SetShape(planeComponent);
 	}
 
@@ -207,7 +207,7 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 
 		auto renderComponent = planeGameObject->AddComponent<Muse::RenderComponent>();
 
-		renderComponent->SetMaterial(greenDiffuseMaterialComponent);
+		renderComponent->SetMaterial(whiteDiffuseMaterialComponent);
 		renderComponent->SetShape(planeComponent);
 	}
 
@@ -218,7 +218,7 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 
 		auto renderComponent = planeGameObject->AddComponent<Muse::RenderComponent>();
 
-		renderComponent->SetMaterial(greenDiffuseMaterialComponent);
+		renderComponent->SetMaterial(whiteDiffuseMaterialComponent);
 		renderComponent->SetShape(planeComponent);
 	}
 }

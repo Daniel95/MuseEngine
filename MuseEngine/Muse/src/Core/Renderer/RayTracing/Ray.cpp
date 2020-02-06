@@ -33,6 +33,34 @@ namespace Muse
         return false;
     }
 
+    bool Ray::Cast(float a_MaxDistance) const
+    {
+    #if MUSE_PROFILE
+        std::shared_ptr<Scene> scene = SceneManager::GetActiveScene();
+
+        scene->IncreaseRaysSend();
+    #endif
+
+        const std::vector<std::shared_ptr<RenderComponent>>& renderComponents = RenderComponent::GetAll();
+
+        for (const std::shared_ptr<RenderComponent>& renderComponent : renderComponents)
+        {
+            const float distance = renderComponent->CheckRayHit(*this);
+
+            if (distance != -1 &&
+                distance < a_MaxDistance)
+            {
+            #if MUSE_PROFILE
+                scene->IncreaseRaysHit();
+            #endif
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     bool Ray::Cast(const std::shared_ptr<const RenderComponent>& a_Ignore, float a_MaxDistance) const
     {
     #if MUSE_PROFILE

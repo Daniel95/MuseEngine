@@ -12,7 +12,7 @@ namespace Muse
 	class DiffuseMaterial : public Material
 	{
 	public:
-		DiffuseMaterial(const glm::vec3& a_Color);
+		DiffuseMaterial(const glm::vec3& a_Color = glm::vec3(1));
 		virtual ~DiffuseMaterial() = default;
 
 		virtual glm::vec3 GetColor(const std::shared_ptr<const RenderComponent>& a_RenderComponent, const glm::vec3& a_Point, GetColorParameters& a_GetColorParameters) const override;
