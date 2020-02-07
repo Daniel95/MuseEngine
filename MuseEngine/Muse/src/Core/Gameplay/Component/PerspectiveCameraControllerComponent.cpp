@@ -46,7 +46,8 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        const float moveSpeed = m_BaseMoveSpeed * a_DeltaTime * m_CameraComponent->GetZoomLevel();
+        const float moveSpeed = m_BaseMoveSpeed * a_DeltaTime;
+        const float rotateSpeed = m_BaseMoveSpeed * a_DeltaTime;
 
         //Move
 
@@ -79,25 +80,23 @@ namespace Muse
 
         //Rotate
 
-        /*
-        if (Input::GetKeyDown(MUSE_KEY_A))
+        if (Input::GetKeyDown(MUSE_KEY_LEFT))
         {
-            GetTransform()->(glm::vec2(-moveSpeed, 0.0f));
+            GetTransform()->Rotate(glm::vec3(0.0f, -rotateSpeed, 0.0f));
         }
-        else if (Input::GetKeyDown(MUSE_KEY_D))
+        else if (Input::GetKeyDown(MUSE_KEY_RIGHT))
         {
-            GetTransform()->Move(glm::vec2(moveSpeed, 0.0f));
+            GetTransform()->Rotate(glm::vec3(0.0f, rotateSpeed, 0.0f));
         }
 
-        if (Input::GetKeyDown(MUSE_KEY_S))
+        if (Input::GetKeyDown(MUSE_KEY_DOWN))
         {
-            GetTransform()->Move(glm::vec2(0.0f, -moveSpeed));
+            GetTransform()->Rotate(glm::vec3(-rotateSpeed, 0.0f, 0.0f));
         }
-        else if (Input::GetKeyDown(MUSE_KEY_W))
+        else if (Input::GetKeyDown(MUSE_KEY_UP))
         {
-            GetTransform()->Move(glm::vec2(0.0f, moveSpeed));
+            GetTransform()->Rotate(glm::vec3(rotateSpeed, 0.0f, 0.0f));
         }
-        */
     }
 
     void PerspectiveCameraControllerComponent::OnMouseScrolledEvent(float a_XOffset, float a_YOffset) const

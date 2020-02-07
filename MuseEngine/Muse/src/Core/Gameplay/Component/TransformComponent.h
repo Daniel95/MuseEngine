@@ -38,6 +38,7 @@ namespace Muse
 
 		const glm::vec3 & GetRotation() const { return m_Rotation; }
 		void SetRotation(const glm::vec3& a_Rotation);
+		void Rotate(const glm::vec3& a_Rotation);
 
 		const glm::quat & GetRotationQuat() const { return m_RotationQuaternion; }
 		void SetRotationQuat(const glm::quat& a_Rotation);

@@ -44,7 +44,7 @@ private:
 
     void Resize(unsigned int a_Width, unsigned int a_Height);
     glm::vec3 Sample(const Muse::Ray& a_Ray);
-    glm::vec3 SampleNEE(const Muse::Ray& a_Ray);
+    glm::vec3 SampleNEE(const Muse::Ray& a_Ray, bool a_LastSpecular);
     std::shared_ptr<Muse::RenderComponent> m_Light;
 
     glm::vec3 CosineWeightedDiffuseReflection() const

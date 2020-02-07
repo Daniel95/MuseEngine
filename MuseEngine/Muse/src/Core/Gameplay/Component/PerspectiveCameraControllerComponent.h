@@ -35,7 +35,8 @@ namespace Muse
             );
         }
     private:
-        float m_BaseMoveSpeed = 0.6f;
+        float m_BaseMoveSpeed = 0.8f;
+        float m_BaseRotateSpeed = 0.2f;
         float m_ZoomSpeed = 0.1f;
         float m_MinZoomLevel = 0.1f;
         std::shared_ptr<CameraComponent> m_CameraComponent = nullptr;

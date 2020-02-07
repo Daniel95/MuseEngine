@@ -60,15 +60,23 @@ namespace Muse
     {
 		MUSE_PROFILE_FUNCTION();
 
-		m_DirtyScale = m_DirtyModel = true;
+		m_DirtyRotation = m_DirtyModel = true;
 		m_Rotation = a_Rotation;
+    }
+
+	void TransformComponent::Rotate(const glm::vec3& a_Rotation)
+    {
+		MUSE_PROFILE_FUNCTION();
+
+		m_DirtyRotation = m_DirtyModel = true;
+		m_Rotation += a_Rotation;
     }
 
     void TransformComponent::SetRotationQuat(const glm::quat& a_Rotation)
     {
 		MUSE_PROFILE_FUNCTION();
 
-		m_DirtyScale = m_DirtyModel = true;
+		m_DirtyRotation = m_DirtyModel = true;
 		m_RotationQuaternion = a_Rotation;
     }
 

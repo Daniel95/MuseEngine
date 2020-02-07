@@ -135,7 +135,7 @@ void GamePT::OnRender()
             m_FrameRayCount = 0;
 
             //const glm::vec3 color = Sample(ray);
-            const glm::vec3 color = SampleNEE(ray);
+            const glm::vec3 color = SampleNEE(ray, true);
 
             m_Buffer[colorIndex] += color.x;
             m_Buffer[colorIndex + 1] += color.y;
@@ -203,13 +203,16 @@ glm::vec3 GamePT::Sample(const Muse::Ray& a_Ray)
         return m_BackgroundColor;
     }
 
-    if (m_RayHitData.m_RenderComponent->IsLight()) return m_RayHitData.m_RenderComponent->GetLightColor();
+    if (m_RayHitData.m_RenderComponent->IsLight())
+    {
+        return m_RayHitData.m_RenderComponent->GetLightColor();
+    }
 
     glm::vec3 materialColor = m_RayHitData.m_RenderComponent->GetColor();
     glm::vec3 brdf = m_RayHitData.m_RenderComponent->GetColor() / glm::pi<float>();
 
     //Russian Roulette
-    float surivalRate = std::max(std::max(materialColor.x, materialColor.y), materialColor.z);
+    float surivalRate = std::clamp(std::max(std::max(materialColor.x, materialColor.y), materialColor.z), 0.1f, 0.9f);
 
     if (Muse::Random() > surivalRate)
     {
@@ -235,7 +238,7 @@ glm::vec3 GamePT::Sample(const Muse::Ray& a_Ray)
     return result;
 }
 
-glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray)
+glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray, bool a_LastSpecular)
 {
     m_FrameRayCount++;
 
@@ -248,7 +251,14 @@ glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray)
 
     if(m_RayHitData.m_RenderComponent->IsLight())
     {
-        return glm::vec3(0);
+        if(a_LastSpecular)
+        {
+            return m_RayHitData.m_RenderComponent->GetLightColor();
+        }
+        else
+        {
+            return glm::vec3(0);
+        }
     }
 
     glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
@@ -306,7 +316,7 @@ glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray)
     float pdf = glm::dot(normal, diffuseReflection) / glm::pi<float>();
 
     //glm::vec3 ei = Sample(newRay) * glm::dot(normal, diffuseReflection) / pdf;
-    glm::vec3 ei = Sample(newRay) * glm::dot(normal, diffuseReflection);
+    glm::vec3 ei = SampleNEE(newRay, false) * glm::dot(normal, diffuseReflection);
 
     glm::vec3 result = glm::pi<float>() * 2.0f * brdf * ei + light;
     return result;

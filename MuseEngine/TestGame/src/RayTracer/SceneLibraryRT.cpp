@@ -86,7 +86,7 @@ void SceneLibraryRT::MakeRTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 
 	{
 		auto planeGameObject = a_Scene->AddGameObject(glm::vec3(-2, 4, 5), glm::vec3(2));
-		planeGameObject->GetTransform()->SetRotation(glm::vec3(23, 5, 88));
+		planeGameObject->GetTransform()->Rotate(glm::vec3(23, 5, 88));
 		auto boxComponent = planeGameObject->AddComponent<Muse::Box>();
 		planeGameObject->GetTransform()->SetScale(glm::vec3(2, 0.5, 3));
 
