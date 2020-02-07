@@ -216,7 +216,7 @@ glm::vec3 GamePT::Sample(const Muse::Ray& a_Ray)
 
     if (Muse::Random() > surivalRate)
     {
-        return glm::vec3(0);
+        return m_BackgroundColor;
     }
 
     brdf /= surivalRate;
@@ -244,7 +244,7 @@ glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray, bool a_LastSpecular)
 
     if (!a_Ray.Cast(m_RayHitData) || m_FrameRayCount >= m_FrameRayMax)
     {
-        return glm::vec3(0);
+        return m_BackgroundColor;
     }
 
     glm::vec3 brdf = m_RayHitData.m_RenderComponent->GetColor() / glm::pi<float>();
@@ -257,7 +257,7 @@ glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray, bool a_LastSpecular)
         }
         else
         {
-            return glm::vec3(0);
+            return m_BackgroundColor;
         }
     }
 

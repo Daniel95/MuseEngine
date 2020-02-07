@@ -33,7 +33,7 @@ private:
     std::vector<float> m_ScreenData;
     std::vector<float> m_Buffer;
     unsigned int m_Width, m_Height;
-    glm::vec3 m_BackgroundColor = glm::vec3(0);
+    glm::vec3 m_BackgroundColor = glm::vec3(0.1f, 0.1f, 0.25f);
     Muse::RayHitData m_RayHitData;
     Muse::GetColorParameters m_GetColorParameters;
     bool m_Hit = false;

@@ -53,29 +53,29 @@ namespace Muse
 
         if (Input::GetKeyDown(MUSE_KEY_A))
         {
-            GetTransform()->Move(glm::vec2(-moveSpeed, 0.0f));
+            GetTransform()->Move(GetTransform()->GetRight() * -moveSpeed);
         }
         else if (Input::GetKeyDown(MUSE_KEY_D))
         {
-            GetTransform()->Move(glm::vec2(moveSpeed, 0.0f));
+            GetTransform()->Move(GetTransform()->GetRight() * moveSpeed);
         }
 
         if (Input::GetKeyDown(MUSE_KEY_S))
         {
-            GetTransform()->Move(glm::vec3(0.0f, 0.0f, -moveSpeed));
+            GetTransform()->Move(GetTransform()->GetForward() * -moveSpeed);
         }
         else if (Input::GetKeyDown(MUSE_KEY_W))
         {
-            GetTransform()->Move(glm::vec3(0.0f, 0.0f, moveSpeed));
+            GetTransform()->Move(GetTransform()->GetForward() * moveSpeed);
         }
 
         if (Input::GetKeyDown(MUSE_KEY_LEFT_SHIFT))
         {
-            GetTransform()->Move(glm::vec2(0.0f, -moveSpeed));
+            GetTransform()->Move(GetTransform()->GetUp() * -moveSpeed);
         }
         else if (Input::GetKeyDown(MUSE_KEY_SPACE))
         {
-            GetTransform()->Move(glm::vec2(0.0f, moveSpeed));
+            GetTransform()->Move(GetTransform()->GetUp() * moveSpeed);
         }
 
         //Rotate
@@ -89,14 +89,16 @@ namespace Muse
             GetTransform()->Rotate(glm::vec3(0.0f, rotateSpeed, 0.0f));
         }
 
+        /*
         if (Input::GetKeyDown(MUSE_KEY_DOWN))
         {
-            GetTransform()->Rotate(glm::vec3(-rotateSpeed, 0.0f, 0.0f));
+            GetTransform()->Rotate(glm::vec3(-rotateSpeed, 0.0f, 0));
         }
         else if (Input::GetKeyDown(MUSE_KEY_UP))
         {
-            GetTransform()->Rotate(glm::vec3(rotateSpeed, 0.0f, 0.0f));
+            GetTransform()->Rotate(glm::vec3(rotateSpeed, 0.0f, 0));
         }
+        */
     }
 
     void PerspectiveCameraControllerComponent::OnMouseScrolledEvent(float a_XOffset, float a_YOffset) const
