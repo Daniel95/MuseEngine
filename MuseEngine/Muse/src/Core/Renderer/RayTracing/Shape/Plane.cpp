@@ -38,4 +38,9 @@ namespace Muse
 		a_Max.y = std::max(shapeMin.y, shapeMax.y);
 		a_Max.z = std::max(shapeMin.z, shapeMax.z);
 	}
+
+    glm::vec3 Plane::GetRandomPointInShape() const
+    {
+		return glm::vec3(0);
+    }
 }

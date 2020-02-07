@@ -2,6 +2,7 @@
 
 #include "Utilities.h"
 #include "Core/Instrumentor.h"
+#include "glm/ext/scalar_constants.inl"
 
 namespace Muse
 {
@@ -25,7 +26,7 @@ namespace Muse
         return hash;
     }
 
-    std::string PointerToString(const void* a_Pointer)
+     std::string PointerToString(const void* a_Pointer)
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -35,7 +36,7 @@ namespace Muse
         return ss.str();
     }
 
-    bool Replace(std::string& a_Str, const std::string& a_From, const std::string& a_To)
+     bool Replace(std::string& a_Str, const std::string& a_From, const std::string& a_To)
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -48,17 +49,60 @@ namespace Muse
         return true;
     }
 
-    const glm::vec3& Refract(glm::vec3 a_Vector, glm::vec3 a_Normal, float a_Eta)
+    glm::vec3 Refract(glm::vec3 a_Vector, glm::vec3 a_Normal, float a_Eta)
     {
         float k = 1.0f - a_Eta * a_Eta * (1.0f - glm::dot(a_Normal, a_Vector) * glm::dot(a_Normal, a_Vector));
 
         if (k < 0.0f)
         {
-            return glm::vec3();
+            return glm::vec3(0);
         }
         else
         {
             return a_Eta * a_Vector - (a_Eta * glm::dot(a_Normal, a_Vector) + sqrt(k)) * a_Normal;
         }
+    }
+
+    float Random()
+    {
+        return static_cast<float>(rand()) / RAND_MAX;
+    }
+
+    glm::vec3 RandomDirectionInHemisphere(const glm::vec3& a_Normal)
+    {
+        glm::vec3 hemisphere;
+
+        float azimuth = Random() * glm::pi<float>() * 2.0f;
+        hemisphere.y = Random();
+
+        float sin_elevation = sqrtf(1 - hemisphere.y * hemisphere.y);
+        hemisphere.x = sin_elevation * cos(azimuth);
+        hemisphere.z = sin_elevation * sin(azimuth);
+
+        glm::vec3 Nt;
+        glm::vec3 Nb;
+
+        if (fabs(a_Normal.x) > fabs(a_Normal.y))
+        {
+            Nt = glm::normalize(glm::vec3(a_Normal.z, 0, -a_Normal.x));
+        }
+        else
+        {
+            Nt = glm::normalize(glm::vec3(0, -a_Normal.z, a_Normal.y));
+        }
+        Nb = glm::cross(a_Normal, Nt);
+
+        glm::vec3 randomDirection(
+            hemisphere.x * Nb.x + hemisphere.y * a_Normal.x + hemisphere.z * Nt.x
+            , hemisphere.x * Nb.y + hemisphere.y * a_Normal.y + hemisphere.z * Nt.y
+            , hemisphere.x * Nb.z + hemisphere.y * a_Normal.z + hemisphere.z * Nt.z);
+
+        return randomDirection;
+    }
+
+    float Random(float a_Min, float a_Max)
+    {
+        float range = a_Max - a_Min;
+        return range * Random() + a_Min;
     }
 }

@@ -17,6 +17,7 @@ namespace Muse
 		float GetRadius() const { return m_Radius; }
 		void SetRadius(float a_Radius);
 
+        glm::vec3 GetRandomPointInShape() const override;
 	private:
 		float m_Radius2 = 1;
 		float m_Radius = 1;

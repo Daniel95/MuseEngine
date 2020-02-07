@@ -46,7 +46,7 @@ namespace Muse
         glm::vec3 GetColor() const;
         virtual float CheckRayHit(const Ray& a_Ray) const;
         virtual glm::vec3 GetNormal(const glm::vec3& a_Point) const;
-        bool GetisLight() const { return m_IsLight; }
+        bool IsLight() const { return m_IsLight; }
         const glm::vec3& GetLightColor() const { return m_LightColor; }
         void SetLight(const glm::vec3& a_LightColor)
         {

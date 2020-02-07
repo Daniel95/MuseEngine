@@ -7,6 +7,7 @@
 #include <array>
 #include "Core/Renderer/RayTracing/RayHitData.h"
 #include "Core/Renderer/RayTracing/GetColorParameters.h"
+#include "Core/Utilities/Utilities.h"
 
 namespace Muse
 {
@@ -20,9 +21,6 @@ class GamePT : public Muse::Application
 public:
     GamePT() = default;
     virtual ~GamePT() = default;
-
-    static float Random(float a_Min, float a_Max);
-    static float Random() { return static_cast<float>(rand()) / RAND_MAX; }
 
 protected:
     virtual void OnStart() override;
@@ -47,11 +45,11 @@ private:
     void Resize(unsigned int a_Width, unsigned int a_Height);
     glm::vec3 Sample(const Muse::Ray& a_Ray);
     glm::vec3 SampleNEE(const Muse::Ray& a_Ray);
-    static glm::vec3 RandomDirectionInHemisphere(const glm::vec3& a_Normal);
+    std::shared_ptr<Muse::RenderComponent> m_Light;
 
     glm::vec3 CosineWeightedDiffuseReflection() const
     {
-        float r0 = Random(), r1 = Random();
+        float r0 = Muse::Random(), r1 = Muse::Random();
         float r = sqrt(r0);
         float theta = 2 * PI * r1;
         float x = r * cosf(theta);

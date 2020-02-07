@@ -38,4 +38,9 @@ namespace Muse
 		m_Radius = a_Radius;
 		m_Radius2 = a_Radius * a_Radius;
     }
+
+    glm::vec3 Sphere::GetRandomPointInShape() const
+    {
+		return glm::vec3(0);
+    }
 }

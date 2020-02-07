@@ -4,6 +4,7 @@
 #include "Shape.h"
 #include "Core/Gameplay/Component/TransformComponent.h"
 #include "Core/Renderer/RayTracing/Ray.h"
+#include "Core/Utilities/Utilities.h"
 
 namespace Muse
 {
@@ -146,4 +147,22 @@ bool intersection( box b, ray r )
 		a_Max.z = std::max(shapeMin.z, shapeMax.z);
 	}
 
+    glm::vec3 Box::GetRandomPointInShape() const
+    {
+		glm::vec3 range = bounds[1] - bounds[0];
+
+		glm::vec3 randomPoint = 
+		{
+			bounds[0].x + range.x * Random(),
+			bounds[0].y + range.y * Random(),
+			bounds[0].z + range.z * Random()
+		};
+
+		glm::vec3 position = GetTransform()->GetPosition();
+		glm::vec3 scale = GetTransform()->GetScale();
+		glm::vec3 result = randomPoint * scale + position;
+		return result;
+
+		//return GetTransform()->InverseTransformPoint(randomPoint);
+    }
 }

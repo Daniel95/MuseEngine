@@ -17,6 +17,7 @@
 #include "Core/Renderer/RayTracing/Ray.h"
 #include "RayTracer/SceneLibraryRT.h"
 #include "Core/Gameplay/Component/CameraComponent.h"
+#include "Core/Renderer/RayTracing/Shape/Shape.h"
 
 #if GAME_PT
 #include "EntryPoint.h"
@@ -44,6 +45,17 @@ void GamePT::OnStart()
     //scene->ConstructBVH();
 
     SceneLibraryRT::MakePTBenchmarkScene(scene);
+
+    auto renderComponents = Muse::RenderComponent::GetAll();
+
+    for(auto renderComponent : renderComponents)
+    {
+        if(renderComponent->IsLight())
+        {
+            m_Light = renderComponent;
+            break;
+        }
+    }
 }
 
 void GamePT::OnUpdate(float a_DeltaTime)
@@ -87,8 +99,6 @@ void GamePT::OnRender()
     std::shared_ptr<Muse::Scene> scene = Muse::SceneManager::GetActiveScene();
 
     /////////////////
-
-
 
     glm::mat4 newCameraTransform = camera->GetTransform()->GetModelMatrix();
 
@@ -193,7 +203,20 @@ glm::vec3 GamePT::Sample(const Muse::Ray& a_Ray)
         return m_BackgroundColor;
     }
 
-    if (m_RayHitData.m_RenderComponent->GetisLight()) return m_RayHitData.m_RenderComponent->GetLightColor();
+    if (m_RayHitData.m_RenderComponent->IsLight()) return m_RayHitData.m_RenderComponent->GetLightColor();
+
+    glm::vec3 materialColor = m_RayHitData.m_RenderComponent->GetColor();
+    glm::vec3 brdf = m_RayHitData.m_RenderComponent->GetColor() / glm::pi<float>();
+
+    //Russian Roulette
+    float surivalRate = std::max(std::max(materialColor.x, materialColor.y), materialColor.z);
+
+    if (Muse::Random() > surivalRate)
+    {
+        return glm::vec3(0);
+    }
+
+    brdf /= surivalRate;
 
     m_Hit = true;
 
@@ -202,11 +225,10 @@ glm::vec3 GamePT::Sample(const Muse::Ray& a_Ray)
 
     glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
     glm::vec3 normal = m_RayHitData.m_RenderComponent->GetNormal(intersectionPoint);
-    glm::vec3 diffuseReflection = RandomDirectionInHemisphere(normal);
+    glm::vec3 diffuseReflection = Muse::RandomDirectionInHemisphere(normal);
 
     Muse::Ray newRay{ intersectionPoint, diffuseReflection };
 
-    glm::vec3 brdf = m_RayHitData.m_RenderComponent->GetColor() / glm::pi<float>();
 
     glm::vec3 ei = Sample(newRay) * glm::dot(normal, diffuseReflection);
     glm::vec3 result = glm::pi<float>() * 2.0f * brdf * ei;
@@ -224,18 +246,20 @@ glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray)
 
     glm::vec3 brdf = m_RayHitData.m_RenderComponent->GetColor() / glm::pi<float>();
 
-    if(m_RayHitData.m_RenderComponent->GetisLight())
+    if(m_RayHitData.m_RenderComponent->IsLight())
     {
         return glm::vec3(0);
     }
 
+    glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
 
+    glm::vec3 lightPosition = m_Light->GetShape()->GetRandomPointInShape();
+    glm::vec3 scale = m_Light->GetTransform()->GetScale();
 
     //NEE
-    glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
-    float area = 0.1f;
-    glm::vec3 lightPosition = glm::vec3(0, 15, 0);
-    glm::vec3 directionToLight = lightPosition - intersectionPoint;
+    float area = scale.x * scale.z;
+    //float area = 1;
+    glm::vec3 directionToLight = glm::normalize(lightPosition - intersectionPoint);
     float distanceToLight = glm::distance(lightPosition, intersectionPoint);
     glm::vec3 lightNormal = glm::vec3(0, -1, 0);
     Muse::Ray lightRay{ intersectionPoint, directionToLight };
@@ -264,16 +288,16 @@ glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray)
     //Russian Roulette
     float surivalRate = std::max(std::max(materialColor.x, materialColor.y), materialColor.z);
 
-    if (Random() > surivalRate)
+    if (Muse::Random() > surivalRate)
     {
-        return glm::pi<float>() * 2.0f * brdf + light;
+        return light;
     }
 
     brdf /= surivalRate;
 
 
 
-    glm::vec3 diffuseReflection = RandomDirectionInHemisphere(normal);
+    glm::vec3 diffuseReflection = Muse::RandomDirectionInHemisphere(normal);
     //glm::vec3 diffuseReflection = TransformToTangent(normal, CosineWeightedDiffuseReflection());
     //glm::vec3 diffuseReflection = normal * CosineWeightedDiffuseReflection();
 
@@ -288,44 +312,6 @@ glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray)
     return result;
 }
 
-glm::vec3 GamePT::RandomDirectionInHemisphere(const glm::vec3& a_Normal)
-{
-    glm::vec3 hemisphere;
-
-    float azimuth = Random() * glm::pi<float>() * 2.0f;
-    hemisphere.y = Random();
-
-    float sin_elevation = sqrtf(1 - hemisphere.y * hemisphere.y);
-    hemisphere.x = sin_elevation * cos(azimuth);
-    hemisphere.z = sin_elevation * sin(azimuth);
-
-    glm::vec3 Nt;
-    glm::vec3 Nb;
-
-    if (fabs(a_Normal.x) > fabs(a_Normal.y))
-    {
-        Nt = glm::normalize(glm::vec3(a_Normal.z, 0, -a_Normal.x));
-    }
-    else
-    {
-        Nt = glm::normalize(glm::vec3(0, -a_Normal.z, a_Normal.y));
-    }
-    Nb = glm::cross( a_Normal, Nt);
-
-    glm::vec3 randomDirection(
-        hemisphere.x * Nb.x + hemisphere.y * a_Normal.x + hemisphere.z * Nt.x
-        , hemisphere.x * Nb.y + hemisphere.y * a_Normal.y + hemisphere.z * Nt.y
-        , hemisphere.x * Nb.z + hemisphere.y * a_Normal.z + hemisphere.z * Nt.z);
-
-    return randomDirection;
-}
-
-float GamePT::Random(float a_Min, float a_Max)
-{
-    float range = a_Max - a_Min;
-
-    return range * GamePT::Random() + a_Min;
-}
 
 /*
 glm::vec3 GamePT::CosineWeightedDiffuseReflection(const glm::vec3& origin) const
