@@ -45,6 +45,7 @@ private:
 
     void Resize(unsigned int a_Width, unsigned int a_Height);
     glm::vec3 Sample(const Muse::Ray& a_Ray);
+    glm::vec3 SampleNew(const Muse::Ray& a_Ray);
     glm::vec3 SampleIS(const Muse::Ray& a_Ray);
     glm::vec3 SampleNEE(const Muse::Ray& a_Ray, bool a_LastSpecular);
     glm::vec3 SampleNEEIS(const Muse::Ray& a_Ray, bool a_LastSpecular);

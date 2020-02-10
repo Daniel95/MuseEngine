@@ -21,7 +21,7 @@ namespace Muse
 
 		virtual void ConstructHierarchy(const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents) override;
 		void Split(BoundingVolume& parentBoundingVolume, const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents) const;
-        static bool CheckShapeOverlap(std::shared_ptr<Shape> shape, const glm::vec3& minBound, const glm::vec3& maxBound);
+        static bool CheckShapeOverlap(std::shared_ptr<const Shape> shape, const glm::vec3& minBound, const glm::vec3& maxBound);
 		void GetWorldMinMaxBounds(glm::vec3& minBound, glm::vec3& maxBound, const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents) const;
 
 	};

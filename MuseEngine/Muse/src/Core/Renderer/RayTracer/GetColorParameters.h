@@ -11,12 +11,14 @@ namespace Muse
 
     struct GetColorParameters
     {
-        std::shared_ptr<RenderComponent> RenderComponent;
+        std::shared_ptr<const Shape> Shape;
         const Material* Material;
-        std::shared_ptr<Shape> Shape;
         Ray* Ray;
         glm::vec3 IntersectionPoint;
         int Bounces = 0;
+
+
+        //const std::shared_ptr<const RenderComponent> RenderComponent;
     };
 
 }

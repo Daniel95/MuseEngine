@@ -13,6 +13,7 @@ namespace Muse
         Refractive,
         Checkerboard,
         NormalDebug,
+        Light,
     };
 
     struct Material

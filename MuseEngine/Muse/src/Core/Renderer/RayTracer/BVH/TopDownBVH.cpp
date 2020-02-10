@@ -88,7 +88,7 @@ namespace Muse
 
 		for (std::shared_ptr<RenderComponent> renderComponent : a_RenderComponents)
 		{
-			std::shared_ptr<Shape> shape = renderComponent->GetShape();
+			std::shared_ptr<const Shape> shape = renderComponent->GetShape();
 
 			bool overlapWithBoundingVolume1 = CheckShapeOverlap(shape, box1MinBounds, box1MaxBounds);
 			bool overlapWithBoundingVolume2 = CheckShapeOverlap(shape, box2MinBounds, box2MaxBounds);
@@ -144,7 +144,7 @@ namespace Muse
 		}
 	}
 
-	bool TopDownBVH::CheckShapeOverlap(std::shared_ptr<Shape> shape, const glm::vec3& minBound, const glm::vec3& maxBound)
+	bool TopDownBVH::CheckShapeOverlap(std::shared_ptr<const Shape> shape, const glm::vec3& minBound, const glm::vec3& maxBound)
     {
 		glm::vec3 shapeMinBound;
 		glm::vec3 shapeMaxBound;
@@ -166,7 +166,7 @@ namespace Muse
 
 		for (std::shared_ptr<RenderComponent> sceneObject : a_RenderComponents)
 		{
-			std::shared_ptr<Shape> shape = sceneObject->GetGameObject()->GetComponent<RenderComponent>()->GetShape();
+			std::shared_ptr<const Shape> shape = sceneObject->GetGameObject()->GetComponent<RenderComponent>()->GetShape();
 
 			shape->GetMinMaxBounds(sceneObjectMinBound, sceneObjectMaxBound);
 

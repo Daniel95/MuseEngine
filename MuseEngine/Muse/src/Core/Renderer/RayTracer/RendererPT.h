@@ -4,12 +4,13 @@
 
 namespace Muse
 {
-    struct Material;
+    struct GetColorParameters;
 
     class RendererPT
     {
     public:
-        static glm::vec3 GetColor(const Material& a_Material);
+        static glm::vec3 CalculateColor(GetColorParameters& a_GetColorParameters);
+        static glm::vec3 CalculateCheckerBoardColor(const GetColorParameters& a_GetColorParameters);
 
     };
 }

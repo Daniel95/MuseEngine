@@ -36,7 +36,7 @@ namespace Muse
         void SetTexture(std::shared_ptr<Texture> a_Texture) { m_Texture = a_Texture; }
         std::shared_ptr<Texture> GetTexture() const { return m_Texture; }
         std::shared_ptr<VertexArray> GetVA() const { return m_VA; }
-        std::shared_ptr<Shape> GetShape() const { return m_Shape; }
+        std::shared_ptr<const Shape> GetShape() const { return m_Shape; }
         const Material& GetMaterial() const { return m_Material; }
         void SetMaterial(const Material& a_Material) { m_Material = a_Material; }
         void SetShape(std::shared_ptr<Shape> a_Shape) { m_Shape = a_Shape; }

@@ -173,6 +173,8 @@ void GamePT::OnRender()
 
             glm::vec3 color;
 
+            m_GetColorParameters.Bounces = 5;
+
             if(x <= halfWidth)
             {
                 color = SampleNEEIS(ray, true);
@@ -239,6 +241,51 @@ void GamePT::Resize(unsigned a_Width, unsigned a_Height)
 
     m_Height = a_Height;
     m_Width = a_Width;
+}
+
+glm::vec3 GamePT::SampleNew(const Muse::Ray& a_Ray)
+{
+    m_FrameRayCount++;
+    m_GetColorParameters.Bounces++;
+
+    if (!a_Ray.Cast(m_RayHitData) || m_FrameRayCount >= m_FrameRayMax)
+    {
+        return m_BackgroundColor;
+    }
+
+    if (m_RayHitData.m_RenderComponent->IsLight())
+    {
+        return m_RayHitData.m_RenderComponent->GetLightColor();
+    }
+
+    glm::vec3 materialColor = m_RayHitData.m_RenderComponent->GetMaterial().Color;
+    glm::vec3 brdf = materialColor / glm::pi<float>();
+
+    //Russian Roulette
+    float surivalRate = std::clamp(std::max(std::max(materialColor.x, materialColor.y), materialColor.z), 0.1f, 0.9f);
+
+    if (Muse::Random() > surivalRate)
+    {
+        return m_BackgroundColor;
+    }
+
+    brdf /= surivalRate;
+
+    m_Hit = true;
+
+    //m_GetColorParameters.Ray->Direction = a_Ray.Direction;
+    //m_GetColorParameters.Bounces = 5;
+
+    glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
+    glm::vec3 normal = m_RayHitData.m_RenderComponent->GetNormal(intersectionPoint);
+    glm::vec3 diffuseReflection = Muse::RandomDirectionInHemisphere(normal);
+
+    Muse::Ray newRay{ intersectionPoint, diffuseReflection };
+
+
+    glm::vec3 ei = Sample(newRay) * glm::dot(normal, diffuseReflection);
+    glm::vec3 result = glm::pi<float>() * 2.0f * brdf * ei;
+    return result;
 }
 
 glm::vec3 GamePT::Sample(const Muse::Ray& a_Ray)

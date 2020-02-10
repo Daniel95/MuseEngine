@@ -19,7 +19,7 @@ namespace Muse
         }
 
         const Material* material = a_GetColorParameters.Material;
-        MaterialType materialType = material->MaterialType;
+        const MaterialType materialType = material->MaterialType;
 
         glm::vec3 color;
 
@@ -46,8 +46,9 @@ namespace Muse
                 color = CalculateDebugNormalsColor(a_GetColorParameters);
                 break;
             default:
-                LOG_ENGINE_ERROR("MaterialType: {0} not supported", static_cast<int>(materialType));
-                ASSERT_ENGINE(false, "Material type not supported!");
+                color = material->Color;
+                //LOG_ENGINE_ERROR("MaterialType: {0} not supported", static_cast<int>(materialType));
+                //ASSERT_ENGINE(false, "Material type not supported!");
         }
 
         return color;

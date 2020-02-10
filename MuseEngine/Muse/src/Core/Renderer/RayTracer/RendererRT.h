@@ -22,7 +22,6 @@ namespace Muse
         static glm::vec3 CalculateBlinnPhongColor(GetColorParameters& a_GetColorParameters);
         static glm::vec3 CalculateReflectiveColor(GetColorParameters& a_GetColorParameters);
         static glm::vec3 CalculateRefractiveColor(GetColorParameters& a_GetColorParameters);
-
         static glm::vec3 CalculateCheckerBoardColor(GetColorParameters& a_GetColorParameters);
         static glm::vec3 CalculateDebugNormalsColor(GetColorParameters& a_GetColorParameters);
 
