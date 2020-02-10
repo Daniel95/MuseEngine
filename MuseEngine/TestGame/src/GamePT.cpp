@@ -172,12 +172,12 @@ void GamePT::OnRender()
 
             if(x <= halfWidth)
             {
-                color = SampleIS(ray);
+                color = SampleNEEIS(ray, true);
 
             }
             else
             {
-                color = Sample(ray);
+                color = SampleNEEIS(ray, true);
                 //color = SampleNEE(ray, true);
             }
 
@@ -334,71 +334,6 @@ glm::vec3 GamePT::SampleIS(const Muse::Ray& a_Ray)
     return result;
 }
 
-/*
-glm::vec3 GamePT::SampleIS(const Muse::Ray& a_Ray)
-{
-    m_FrameRayCount++;
-
-    if (!a_Ray.Cast(m_RayHitData) || m_FrameRayCount >= m_FrameRayMax)
-    {
-        return m_BackgroundColor;
-    }
-
-    if (m_RayHitData.m_RenderComponent->IsLight())
-    {
-        return m_RayHitData.m_RenderComponent->GetLightColor();
-    }
-
-    glm::vec3 materialColor = m_RayHitData.m_RenderComponent->GetColor();
-    glm::vec3 brdf = m_RayHitData.m_RenderComponent->GetColor() / glm::pi<float>();
-
-    //Russian Roulette
-    float surivalRate = std::clamp(std::max(std::max(materialColor.x, materialColor.y), materialColor.z), 0.1f, 0.9f);
-
-    if (Muse::Random() > surivalRate)
-    {
-        return m_BackgroundColor;
-    }
-
-    brdf /= surivalRate;
-
-    m_Hit = true;
-
-    m_GetColorParameters.RayDirection = a_Ray.Direction;
-    m_GetColorParameters.Bounces = 5;
-
-    glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
-    glm::vec3 normal = m_RayHitData.m_RenderComponent->GetNormal(intersectionPoint);
-
-
-    glm::vec3 diffuseReflection = Muse::RandomDirectionInHemisphere(glm::vec3(0, 0, 1));
-    //glm::vec3 diffuseReflection = m_RayHitData.m_RenderComponent->GetTransform()->TransformVector(CosineWeightedDiffuseReflection());
-    //glm::vec3 diffuseReflection = normal + CosineWeightedDiffuseReflection();
-    //glm::vec3 diffuseReflection = glm::normalize(getBRDFRay(intersectionPoint, normal, a_Ray.Direction));
-    //glm::vec3 cosineWeightedDiffuseReflection = CosineWeightedDiffuseReflection();
-    //glm::vec3 diffuseReflection = TransformToDirection(normal, cosineWeightedDiffuseReflection);
-
-
-    glm::mat3 normalRotationMatrix = MakeRotationMat(normal);
-
-    glm::vec3 transformedDiffuseReflection = normalRotationMatrix * diffuseReflection;
-
-    float pdf = glm::dot(normal, transformedDiffuseReflection);
-
-    Muse::Ray newRay{ intersectionPoint, diffuseReflection };
-
-    if(normal != glm::vec3(0, 1, 0))
-    {
-        //LOG_ENGINE_INFO("yo");
-    }
-
-
-    glm::vec3 ei = SampleIS(newRay) * glm::dot(normal, diffuseReflection);
-    glm::vec3 result = glm::pi<float>() * 2.0f * brdf * ei;
-    return result;
-}
-*/
-
 glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray, bool a_LastSpecular)
 {
     m_FrameRayCount++;
@@ -496,7 +431,7 @@ glm::vec3 GamePT::SampleNEEIS(const Muse::Ray& a_Ray, bool a_LastSpecular)
         }
         else
         {
-            return m_BackgroundColor;
+            return m_RayHitData.m_RenderComponent->GetLightColor();
         }
     }
 
@@ -532,6 +467,7 @@ glm::vec3 GamePT::SampleNEEIS(const Muse::Ray& a_Ray, bool a_LastSpecular)
 
 
 
+
     glm::vec3 materialColor = m_RayHitData.m_RenderComponent->GetColor();
 
     //Russian Roulette
@@ -545,39 +481,17 @@ glm::vec3 GamePT::SampleNEEIS(const Muse::Ray& a_Ray, bool a_LastSpecular)
     brdf /= surivalRate;
 
 
-    //glm::vec3 diffuseReflection = Muse::RandomDirectionInHemisphere(normal);
-    //glm::vec3 diffuseReflection = m_RayHitData.m_RenderComponent->GetTransform()->InverseTransformVector(CosineWeightedDiffuseReflection());
-    glm::vec3 diffuseReflection = getBRDFRay(intersectionPoint, normal, a_Ray.Direction);
+    glm::vec3 diffuseReflection = CosineWeightedDiffuseReflection();
 
 
+    glm::mat3 normalRotationMatrix = MakeRotationMat(normal);
 
-    Muse::Ray newRay{ intersectionPoint, diffuseReflection };
 
-    float pdf = glm::dot(normal, diffuseReflection) / glm::pi<float>();
-    //float pdf = 1 / (2 * glm::pi<float>());
+    glm::vec3 transformedDiffuseReflection = normalRotationMatrix * diffuseReflection;
 
-    //float angleOffset = glm::dot(normal, diffuseReflection);
-    //float angleOffsetPDF = glm::dot(normal, diffuseReflection) / pdf;
-    //glm::vec3 sample = SampleNEE(newRay, false);
+    Muse::Ray newRay{ intersectionPoint, transformedDiffuseReflection };
 
-    //glm::vec3 ei = SampleNEE(newRay, false) * glm::dot(normal, diffuseReflection);
-    glm::vec3 eiPDF = SampleNEE(newRay, false) * glm::dot(normal, diffuseReflection) / pdf;
-    //glm::vec3 ei = SampleNEE(newRay, false) * glm::dot(normal, diffuseReflection);
-
-    glm::vec3 result = glm::pi<float>() * 2.0f * brdf * eiPDF + light;
+    glm::vec3 ei = SampleNEEIS(newRay, false) * glm::dot(normal, transformedDiffuseReflection);
+    glm::vec3 result = glm::pi<float>() * 2.0f * brdf * ei;
     return result;
 }
-
-
-/*
-glm::vec3 GamePT::CosineWeightedDiffuseReflection(const glm::vec3& origin) const
-{
-    glm::vec3 Nt, Nb;
-    rng.createCoordinateSystem(normal, Nt, Nb);
-    const float r1 = rng.Rand(1.0f);
-    const float r2 = rng.Rand(1.0f);
-    const vec3 sample = cosineWeightedSample(r1, r2);
-    const vec3 dir = rng.localToWorld(sample, Nt, Nb, normal);
-    return { origin + EPSILON * dir, dir };
-}
-*/
