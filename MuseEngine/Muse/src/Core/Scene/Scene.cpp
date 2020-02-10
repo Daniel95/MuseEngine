@@ -21,15 +21,15 @@
 #include <cereal/types/vector.hpp>
 #include <cereal/types/memory.hpp>
 #include <cereal/cereal.hpp>
-#include "Core/Renderer/RayTracing/AmbientLightSource.h"
-#include "Core/Renderer/RayTracing/BVH/BVH.h"
+#include "Core/Renderer/RayTracer/AmbientLightSource.h"
+#include "Core/Renderer/RayTracer/BVH/BVH.h"
 
-#include "Core/Renderer/RayTracing/AmbientLightSource.h"
-#include "Core/Renderer/RayTracing/BVH/BVH.h"
-#include "Core/Renderer/RayTracing/Ray.h"
-#include "Core/Renderer/RayTracing/AmbientLightSource.h"
+#include "Core/Renderer/RayTracer/AmbientLightSource.h"
+#include "Core/Renderer/RayTracer/BVH/BVH.h"
+#include "Core/Renderer/RayTracer/Ray.h"
+#include "Core/Renderer/RayTracer/AmbientLightSource.h"
 #include "Core/Gameplay/Component/RenderComponent.h"
-#include "Core/Renderer/RayTracing/RayHitData.h"
+#include "Core/Renderer/RayTracer/RayHitData.h"
 #include "Core/Gameplay/Component/PerspectiveCameraControllerComponent.h"
 
 namespace Muse

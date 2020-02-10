@@ -4,9 +4,9 @@
 #include <cereal/cereal.hpp>
 #include <cereal/types/memory.hpp>
 #include <cereal/types/polymorphic.hpp>
-#include "Core/Renderer/RayTracing/Material/Material.h"
 
 #include <memory>
+#include "Core/Renderer/Material.h"
 
 namespace Muse
 {
@@ -37,13 +37,10 @@ namespace Muse
         std::shared_ptr<Texture> GetTexture() const { return m_Texture; }
         std::shared_ptr<VertexArray> GetVA() const { return m_VA; }
         std::shared_ptr<Shape> GetShape() const { return m_Shape; }
-        std::shared_ptr<const Material> GetMaterial() const { return m_Material; }
-        void SetShape(std::shared_ptr<Shape> a_Material) { m_Shape = a_Material; }
-        void SetMaterial(std::shared_ptr<Material> a_Material) { m_Material = a_Material; }
+        const Material& GetMaterial() const { return m_Material; }
+        void SetMaterial(const Material& a_Material) { m_Material = a_Material; }
+        void SetShape(std::shared_ptr<Shape> a_Shape) { m_Shape = a_Shape; }
 
-        //Raytracing
-        virtual glm::vec3 GetColor(const glm::vec3& a_Point, GetColorParameters& a_GetColorParameters) const;
-        glm::vec3 GetColor() const;
         virtual float CheckRayHit(const Ray& a_Ray) const;
         virtual glm::vec3 GetNormal(const glm::vec3& a_Point) const;
         bool IsLight() const { return m_IsLight; }
@@ -87,7 +84,7 @@ namespace Muse
         glm::vec3 m_LightColor = glm::vec3(1);
 
         std::shared_ptr<Shape> m_Shape;
-        std::shared_ptr<Material> m_Material;
+        Material m_Material;
 
         int test = 1;
     };

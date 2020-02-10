@@ -2,7 +2,7 @@
 
 #include "TopDownBVH.h"
 #include "BoundingVolume.h"
-#include "Core/Renderer/RayTracing/Shape/Box.h"
+#include "Core/Renderer/RayTracer/Shape/Box.h"
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Gameplay/Component/RenderComponent.h"
 

@@ -11,12 +11,13 @@
 #include "Mode.h"
 #include "Editor/ViewPort.h"
 #include "Core/Renderer/Buffer/FrameBuffer.h"
-#include "Core/Renderer/RayTracing/RayHitData.h"
-#include "Core/Renderer/RayTracing/GetColorParameters.h"
-#include "Core/Renderer/RayTracing/BVH/BVH.h"
-#include "Core/Renderer/RayTracing/Ray.h"
+#include "Core/Renderer/RayTracer/RayHitData.h"
+#include "Core/Renderer/RayTracer/GetColorParameters.h"
+#include "Core/Renderer/RayTracer/BVH/BVH.h"
+#include "Core/Renderer/RayTracer/Ray.h"
 #include "RayTracer/SceneLibraryRT.h"
 #include "Core/Gameplay/Component/CameraComponent.h"
+#include "Core/Renderer/RayTracer/RendererRT.h"
 
 #if GAME_RT
 #include "EntryPoint.h"
@@ -61,9 +62,9 @@ void GameRT::OnRender()
     Muse::RenderCommand::SetClearColor({ 1.f, 1.0f, 1.0f, 1 });
     Muse::RenderCommand::Clear();
 
-    std::shared_ptr<Muse::CameraComponent> camera = Muse::CameraComponent::GetMain();
+    Muse::CameraComponent* camera = Muse::CameraComponent::GetMain();
 
-    Muse::Renderer2D::BeginScene(camera);
+    Muse::Renderer2D::BeginScene(*camera);
 
     const unsigned int height = GetViewport()->GetHeight();
     const unsigned int width = GetViewport()->GetWidth();
@@ -120,12 +121,14 @@ void GameRT::OnRender()
 
             if(ray.Cast(rayHitData))
             {
-                rayHitData.UpdateIntersectionPoint(ray);
 
-                getColorParameters.RayDirection = ray.Direction;
                 getColorParameters.Bounces = 5;
+                getColorParameters.Material = &rayHitData.m_RenderComponent->GetMaterial();
+                getColorParameters.Ray = &ray;
+                getColorParameters.IntersectionPoint = rayHitData.UpdateIntersectionPoint(ray);
+                getColorParameters.Shape = rayHitData.m_RenderComponent->GetShape();
 
-                const glm::vec3 color = rayHitData.m_RenderComponent->GetColor(rayHitData.GetIntersectionPoint(), getColorParameters);
+                const glm::vec3 color = Muse::RendererRT::CalculateColor(getColorParameters);
 
                 m_ScreenData[colorIndex] = color.x;
                 m_ScreenData[colorIndex + 1] = color.y;

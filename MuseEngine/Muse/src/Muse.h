@@ -59,7 +59,7 @@
 //sqrtf the results to make add gamma correction
 //Fix BVH
 //use simd to calculate 4 rays at once.
-//Make Material a resource
+//Make MaterialOld a resource
 //Divide the raytracer into grids
 
 /////Raytracer:
@@ -67,7 +67,6 @@
 //Split screen in 2 for debugging
 //Stratification
 //Blue noise
-//Importance sampling
 //Filtering
 //Path Guiding
 

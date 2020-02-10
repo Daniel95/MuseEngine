@@ -1,17 +1,11 @@
 ﻿#include "SceneLibraryRT.h"
-#include "Core/Renderer/RayTracing/AmbientLightSource.h"
+#include "Core/Renderer/RayTracer/AmbientLightSource.h"
 #include "Core/Scene/Scene.h"
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Gameplay/Component/RenderComponent.h"
-#include "Core/Renderer/RayTracing/Shape/Sphere.h"
-#include "Core/Renderer/RayTracing/Material/DiffuseMaterial.h"
-#include "Core/Renderer/RayTracing/Material/ReflectiveMaterial.h"
-#include "Core/Renderer/RayTracing/Shape/Plane.h"
-#include "Core/Renderer/RayTracing/Material/CheckerBoardMaterial.h"
-#include "Core/Renderer/RayTracing/Material/SpecularMaterial.h"
-#include "Core/Renderer/RayTracing/Material/RefractiveMaterial.h"
-#include "Core/Renderer/RayTracing/Shape/Box.h"
-#include "Core/Renderer/RayTracing/Material/NormalDebugMaterial.h"
+#include "Core/Renderer/RayTracer/Shape/Sphere.h"
+#include "Core/Renderer/RayTracer/Shape/Plane.h"
+#include "Core/Renderer/RayTracer/Shape/Box.h"
 
 void SceneLibraryRT::MakeRTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 {
@@ -29,14 +23,14 @@ void SceneLibraryRT::MakeRTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 		//a_Scene->AddLightSource(lightSource);
 	}
 
-	auto diffuseMaterialComponent = std::make_shared<Muse::DiffuseMaterial>(glm::vec3(0.8f, 0.3f, 0.5f));
-	auto blinnPhongMaterialComponent = std::make_shared<Muse::BlinnPhongMaterial>(glm::vec3(0.8f, 0.3f, 0.5f));
-	auto reflectiveMaterial = std::make_shared<Muse::ReflectiveMaterial>();
-	//auto groundReflectiveMaterial = std::make_shared<Muse::ReflectiveMaterial>(glm::vec3(0), 0.5f,0.1f);
-	auto speculairMaterial = std::make_shared<Muse::SpecularMaterial>();
-	auto refractiveMaterial = std::make_shared<Muse::RefractiveMaterial>();
-	auto checkerBoardMaterial = std::make_shared<Muse::CheckerBoardMaterial>();
-	auto normalDebugMaterial = std::make_shared<Muse::NormalDebugMaterial>();
+
+	Muse::Material diffuseMaterial = { Muse::MaterialType::Diffuse, glm::vec3(0.8f, 0.3f, 0.5f) };
+	Muse::Material speculairMaterial = { Muse::MaterialType::Specular};
+	Muse::Material blinnPhongMaterialComponent = { Muse::MaterialType::BlinnPhong, glm::vec3(0.8f, 0.3f, 0.5f) };
+	Muse::Material reflectiveMaterial = { Muse::MaterialType::Reflective };
+	Muse::Material refractiveMaterial = { Muse::MaterialType::Refractive };
+	Muse::Material checkerBoardMaterial = { Muse::MaterialType::Checkerboard };
+	Muse::Material normalDebugMaterial = { Muse::MaterialType::NormalDebug };
 
 	a_Scene->SetAmbientLight(ambientLight);
 
@@ -102,16 +96,9 @@ void SceneLibraryRT::MakePTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 
 	a_Scene->SetBackgroundColor(glm::vec3(0.3f));
 
-	auto redDiffuseMaterialComponent = std::make_shared<Muse::DiffuseMaterial>(glm::vec3(1.f, 0.f, 0.f));
-	auto greenDiffuseMaterialComponent = std::make_shared<Muse::DiffuseMaterial>(glm::vec3(0.f, 1.f, 0.f));
-	auto blueDiffuseMaterialComponent = std::make_shared<Muse::DiffuseMaterial>(glm::vec3(0.f, 0.f, 1.0f));
-	auto purpleDiffuseMaterialComponent = std::make_shared<Muse::DiffuseMaterial>(glm::vec3(0.f, 0.f, 1.0f));
-	auto blinnPhongMaterialComponent = std::make_shared<Muse::BlinnPhongMaterial>(glm::vec3(0.8f, 0.3f, 0.5f));
-	auto reflectiveMaterial = std::make_shared<Muse::ReflectiveMaterial>();
-	//auto groundReflectiveMaterial = std::make_shared<Muse::ReflectiveMaterial>(glm::vec3(0), 0.5f,0.1f);
-	auto speculairMaterial = std::make_shared<Muse::SpecularMaterial>();
-	auto refractiveMaterial = std::make_shared<Muse::RefractiveMaterial>();
-	auto checkerBoardMaterial = std::make_shared<Muse::CheckerBoardMaterial>();
+	Muse::Material redDiffuseMaterial = { Muse::MaterialType::Diffuse, glm::vec3(0.8f, 0.3f, 0.5f) };
+	Muse::Material greenDiffuseMaterial = { Muse::MaterialType::Diffuse, glm::vec3(0.f, 1.f, 0.f) };
+	Muse::Material blueDiffuseMaterial = { Muse::MaterialType::Diffuse, glm::vec3(0.f, 0.f, 1.0f) };
 
 	a_Scene->SetAmbientLight(ambientLight);
 
@@ -122,7 +109,7 @@ void SceneLibraryRT::MakePTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 
 		auto renderComponent = sphereGameObject->AddComponent<Muse::RenderComponent>();
 
-		renderComponent->SetMaterial(blueDiffuseMaterialComponent);
+		renderComponent->SetMaterial(redDiffuseMaterial);
 		renderComponent->SetShape(sphereComponent);
 	}
 
@@ -133,7 +120,7 @@ void SceneLibraryRT::MakePTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 
 		auto renderComponent = sphereGameObject->AddComponent<Muse::RenderComponent>();
 
-		renderComponent->SetMaterial(greenDiffuseMaterialComponent);
+		renderComponent->SetMaterial(greenDiffuseMaterial);
 		renderComponent->SetShape(sphereComponent);
 	}
 
@@ -144,7 +131,7 @@ void SceneLibraryRT::MakePTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 
 		auto renderComponent = sphereGameObject->AddComponent<Muse::RenderComponent>();
 
-		renderComponent->SetMaterial(redDiffuseMaterialComponent);
+		renderComponent->SetMaterial(blueDiffuseMaterial);
 		renderComponent->SetShape(sphereComponent);
 	}
 
@@ -170,8 +157,8 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 	float y = a_Height / 2;
 	//float z = a_Length / 2;
 
-	auto whiteDiffuseMaterialComponent = std::make_shared<Muse::DiffuseMaterial>(glm::vec3(0.5f, 0.5f, 0.5f));
-	auto checkerBoardMaterial = std::make_shared<Muse::CheckerBoardMaterial>();
+	Muse::Material checkerBoardMaterial = { Muse::MaterialType::Checkerboard };
+	Muse::Material diffuseComponent = { Muse::MaterialType::Diffuse};
 
 	{
 		auto boxGameObject = a_Scene->AddGameObject(glm::vec3(2, y, 8), glm::vec3(2.f, 2, 1.5));
@@ -179,7 +166,7 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 
 		auto renderComponent = boxGameObject->AddComponent<Muse::RenderComponent>();
 
-		renderComponent->SetMaterial(whiteDiffuseMaterialComponent);
+		renderComponent->SetMaterial(diffuseComponent);
 		renderComponent->SetShape(boxComponent);
 		renderComponent->SetLight(glm::vec3(1.f, 1.f, 0.6f));
 	}
@@ -190,7 +177,7 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 
 		auto renderComponent = boxGameObject->AddComponent<Muse::RenderComponent>();
 
-		renderComponent->SetMaterial(whiteDiffuseMaterialComponent);
+		renderComponent->SetMaterial(diffuseComponent);
 		renderComponent->SetShape(boxComponent);
 		renderComponent->SetLight(glm::vec3(1.f, 1.f, 0.6f));
 	}

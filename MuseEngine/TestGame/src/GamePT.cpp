@@ -11,13 +11,16 @@
 #include "Mode.h"
 #include "Editor/ViewPort.h"
 #include "Core/Renderer/Buffer/FrameBuffer.h"
-#include "Core/Renderer/RayTracing/RayHitData.h"
-#include "Core/Renderer/RayTracing/GetColorParameters.h"
-#include "Core/Renderer/RayTracing/BVH/BVH.h"
-#include "Core/Renderer/RayTracing/Ray.h"
+#include "Core/Renderer/RayTracer/RayHitData.h"
+#include "Core/Renderer/RayTracer/GetColorParameters.h"
+#include "Core/Renderer/RayTracer/BVH/BVH.h"
+#include "Core/Renderer/RayTracer/Ray.h"
 #include "RayTracer/SceneLibraryRT.h"
 #include "Core/Gameplay/Component/CameraComponent.h"
-#include "Core/Renderer/RayTracing/Shape/Shape.h"
+#include "Core/Renderer/RayTracer/Shape/Shape.h"
+#include "Core/Renderer/RayTracer/Ray.h"
+#include "Core/Renderer/RayTracer/RayHitData.h"
+#include "Core/Renderer/RayTracer/GetColorParameters.h"
 
 #if GAME_PT
 #include "EntryPoint.h"
@@ -105,9 +108,9 @@ void GamePT::OnRender()
     Muse::RenderCommand::SetClearColor({ 1.f, 1.0f, 1.0f, 1 });
     Muse::RenderCommand::Clear();
 
-    std::shared_ptr<Muse::CameraComponent> camera = Muse::CameraComponent::GetMain();
+    Muse::CameraComponent* camera = Muse::CameraComponent::GetMain();
 
-    Muse::Renderer2D::BeginScene(camera);
+    Muse::Renderer2D::BeginScene(*camera);
 
     const unsigned int height = GetViewport()->GetHeight();
     const unsigned int width = GetViewport()->GetWidth();
@@ -173,12 +176,12 @@ void GamePT::OnRender()
             if(x <= halfWidth)
             {
                 color = SampleNEEIS(ray, true);
-
             }
             else
             {
-                color = SampleNEEIS(ray, true);
+                //color = SampleNEEIS(ray, true);
                 //color = SampleNEE(ray, true);
+                color = Sample(ray);
             }
 
             m_Buffer[colorIndex] += color.x;
@@ -252,8 +255,8 @@ glm::vec3 GamePT::Sample(const Muse::Ray& a_Ray)
         return m_RayHitData.m_RenderComponent->GetLightColor();
     }
 
-    glm::vec3 materialColor = m_RayHitData.m_RenderComponent->GetColor();
-    glm::vec3 brdf = m_RayHitData.m_RenderComponent->GetColor() / glm::pi<float>();
+    glm::vec3 materialColor = m_RayHitData.m_RenderComponent->GetMaterial().Color;
+    glm::vec3 brdf = materialColor / glm::pi<float>();
 
     //Russian Roulette
     float surivalRate = std::clamp(std::max(std::max(materialColor.x, materialColor.y), materialColor.z), 0.1f, 0.9f);
@@ -267,8 +270,8 @@ glm::vec3 GamePT::Sample(const Muse::Ray& a_Ray)
 
     m_Hit = true;
 
-    m_GetColorParameters.RayDirection = a_Ray.Direction;
-    m_GetColorParameters.Bounces = 5;
+    //m_GetColorParameters.Ray->Direction = a_Ray.Direction;
+    //m_GetColorParameters.Bounces = 5;
 
     glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
     glm::vec3 normal = m_RayHitData.m_RenderComponent->GetNormal(intersectionPoint);
@@ -281,7 +284,6 @@ glm::vec3 GamePT::Sample(const Muse::Ray& a_Ray)
     glm::vec3 result = glm::pi<float>() * 2.0f * brdf * ei;
     return result;
 }
-
 
 glm::vec3 GamePT::SampleIS(const Muse::Ray& a_Ray)
 {
@@ -297,8 +299,8 @@ glm::vec3 GamePT::SampleIS(const Muse::Ray& a_Ray)
         return m_RayHitData.m_RenderComponent->GetLightColor();
     }
 
-    glm::vec3 materialColor = m_RayHitData.m_RenderComponent->GetColor();
-    glm::vec3 brdf = m_RayHitData.m_RenderComponent->GetColor() / glm::pi<float>();
+    glm::vec3 materialColor = m_RayHitData.m_RenderComponent->GetMaterial().Color;
+    glm::vec3 brdf = materialColor / glm::pi<float>();
 
     //Russian Roulette
     float surivalRate = std::clamp(std::max(std::max(materialColor.x, materialColor.y), materialColor.z), 0.1f, 0.9f);
@@ -312,8 +314,8 @@ glm::vec3 GamePT::SampleIS(const Muse::Ray& a_Ray)
 
     m_Hit = true;
 
-    m_GetColorParameters.RayDirection = a_Ray.Direction;
-    m_GetColorParameters.Bounces = 5;
+    //m_GetColorParameters.Ray->Direction = a_Ray.Direction;
+    //m_GetColorParameters.Bounces = 5;
 
     glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
     glm::vec3 normal = m_RayHitData.m_RenderComponent->GetNormal(intersectionPoint);
@@ -329,7 +331,7 @@ glm::vec3 GamePT::SampleIS(const Muse::Ray& a_Ray)
 
     Muse::Ray newRay{ intersectionPoint, transformedDiffuseReflection };
 
-    glm::vec3 ei = Sample(newRay) * glm::dot(normal, transformedDiffuseReflection);
+    glm::vec3 ei = SampleIS(newRay) * glm::dot(normal, transformedDiffuseReflection);
     glm::vec3 result = glm::pi<float>() * 2.0f * brdf * ei;
     return result;
 }
@@ -343,7 +345,7 @@ glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray, bool a_LastSpecular)
         return m_BackgroundColor;
     }
 
-    glm::vec3 brdf = m_RayHitData.m_RenderComponent->GetColor() / glm::pi<float>();
+    glm::vec3 brdf = m_RayHitData.m_RenderComponent->GetMaterial().Color / glm::pi<float>();
 
     if(m_RayHitData.m_RenderComponent->IsLight())
     {
@@ -389,7 +391,7 @@ glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray, bool a_LastSpecular)
 
 
 
-    glm::vec3 materialColor = m_RayHitData.m_RenderComponent->GetColor();
+    glm::vec3 materialColor = m_RayHitData.m_RenderComponent->GetMaterial().Color;
 
     //Russian Roulette
     float surivalRate = std::max(std::max(materialColor.x, materialColor.y), materialColor.z);
@@ -421,7 +423,7 @@ glm::vec3 GamePT::SampleNEEIS(const Muse::Ray& a_Ray, bool a_LastSpecular)
         return m_BackgroundColor;
     }
 
-    glm::vec3 brdf = m_RayHitData.m_RenderComponent->GetColor() / glm::pi<float>();
+    glm::vec3 brdf = m_RayHitData.m_RenderComponent->GetMaterial().Color / glm::pi<float>();
 
     if (m_RayHitData.m_RenderComponent->IsLight())
     {
@@ -468,7 +470,7 @@ glm::vec3 GamePT::SampleNEEIS(const Muse::Ray& a_Ray, bool a_LastSpecular)
 
 
 
-    glm::vec3 materialColor = m_RayHitData.m_RenderComponent->GetColor();
+    glm::vec3 materialColor = m_RayHitData.m_RenderComponent->GetMaterial().Color;
 
     //Russian Roulette
     float surivalRate = std::max(std::max(materialColor.x, materialColor.y), materialColor.z);

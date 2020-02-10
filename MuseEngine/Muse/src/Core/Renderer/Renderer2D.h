@@ -13,7 +13,7 @@ namespace Muse
         static void Init();
         static void ShutDown();
 
-        static void BeginScene(std::shared_ptr<CameraComponent> a_OrthographicCamera);
+        static void BeginScene(const CameraComponent& a_OrthographicCamera);
         static void EndScene();
 
         struct QuadPropertiesTransform

@@ -2,7 +2,7 @@
 
 #include "Sphere.h"
 #include "Core/Gameplay/Component/TransformComponent.h"
-#include "Core/Renderer/RayTracing/Ray.h"
+#include "Core/Renderer/RayTracer/Ray.h"
 #include "Core/Utilities/Log.h"
 
 namespace Muse

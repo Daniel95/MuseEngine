@@ -1392,30 +1392,23 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Renderer\RayTracing\AmbientLightSource.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\Camera.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\GetColorParameters.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\LightSource.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\Ray.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\RayHitData.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\Material\NormalDebugMaterial.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\Material\CheckerBoardMaterial.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\Material\DiffuseMaterial.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\Material\BlinnPhongMaterial.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\Material\ReflectiveMaterial.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\Material\RefractiveMaterial.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\Material\MaterialType.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\Material\MaterialHelper.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\Material\Material.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\BVH\BoundingVolume.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\BVH\BVH.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\Shape\Plane.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\Shape\Shape.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\Shape\Sphere.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\Shape\Box.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\BVH\TopDownBVH.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracing\Material\SpecularMaterial.h" />
     <ClInclude Include="src\Core\Gameplay\Component\PerspectiveCameraControllerComponent.h" />
+    <ClInclude Include="src\Core\Renderer\Material.h" />
+    <ClInclude Include="src\Core\Utilities\Color.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\BVH\BoundingVolume.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\BVH\BVH.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\BVH\TopDownBVH.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Box.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Plane.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Shape.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Sphere.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\AmbientLightSource.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\GetColorParameters.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\LightSource.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\Ray.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\RayHitData.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\RendererPT.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\RendererRT.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1577,26 +1570,19 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Renderer\RayTracing\AmbientLightSource.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\Camera.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\LightSource.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\RayHitData.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\Material\NormalDebugMaterial.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\Material\CheckerBoardMaterial.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\Material\DiffuseMaterial.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\Material\BlinnPhongMaterial.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\Material\ReflectiveMaterial.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\Material\RefractiveMaterial.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\Material\MaterialHelper.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\BVH\BoundingVolume.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\BVH\BVH.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\Shape\Plane.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\Shape\Sphere.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\Shape\Box.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\BVH\TopDownBVH.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\Shape\Shape.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\Ray.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracing\Material\SpecularMaterial.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\PerspectiveCameraControllerComponent.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\BVH\BoundingVolume.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\BVH\BVH.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\BVH\TopDownBVH.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Box.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Plane.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Shape.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Sphere.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\AmbientLightSource.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\LightSource.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\Ray.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\RayHitData.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\RendererPT.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\RendererRT.cpp" />
   </ItemGroup>
 </Project>

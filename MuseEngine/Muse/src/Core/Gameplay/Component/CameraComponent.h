@@ -33,7 +33,7 @@ namespace Muse
         void SetProjectionMatrix(float a_Left, float a_Right, float a_Bottom, float a_Top, float a_Near = -1.0, float a_Far = 1.0);
         void SetProjectionMatrix(const glm::mat4& a_ProjectionMatrix);
 
-        static std::shared_ptr<CameraComponent> GetMain() { return s_MainCamera; }
+        static CameraComponent* GetMain() { return s_MainCamera; }
 
         template <class Archive>
         void serialize(Archive& ar)
@@ -60,7 +60,7 @@ namespace Muse
         bool m_IsEditorCamera = false;
         float m_ZoomLevel = 1.0f;
 
-        static std::shared_ptr<CameraComponent> s_MainCamera;
+        static CameraComponent* s_MainCamera;
         void RecalculateViewMatrix();
 
     };

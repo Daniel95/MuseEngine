@@ -5,12 +5,13 @@
 
 #include <vector>
 #include <array>
-#include "Core/Renderer/RayTracing/RayHitData.h"
-#include "Core/Renderer/RayTracing/GetColorParameters.h"
 #include "Core/Utilities/Utilities.h"
+#include "Core/Renderer/RayTracer/RayHitData.h"
+#include "Core/Renderer/RayTracer/GetColorParameters.h"
 
 namespace Muse
 {
+    class RenderComponent;
     struct Ray;
     class Texture;
     class Shader;

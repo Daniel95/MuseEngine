@@ -6,10 +6,10 @@
 #include "Core/Renderer/VertexArray.h"
 #include "Core/Renderer/Buffer/BufferLayout.h"
 #include "Core/Instrumentor.h"
-#include "Core/Renderer/RayTracing/Shape/Shape.h"
+#include "Core/Renderer/RayTracer/Shape/Shape.h"
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Scene/Scene.h"
-#include "Core/Renderer/RayTracing/RayHitData.h"
+#include "Core/Renderer/RayTracer/RayHitData.h"
 #include "Core/Scene/SceneManager.h"
 #include "glm/common.hpp"
 #include "glm/common.hpp"
@@ -40,16 +40,6 @@ namespace Muse
     glm::vec3 RenderComponent::GetNormal(const glm::vec3& a_Point) const
     {
         return m_Shape->GetNormal(a_Point);
-    }
-
-    glm::vec3 RenderComponent::GetColor(const glm::vec3& a_Point, GetColorParameters& a_GetColorParameters) const
-    {
-        return m_Material->GetColor(shared_from_this(), a_Point, a_GetColorParameters);
-    }
-
-    glm::vec3 RenderComponent::GetColor() const
-    {
-        return m_Material->GetColor();
     }
 
     float RenderComponent::CheckRayHit(const Ray& a_Ray) const

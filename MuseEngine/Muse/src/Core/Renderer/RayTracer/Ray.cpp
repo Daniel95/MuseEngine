@@ -2,7 +2,7 @@
 
 #include "Ray.h"
 #include "Core/Gameplay/Component/RenderComponent.h"
-#include "Core/Renderer/RayTracing/RayHitData.h"
+#include "Core/Renderer/RayTracer/RayHitData.h"
 
 namespace Muse
 {

@@ -2,9 +2,9 @@
 
 #include "BVH.h"
 #include "BoundingVolume.h"
-#include "Core/Renderer/RayTracing/Shape/Shape.h"
-#include "Core/Renderer/RayTracing/RayHitData.h"
-#include "Core/Renderer/RayTracing/Ray.h"
+#include "Core/Renderer/RayTracer/Shape/Shape.h"
+#include "Core/Renderer/RayTracer/RayHitData.h"
+#include "Core/Renderer/RayTracer/Ray.h"
 #include "Core/Scene/Scene.h"
 
 namespace Muse
