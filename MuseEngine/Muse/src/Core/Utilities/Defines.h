@@ -4,6 +4,8 @@
 
 #include <string>
 
+#define GLM_FORCE_XYZW_ONLY
+
 // Platform detection using predefined macros
 #ifdef _WIN32
 	/* Windows x64/x86 */

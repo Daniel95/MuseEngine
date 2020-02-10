@@ -51,19 +51,25 @@
 //GLM make vec's and mat's conversion to string
 //Transform support rotations
 
-/////Raytracer:
-//Refactor materials. Make materials data only and put calculates somewhere else.
-//calculate shadows by giving using a light area, take a random sample to one point of this light, and add the samples together
+/////RayTracer
+//Implement multithreading
 //give each ray a random offset, add the samples together to get anti aliasing
+//Raytracer: calculate soft shadows by using a light area, take a random sample to one point of this light, and add the samples together
+//Refactor materials. Make materials data only and put calculates somewhere else.
 //sqrtf the results to make add gamma correction
 //Fix BVH
-//Update/Remove raytracer camera class
-//Make Material a resource
-//Implement pathtracer
-//Reset samples when moving the camera
 //use simd to calculate 4 rays at once.
+//Make Material a resource
 //Divide the raytracer into grids
-//Implement multithreading
+
+/////Raytracer:
+//Debug radiance
+//Split screen in 2 for debugging
+//Stratification
+//Blue noise
+//Importance sampling
+//Filtering
+//Path Guiding
 
 
 //to generate a bvh, use throw all the triangles of all the models in a big array with each triangle to a pointer to the material

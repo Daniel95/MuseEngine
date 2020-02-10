@@ -141,7 +141,7 @@ namespace Muse
 	{
 		MUSE_PROFILE_FUNCTION();
 
-		const glm::vec4 transformed = glm::inverse(GetModelMatrix()) * glm::vec4(worldPoint.x, worldPoint.y, worldPoint.z, 1);
+		const glm::vec4 transformed = glm::inverse(GetModelMatrix()) * glm::vec4(worldPoint, 1);
 		return glm::vec3(transformed);
 	}
 
@@ -149,7 +149,7 @@ namespace Muse
 	{
 		MUSE_PROFILE_FUNCTION();
 
-		const glm::vec4 transformed = glm::inverse(GetModelMatrix()) * glm::vec4(worldVector.x, worldVector.y, worldVector.z, 0);
+		const glm::vec4 transformed = glm::inverse(GetModelMatrix()) * glm::vec4(worldVector, 0);
 		return glm::vec3(transformed);
 	}
 
@@ -157,7 +157,7 @@ namespace Muse
 	{
 		MUSE_PROFILE_FUNCTION();
 
-		const glm::vec4 transformed = GetModelMatrix() * glm::vec4(localPoint.x, localPoint.y, localPoint.z, 1);
+		const glm::vec4 transformed = GetModelMatrix() * glm::vec4(localPoint, 1);
 		return glm::vec3(transformed);
 	}
 
@@ -165,7 +165,7 @@ namespace Muse
 	{
 		MUSE_PROFILE_FUNCTION();
 
-		const glm::vec4 transformed = GetModelMatrix() * glm::vec4(localVector.x, localVector.y, localVector.z, 0);
+		const glm::vec4 transformed = GetModelMatrix() * glm::vec4(localVector, 0);
 		return glm::vec3(transformed);
 	}
 }

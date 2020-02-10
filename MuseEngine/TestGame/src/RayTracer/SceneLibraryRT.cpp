@@ -116,7 +116,7 @@ void SceneLibraryRT::MakePTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 	a_Scene->SetAmbientLight(ambientLight);
 
 	{
-		auto sphereGameObject = a_Scene->AddGameObject(glm::vec3(-3, -1.2, 5), glm::vec3(1, 1, 1));
+		auto sphereGameObject = a_Scene->AddGameObject(glm::vec3(-2.5f, -1.2, 5), glm::vec3(1, 1, 1));
 		auto sphereComponent = sphereGameObject->AddComponent<Muse::Sphere>();
 		sphereComponent->SetRadius(1.f);
 
@@ -127,7 +127,7 @@ void SceneLibraryRT::MakePTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 	}
 
 	{
-		auto sphereGameObject = a_Scene->AddGameObject(glm::vec3(0.75f, -1.7, 5), glm::vec3(1, 1, 1));
+		auto sphereGameObject = a_Scene->AddGameObject(glm::vec3(0, -1.7, 5), glm::vec3(1, 1, 1));
 		auto sphereComponent = sphereGameObject->AddComponent<Muse::Sphere>();
 		sphereComponent->SetRadius(1.f);
 
@@ -138,7 +138,7 @@ void SceneLibraryRT::MakePTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 	}
 
 	{
-		auto sphereGameObject = a_Scene->AddGameObject(glm::vec3(3, -2.2, 5), glm::vec3(1, 1, 1));
+		auto sphereGameObject = a_Scene->AddGameObject(glm::vec3(2.5f, -2.2, 5), glm::vec3(1, 1, 1));
 		auto sphereComponent = sphereGameObject->AddComponent<Muse::Sphere>();
 		sphereComponent->SetRadius(1.f);
 
@@ -173,32 +173,19 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 	auto whiteDiffuseMaterialComponent = std::make_shared<Muse::DiffuseMaterial>(glm::vec3(0.5f, 0.5f, 0.5f));
 	auto checkerBoardMaterial = std::make_shared<Muse::CheckerBoardMaterial>();
 
-	/*
 	{
-		auto planeGameObject = a_Scene->AddGameObject(glm::vec3(x, 0, 0), glm::vec3(15));
-		auto planeComponent = planeGameObject->AddComponent<Muse::Plane>();
-		planeComponent->SetNormal(glm::vec3(-1, 0, 0));
+		auto boxGameObject = a_Scene->AddGameObject(glm::vec3(2, y, 8), glm::vec3(2.f, 2, 1.5));
+		auto boxComponent = boxGameObject->AddComponent<Muse::Box>();
 
-		auto renderComponent = planeGameObject->AddComponent<Muse::RenderComponent>();
+		auto renderComponent = boxGameObject->AddComponent<Muse::RenderComponent>();
 
 		renderComponent->SetMaterial(whiteDiffuseMaterialComponent);
-		renderComponent->SetShape(planeComponent);
+		renderComponent->SetShape(boxComponent);
+		renderComponent->SetLight(glm::vec3(1.f, 1.f, 0.6f));
 	}
 
 	{
-		auto planeGameObject = a_Scene->AddGameObject(glm::vec3(-x, 0, 0), glm::vec3(15));
-		auto planeComponent = planeGameObject->AddComponent<Muse::Plane>();
-		planeComponent->SetNormal(glm::vec3(1, 0, 0));
-
-		auto renderComponent = planeGameObject->AddComponent<Muse::RenderComponent>();
-
-		renderComponent->SetMaterial(whiteDiffuseMaterialComponent);
-		renderComponent->SetShape(planeComponent);
-	}
-    */
-
-	{
-		auto boxGameObject = a_Scene->AddGameObject(glm::vec3(0, y, 0), glm::vec3(8, 1, 8));
+		auto boxGameObject = a_Scene->AddGameObject(glm::vec3(-1.5f, y, 6), glm::vec3(2, 1, 1.5f));
 		auto boxComponent = boxGameObject->AddComponent<Muse::Box>();
 
 		auto renderComponent = boxGameObject->AddComponent<Muse::RenderComponent>();
@@ -210,15 +197,13 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 
 	/*
 	{
-		auto planeGameObject = a_Scene->AddGameObject(glm::vec3(0, y, 0), glm::vec3(15));
-		auto planeComponent = planeGameObject->AddComponent<Muse::Plane>();
-		planeComponent->SetNormal(glm::vec3(0, -1, 0));
+		auto boxGameObject = a_Scene->AddGameObject(glm::vec3(-4, 0, -3), glm::vec3(3, 5, 1));
+		auto boxComponent = boxGameObject->AddComponent<Muse::Box>();
 
-		auto renderComponent = planeGameObject->AddComponent<Muse::RenderComponent>();
+		auto renderComponent = boxGameObject->AddComponent<Muse::RenderComponent>();
 
-		renderComponent->SetMaterial(checkerBoardMaterial);
-		renderComponent->SetShape(planeComponent);
-		renderComponent->SetLight(glm::vec3(1));
+		renderComponent->SetMaterial(whiteDiffuseMaterialComponent);
+		renderComponent->SetShape(boxComponent);
 	}
     */
 
@@ -232,28 +217,4 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 		renderComponent->SetMaterial(checkerBoardMaterial);
 		renderComponent->SetShape(planeComponent);
 	}
-
-	/*
-	{
-		auto planeGameObject = a_Scene->AddGameObject(glm::vec3(0, 0, -z), glm::vec3(15));
-		auto planeComponent = planeGameObject->AddComponent<Muse::Plane>();
-		planeComponent->SetNormal(glm::vec3(0, 0, 1));
-
-		auto renderComponent = planeGameObject->AddComponent<Muse::RenderComponent>();
-
-		renderComponent->SetMaterial(whiteDiffuseMaterialComponent);
-		renderComponent->SetShape(planeComponent);
-	}
-
-	{
-		auto planeGameObject = a_Scene->AddGameObject(glm::vec3(0, 0, z), glm::vec3(15));
-		auto planeComponent = planeGameObject->AddComponent<Muse::Plane>();
-		planeComponent->SetNormal(glm::vec3(0, 0, -1));
-
-		auto renderComponent = planeGameObject->AddComponent<Muse::RenderComponent>();
-
-		renderComponent->SetMaterial(whiteDiffuseMaterialComponent);
-		renderComponent->SetShape(planeComponent);
-	}
-    */
 }
