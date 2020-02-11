@@ -54,22 +54,12 @@ void GamePT::OnStart()
 
     for(auto renderComponent : renderComponents)
     {
-        if(renderComponent->IsLight())
+        if(renderComponent->GetMaterial().MaterialType == Muse::MaterialType::Light)
         {
-            m_Light = renderComponent;
-            break;
+            m_LightsRenderComponents.push_back(renderComponent);
         }
     }
 
-
-
-
-    glm::vec3 direction(0.5f, 0.5f, 0);
-    glm::vec3 normal(-0.3f, 0.6f, 0);
-
-
-    glm::vec3 difference = direction - (normal * -1.f);
-    glm::vec3 result = direction + difference;
 
 
     /*
@@ -176,14 +166,19 @@ void GamePT::OnRender()
 
             if(x <= halfWidth)
             {
-                color = SampleNew(ray);
+                //color = SampleNew(ray);
                 //color = SampleNEEIS(ray, true);
+                color = SampleIS(ray);
+
             }
             else
             {
                 //color = SampleNEEIS(ray, true);
                 //color = SampleNEE(ray, true);
-                color = SampleNew(ray);
+                //color = SampleIS(ray);
+                color = SampleNEEIS(ray, true);
+
+                //color = Sample(ray);
             }
 
             m_Buffer[colorIndex] += color.x;
@@ -342,16 +337,22 @@ glm::vec3 GamePT::SampleIS(const Muse::Ray& a_Ray)
         return m_BackgroundColor;
     }
 
-    if (m_RayHitData.m_RenderComponent->IsLight())
+    const Muse::Material& material = m_RayHitData.m_RenderComponent->GetMaterial();
+    const glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
+
+    bool continueSampling;
+
+    glm::vec3 color = Muse::RendererPT::CalculateColor(material, intersectionPoint, continueSampling);
+
+    if (!continueSampling)
     {
-        return m_RayHitData.m_RenderComponent->GetLightColor();
+        return color;
     }
 
-    glm::vec3 materialColor = m_RayHitData.m_RenderComponent->GetMaterial().Color;
-    glm::vec3 brdf = materialColor / glm::pi<float>();
+    glm::vec3 brdf = color / glm::pi<float>();
 
     //Russian Roulette
-    float surivalRate = std::clamp(std::max(std::max(materialColor.x, materialColor.y), materialColor.z), 0.1f, 0.9f);
+    float surivalRate = std::clamp(std::max(std::max(color.x, color.y), color.z), 0.1f, 0.9f);
 
     if (Muse::Random() > surivalRate)
     {
@@ -360,20 +361,10 @@ glm::vec3 GamePT::SampleIS(const Muse::Ray& a_Ray)
 
     brdf /= surivalRate;
 
-    m_Hit = true;
-
-    //m_GetColorParameters.Ray->Direction = a_Ray.Direction;
-    //m_GetColorParameters.Bounces = 5;
-
-    glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
     glm::vec3 normal = m_RayHitData.m_RenderComponent->GetNormal(intersectionPoint);
-    //glm::vec3 diffuseReflection = Muse::RandomDirectionInHemisphere(normal);
     glm::vec3 diffuseReflection = CosineWeightedDiffuseReflection();
-    //glm::vec3 diffuseReflection = Muse::RandomDirectionInHemisphere(normal);
-
 
     glm::mat3 normalRotationMatrix = MakeRotationMat(normal);
-
 
     glm::vec3 transformedDiffuseReflection = normalRotationMatrix * diffuseReflection;
 
@@ -393,24 +384,31 @@ glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray, bool a_LastSpecular)
         return m_BackgroundColor;
     }
 
-    glm::vec3 brdf = m_RayHitData.m_RenderComponent->GetMaterial().Color / glm::pi<float>();
+    const Muse::Material& material = m_RayHitData.m_RenderComponent->GetMaterial();
+    const glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
 
-    if(m_RayHitData.m_RenderComponent->IsLight())
+    bool hitLight;
+
+    glm::vec3 color = Muse::RendererPT::CalculateColor(material, intersectionPoint, hitLight);
+
+    if (!hitLight)
     {
-        if(a_LastSpecular)
+        if (a_LastSpecular)
         {
-            return m_RayHitData.m_RenderComponent->GetLightColor();
+            return color;
         }
         else
         {
-            return m_RayHitData.m_RenderComponent->GetLightColor();
+            return m_BackgroundColor;
         }
     }
 
-    glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
+    glm::vec3 brdf = color / glm::pi<float>();
 
-    glm::vec3 lightPosition = m_Light->GetShape()->GetRandomPointInShape();
-    glm::vec3 scale = m_Light->GetTransform()->GetScale();
+    int randomLightIndex = Muse::Random() * (m_LightsRenderComponents.size() - 1);
+    std::shared_ptr<Muse::RenderComponent> lightRenderComponent = m_LightsRenderComponents[randomLightIndex];
+    glm::vec3 lightPosition = lightRenderComponent->GetShape()->GetRandomPointInShape();
+    glm::vec3 scale = lightRenderComponent->GetTransform()->GetScale();
 
     //NEE
     float area = scale.x * scale.z;
@@ -434,10 +432,6 @@ glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray, bool a_LastSpecular)
             light = lightColor * solidAngle * brdf * glm::dot(normal, directionToLight);
         }
     }
-
-
-
-
 
     glm::vec3 materialColor = m_RayHitData.m_RenderComponent->GetMaterial().Color;
 
@@ -471,24 +465,31 @@ glm::vec3 GamePT::SampleNEEIS(const Muse::Ray& a_Ray, bool a_LastSpecular)
         return m_BackgroundColor;
     }
 
-    glm::vec3 brdf = m_RayHitData.m_RenderComponent->GetMaterial().Color / glm::pi<float>();
+    const Muse::Material& material = m_RayHitData.m_RenderComponent->GetMaterial();
+    const glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
 
-    if (m_RayHitData.m_RenderComponent->IsLight())
+    bool hitLight;
+
+    glm::vec3 color = Muse::RendererPT::CalculateColor(material, intersectionPoint, hitLight);
+
+    if (!hitLight)
     {
         if (a_LastSpecular)
         {
-            return m_RayHitData.m_RenderComponent->GetLightColor();
+            return color;
         }
         else
         {
-            return m_RayHitData.m_RenderComponent->GetLightColor();
+            return m_BackgroundColor;
         }
     }
 
-    glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
+    glm::vec3 brdf = color / glm::pi<float>();
 
-    glm::vec3 lightPosition = m_Light->GetShape()->GetRandomPointInShape();
-    glm::vec3 scale = m_Light->GetTransform()->GetScale();
+    int randomLightIndex = Muse::Random() * (m_LightsRenderComponents.size() - 1);
+    std::shared_ptr<Muse::RenderComponent> lightRenderComponent = m_LightsRenderComponents[randomLightIndex];
+    glm::vec3 lightPosition = lightRenderComponent->GetShape()->GetRandomPointInShape();
+    glm::vec3 scale = lightRenderComponent->GetTransform()->GetScale();
 
     //NEE
     float area = scale.x * scale.z;

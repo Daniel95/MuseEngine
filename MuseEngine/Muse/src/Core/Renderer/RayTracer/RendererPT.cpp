@@ -6,7 +6,7 @@
 
 namespace Muse
 {
-    glm::vec3 RendererPT::CalculateColor(const Material& a_Material, const glm::vec3& a_IntersectionPoint, bool& a_ContinueSampling)
+    glm::vec3 RendererPT::CalculateColor(const Material& a_Material, const glm::vec3& a_IntersectionPoint, bool& hitLight)
     {
         const MaterialType materialType = a_Material.MaterialType;
 
@@ -16,24 +16,20 @@ namespace Muse
         {
             case MaterialType::Checkerboard:
             {
-                    
                 color = CalculateCheckerBoardColor(a_Material, a_IntersectionPoint);
-                a_ContinueSampling = true;
+                hitLight = true;
                 break;
             }
             case MaterialType::Light:
             {
-                    
                 color = a_Material.Color;
-                a_ContinueSampling = false;
+                hitLight = false;
                 break;
-
             }
             default:
             {
-                    
                 color = a_Material.Color;
-                a_ContinueSampling = true;
+                hitLight = true;
             }
         }
 

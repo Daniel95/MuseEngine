@@ -8,6 +8,7 @@
 
 namespace Muse
 {
+    class RenderComponent;
     class PerspectiveCamera;
     class Texture;
     class Shader;

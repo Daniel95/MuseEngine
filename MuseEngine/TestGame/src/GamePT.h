@@ -42,6 +42,7 @@ private:
     const int m_FrameRayMax = 5;
     int m_FrameRayCount = 0;
     glm::mat4 cameraTransform;
+    std::vector<std::shared_ptr<Muse::RenderComponent>> m_LightsRenderComponents;
 
     void Resize(unsigned int a_Width, unsigned int a_Height);
     glm::vec3 Sample(const Muse::Ray& a_Ray);
