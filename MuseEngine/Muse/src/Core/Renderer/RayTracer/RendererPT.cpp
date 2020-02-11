@@ -15,16 +15,26 @@ namespace Muse
         switch (materialType)
         {
             case MaterialType::Checkerboard:
+            {
+                    
                 color = CalculateCheckerBoardColor(a_Material, a_IntersectionPoint);
                 a_ContinueSampling = true;
                 break;
+            }
             case MaterialType::Light:
+            {
+                    
                 color = a_Material.Color;
                 a_ContinueSampling = false;
+                break;
+
+            }
             default:
+            {
+                    
                 color = a_Material.Color;
                 a_ContinueSampling = true;
-
+            }
         }
 
         return color;
