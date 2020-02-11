@@ -17,7 +17,6 @@ namespace Muse
         glm::vec3 IntersectionPoint;
         int Bounces = 0;
 
-
         //const std::shared_ptr<const RenderComponent> RenderComponent;
     };
 

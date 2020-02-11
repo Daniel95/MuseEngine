@@ -158,7 +158,7 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 	//float z = a_Length / 2;
 
 	Muse::Material checkerBoardMaterial = { Muse::MaterialType::Checkerboard };
-	Muse::Material diffuseComponent = { Muse::MaterialType::Diffuse};
+	Muse::Material lightMaterial = { Muse::MaterialType::Light, glm::vec3(1.f, 1.f, 0.6f) };
 
 	{
 		auto boxGameObject = a_Scene->AddGameObject(glm::vec3(2, y, 8), glm::vec3(2.f, 2, 1.5));
@@ -166,9 +166,8 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 
 		auto renderComponent = boxGameObject->AddComponent<Muse::RenderComponent>();
 
-		renderComponent->SetMaterial(diffuseComponent);
+		renderComponent->SetMaterial(lightMaterial);
 		renderComponent->SetShape(boxComponent);
-		renderComponent->SetLight(glm::vec3(1.f, 1.f, 0.6f));
 	}
 
 	{
@@ -177,9 +176,8 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 
 		auto renderComponent = boxGameObject->AddComponent<Muse::RenderComponent>();
 
-		renderComponent->SetMaterial(diffuseComponent);
+		renderComponent->SetMaterial(lightMaterial);
 		renderComponent->SetShape(boxComponent);
-		renderComponent->SetLight(glm::vec3(1.f, 1.f, 0.6f));
 	}
 
 	/*

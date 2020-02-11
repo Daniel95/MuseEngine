@@ -21,6 +21,7 @@
 #include "Core/Renderer/RayTracer/Ray.h"
 #include "Core/Renderer/RayTracer/RayHitData.h"
 #include "Core/Renderer/RayTracer/GetColorParameters.h"
+#include "Core/Renderer/RayTracer/RendererPT.h"
 
 #if GAME_PT
 #include "EntryPoint.h"
@@ -173,17 +174,16 @@ void GamePT::OnRender()
 
             glm::vec3 color;
 
-            m_GetColorParameters.Bounces = 5;
-
             if(x <= halfWidth)
             {
-                color = SampleNEEIS(ray, true);
+                color = SampleNew(ray);
+                //color = SampleNEEIS(ray, true);
             }
             else
             {
                 //color = SampleNEEIS(ray, true);
                 //color = SampleNEE(ray, true);
-                color = Sample(ray);
+                color = SampleNew(ray);
             }
 
             m_Buffer[colorIndex] += color.x;
@@ -246,23 +246,28 @@ void GamePT::Resize(unsigned a_Width, unsigned a_Height)
 glm::vec3 GamePT::SampleNew(const Muse::Ray& a_Ray)
 {
     m_FrameRayCount++;
-    m_GetColorParameters.Bounces++;
 
     if (!a_Ray.Cast(m_RayHitData) || m_FrameRayCount >= m_FrameRayMax)
     {
         return m_BackgroundColor;
     }
 
-    if (m_RayHitData.m_RenderComponent->IsLight())
+    const Muse::Material& material = m_RayHitData.m_RenderComponent->GetMaterial();
+    const glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
+
+    bool continueSampling;
+
+    glm::vec3 color = Muse::RendererPT::CalculateColor(material, intersectionPoint, continueSampling);
+
+    if(!continueSampling)
     {
-        return m_RayHitData.m_RenderComponent->GetLightColor();
+        return color;
     }
 
-    glm::vec3 materialColor = m_RayHitData.m_RenderComponent->GetMaterial().Color;
-    glm::vec3 brdf = materialColor / glm::pi<float>();
+    glm::vec3 brdf = color / glm::pi<float>();
 
     //Russian Roulette
-    float surivalRate = std::clamp(std::max(std::max(materialColor.x, materialColor.y), materialColor.z), 0.1f, 0.9f);
+    float surivalRate = std::clamp(std::max(std::max(color.x, color.y), color.z), 0.1f, 0.9f);
 
     if (Muse::Random() > surivalRate)
     {
@@ -273,10 +278,6 @@ glm::vec3 GamePT::SampleNew(const Muse::Ray& a_Ray)
 
     m_Hit = true;
 
-    //m_GetColorParameters.Ray->Direction = a_Ray.Direction;
-    //m_GetColorParameters.Bounces = 5;
-
-    glm::vec3 intersectionPoint = m_RayHitData.UpdateIntersectionPoint(a_Ray);
     glm::vec3 normal = m_RayHitData.m_RenderComponent->GetNormal(intersectionPoint);
     glm::vec3 diffuseReflection = Muse::RandomDirectionInHemisphere(normal);
 
