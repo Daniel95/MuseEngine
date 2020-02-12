@@ -618,6 +618,7 @@
     <ClCompile Include="src\Core\Renderer\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="src\Core\Renderer\Buffer\VertexBuffer.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracer\AmbientLightSource.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\GetColorParameter.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracer\RendererPT.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracer\BVH\BoundingVolume.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracer\RendererRT.cpp" />

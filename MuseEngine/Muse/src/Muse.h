@@ -45,7 +45,6 @@
 #include "Core/Event/MouseEvent.h"
 
 //Todo:
-
 /////Engine:
 //Fix Crash in Game2D
 //Move Rasterizer to its own folder in Renderer
@@ -58,14 +57,13 @@
 //Implement multithreading
 //give each ray a random offset, add the samples together to get anti aliasing
 //Raytracer: calculate soft shadows by using a light area, take a random sample to one point of this light, and add the samples together
-//Refactor materials. Make materials data only and put calculates somewhere else.
 //sqrtf the results to make add gamma correction
 //Fix BVH
 //use simd to calculate 4 rays at once.
 //Make MaterialOld a resource
 //Divide the raytracer into grids
 
-/////Raytracer:
+/////PathTracer:
 //Debug radiance
 //Split screen in 2 for debugging
 //Stratification

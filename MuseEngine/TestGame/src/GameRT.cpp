@@ -118,23 +118,18 @@ void GameRT::OnRender()
             ray.Origin = p0 + u * right + v * down + E;
             ray.Direction = glm::normalize(ray.Origin - E);
 
-
             if(ray.Cast(rayHitData))
             {
-
                 getColorParameters.Bounces = 5;
-                getColorParameters.Material = &rayHitData.m_RenderComponent->GetMaterial();
                 getColorParameters.Ray = &ray;
                 getColorParameters.IntersectionPoint = rayHitData.UpdateIntersectionPoint(ray);
-                getColorParameters.Shape = rayHitData.m_RenderComponent->GetShape();
+                getColorParameters.RenderComponent = rayHitData.m_RenderComponent;
 
                 const glm::vec3 color = Muse::RendererRT::CalculateColor(getColorParameters);
 
                 m_ScreenData[colorIndex] = color.x;
                 m_ScreenData[colorIndex + 1] = color.y;
                 m_ScreenData[colorIndex + 2] = color.z;
-
-                hit = true;
             }
             else
             {
@@ -145,11 +140,6 @@ void GameRT::OnRender()
 
             colorIndex += stride;
         }
-    }
-
-    if (!hit)
-    {
-        LOG_INFO("No hits!");
     }
 
     GetViewport()->BindTexture();

@@ -1584,5 +1584,6 @@
     <ClCompile Include="src\Core\Renderer\RayTracer\RayHitData.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracer\RendererPT.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracer\RendererRT.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\GetColorParameter.cpp" />
   </ItemGroup>
 </Project>

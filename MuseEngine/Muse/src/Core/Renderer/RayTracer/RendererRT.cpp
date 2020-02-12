@@ -18,8 +18,8 @@ namespace Muse
             return SceneManager::GetActiveScene()->GetBackgroundColor();
         }
 
-        const Material* material = a_GetColorParameters.Material;
-        const MaterialType materialType = material->MaterialType;
+        const Material& material = a_GetColorParameters.GetMaterial();
+        const MaterialType materialType = a_GetColorParameters.GetMaterial().MaterialType;
 
         glm::vec3 color;
 
@@ -46,7 +46,7 @@ namespace Muse
                 color = CalculateDebugNormalsColor(a_GetColorParameters);
                 break;
             default:
-                color = material->Color;
+                color = material.Color;
                 //LOG_ENGINE_ERROR("MaterialType: {0} not supported", static_cast<int>(materialType));
                 //ASSERT_ENGINE(false, "Material type not supported!");
         }
@@ -77,7 +77,7 @@ namespace Muse
         const std::vector<std::shared_ptr<LightSource>>& lightSources = SceneManager::GetActiveScene()->GetLightSources();
 
         glm::vec3 totalDiffuse = glm::vec3(0);
-        glm::vec3 normal = a_GetColorParameters.Shape->GetNormal(a_GetColorParameters.IntersectionPoint);
+        glm::vec3 normal = a_GetColorParameters.GetShape()->GetNormal(a_GetColorParameters.IntersectionPoint);
 
         for (const std::shared_ptr<LightSource>& lightSource : lightSources)
         {
@@ -104,7 +104,7 @@ namespace Muse
         const std::vector<std::shared_ptr<LightSource>>& lightSources = SceneManager::GetActiveScene()->GetLightSources();
 
         glm::vec3 totalSpecular = glm::vec3(0);
-        glm::vec3 normal = a_GetColorParameters.Shape->GetNormal(a_GetColorParameters.IntersectionPoint);
+        glm::vec3 normal = a_GetColorParameters.GetShape()->GetNormal(a_GetColorParameters.IntersectionPoint);
 
         for (const std::shared_ptr<LightSource>& lightSource : lightSources)
         {
@@ -114,7 +114,7 @@ namespace Muse
 
             if (!ray.Cast())
             {
-                float specular = GetSpecular(normal, a_GetColorParameters.Ray->Direction, directionToLightSource, a_GetColorParameters.Material->SpecularStrength);
+                float specular = GetSpecular(normal, a_GetColorParameters.Ray->Direction, directionToLightSource, a_GetColorParameters.GetMaterial().SpecularStrength);
 
                 totalSpecular += specular;
             }
@@ -126,7 +126,7 @@ namespace Muse
     glm::vec3 RendererRT::CalculateBlinnPhongColor(GetColorParameters& a_GetColorParameters)
     {
         glm::vec3 specularAndDiffuse = glm::vec3(0);
-        glm::vec3 normal = a_GetColorParameters.Shape->GetNormal(a_GetColorParameters.IntersectionPoint);
+        glm::vec3 normal = a_GetColorParameters.GetShape()->GetNormal(a_GetColorParameters.IntersectionPoint);
 
         const std::vector<std::shared_ptr<LightSource>>& lightSources = SceneManager::GetActiveScene()->GetLightSources();
 
@@ -142,7 +142,7 @@ namespace Muse
 
             if (!ray.Cast())
             {
-                float specular = GetSpecular(normal, a_GetColorParameters.Ray->Direction, directionToLightSource, a_GetColorParameters.Material->SpecularStrength);
+                float specular = GetSpecular(normal, a_GetColorParameters.Ray->Direction, directionToLightSource, a_GetColorParameters.GetMaterial().SpecularStrength);
                 float diffuse = GetDiffuse(normal, directionToLightSource);
 
                 specularAndDiffuse += (specular + diffuse) * light;
@@ -156,24 +156,26 @@ namespace Muse
 
     glm::vec3 RendererRT::CalculateReflectiveColor(GetColorParameters& a_GetColorParameters)
     {
+        glm::vec3 reflectionColor = SceneManager::GetActiveScene()->GetBackgroundColor();
+
         if (a_GetColorParameters.Bounces <= 0)
         {
-            return SceneManager::GetActiveScene()->GetBackgroundColor();
+            return reflectionColor;
         }
         a_GetColorParameters.Bounces--;
 
-        const glm::vec3 normal = a_GetColorParameters.Shape->GetNormal(a_GetColorParameters.IntersectionPoint);
+        const glm::vec3 normal = a_GetColorParameters.GetShape()->GetNormal(a_GetColorParameters.IntersectionPoint);
 
-        glm::vec3 reflectionColor = SceneManager::GetActiveScene()->GetBackgroundColor();
         const glm::vec3 reflectionDirection = glm::reflect(a_GetColorParameters.Ray->Direction, normal);
 
         RayHitData rayHitData;
         a_GetColorParameters.Ray->Origin = a_GetColorParameters.IntersectionPoint; 
         a_GetColorParameters.Ray->Direction = reflectionDirection;
 
-        if (a_GetColorParameters.Ray->Cast(rayHitData))
+        if (a_GetColorParameters.Ray->Cast(rayHitData, a_GetColorParameters.RenderComponent))
         {
             a_GetColorParameters.IntersectionPoint = rayHitData.UpdateIntersectionPoint(*a_GetColorParameters.Ray);
+            a_GetColorParameters.RenderComponent = rayHitData.m_RenderComponent;
 
             reflectionColor = CalculateColor(a_GetColorParameters);
         }
@@ -191,17 +193,18 @@ namespace Muse
         }
         a_GetColorParameters.Bounces--;
 
-        const glm::vec3 normal = a_GetColorParameters.Shape->GetNormal(a_GetColorParameters.IntersectionPoint);
+        const glm::vec3 normal = a_GetColorParameters.GetShape()->GetNormal(a_GetColorParameters.IntersectionPoint);
 
-        glm::vec3 refractionDirection = glm::refract(a_GetColorParameters.Ray->Direction, normal, a_GetColorParameters.Material->Eta);
+        glm::vec3 refractionDirection = glm::refract(a_GetColorParameters.Ray->Direction, normal, a_GetColorParameters.GetMaterial().Eta);
 
         RayHitData rayHitData;
         a_GetColorParameters.Ray->Origin = a_GetColorParameters.IntersectionPoint;
         a_GetColorParameters.Ray->Direction = refractionDirection;
 
-        if (a_GetColorParameters.Ray->Cast(rayHitData))
+        if (a_GetColorParameters.Ray->Cast(rayHitData, a_GetColorParameters.RenderComponent))
         {
             a_GetColorParameters.IntersectionPoint = rayHitData.UpdateIntersectionPoint(*a_GetColorParameters.Ray);
+            a_GetColorParameters.RenderComponent = rayHitData.m_RenderComponent;
 
             refractionColor = CalculateColor(a_GetColorParameters);
         }
@@ -213,16 +216,16 @@ namespace Muse
     {
         const glm::vec3 light = CalculateBlinnPhongColor(a_GetColorParameters);
 
-        int gridPositionX = static_cast<int>(std::round(a_GetColorParameters.IntersectionPoint.x / a_GetColorParameters.Material->GridSize));
-        int gridPositionZ = static_cast<int>(std::round(a_GetColorParameters.IntersectionPoint.z / a_GetColorParameters.Material->GridSize));
+        int gridPositionX = static_cast<int>(std::round(a_GetColorParameters.IntersectionPoint.x / a_GetColorParameters.GetMaterial().GridSize));
+        int gridPositionZ = static_cast<int>(std::round(a_GetColorParameters.IntersectionPoint.z / a_GetColorParameters.GetMaterial().GridSize));
 
         int positionInGrid = gridPositionX + gridPositionZ;
 
-        glm::vec3 result = a_GetColorParameters.Material->SecondaryColor;
+        glm::vec3 result = a_GetColorParameters.GetMaterial().SecondaryColor;
 
         if (positionInGrid % 2 == 0)
         {
-            result = a_GetColorParameters.Material->Color;
+            result = a_GetColorParameters.GetMaterial().Color;
         }
 
         return result * light;
@@ -232,10 +235,10 @@ namespace Muse
     {
         a_GetColorParameters;
 
-        const glm::vec3 normalT = a_GetColorParameters.Shape->GetNormal(a_GetColorParameters.IntersectionPoint);
+        const glm::vec3 normalT = a_GetColorParameters.GetShape()->GetNormal(a_GetColorParameters.IntersectionPoint);
 
         const glm::vec3 normal = (normalT + glm::vec3(1, 1, 1)) / 2.f;
-        const glm::vec3 normalDebugColor = glm::vec3(normal.x * a_GetColorParameters.Material->Color.r, normal.y * a_GetColorParameters.Material->Color.g, normal.z * a_GetColorParameters.Material->Color.b);
+        const glm::vec3 normalDebugColor = glm::vec3(normal.x * a_GetColorParameters.GetMaterial().Color.r, normal.y * a_GetColorParameters.GetMaterial().Color.g, normal.z * a_GetColorParameters.GetMaterial().Color.b);
         return normalDebugColor;
     }
 }
