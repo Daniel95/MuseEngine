@@ -51,7 +51,7 @@
 //Fix warnings
 //Model loading
 //GLM make vec's and mat's conversion to string
-//Transform support rotations
+//Transform support euler rotations
 
 /////RayTracer
 //Implement multithreading

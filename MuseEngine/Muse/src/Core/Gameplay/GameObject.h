@@ -44,10 +44,14 @@ namespace Muse
         void RemoveComponent();
         template <class T>
         std::shared_ptr<T> GetComponent() const;
-        template <class T>
-        bool TryGetComponent(std::shared_ptr<const T> a_Component) const;
+        //template <class T>
+        //bool TryGetComponent(std::shared_ptr<const T> a_Component) const;
         Scene* GetScene() const { return  m_Scene; }
-        std::shared_ptr<TransformComponent> GetTransform() const { return m_TransformComponent; }
+        std::shared_ptr<TransformComponent> GetTransform() const
+        {
+            ASSERT_ENGINE(m_TransformComponent != nullptr, "No transform component!");
+            return m_TransformComponent;
+        }
 
         const std::vector<std::shared_ptr<Component>>& GetComponents() const { return m_Components;  }
         void Destroy();
@@ -61,9 +65,9 @@ namespace Muse
         }
 	private:
         std::vector<std::shared_ptr<Component>> m_Components;
-        Scene* m_Scene;
+        Scene* m_Scene = nullptr;
         bool m_Destroyed = false;
-        std::shared_ptr<TransformComponent> m_TransformComponent;
+        std::shared_ptr<TransformComponent> m_TransformComponent = nullptr;
 
 	};
 
@@ -124,6 +128,7 @@ namespace Muse
         return componentOfType;
     }
 
+    /*
     template <class T>
     bool GameObject::TryGetComponent(std::shared_ptr<const T> a_Component) const
     {
@@ -133,6 +138,7 @@ namespace Muse
 
         return a_Component != nullptr;
     }
+    */
 }
 
 CEREAL_REGISTER_TYPE_WITH_NAME(Muse::GameObject, "GameObject")

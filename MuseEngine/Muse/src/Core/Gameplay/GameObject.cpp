@@ -27,7 +27,9 @@ namespace Muse
 
         m_Scene = &a_Scene;
 
-        if (!TryGetComponent<TransformComponent>(m_TransformComponent))
+        m_TransformComponent = GetComponent<TransformComponent>();
+
+        if (m_TransformComponent == nullptr)
         {
             m_TransformComponent = AddComponent<TransformComponent>();
         }
