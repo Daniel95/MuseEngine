@@ -20,7 +20,7 @@ namespace Muse
 {
     class RenderComponent;
     struct Ray;
-    struct RayHitData;
+    class RayHitData;
     class Component;
     class GameObject;
     class TransformComponent;

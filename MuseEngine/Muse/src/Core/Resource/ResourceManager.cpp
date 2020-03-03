@@ -44,7 +44,7 @@ namespace Muse
 
         std::vector<std::shared_ptr<Resource>> resources;
 
-        for (const std::pair<ullong, std::shared_ptr<Resource>>& resource : m_Resources)
+        for (std::pair<ullong, std::shared_ptr<Resource>> resource : m_Resources)
         {
             resources.push_back(resource.second);
         }
@@ -52,12 +52,12 @@ namespace Muse
         return resources;
     }
 
-    void ResourceManager::UpdateResourcePath(const std::string& a_OldResourcePath, const std::string& a_NewResourcePath)
+    void ResourceManager::UpdateResourcePath(const std::string& a_OldPath, const std::string& a_NewPath)
     {
-        ullong oldId = Resource::CalculateResourceId(a_OldResourcePath);
-        ullong newId = Resource::CalculateResourceId(a_NewResourcePath);
+        const ullong oldId = Resource::CalculateResourceId(a_OldPath);
+        const ullong newId = Resource::CalculateResourceId(a_NewPath);
 
-        std::shared_ptr<Resource> resource = m_Resources.at(oldId);
+        const std::shared_ptr<Resource> resource = m_Resources.at(oldId);
 
         m_Resources[newId] = resource;
 

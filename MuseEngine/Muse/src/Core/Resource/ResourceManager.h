@@ -22,7 +22,7 @@ namespace Muse
         RTTR_ENABLE();
 
     public:
-        static void Add(const std::string& a_Name, const std::shared_ptr<Resource>& a_Path);
+        static void Add(const std::string& a_Name, const std::shared_ptr<Resource>& a_Resource);
         template<typename T, typename... Args>
         static std::shared_ptr<T> Load(const std::string & a_Path);
         template<typename T>
@@ -37,19 +37,6 @@ namespace Muse
         static void CreateSaveLocation();
 
     protected:
-        template<typename T>
-        static std::shared_ptr<T> LoadResource(const std::string& a_Path)
-        {
-            ASSERT_ENGINE(false, "Loading this resource is not supported!");
-            return nullptr;
-        }
-        template<>
-        static std::shared_ptr<Shader> LoadResource<Shader>(const std::string& a_Path) { return Shader::Load(a_Path); }
-        template<>
-        static std::shared_ptr<Texture> LoadResource<Texture>(const std::string& a_Path) { return Texture::Load(a_Path); }
-        template<>
-        static std::shared_ptr<Scene> LoadResource<Scene>(const std::string& a_Path) { return Scene::Load(a_Path); }
-
         template<typename T>
         static std::shared_ptr<T> GetLoadedResource(ullong a_Id);
 
@@ -91,7 +78,7 @@ namespace Muse
         ASSERT_ENGINE(std::filesystem::exists(a_Path), "Resource path doesn't points to a file.");
         ASSERT_ENGINE(GetLoadedResource<T>(id) == nullptr, "Resource is already loaded!");
 
-        std::shared_ptr<T> resource = LoadResource<T>(a_Path);
+        std::shared_ptr<T> resource = T::Load(a_Path);
 
         std::dynamic_pointer_cast<Resource>(resource)->InitPath(a_Path);
 
