@@ -22,57 +22,39 @@ namespace Muse
         RTTR_ENABLE();
 
     public:
+        static void Add(const std::string& a_Name, const std::shared_ptr<Resource>& a_Path);
         template<typename T, typename... Args>
-        static std::shared_ptr<T> Create(const std::string& a_Name, Args&& ... a_Args);
-        template<typename T, typename... Args>
-        static std::shared_ptr<T> Load(const std::string & a_ResourcePath);
+        static std::shared_ptr<T> Load(const std::string & a_Path);
         template<typename T>
-        static std::shared_ptr<T> Get(const std::string& a_ResourcePath);
+        static std::shared_ptr<T> Get(const std::string& a_Path);
         template<typename T>
         static std::vector<std::shared_ptr<T>> GetResourcesOfType();
         template<typename T>
-        static void UnloadResource(const std::string & a_ResourcePath);
+        static void UnloadResource(const std::string & a_Path);
         static std::vector<std::shared_ptr<Resource>> GetAllResources();
-        static void UpdateResourcePath(const std::string& a_OldResourcePath, const std::string& a_NewResourcePath);
+        static void UpdateResourcePath(const std::string& a_OldPath, const std::string& a_NewPath);
 
         static void CreateSaveLocation();
 
     protected:
         template<typename T>
-        static std::shared_ptr<T> CreateResource()
-        {
-            ASSERT_ENGINE(false, "Loading this resource is not supported!");
-            return nullptr;
-        }
-        template<typename T>
-        static std::shared_ptr<T> CreateResource(const std::string& a_VertexSource, const std::string& a_FragmentSource) { return Shader::Create(a_VertexSource, a_FragmentSource); }
-        template<typename T>
-        static std::shared_ptr<T> CreateResource(uint32_t a_Width, uint32_t a_Height) { return Texture::Create(a_Width, a_Height); }
-        template<>
-        static std::shared_ptr<Scene> CreateResource() { return Scene::Create(); }
-
-        template<typename T>
-        static std::shared_ptr<T> LoadResource(const std::string& a_FilePath)
+        static std::shared_ptr<T> LoadResource(const std::string& a_Path)
         {
             ASSERT_ENGINE(false, "Loading this resource is not supported!");
             return nullptr;
         }
         template<>
-        static std::shared_ptr<Shader> LoadResource<Shader>(const std::string& a_FilePath) { return Shader::Load(a_FilePath); }
+        static std::shared_ptr<Shader> LoadResource<Shader>(const std::string& a_Path) { return Shader::Load(a_Path); }
         template<>
-        static std::shared_ptr<Texture> LoadResource<Texture>(const std::string& a_FilePath) { return Texture::Load(a_FilePath); }
+        static std::shared_ptr<Texture> LoadResource<Texture>(const std::string& a_Path) { return Texture::Load(a_Path); }
         template<>
-        static std::shared_ptr<Scene> LoadResource<Scene>(const std::string& a_FilePath) { return Scene::Load(a_FilePath); }
+        static std::shared_ptr<Scene> LoadResource<Scene>(const std::string& a_Path) { return Scene::Load(a_Path); }
 
         template<typename T>
         static std::shared_ptr<T> GetLoadedResource(ullong a_Id);
 
         /// A map of resources
         static std::unordered_map<ullong, std::shared_ptr<Resource>> m_Resources;
-
-        /// A map of reference counters
-        static std::unordered_map<ullong, uint> m_RefCounters;
-
     };
 
     template<typename T>
@@ -98,57 +80,34 @@ namespace Muse
     }
 
     template<typename T, typename... Args>
-    std::shared_ptr<T> ResourceManager::Create(const std::string& a_Name, Args&&... a_Args)
+    std::shared_ptr<T> ResourceManager::Load(const std::string & a_Path)
     {
         MUSE_PROFILE_FUNCTION();
 
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Resource");
 
-        ullong id = T::CalculateResourceId(a_Name);
+        ullong id = T::CalculateResourceId(a_Path);
 
-        ASSERT_ENGINE(a_Name.find("/") == std::string::npos, "Use Load(a_FilePath) instead of Create when trying to load a file.");
-        ASSERT_ENGINE(GetLoadedResource<T>(id) == nullptr, "Resource is already created!");
-
-        std::shared_ptr<T> resource = CreateResource<T>(a_Args ...);
-
-        std::dynamic_pointer_cast<Resource>(resource)->InitPath(a_Name);
-
-        m_Resources.insert(std::make_pair(id, resource));
-        m_RefCounters.insert(std::make_pair(id, 1));
-
-        return resource;
-    }
-
-    template<typename T, typename... Args>
-    std::shared_ptr<T> ResourceManager::Load(const std::string & a_ResourcePath)
-    {
-        MUSE_PROFILE_FUNCTION();
-
-        static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Resource");
-
-        ullong id = T::CalculateResourceId(a_ResourcePath);
-
-        ASSERT_ENGINE(std::filesystem::exists(a_ResourcePath), "Resource path doesn't points to a file.");
+        ASSERT_ENGINE(std::filesystem::exists(a_Path), "Resource path doesn't points to a file.");
         ASSERT_ENGINE(GetLoadedResource<T>(id) == nullptr, "Resource is already loaded!");
 
-        std::shared_ptr<T> resource = LoadResource<T>(a_ResourcePath);
+        std::shared_ptr<T> resource = LoadResource<T>(a_Path);
 
-        std::dynamic_pointer_cast<Resource>(resource)->InitPath(a_ResourcePath);
+        std::dynamic_pointer_cast<Resource>(resource)->InitPath(a_Path);
 
         m_Resources.insert(std::make_pair(id, resource));
-        m_RefCounters.insert(std::make_pair(id, 1));
 
         return resource;
     }
 
     template <typename T>
-    std::shared_ptr<T> ResourceManager::Get(const std::string& a_ResourcePath)
+    std::shared_ptr<T> ResourceManager::Get(const std::string& a_Path)
     {
         MUSE_PROFILE_FUNCTION();
 
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Resource");
 
-        ullong id = T::CalculateResourceId(a_ResourcePath);
+        ullong id = T::CalculateResourceId(a_Path);
 
         std::shared_ptr<T> resource = GetLoadedResource<T>(id);
         ASSERT_ENGINE(resource != nullptr, "Resource is not yet loaded!");
@@ -168,7 +127,6 @@ namespace Muse
         // Check cache
         if (it != m_Resources.end())
         {
-            ++m_RefCounters[a_Id];
             return std::dynamic_pointer_cast<T>(it->second);
         }
 
@@ -176,17 +134,17 @@ namespace Muse
     }
 
     template<typename T>
-    void ResourceManager::UnloadResource(const std::string & a_ResourcePath)
+    void ResourceManager::UnloadResource(const std::string & a_Path)
     {
         MUSE_PROFILE_FUNCTION();
 
         static_assert(std::is_base_of<Resource, T>::value, "Type must derive from Component");
 
-        ullong id = T::CalculateResourceId(a_ResourcePath);
+        ullong id = T::CalculateResourceId(a_Path);
 
         ASSERT_ENGINE(m_Resources.find(id) != m_Resources.end(), "Resource does not exists!");
+        ASSERT_ENGINE(m_Resources[id].use_count() >= 1, "Resource " + a_Path + " that you are trying to delete is still in use!");
 
         m_Resources.erase(id);
-        m_RefCounters.erase(id);
     }
 }

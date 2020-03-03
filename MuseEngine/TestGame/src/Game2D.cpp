@@ -22,7 +22,8 @@ void Game2D::OnStart()
     Muse::RenderCommand::Init();
     Muse::Renderer2D::Init();
 
-    std::shared_ptr<Muse::Scene> scene = Muse::ResourceManager::Create<Muse::Scene>("Game2DTestScene");
+    std::shared_ptr <Muse::Scene> scene = Muse::Scene::Create();
+    Muse::ResourceManager::Add("Game2DTestScene", scene);
     Muse::SceneManager::SwitchScene(scene);
 
     {

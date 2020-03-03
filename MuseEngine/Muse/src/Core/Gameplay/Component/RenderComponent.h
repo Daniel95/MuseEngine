@@ -11,7 +11,7 @@
 namespace Muse
 {
     struct Ray;
-    struct RayHitData;
+    class RayHitData;
     struct GetColorParameters;
     class Shape;
     class Texture;

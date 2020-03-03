@@ -9,7 +9,7 @@ namespace Muse
     class BoundingVolume;
 	class Scene;
 	struct Ray;
-	struct RayHitData;
+	class RayHitData;
 	class GameObject;
 
 	class BVH

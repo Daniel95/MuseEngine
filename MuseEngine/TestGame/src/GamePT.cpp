@@ -38,7 +38,8 @@ void GamePT::OnStart()
     Muse::RenderCommand::Init();
     Muse::Renderer2D::Init();
 
-    std::shared_ptr<Muse::Scene> scene = Muse::ResourceManager::Create<Muse::Scene>("New Scene");
+    std::shared_ptr <Muse::Scene> scene = Muse::Scene::Create();
+    Muse::ResourceManager::Add("GamePTScene", scene);
     Muse::SceneManager::SwitchScene(scene);
 
     m_Height = GetViewport()->GetHeight();

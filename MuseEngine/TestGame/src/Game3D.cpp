@@ -19,7 +19,8 @@ Muse::Application* Muse::CreateApplication()
 
 void Game3D::OnStart()
 {
-    std::shared_ptr<Muse::Scene> scene = Muse::ResourceManager::Create<Muse::Scene>("New Scene");
+    std::shared_ptr <Muse::Scene> scene = Muse::Scene::Create();
+    Muse::ResourceManager::Add("New Scene", scene);
     Muse::SceneManager::SwitchScene(scene);
 
     std::shared_ptr<Muse::Shader> textureShader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/Texture.glsl");

@@ -80,7 +80,6 @@ namespace Muse
         std::shared_ptr<FrameBuffer> m_ViewportFramebuffer;
         float m_DeltaTime = 0;
 
-
         ImGuiLayer* m_ImGuiLayer;
         LayerStack m_LayerStack;
         float m_LastFrameTime = 0.0f;

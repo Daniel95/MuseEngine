@@ -46,7 +46,9 @@ namespace Muse
         std::shared_ptr<IndexBuffer> quadIB = IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
         s_Data->QuadVertexArray->SetIndexBuffer(quadIB);
 
-        s_Data->WhiteTexture = ResourceManager::Create<Texture>("WhiteTexture", 1, 1);
+        s_Data->WhiteTexture = Texture::Create(1, 1);
+        ResourceManager::Add("WhiteTexture", s_Data->WhiteTexture);
+            
         uint32_t whiteTextureData = 0xffffffff;
         s_Data->WhiteTexture->SetData(&whiteTextureData, sizeof(uint32_t));
 
