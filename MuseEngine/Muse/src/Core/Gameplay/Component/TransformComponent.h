@@ -49,8 +49,8 @@ namespace Muse
 		glm::vec3 TransformPoint(const glm::vec3& a_LocalPoint); //Local to world point
 		glm::vec3 TransformVector(const glm::vec3& a_LocalVector); //Local to world vector
 
-		glm::mat4 InverseTransformMatrix(const glm::mat4& a_WorldMatrix) { return glm::inverse(GetLocalModelMatrix() * a_WorldMatrix); } //World to local point 
-		glm::mat4 TransformMatrix(const glm::mat4& a_LocalMatrix) { return GetLocalModelMatrix() * a_LocalMatrix;  }  //Local to world point
+		glm::mat4 InverseTransformMatrix(const glm::mat4& a_WorldMatrix) { return glm::inverse(GetWorldModelMatrix() * a_WorldMatrix); } //World to local point 
+		glm::mat4 TransformMatrix(const glm::mat4& a_LocalMatrix) { return GetWorldModelMatrix() * a_LocalMatrix;  }  //Local to world point
 
 		glm::vec3 GetForward() { return TransformVector(glm::vec3(0, 0, 1)); }
 		glm::vec3 GetUp() { return TransformVector(glm::vec3(0, 1, 0));; }

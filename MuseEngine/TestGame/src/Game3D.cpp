@@ -185,7 +185,7 @@ void Game3D::OnStart()
         };
 
         auto gameObject = scene->AddGameObject();
-        //gameObject->GetTransform()->SetParent(m_PlayerGameObject->GetTransform());
+        gameObject->GetTransform()->SetParent(m_PlayerGameObject->GetTransform());
 
         auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
 
@@ -202,6 +202,7 @@ void Game3D::OnStart()
 
         gameObject->GetTransform()->SetPosition({ 0.5f, 0.5f, 1.f });
         gameObject->GetTransform()->SetScale({ 0.5f, 0.5f, 0.5f });
+
     }
 }
 
