@@ -71,7 +71,7 @@ void Game2D::OnRender()
         if(meshComponent != nullptr)
         {
             const Muse::Renderer2D::QuadPropertiesTransform quadPropertiesTransform(
-                gameObject->GetTransform()->GetModelMatrix(),
+                gameObject->GetTransform()->GetWorldModelMatrix(),
                 { 0.8f, 0.2f, 0.3f, 1.0f });
 
             Muse::Renderer2D::DrawQuad(quadPropertiesTransform);

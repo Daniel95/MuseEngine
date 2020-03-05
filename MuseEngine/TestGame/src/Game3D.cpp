@@ -147,8 +147,46 @@ void Game3D::OnStart()
             { Muse::ShaderDataType::Float2, "a_TexCoord" },
         };
 
+        m_PlayerGameObject = scene->AddGameObject();
+        m_PlayerGameObject->AddComponent<PlayerComponent>();
+        auto renderComponent = m_PlayerGameObject->AddComponent<Muse::RenderComponent>();
+
+        renderComponent->SetMesh(vertices,
+            5 * 4,
+            indices,
+            6,
+            layout);
+        renderComponent->SetShader(textureShader);
+        renderComponent->SetTexture(raymanTexture);
+
+        textureShader->Bind();
+        textureShader->SetInt("u_Texture", 0);
+
+        m_PlayerGameObject->GetTransform()->SetPosition({ 0, 0, 1 });
+    }
+
+    /////////////////////////////////////////////////////////////////
+    //// Player Child Textured Square /////////////////////////////////////
+    /////////////////////////////////////////////////////////////////
+    {
+        float vertices[5 * 4] =
+        {
+            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+            0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
+        };
+        uint32_t indices[6] = { 0, 1, 2, 2, 3, 0 };
+
+        const Muse::BufferLayout layout =
+        {
+            { Muse::ShaderDataType::Float3, "a_Position" },
+            { Muse::ShaderDataType::Float2, "a_TexCoord" },
+        };
+
         auto gameObject = scene->AddGameObject();
-        gameObject->AddComponent<PlayerComponent>();
+        //gameObject->GetTransform()->SetParent(m_PlayerGameObject->GetTransform());
+
         auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
 
         renderComponent->SetMesh(vertices,
@@ -162,7 +200,8 @@ void Game3D::OnStart()
         textureShader->Bind();
         textureShader->SetInt("u_Texture", 0);
 
-        gameObject->GetTransform()->SetPosition({ 0, 0, 1 });
+        gameObject->GetTransform()->SetPosition({ 0.5f, 0.5f, 1.f });
+        gameObject->GetTransform()->SetScale({ 0.5f, 0.5f, 0.5f });
     }
 }
 
@@ -189,7 +228,7 @@ void Game3D::OnRender()
             {
                 meshComponent->GetTexture()->Bind();
             }
-            Muse::Renderer::Submit(meshComponent->GetShader(), meshComponent->GetVA(), gameObject->GetTransform()->GetModelMatrix());
+            Muse::Renderer::Submit(meshComponent->GetShader(), meshComponent->GetVA(), gameObject->GetTransform()->GetWorldModelMatrix());
         }
     }
 

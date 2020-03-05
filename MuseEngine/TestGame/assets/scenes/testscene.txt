@@ -138,14 +138,14 @@
                             },
                             {
                                 "polymorphic_id": 2147483651,
-                                "polymorphic_name": "PerspectiveCameraControllerComponent",
+                                "polymorphic_name": "OrthographicCameraControllerComponent",
                                 "ptr_wrapper": {
                                     "id": 2147483652,
                                     "data": {
                                         "Component": {
                                             "value0": true
                                         },
-                                        "value0": 0.800000011920929,
+                                        "value0": 0.6000000238418579,
                                         "value1": 0.10000000149011612,
                                         "value2": 0.10000000149011612
                                     }

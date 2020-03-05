@@ -95,7 +95,7 @@ void GameRT::OnRender()
     Muse::RayHitData rayHitData;
     Muse::GetColorParameters getColorParameters;
 
-    glm::mat4 T = camera->GetTransform()->GetModelMatrix();
+    glm::mat4 T = camera->GetTransform()->GetWorldModelMatrix();
 
     glm::vec3 p0 = T * glm::vec4(-1, -1, 1, 0); // top-left
     glm::vec3 p1 = T * glm::vec4(1, -1, 1, 0); // top-right

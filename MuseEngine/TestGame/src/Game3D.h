@@ -3,8 +3,11 @@
 #include "Core/Application.h"
 #include "glm/vec4.hpp"
 
+#include <memory>
+
 namespace Muse
 {
+    class GameObject;
     class Shader;
 }
 
@@ -24,6 +27,8 @@ protected:
 private:
     std::shared_ptr<Muse::Shader> m_FlatColorShader;
     glm::vec4 m_FlatShaderColor = { 0.8, 0.2, 0.4, 1.0f };
+    std::shared_ptr<Muse::GameObject> m_PlayerGameObject;
+
 
     const float m_CameraMoveSpeed = 0.3f;
 

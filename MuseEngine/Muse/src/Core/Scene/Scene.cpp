@@ -253,7 +253,8 @@ namespace Muse
         std::shared_ptr<GameObject> gameObject = AddGameObject();
 
         gameObject->AddComponent<CameraComponent>()->MakeEditorCamera();
-        gameObject->AddComponent<PerspectiveCameraControllerComponent>();
+        //gameObject->AddComponent<PerspectiveCameraControllerComponent>();
+        gameObject->AddComponent<OrthographicCameraControllerComponent>();
 
         return gameObject;
     }

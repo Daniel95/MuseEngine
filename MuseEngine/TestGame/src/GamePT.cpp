@@ -127,7 +127,7 @@ void GamePT::OnRender()
 
     /////////////////
 
-    glm::mat4 newCameraTransform = camera->GetTransform()->GetModelMatrix();
+    glm::mat4 newCameraTransform = camera->GetTransform()->GetWorldModelMatrix();
 
     if(newCameraTransform != cameraTransform)
     {
