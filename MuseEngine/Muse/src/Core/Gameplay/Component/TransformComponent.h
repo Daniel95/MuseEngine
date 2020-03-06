@@ -51,6 +51,8 @@ namespace Muse
 		const glm::vec3& GetLocalScale() const { return m_LocalScale; }
 		void SetLocalScale(const glm::vec3& a_Scale);
 		void SetLocalScale(const glm::vec2& a_Scale);
+		void ScaleLocal(const glm::vec3& a_Scale);
+		void ScaleLocal(const glm::vec2& a_Scale);
 
 		const glm::vec3 & GetLocalRotation() const { return m_LocalRotation; }
 		void SetLocalRotation(const glm::vec3& a_Rotation);
@@ -73,9 +75,9 @@ namespace Muse
 		glm::mat4 CalculateWorldScaleMatrix() const { return glm::scale(GetWorldScale()); }
 		glm::mat4 CalculateWorldModelMatrix() const { return CalculateWorldTranslationMatrix() * CalculateWorldRotationMatrix() * CalculateWorldScaleMatrix(); };
 
-		const glm::mat4& GetWorldTranslationMatrix();
-		const glm::mat4& GetWorldRotationMatrix();
-		const glm::mat4& GetWorldScaleMatrix();
+		//const glm::mat4& GetWorldTranslationMatrix();
+		//const glm::mat4& GetWorldRotationMatrix();
+		//const glm::mat4& GetWorldScaleMatrix();
 		const glm::mat4& GetWorldModelMatrix();
 
 		void SetDirty()
@@ -111,9 +113,9 @@ namespace Muse
 		glm::vec3 m_LocalScale = glm::vec3(1, 1, 1);
 		glm::vec3 m_LocalRotation = glm::vec3(0, 0, 0);
 
-		glm::mat4 m_WorldTranslationMatrix = glm::identity<glm::mat4>();
-		glm::mat4 m_WorldRotationMatrix = glm::identity<glm::mat4>();
-		glm::mat4 m_WorldScaleMatrix = glm::identity<glm::mat4>();
+		//glm::mat4 m_WorldTranslationMatrix = glm::identity<glm::mat4>();
+		//glm::mat4 m_WorldRotationMatrix = glm::identity<glm::mat4>();
+		//glm::mat4 m_WorldScaleMatrix = glm::identity<glm::mat4>();
 		glm::mat4 m_WorldModelMatrix = glm::identity<glm::mat4>();
 
 		std::vector<std::shared_ptr<TransformComponent>> m_Children;

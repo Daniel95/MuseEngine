@@ -95,10 +95,22 @@ namespace Muse
 		//m_DirtyScale = m_DirtyModel = true;
     	
 		SetDirty();
-		m_LocalScale = glm::vec3(a_Scale.x, a_Scale.y, m_LocalScale.z);;
+		m_LocalScale = glm::vec3(a_Scale.x, a_Scale.y, m_LocalScale.z);
     }
 
-    void TransformComponent::SetLocalRotation(const glm::vec3& a_Rotation)
+	void TransformComponent::ScaleLocal(const glm::vec2& a_Scale)
+	{
+		SetDirty();
+		m_LocalScale += glm::vec3(a_Scale.x, a_Scale.y, 0);
+	}
+
+	void TransformComponent::ScaleLocal(const glm::vec3& a_Scale)
+	{
+		SetDirty();
+		m_LocalScale += a_Scale;
+	}
+
+	void TransformComponent::SetLocalRotation(const glm::vec3& a_Rotation)
     {
 		MUSE_PROFILE_FUNCTION();
 

@@ -8,5 +8,7 @@ public:
 
 private:
     float m_MoveSpeed = 0.3f;
+    float m_RotateSpeed = 0.3f;
+    float m_ScaleSpeed = 0.3f;
 
 };
