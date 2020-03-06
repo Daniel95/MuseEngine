@@ -47,8 +47,8 @@ namespace Muse
 	void TopDownBVH::Split(BoundingVolume& parentBoundingVolume, const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents) const
 	{
 		//Start with placing two bounding volumes inside the parent bounding volume, that split the space evenly.
-		glm::vec3 parentBoundingVolumePosition = parentBoundingVolume.boundingVolumeShape.GetTransform()->GetPosition();
-		glm::vec3 parentBoundingVolumeScale = parentBoundingVolume.boundingVolumeShape.GetTransform()->GetScale();
+		glm::vec3 parentBoundingVolumePosition = parentBoundingVolume.boundingVolumeShape.GetTransform()->GetLocalPosition();
+		glm::vec3 parentBoundingVolumeScale = parentBoundingVolume.boundingVolumeShape.GetTransform()->GetLocalScale();
 
 		glm::vec3 box1Position;
 		glm::vec3 box2Position;

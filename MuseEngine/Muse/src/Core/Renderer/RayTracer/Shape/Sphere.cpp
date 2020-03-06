@@ -22,15 +22,15 @@ namespace Muse
 
 	glm::vec3 Sphere::GetNormal(const glm::vec3& a_Point) const
 	{
-		glm::vec3 n = glm::normalize(a_Point - GetTransform()->GetPosition());
+		glm::vec3 n = glm::normalize(a_Point - GetTransform()->GetLocalPosition());
 		return n;
 	}
 
 	void Sphere::GetMinMaxBounds(glm::vec3& a_Min, glm::vec3& a_Max) const
 	{
-        const glm::vec3 halfScale = GetTransform()->GetScale() / 2.f;
-		a_Min = GetTransform()->GetPosition() - halfScale;
-		a_Max = GetTransform()->GetPosition() + halfScale;
+        const glm::vec3 halfScale = GetTransform()->GetLocalScale() / 2.f;
+		a_Min = GetTransform()->GetLocalPosition() - halfScale;
+		a_Max = GetTransform()->GetLocalPosition() + halfScale;
 	}
 
     void Sphere::SetRadius(float a_Radius)

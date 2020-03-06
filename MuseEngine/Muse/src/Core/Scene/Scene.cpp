@@ -94,8 +94,8 @@ namespace Muse
         MUSE_PROFILE_FUNCTION();
 
         std::shared_ptr<GameObject> gameObject = AddGameObject();
-        gameObject->GetTransform()->SetPosition(a_Position);
-        gameObject->GetTransform()->SetScale(a_Size);
+        gameObject->GetTransform()->SetLocalPosition(a_Position);
+        gameObject->GetTransform()->SetLocalScale(a_Size);
         return gameObject;
     }
 
@@ -104,8 +104,8 @@ namespace Muse
         MUSE_PROFILE_FUNCTION();
 
         std::shared_ptr<GameObject> gameObject = AddGameObject();
-        gameObject->GetTransform()->SetPosition(a_Position);
-        gameObject->GetTransform()->SetScale(a_Size);
+        gameObject->GetTransform()->SetLocalPosition(a_Position);
+        gameObject->GetTransform()->SetLocalScale(a_Size);
         return gameObject;
     }
 

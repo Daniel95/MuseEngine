@@ -33,7 +33,7 @@ namespace Muse
 
     const glm::mat4& CameraComponent::GetViewMatrix() const
     {
-        return GetGameObject()->GetTransform()->GetLocalModelMatrix();
+        return GetGameObject()->GetTransform()->GetWorldModelMatrix();
     }
 
     void CameraComponent::RecalculateViewMatrix()

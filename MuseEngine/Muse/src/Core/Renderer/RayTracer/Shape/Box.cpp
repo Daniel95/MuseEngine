@@ -135,8 +135,8 @@ bool intersection( box b, ray r )
 	void Box::GetMinMaxBounds(glm::vec3& a_Min, glm::vec3& a_Max) const
 	{
 		glm::vec3 worldExtends = GetTransform()->TransformVector(glm::vec3(0.5f, 0.5f, 0.5f));
-		glm::vec3 shapeMin = GetTransform()->GetPosition() - worldExtends;
-		glm::vec3 shapeMax = GetTransform()->GetPosition() + worldExtends;
+		glm::vec3 shapeMin = GetTransform()->GetLocalPosition() - worldExtends;
+		glm::vec3 shapeMax = GetTransform()->GetLocalPosition() + worldExtends;
 
 		a_Min.x = std::min(shapeMin.x, shapeMax.x);
 		a_Min.y = std::min(shapeMin.y, shapeMax.y);
@@ -158,8 +158,8 @@ bool intersection( box b, ray r )
 			bounds[0].z + range.z * Random()
 		};
 
-		glm::vec3 position = GetTransform()->GetPosition();
-		glm::vec3 scale = GetTransform()->GetScale();
+		glm::vec3 position = GetTransform()->GetLocalPosition();
+		glm::vec3 scale = GetTransform()->GetLocalScale();
 		glm::vec3 result = randomPoint * scale + position;
 		return result;
 

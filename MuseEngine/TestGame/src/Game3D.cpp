@@ -92,7 +92,7 @@ void Game3D::OnStart()
             layout);
         renderComponent->SetShader(m_FlatColorShader);
 
-        gameObject->GetTransform()->SetPosition({ 1.1f, 0, 0 });
+        gameObject->GetTransform()->SetLocalPosition({ 1.1f, 0, 0 });
     }
 
     /////////////////////////////////////////////////////////////////
@@ -125,7 +125,7 @@ void Game3D::OnStart()
         renderComponent->SetShader(vertexColorShader);
 
 
-        gameObject->GetTransform()->SetPosition({ -1, 0, 0 });
+        gameObject->GetTransform()->SetLocalPosition({ -1, 0, 0 });
     }
 
     /////////////////////////////////////////////////////////////////
@@ -162,7 +162,7 @@ void Game3D::OnStart()
         textureShader->Bind();
         textureShader->SetInt("u_Texture", 0);
 
-        m_PlayerGameObject->GetTransform()->SetPosition({ 0, 0, 1 });
+        m_PlayerGameObject->GetTransform()->SetLocalPosition({ 0, 0, 1 });
     }
 
     /////////////////////////////////////////////////////////////////
@@ -185,7 +185,11 @@ void Game3D::OnStart()
         };
 
         auto gameObject = scene->AddGameObject();
-        gameObject->GetTransform()->SetParent(m_PlayerGameObject->GetTransform());
+        m_PlayerGameObject->GetTransform()->AddChild(gameObject->GetTransform());
+
+        glm::vec3 position = gameObject->GetTransform()->GetWorldPosition();
+        glm::vec3 rotation = gameObject->GetTransform()->GetWorldRotation();
+        glm::vec3 scale = gameObject->GetTransform()->GetWorldScale();
 
         auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
 
@@ -200,9 +204,8 @@ void Game3D::OnStart()
         textureShader->Bind();
         textureShader->SetInt("u_Texture", 0);
 
-        gameObject->GetTransform()->SetPosition({ 0.5f, 0.5f, 1.f });
-        gameObject->GetTransform()->SetScale({ 0.5f, 0.5f, 0.5f });
-
+        gameObject->GetTransform()->SetLocalPosition({ 1.f, 1.0f, 0.f });
+        //gameObject->GetTransform()->SetLocalScale({ 0.5f, 0.5f, 0.5f });
     }
 }
 
@@ -229,6 +232,13 @@ void Game3D::OnRender()
             {
                 meshComponent->GetTexture()->Bind();
             }
+
+            if(gameObject->GetTransform()->HasParent())
+            {
+                glm::mat4 model = gameObject->GetTransform()->GetWorldModelMatrix();
+                glm::mat4 test = gameObject->GetTransform()->GetWorldModelMatrix();
+            }
+
             Muse::Renderer::Submit(meshComponent->GetShader(), meshComponent->GetVA(), gameObject->GetTransform()->GetWorldModelMatrix());
         }
     }

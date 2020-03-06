@@ -27,8 +27,8 @@ namespace Muse
 	void Plane::GetMinMaxBounds(glm::vec3& a_Min, glm::vec3& a_Max) const
 	{
 		glm::vec3 worldExtends = GetTransform()->TransformVector(glm::vec3(0.5f, 0.5f, 0.5f));
-		glm::vec3 shapeMin = GetTransform()->GetPosition() - worldExtends;
-		glm::vec3 shapeMax = GetTransform()->GetPosition() + worldExtends;
+		glm::vec3 shapeMin = GetTransform()->GetLocalPosition() - worldExtends;
+		glm::vec3 shapeMax = GetTransform()->GetLocalPosition() + worldExtends;
 
 		a_Min.x = std::min(shapeMin.x, shapeMax.x);
 		a_Min.y = std::min(shapeMin.y, shapeMax.y);

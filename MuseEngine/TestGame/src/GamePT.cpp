@@ -409,7 +409,7 @@ glm::vec3 GamePT::SampleNEE(const Muse::Ray& a_Ray, bool a_LastSpecular)
     int randomLightIndex = Muse::Random() * (m_LightsRenderComponents.size() - 1);
     std::shared_ptr<Muse::RenderComponent> lightRenderComponent = m_LightsRenderComponents[randomLightIndex];
     glm::vec3 lightPosition = lightRenderComponent->GetShape()->GetRandomPointInShape();
-    glm::vec3 scale = lightRenderComponent->GetTransform()->GetScale();
+    glm::vec3 scale = lightRenderComponent->GetTransform()->GetLocalScale();
 
     //NEE
     float area = scale.x * scale.z;
@@ -490,7 +490,7 @@ glm::vec3 GamePT::SampleNEEIS(const Muse::Ray& a_Ray, bool a_LastSpecular)
     int randomLightIndex = Muse::Random() * (m_LightsRenderComponents.size() - 1);
     std::shared_ptr<Muse::RenderComponent> lightRenderComponent = m_LightsRenderComponents[randomLightIndex];
     glm::vec3 lightPosition = lightRenderComponent->GetShape()->GetRandomPointInShape();
-    glm::vec3 scale = lightRenderComponent->GetTransform()->GetScale();
+    glm::vec3 scale = lightRenderComponent->GetTransform()->GetLocalScale();
 
     //NEE
     float area = scale.x * scale.z;

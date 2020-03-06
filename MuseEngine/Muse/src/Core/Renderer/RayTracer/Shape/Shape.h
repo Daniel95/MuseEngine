@@ -19,7 +19,7 @@ namespace Muse
 		virtual void OnInit() override;
 
 	protected:
-		const glm::vec3& GetPosition() const { return m_TransformComponent->GetPosition(); }
+		const glm::vec3& GetPosition() const { return m_TransformComponent->GetLocalPosition(); }
 
 	private:
 		std::shared_ptr<TransformComponent> m_TransformComponent;

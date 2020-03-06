@@ -49,54 +49,54 @@ namespace Muse
         const float moveSpeed = m_BaseMoveSpeed * a_DeltaTime;
         const float rotateSpeed = m_BaseMoveSpeed * a_DeltaTime;
 
-        //Move
+        //Translate
 
         if (Input::GetKeyDown(MUSE_KEY_A))
         {
-            GetTransform()->Move(GetTransform()->GetRight() * -moveSpeed);
+            GetTransform()->Translate(GetTransform()->GetRight() * -moveSpeed);
         }
         else if (Input::GetKeyDown(MUSE_KEY_D))
         {
-            GetTransform()->Move(GetTransform()->GetRight() * moveSpeed);
+            GetTransform()->Translate(GetTransform()->GetRight() * moveSpeed);
         }
 
         if (Input::GetKeyDown(MUSE_KEY_S))
         {
-            GetTransform()->Move(GetTransform()->GetForward() * -moveSpeed);
+            GetTransform()->Translate(GetTransform()->GetForward() * -moveSpeed);
         }
         else if (Input::GetKeyDown(MUSE_KEY_W))
         {
-            GetTransform()->Move(GetTransform()->GetForward() * moveSpeed);
+            GetTransform()->Translate(GetTransform()->GetForward() * moveSpeed);
         }
 
         if (Input::GetKeyDown(MUSE_KEY_LEFT_SHIFT))
         {
-            GetTransform()->Move(GetTransform()->GetUp() * -moveSpeed);
+            GetTransform()->Translate(GetTransform()->GetUp() * -moveSpeed);
         }
         else if (Input::GetKeyDown(MUSE_KEY_SPACE))
         {
-            GetTransform()->Move(GetTransform()->GetUp() * moveSpeed);
+            GetTransform()->Translate(GetTransform()->GetUp() * moveSpeed);
         }
 
-        //Rotate
+        //RotateLocal
 
         if (Input::GetKeyDown(MUSE_KEY_LEFT))
         {
-            GetTransform()->Rotate(glm::vec3(0.0f, -rotateSpeed, 0.0f));
+            GetTransform()->RotateLocal(glm::vec3(0.0f, -rotateSpeed, 0.0f));
         }
         else if (Input::GetKeyDown(MUSE_KEY_RIGHT))
         {
-            GetTransform()->Rotate(glm::vec3(0.0f, rotateSpeed, 0.0f));
+            GetTransform()->RotateLocal(glm::vec3(0.0f, rotateSpeed, 0.0f));
         }
 
         /*
         if (Input::GetKeyDown(MUSE_KEY_DOWN))
         {
-            GetTransform()->Rotate(glm::vec3(-rotateSpeed, 0.0f, 0));
+            GetTransform()->RotateLocal(glm::vec3(-rotateSpeed, 0.0f, 0));
         }
         else if (Input::GetKeyDown(MUSE_KEY_UP))
         {
-            GetTransform()->Rotate(glm::vec3(rotateSpeed, 0.0f, 0));
+            GetTransform()->RotateLocal(glm::vec3(rotateSpeed, 0.0f, 0));
         }
         */
     }

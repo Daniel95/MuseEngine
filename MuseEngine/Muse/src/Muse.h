@@ -47,7 +47,7 @@
 //Todo:
 /////Engine:
 //Fix Crash in Game2D
-//Move Rasterizer to its own folder in Renderer
+//Translate Rasterizer to its own folder in Renderer
 //Fix warnings
 //Model loading
 //GLM make vec's and mat's conversion to string

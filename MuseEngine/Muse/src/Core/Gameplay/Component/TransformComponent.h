@@ -18,7 +18,7 @@ namespace Muse
 {
 	class GameObject;
 
-	class TransformComponent : public Component, std::enable_shared_from_this<TransformComponent>
+	class TransformComponent : public Component, public std::enable_shared_from_this<TransformComponent>
 	{
 		RTTR_ENABLE(Component)
 		RTTR_REGISTRATION_FRIEND
@@ -27,47 +27,65 @@ namespace Muse
 		TransformComponent() = default;
 		virtual ~TransformComponent() = default;
 
-		const glm::vec3& GetPosition() const { return m_LocalPosition; }
-		void SetPosition(const glm::vec3& a_Position);
-		void SetPosition(const glm::vec2& a_Position);
-		void Move(const glm::vec3& a_Movement);
-		void Move(const glm::vec2& a_Movement);
+		bool HasParent() const { return m_Parent != nullptr; };
+		const std::shared_ptr<TransformComponent>& GetParent() const { return m_Parent; };
 
-		const glm::vec3& GetScale() const { return m_LocalScale; }
-		void SetScale(const glm::vec3& a_Scale);
-		void SetScale(const glm::vec2& a_Scale);
+		void AddChild(const std::shared_ptr<TransformComponent>& a_ChildTransformComponent);
+		void RemoveChild(const std::shared_ptr<TransformComponent>& a_ChildTransformComponent);
 
-		const glm::vec3 & GetRotation() const { return m_LocalRotation; }
-		void SetRotation(const glm::vec3& a_Rotation);
-		void Rotate(const glm::vec3& a_Rotation);
+		glm::vec3 GetWorldPosition() const;
+		glm::vec3 GetWorldScale() const;
+		glm::vec3 GetWorldRotation() const;
 
-		const glm::quat & GetRotationQuat() const { return m_RotationQuaternion; }
-		void SetRotationQuat(const glm::quat& a_Rotation);
+		//void GetWorldPosition();
+		//void GetWorldScale();
+		//void GetWorldRotation();
+
+		//Local
+		const glm::vec3& GetLocalPosition() const { return m_LocalPosition; }
+		void SetLocalPosition(const glm::vec3& a_Position);
+		void SetLocalPosition(const glm::vec2& a_Position);
+		void Translate(const glm::vec3& a_Movement);
+		void Translate(const glm::vec2& a_Movement);
+
+		const glm::vec3& GetLocalScale() const { return m_LocalScale; }
+		void SetLocalScale(const glm::vec3& a_Scale);
+		void SetLocalScale(const glm::vec2& a_Scale);
+
+		const glm::vec3 & GetLocalRotation() const { return m_LocalRotation; }
+		void SetLocalRotation(const glm::vec3& a_Rotation);
+		void RotateLocal(const glm::vec3& a_Rotation);
 
 		glm::vec3 InverseTransformPoint(const glm::vec3& a_WorldPoint); //World to local point 
 		glm::vec3 InverseTransformVector(const glm::vec3& a_WorldVector); //World to local vector
 		glm::vec3 TransformPoint(const glm::vec3& a_LocalPoint); //Local to world point
 		glm::vec3 TransformVector(const glm::vec3& a_LocalVector); //Local to world vector
 
-		glm::mat4 InverseTransformMatrix(const glm::mat4& a_WorldMatrix) { return glm::inverse(GetWorldModelMatrix() * a_WorldMatrix); } //World to local point 
-		glm::mat4 TransformMatrix(const glm::mat4& a_LocalMatrix) { return GetWorldModelMatrix() * a_LocalMatrix;  }  //Local to world point
+		//glm::mat4 InverseTransformMatrix(const glm::mat4& a_WorldMatrix) { return glm::inverse(GetWorldModelMatrix() * a_WorldMatrix); } //World to local point 
+		//glm::mat4 TransformMatrix(const glm::mat4& a_LocalMatrix) { return GetWorldModelMatrix() * a_LocalMatrix;  }  //Local to world point
 
 		glm::vec3 GetForward() { return TransformVector(glm::vec3(0, 0, 1)); }
 		glm::vec3 GetUp() { return TransformVector(glm::vec3(0, 1, 0));; }
 		glm::vec3 GetRight() { return TransformVector(glm::vec3(1, 0, 0)); }
 
-		const glm::mat4& GetLocalTranslationMatrix();
-		const glm::mat4& GetLocalRotationMatrix();
-		const glm::mat4& GetLocalScaleMatrix();
-		const glm::mat4& GetLocalModelMatrix();
+		glm::mat4 CalculateWorldTranslationMatrix() const { return glm::translate(GetWorldPosition()); }
+		glm::mat4 CalculateWorldRotationMatrix() const;
+		glm::mat4 CalculateWorldScaleMatrix() const { return glm::scale(GetWorldScale()); }
+		glm::mat4 CalculateWorldModelMatrix() const { return CalculateWorldTranslationMatrix() * CalculateWorldRotationMatrix() * CalculateWorldScaleMatrix(); };
 
-		glm::mat4 GetWorldTranslationMatrix();
-		glm::mat4 GetWorldRotationMatrix();
-		glm::mat4 GetWorldScaleMatrix();
-		glm::mat4 GetWorldModelMatrix();
+		const glm::mat4& GetWorldTranslationMatrix();
+		const glm::mat4& GetWorldRotationMatrix();
+		const glm::mat4& GetWorldScaleMatrix();
+		const glm::mat4& GetWorldModelMatrix();
 
-		void AddChild(const std::shared_ptr<TransformComponent>& a_ChildTransformComponent);
-		void SetParent(const std::shared_ptr<TransformComponent>& a_ParentTransformComponent);
+		void SetDirty()
+		{
+			m_Dirty = true;
+            for (const auto& transformComponent : m_Children)
+            {
+				transformComponent->SetDirty();
+            }
+		}
 
 		template <class Archive>
 		void serialize(Archive& ar)
@@ -76,29 +94,32 @@ namespace Muse
 			ar(
 				m_LocalPosition,
 				m_LocalScale,
-				m_LocalRotation,
-				m_RotationQuaternion
+				m_LocalRotation
 			);
 		}
 
 	private:
+		/*
 		bool m_DirtyPosition = true;
 		bool m_DirtyRotation = true;
 		bool m_DirtyScale = true;
 		bool m_DirtyModel = true;
+		*/
+		bool m_Dirty = true;
 
 		glm::vec3 m_LocalPosition = glm::vec3(0, 0, 0);
 		glm::vec3 m_LocalScale = glm::vec3(1, 1, 1);
 		glm::vec3 m_LocalRotation = glm::vec3(0, 0, 0);
-		glm::quat m_RotationQuaternion = glm::identity<glm::quat>();
 
-		glm::mat4 m_LocalTranslationMatrix = glm::identity<glm::mat4>();
-		glm::mat4 m_LocalRotationMatrix = glm::identity<glm::mat4>();
-		glm::mat4 m_LocalScaleMatrix = glm::identity<glm::mat4>();
-		glm::mat4 m_LocalModelMatrix = glm::identity<glm::mat4>();
+		glm::mat4 m_WorldTranslationMatrix = glm::identity<glm::mat4>();
+		glm::mat4 m_WorldRotationMatrix = glm::identity<glm::mat4>();
+		glm::mat4 m_WorldScaleMatrix = glm::identity<glm::mat4>();
+		glm::mat4 m_WorldModelMatrix = glm::identity<glm::mat4>();
 
 		std::vector<std::shared_ptr<TransformComponent>> m_Children;
 		std::shared_ptr<TransformComponent> m_Parent = nullptr;
+
+		void SetParent(const std::shared_ptr<TransformComponent>& a_ParentTransformComponent);
 	};
 }
 

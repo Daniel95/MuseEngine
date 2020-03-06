@@ -34,14 +34,14 @@ void Game2D::OnStart()
     {
         auto gameObject = scene->AddGameObject();
         auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
-        gameObject->GetTransform()->SetPosition({ 1.1f, 0, 0 });
+        gameObject->GetTransform()->SetLocalPosition({ 1.1f, 0, 0 });
     }
 
     {
         auto gameObject = scene->AddGameObject();
         auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
-        gameObject->GetTransform()->SetPosition({ -1, -1, 0 });
-        gameObject->GetTransform()->SetScale({ 2, 1 });
+        gameObject->GetTransform()->SetLocalPosition({ -1, -1, 0 });
+        gameObject->GetTransform()->SetLocalScale({ 2, 1 });
     }
 
     m_Texture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");

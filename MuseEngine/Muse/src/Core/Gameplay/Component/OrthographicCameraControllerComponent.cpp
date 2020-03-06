@@ -50,20 +50,20 @@ namespace Muse
 
         if (Input::GetKeyDown(MUSE_KEY_A))
         {
-            GetTransform()->Move(glm::vec2(-moveSpeed, 0.0f));
+            GetTransform()->Translate(glm::vec2(-moveSpeed, 0.0f));
         }
         else if (Input::GetKeyDown(MUSE_KEY_D))
         {
-            GetTransform()->Move(glm::vec2(moveSpeed, 0.0f));
+            GetTransform()->Translate(glm::vec2(moveSpeed, 0.0f));
         }
 
         if (Input::GetKeyDown(MUSE_KEY_S))
         {
-            GetTransform()->Move(glm::vec2(0.0f, -moveSpeed));
+            GetTransform()->Translate(glm::vec2(0.0f, -moveSpeed));
         }
         else if (Input::GetKeyDown(MUSE_KEY_W))
         {
-            GetTransform()->Move(glm::vec2(0.0f, moveSpeed));
+            GetTransform()->Translate(glm::vec2(0.0f, moveSpeed));
         }
     }
 
