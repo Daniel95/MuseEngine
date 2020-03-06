@@ -18,16 +18,6 @@ namespace Muse
 		return m_Parent->TransformPoint(m_LocalPosition);
     }
 
-	glm::vec3 TransformComponent::GetWorldRotation() const
-	{
-		if (!HasParent())
-		{
-			return m_LocalRotation;
-		}
-
-		return m_Parent->TransformVector(m_LocalRotation);
-	}
-
 	glm::vec3 TransformComponent::GetWorldScale() const
 	{
 		if (!HasParent())
@@ -130,49 +120,6 @@ namespace Muse
 		m_LocalRotation += a_Rotation;
     }
 
-	/*
-	const glm::mat4& TransformComponent::GetWorldTranslationMatrix()
-	{
-		MUSE_PROFILE_FUNCTION();
-
-		if (m_DirtyPosition)
-		{
-			m_WorldTranslationMatrix = CalculateWorldTranslationMatrix();
-			m_DirtyPosition = false;
-		}
-
-		return m_WorldTranslationMatrix;
-	}
-
-	const glm::mat4& TransformComponent::GetWorldRotationMatrix()
-	{
-		MUSE_PROFILE_FUNCTION();
-
-		if (m_DirtyRotation)
-		{
-			m_WorldRotationMatrix = CalculateWorldRotationMatrix();
-
-			m_DirtyRotation = false;
-		}
-
-		return m_WorldRotationMatrix;
-	}
-
-	const glm::mat4& TransformComponent::GetWorldScaleMatrix()
-	{
-		MUSE_PROFILE_FUNCTION();
-
-		if (m_DirtyScale)
-		{
-			m_WorldScaleMatrix = CalculateWorldScaleMatrix();
-
-			m_DirtyScale = false;
-		}
-
-		return m_WorldScaleMatrix;
-	}
-	*/
-
 	const glm::mat4& TransformComponent::GetWorldModelMatrix()
 	{
 		MUSE_PROFILE_FUNCTION();
@@ -188,13 +135,16 @@ namespace Muse
 
     glm::mat4 TransformComponent::CalculateWorldRotationMatrix() const
     {
-        const glm::vec3 worldRotation = GetWorldRotation();
+		glm::mat4 localRotationMatrix = glm::rotate(m_LocalRotation.x, glm::vec3(1, 0, 0));
+		localRotationMatrix = glm::rotate(localRotationMatrix, m_LocalRotation.y, glm::vec3(0, 1, 0));
+		localRotationMatrix = glm::rotate(localRotationMatrix, m_LocalRotation.z, glm::vec3(0, 0, 1));
 
-		glm::mat4 worldRotationMatrix = glm::rotate(worldRotation.x, glm::vec3(1, 0, 0));
-		worldRotationMatrix = glm::rotate(m_WorldRotationMatrix, worldRotation.y, glm::vec3(0, 1, 0));
-		worldRotationMatrix = glm::rotate(m_WorldRotationMatrix, worldRotation.z, glm::vec3(0, 0, 1));
+		if (!HasParent())
+		{
+			return localRotationMatrix;
+		}
 
-		return worldRotationMatrix;
+		return m_Parent->CalculateWorldRotationMatrix() * localRotationMatrix;
     }
 
     void TransformComponent::AddChild(const std::shared_ptr<TransformComponent>& a_ChildTransformComponent)

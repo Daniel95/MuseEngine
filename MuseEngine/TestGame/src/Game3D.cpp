@@ -187,10 +187,6 @@ void Game3D::OnStart()
         auto gameObject = scene->AddGameObject();
         m_PlayerGameObject->GetTransform()->AddChild(gameObject->GetTransform());
 
-        glm::vec3 position = gameObject->GetTransform()->GetWorldPosition();
-        glm::vec3 rotation = gameObject->GetTransform()->GetWorldRotation();
-        glm::vec3 scale = gameObject->GetTransform()->GetWorldScale();
-
         auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
 
         renderComponent->SetMesh(vertices,
