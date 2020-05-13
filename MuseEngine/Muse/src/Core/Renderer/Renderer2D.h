@@ -48,7 +48,8 @@ namespace Muse
             float TilingFactor = 1;
         };
 
-        static void DrawQuad(const QuadPropertiesTransform& a_QuadPropertiesTransform);
-        static void DrawQuad(const QuadProperties& a_QuadProperties);
+        //static void DrawQuad(const QuadPropertiesTransform& a_QuadPropertiesTransform);
+        //static void DrawQuad(const QuadProperties& a_QuadProperties);
+        static void DrawQuad(const glm::vec3& a_Position, const glm::vec2& a_Size, const glm::vec4& a_Color);
     };
 }

@@ -37,11 +37,13 @@ namespace Muse
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
 
-    void OpenGLRendererAPI::DrawIndexed(const std::shared_ptr<VertexArray>& a_VertexArray)
+    void OpenGLRendererAPI::DrawIndexed(const std::shared_ptr<VertexArray>& a_VertexArray, uint32_t a_IndexCount)
     {
         MUSE_PROFILE_FUNCTION();
 
-        glDrawElements(GL_TRIANGLES, a_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+        uint32_t indexCount = a_IndexCount == 0 ? a_VertexArray->GetIndexBuffer()->GetCount() : a_IndexCount;
+
+        glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);
         //glBindTexture(GL_TEXTURE_2D, 0);
     }
 }

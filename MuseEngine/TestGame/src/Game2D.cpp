@@ -58,6 +58,34 @@ void Game2D::OnStart()
 void Game2D::OnRender()
 {
     //Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+    //Muse::RenderCommand::SetClearColor({ 0.9f, 0.9f, 0.9f, 1 });
+    Muse::RenderCommand::Clear();
+
+    Muse::Renderer2D::BeginScene(*Muse::CameraComponent::GetMain());
+
+    //Muse::Renderer2D::DrawQuad(quadProperties);
+
+    const Muse::Renderer2D::QuadProperties quadProperties(
+        { 0, 0, 0.1f },
+        glm::vec2(1),
+        45,
+        { 0.5f, 0.5f, 0.5f, 0.5f }
+        //m_Texture
+    );
+
+    Muse::Renderer2D::DrawQuad(
+        { 0, 0, 0.1f },
+        glm::vec2(1),
+        { 0.5f, 0.5f, 0.5f, 0.5f }
+    );
+
+    Muse::Renderer2D::EndScene();
+}
+
+/*
+void Game2D::OnRender()
+{
+    //Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
     Muse::RenderCommand::SetClearColor({ 0.9f, 0.9f, 0.9f, 1 });
     Muse::RenderCommand::Clear();
 
@@ -89,6 +117,7 @@ void Game2D::OnRender()
 
 	Muse::Renderer2D::EndScene();
 }
+*/
 
 void Game2D::OnImGuiRender()
 {

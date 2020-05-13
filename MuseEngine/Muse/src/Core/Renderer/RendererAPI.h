@@ -21,7 +21,7 @@ namespace Muse
         virtual void SetClearColor(const glm::vec4& a_Color) = 0;
         virtual void Clear() = 0;
 
-        virtual void DrawIndexed(const std::shared_ptr<VertexArray>& a_VertexArray) = 0;
+        virtual void DrawIndexed(const std::shared_ptr<VertexArray>& a_VertexArray, uint32_t a_IndexCount = 0) = 0;
 
         static API GetAPI() { return s_API; }
 

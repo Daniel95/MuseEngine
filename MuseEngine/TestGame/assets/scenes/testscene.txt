@@ -33,12 +33,6 @@
                                             "value0": 0.0,
                                             "value1": 0.0,
                                             "value2": 0.0
-                                        },
-                                        "value3": {
-                                            "value0": 0.0,
-                                            "value1": 0.0,
-                                            "value2": 0.0,
-                                            "value3": 1.0
                                         }
                                     }
                                 }
@@ -183,12 +177,6 @@
                                             "value0": 0.0,
                                             "value1": 0.0,
                                             "value2": 0.0
-                                        },
-                                        "value3": {
-                                            "value0": 0.0,
-                                            "value1": 0.0,
-                                            "value2": 0.0,
-                                            "value3": 1.0
                                         }
                                     }
                                 }
@@ -238,12 +226,6 @@
                                             "value0": 0.0,
                                             "value1": 0.0,
                                             "value2": 0.0
-                                        },
-                                        "value3": {
-                                            "value0": 0.0,
-                                            "value1": 0.0,
-                                            "value2": 0.0,
-                                            "value3": 1.0
                                         }
                                     }
                                 }
@@ -292,12 +274,6 @@
                                             "value0": 0.0,
                                             "value1": 0.0,
                                             "value2": 0.0
-                                        },
-                                        "value3": {
-                                            "value0": 0.0,
-                                            "value1": 0.0,
-                                            "value2": 0.0,
-                                            "value3": 1.0
                                         }
                                     }
                                 }
