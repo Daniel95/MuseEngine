@@ -15,6 +15,7 @@ namespace Muse
 
         static void BeginScene(const CameraComponent& a_OrthographicCamera);
         static void EndScene();
+        static void Flush();
 
         struct QuadPropertiesTransform
         {
