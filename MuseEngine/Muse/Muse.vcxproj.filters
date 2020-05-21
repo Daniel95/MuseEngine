@@ -1409,6 +1409,7 @@
     <ClInclude Include="src\Core\Renderer\RayTracer\RayHitData.h" />
     <ClInclude Include="src\Core\Renderer\RayTracer\RendererPT.h" />
     <ClInclude Include="src\Core\Renderer\RayTracer\RendererRT.h" />
+    <ClInclude Include="src\Core\Renderer\Renderer2DOld.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1585,5 +1586,6 @@
     <ClCompile Include="src\Core\Renderer\RayTracer\RendererPT.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracer\RendererRT.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracer\GetColorParameter.cpp" />
+    <ClCompile Include="src\Core\Renderer\Renderer2DOld.cpp" />
   </ItemGroup>
 </Project>

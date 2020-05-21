@@ -7,7 +7,7 @@ namespace Muse
     class Texture;
     class CameraComponent;
 
-    class Renderer2D
+    class Renderer2DOld
     {
     public:
         static void Init();
@@ -19,17 +19,11 @@ namespace Muse
         struct QuadPropertiesTransform
         {
             QuadPropertiesTransform(const glm::mat4& a_Transform, const glm::vec4& a_Color)
-                : Transform(a_Transform), Color(a_Color)
-            {
-            }
+            : Transform(a_Transform), Color(a_Color) {}
             QuadPropertiesTransform(const glm::mat4& a_Transform, std::shared_ptr<Texture> a_Texture, float a_TilingFactor = 1)
-                : Transform(a_Transform), Texture(a_Texture), TilingFactor(a_TilingFactor)
-            {
-            }
+            : Transform(a_Transform), Texture(a_Texture), TilingFactor(a_TilingFactor) {}
             QuadPropertiesTransform(const glm::mat4& a_Transform, const glm::vec4& a_TintColor, std::shared_ptr<Texture> a_Texture, float a_TilingFactor = 1)
-                : Transform(a_Transform), Color(a_TintColor), Texture(a_Texture), TilingFactor(a_TilingFactor)
-            {
-            }
+                : Transform(a_Transform), Color(a_TintColor), Texture(a_Texture), TilingFactor(a_TilingFactor) { }
 
             glm::mat4 Transform = glm::mat4(1);
             glm::vec4 Color = glm::vec4(1);
@@ -40,17 +34,11 @@ namespace Muse
         struct QuadProperties
         {
             QuadProperties(const glm::vec3& a_Position, const glm::vec2& a_Size, float a_Rotation, const glm::vec4& a_Color)
-                : Position(a_Position), Size(a_Size), Rotation(a_Rotation), Color(a_Color)
-            {
-            }
+                : Position(a_Position), Size(a_Size), Rotation(a_Rotation), Color(a_Color) { }
             QuadProperties(const glm::vec3& a_Position, const glm::vec2& a_Size, float a_Rotation, std::shared_ptr<Texture> a_Texture, float TilingFactor = 1)
-                : Position(a_Position), Size(a_Size), Rotation(a_Rotation), Texture(a_Texture), TilingFactor(TilingFactor)
-            {
-            }
+                : Position(a_Position), Size(a_Size), Rotation(a_Rotation), Texture(a_Texture), TilingFactor(TilingFactor) { }
             QuadProperties(const glm::vec3& a_Position, const glm::vec2& a_Size, float a_Rotation, const glm::vec4& a_TintColor, std::shared_ptr<Texture> a_Texture, float TilingFactor = 1)
-                : Position(a_Position), Size(a_Size), Rotation(a_Rotation), Color(a_TintColor), Texture(a_Texture), TilingFactor(TilingFactor)
-            {
-            }
+                : Position(a_Position), Size(a_Size), Rotation(a_Rotation), Color(a_TintColor), Texture(a_Texture), TilingFactor(TilingFactor) { }
 
             glm::vec3 Position = glm::vec3(0);
             glm::vec2 Size = glm::vec2(1);

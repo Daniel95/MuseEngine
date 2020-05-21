@@ -73,13 +73,13 @@ void Game2D::OnRender()
         //m_Texture
     );
 
-    /*
     Muse::Renderer2D::DrawQuad(
-        { 1.0f, 0.0f, 0 },
+        { 0.0f, 0.0f, 0 },
         { 0.5f, 0.5f },
         { 0.0f, 1.0f, 0.0f, 1.0f }
     );
 
+    /*
     Muse::Renderer2D::DrawQuad(
         { 0, 1, 0 },
         glm::vec2(1),

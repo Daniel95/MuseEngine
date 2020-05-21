@@ -1,5 +1,5 @@
 ﻿#include "MusePCH.h"
-#include "Renderer2D.h"
+#include "Renderer2DOld.h"
 
 #include "Core/Gameplay/Component/CameraComponent.h"
 #include "VertexArray.h"
@@ -20,18 +20,18 @@ namespace Muse
     };
 
     static Renderer2DStorage s_Data;
-
-    void Renderer2D::Init()
+    
+    void Renderer2DOld::Init()
     {
         MUSE_PROFILE_FUNCTION();
 
         s_Data.QuadVertexArray = Muse::VertexArray::Create();
 
         float quadVertices[9 * 4] = {
-            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-             0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
-             0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
-            -0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f
+            -0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+             0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f,
+             0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+            -0.5f,  0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f
         };
 
         std::shared_ptr<VertexBuffer> squareVB = VertexBuffer::Create(quadVertices, sizeof(quadVertices));
@@ -39,32 +39,24 @@ namespace Muse
             { ShaderDataType::Float3, "a_Position" },
             { ShaderDataType::Float4, "a_Color" },
             { ShaderDataType::Float2, "a_TexCoord" }
-            });
+        });
         s_Data.QuadVertexArray->AddVertexBuffer(squareVB);
 
         uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
         std::shared_ptr<IndexBuffer> quadIB = IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
         s_Data.QuadVertexArray->SetIndexBuffer(quadIB);
 
-        /*
-        s_Data.WhiteTexture = Texture::Create(1, 1);
-        ResourceManager::Add("WhiteTexture", s_Data.WhiteTexture);
-
-        uint32_t whiteTextureData = 0xffffffff;
-        s_Data.WhiteTexture->SetData(&whiteTextureData, sizeof(uint32_t));
-        */
-
         s_Data.ColoredTextureShader = ResourceManager::Load<Shader>("assets/shaders/ColoredTexture.glsl");
         s_Data.ColoredTextureShader->Bind();
         //s_Data.ColoredTextureShader->SetInt("u_Texture", 0);
     }
 
-    void Renderer2D::ShutDown()
+    void Renderer2DOld::ShutDown()
     {
         MUSE_PROFILE_FUNCTION();
     }
 
-    void Renderer2D::BeginScene(const CameraComponent& a_OrthographicCamera)
+    void Renderer2DOld::BeginScene(const CameraComponent& a_OrthographicCamera)
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -72,12 +64,12 @@ namespace Muse
         s_Data.ColoredTextureShader->SetMat4("u_ViewProjection", a_OrthographicCamera.GetViewProjectionMatrix());
     }
 
-    void Renderer2D::EndScene()
+    void Renderer2DOld::EndScene()
     {
         MUSE_PROFILE_FUNCTION();
     }
 
-    void Renderer2D::DrawQuad(const glm::vec3& a_Position, const glm::vec2& a_Size, const glm::vec4& a_Color)
+    void Renderer2DOld::DrawQuad(const glm::vec3& a_Position, const glm::vec2& a_Size, const glm::vec4& a_Color)
     {
         MUSE_PROFILE_FUNCTION();
 
