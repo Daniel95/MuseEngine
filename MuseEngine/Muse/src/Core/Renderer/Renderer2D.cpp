@@ -12,11 +12,22 @@
 
 namespace Muse
 {
+    struct QuadVertex
+    {
+        glm::vec3 Position;
+        glm::vec3 Color;
+        glm::vec3 TextureCoordinate;
+    };
+
     struct Renderer2DStorage
     {
         std::shared_ptr<VertexArray> QuadVertexArray;
+        std::shared_ptr<VertexBuffer> QuadVertexBuffer;
         std::shared_ptr<Shader> ColoredTextureShader;
         std::shared_ptr<Texture> WhiteTexture;
+
+        QuadVertex* QuadVertexPtr = nullptr;
+        QuadVertex* QuadVertexBase = nullptr;
     };
 
     static Renderer2DStorage s_Data;
@@ -27,23 +38,32 @@ namespace Muse
 
         s_Data.QuadVertexArray = Muse::VertexArray::Create();
 
-        float quadVertices[9 * 4] = {
-            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-             0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
-             0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
-            -0.5f,  0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f
+        float quadVertices[] = {
+            -1.5f, -0.5f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f,
+             -0.5f, -0.5f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f,
+             -0.5f, 0.5f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f,
+            -1.5f,  0.5f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f,
+
+             0.5f, -0.5f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f,
+             1.5f, -0.5f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f,
+             1.5f,  0.5f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f,
+             0.5f,  0.5f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f
         };
 
         std::shared_ptr<VertexBuffer> squareVB = VertexBuffer::Create(quadVertices, sizeof(quadVertices));
         squareVB->SetLayout({
             { ShaderDataType::Float3, "a_Position" },
             { ShaderDataType::Float4, "a_Color" },
-            { ShaderDataType::Float2, "a_TexCoord" }
             });
         s_Data.QuadVertexArray->AddVertexBuffer(squareVB);
 
-        uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-        std::shared_ptr<IndexBuffer> quadIB = IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
+
+        uint32_t* quadIndices = new uint32_t[12]{
+            0, 1, 2, 2, 3, 0,
+            4, 5, 6, 6, 7, 4
+        };
+
+        std::shared_ptr<IndexBuffer> quadIB = IndexBuffer::Create(quadIndices, 12);
         s_Data.QuadVertexArray->SetIndexBuffer(quadIB);
 
         /*

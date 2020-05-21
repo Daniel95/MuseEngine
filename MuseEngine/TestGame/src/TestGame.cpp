@@ -29,14 +29,19 @@ void TestGame::OnStart()
 
     m_VA = Muse::VertexArray::Create();
 
-    float quadVertices[9 * 4] = {
-        -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-         0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
-         0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
-        -0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f
+    float quadVertices[] = {
+        -1.5f, -1.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+         -0.5f, -1.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
+         -0.5f,  -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+        -1.5f,  -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+
+         0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+         1.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 0.0f,
+         1.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f,
+         0.5f,  0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f
     };
 
-    m_VB = Muse::VertexBuffer::Create(quadVertices, 9 * 4 * sizeof(float));
+    m_VB = Muse::VertexBuffer::Create(quadVertices, 9 * 4 * sizeof(quadVertices));
     m_VB->SetLayout({
         { Muse::ShaderDataType::Float3, "a_Position" },
         { Muse::ShaderDataType::Float4, "a_Color" },
@@ -44,11 +49,12 @@ void TestGame::OnStart()
     });
     m_VA->AddVertexBuffer(m_VB);
 
-    uint32_t* quadIndices = new uint32_t[6]{
-        0, 1, 2, 2, 3, 0
+    uint32_t* quadIndices = new uint32_t[12]{
+        0, 1, 2, 2, 3, 0,
+        4, 5, 6, 5, 6, 4
     };
 
-    std::shared_ptr<Muse::IndexBuffer> quadIB = Muse::IndexBuffer::Create(quadIndices, 6);
+    std::shared_ptr<Muse::IndexBuffer> quadIB = Muse::IndexBuffer::Create(quadIndices, 12);
     m_VA->SetIndexBuffer(quadIB);
 
     m_Shader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/ColoredTexture.glsl");
