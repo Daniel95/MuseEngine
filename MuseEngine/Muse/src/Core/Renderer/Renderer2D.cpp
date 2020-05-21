@@ -15,19 +15,24 @@ namespace Muse
     struct QuadVertex
     {
         glm::vec3 Position;
-        glm::vec3 Color;
-        glm::vec3 TextureCoordinate;
+        //glm::vec4 Color;
+        //glm::vec2 TexCoord;
     };
 
     struct Renderer2DStorage
     {
+        static const uint32_t MaxQuads = 20000;
+        static const uint32_t MaxVertices = MaxQuads * 4;
+        static const uint32_t MaxIndices = MaxQuads * 6;
+
         std::shared_ptr<VertexArray> QuadVertexArray;
         std::shared_ptr<VertexBuffer> QuadVertexBuffer;
         std::shared_ptr<Shader> ColoredTextureShader;
         std::shared_ptr<Texture> WhiteTexture;
 
-        QuadVertex* QuadVertexPtr = nullptr;
-        QuadVertex* QuadVertexBase = nullptr;
+        uint32_t QuadIndexCount = 0;
+        QuadVertex* QuadVertexBufferPtr = nullptr;
+        QuadVertex* QuadVertexBufferBase = nullptr;
     };
 
     static Renderer2DStorage s_Data;
@@ -38,33 +43,35 @@ namespace Muse
 
         s_Data.QuadVertexArray = Muse::VertexArray::Create();
 
-        float quadVertices[] = {
-            -1.5f, -0.5f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f,
-             -0.5f, -0.5f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f,
-             -0.5f, 0.5f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f,
-            -1.5f,  0.5f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f,
-
-             0.5f, -0.5f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f,
-             1.5f, -0.5f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f,
-             1.5f,  0.5f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f,
-             0.5f,  0.5f, 0.0f, 0.18f, 0.6f, 0.96f, 1.0f
-        };
-
-        std::shared_ptr<VertexBuffer> squareVB = VertexBuffer::Create(quadVertices, sizeof(quadVertices));
-        squareVB->SetLayout({
+        s_Data.QuadVertexBuffer = VertexBuffer::Create(s_Data.MaxVertices * sizeof(QuadVertex));
+        s_Data.QuadVertexBuffer->SetLayout({
             { ShaderDataType::Float3, "a_Position" },
-            { ShaderDataType::Float4, "a_Color" },
+            //{ ShaderDataType::Float4, "a_Color" },
+            //{ ShaderDataType::Float2, "a_TexCoord" },
             });
-        s_Data.QuadVertexArray->AddVertexBuffer(squareVB);
+        s_Data.QuadVertexArray->AddVertexBuffer(s_Data.QuadVertexBuffer);
 
+        uint32_t* quadIndices = new uint32_t[s_Data.MaxIndices];
 
-        uint32_t* quadIndices = new uint32_t[12]{
-            0, 1, 2, 2, 3, 0,
-            4, 5, 6, 6, 7, 4
-        };
+        s_Data.QuadVertexBufferBase = new QuadVertex[s_Data.MaxVertices];
 
-        std::shared_ptr<IndexBuffer> quadIB = IndexBuffer::Create(quadIndices, 12);
+        uint32_t offset = 0;
+        for (uint32_t i = 0; i < s_Data.MaxIndices; i += 6)
+        {
+            quadIndices[i + 0] = offset + 0;
+            quadIndices[i + 1] = offset + 1;
+            quadIndices[i + 2] = offset + 2;
+
+            quadIndices[i + 3] = offset + 2;
+            quadIndices[i + 4] = offset + 3;
+            quadIndices[i + 5] = offset + 0;
+
+            offset += 4;
+        }
+
+        std::shared_ptr<IndexBuffer> quadIB = IndexBuffer::Create(quadIndices, s_Data.MaxIndices);
         s_Data.QuadVertexArray->SetIndexBuffer(quadIB);
+        delete[] quadIndices;
 
         /*
         s_Data.WhiteTexture = Texture::Create(1, 1);
@@ -90,13 +97,25 @@ namespace Muse
 
         s_Data.ColoredTextureShader->Bind();
         s_Data.ColoredTextureShader->SetMat4("u_ViewProjection", a_OrthographicCamera.GetViewProjectionMatrix());
+
+        s_Data.QuadIndexCount = 0;
+        s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
     }
 
     void Renderer2D::EndScene()
     {
         MUSE_PROFILE_FUNCTION();
+
+        uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
+        s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
+
+        s_Data.QuadIndexCount = 0;
+        s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
+
+        RenderCommand::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
     }
 
+    /*
     void Renderer2D::DrawQuad(const glm::vec3& a_Position, const glm::vec2& a_Size, const glm::vec4& a_Color)
     {
         MUSE_PROFILE_FUNCTION();
@@ -107,35 +126,34 @@ namespace Muse
         s_Data.QuadVertexArray->Bind();
         RenderCommand::DrawIndexed(s_Data.QuadVertexArray);
     }
+    */
 
-    /*
     void Renderer2D::DrawQuad(const glm::vec3& a_Position, const glm::vec2& a_Size, const glm::vec4& a_Color)
     {
         MUSE_PROFILE_FUNCTION();
 
         s_Data.QuadVertexBufferPtr->Position = a_Position;
-        s_Data.QuadVertexBufferPtr->Color = a_Color;
-        s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(0.0f, 0.0f);
+        //s_Data.QuadVertexBufferPtr->Color = a_Color;
+        //s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(0.0f, 0.0f);
         s_Data.QuadVertexBufferPtr++;
 
-        s_Data.QuadVertexBufferPtr->Position = a_Position;
-        s_Data.QuadVertexBufferPtr->Color = a_Color;
-        s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(1.0f, 0.0f);
+        s_Data.QuadVertexBufferPtr->Position = { a_Position.x + a_Size.x, a_Position.y, 0.0f };
+        //s_Data.QuadVertexBufferPtr->Color = a_Color;
+        //s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(1.0f, 0.0f);
         s_Data.QuadVertexBufferPtr++;
 
-        s_Data.QuadVertexBufferPtr->Position = a_Position;
-        s_Data.QuadVertexBufferPtr->Color = a_Color;
-        s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(1.0f, 1.0f);
+        s_Data.QuadVertexBufferPtr->Position = { a_Position.x + a_Size.x, a_Position.y + a_Size.y, 0.0f };;
+        //s_Data.QuadVertexBufferPtr->Color = a_Color;
+        //s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(1.0f, 1.0f);
         s_Data.QuadVertexBufferPtr++;
 
-        s_Data.QuadVertexBufferPtr->Position = a_Position;
-        s_Data.QuadVertexBufferPtr->Color = a_Color;
-        s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(0.0f, 1.0f);
+        s_Data.QuadVertexBufferPtr->Position = { a_Position.x, a_Position.y + a_Size.y, 0.0f };;
+        //s_Data.QuadVertexBufferPtr->Color = a_Color;
+        //s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(0.0f, 1.0f);
         s_Data.QuadVertexBufferPtr++;
 
         s_Data.QuadIndexCount += 6;
     }
-    */
 
     /*
     void Renderer2D::DrawQuad(const QuadPropertiesTransform& a_QuadPropertiesTransform)
