@@ -15,8 +15,8 @@ namespace Muse
     struct QuadVertex
     {
         glm::vec3 Position;
-        //glm::vec4 Color;
-        //glm::vec2 TexCoord;
+        glm::vec4 Color;
+        glm::vec2 TexCoord;
     };
 
     struct Renderer2DStorage
@@ -46,8 +46,8 @@ namespace Muse
         s_Data.QuadVertexBuffer = VertexBuffer::Create(s_Data.MaxVertices * sizeof(QuadVertex));
         s_Data.QuadVertexBuffer->SetLayout({
             { ShaderDataType::Float3, "a_Position" },
-            //{ ShaderDataType::Float4, "a_Color" },
-            //{ ShaderDataType::Float2, "a_TexCoord" },
+            { ShaderDataType::Float4, "a_Color" },
+            { ShaderDataType::Float2, "a_TexCoord" },
             });
         s_Data.QuadVertexArray->AddVertexBuffer(s_Data.QuadVertexBuffer);
 
@@ -133,23 +133,23 @@ namespace Muse
         MUSE_PROFILE_FUNCTION();
 
         s_Data.QuadVertexBufferPtr->Position = a_Position;
-        //s_Data.QuadVertexBufferPtr->Color = a_Color;
-        //s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(0.0f, 0.0f);
+        s_Data.QuadVertexBufferPtr->Color = a_Color;
+        s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(0.0f, 0.0f);
         s_Data.QuadVertexBufferPtr++;
 
         s_Data.QuadVertexBufferPtr->Position = { a_Position.x + a_Size.x, a_Position.y, 0.0f };
-        //s_Data.QuadVertexBufferPtr->Color = a_Color;
-        //s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(1.0f, 0.0f);
+        s_Data.QuadVertexBufferPtr->Color = a_Color;
+        s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(1.0f, 0.0f);
         s_Data.QuadVertexBufferPtr++;
 
         s_Data.QuadVertexBufferPtr->Position = { a_Position.x + a_Size.x, a_Position.y + a_Size.y, 0.0f };;
-        //s_Data.QuadVertexBufferPtr->Color = a_Color;
-        //s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(1.0f, 1.0f);
+        s_Data.QuadVertexBufferPtr->Color = a_Color;
+        s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(1.0f, 1.0f);
         s_Data.QuadVertexBufferPtr++;
 
         s_Data.QuadVertexBufferPtr->Position = { a_Position.x, a_Position.y + a_Size.y, 0.0f };;
-        //s_Data.QuadVertexBufferPtr->Color = a_Color;
-        //s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(0.0f, 1.0f);
+        s_Data.QuadVertexBufferPtr->Color = a_Color;
+        s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(0.0f, 1.0f);
         s_Data.QuadVertexBufferPtr++;
 
         s_Data.QuadIndexCount += 6;
