@@ -3,7 +3,7 @@
         "Resource": {
             "value0": 0
         },
-        "m_GameObjectsToUpdate": [
+        "m_GameObjects": [
             {
                 "polymorphic_id": 1073741824,
                 "ptr_wrapper": {
@@ -19,7 +19,27 @@
                                         "Component": {
                                             "value0": true
                                         },
-                                        "value0": 1
+                                        "value0": {
+                                            "value0": -0.0009299946250393987,
+                                            "value1": 0.0,
+                                            "value2": -0.42569249868392947
+                                        },
+                                        "value1": {
+                                            "value0": 1.0,
+                                            "value1": 1.0,
+                                            "value2": 1.0
+                                        },
+                                        "value2": {
+                                            "value0": 0.0,
+                                            "value1": 0.002184659242630005,
+                                            "value2": 0.0
+                                        },
+                                        "value3": {
+                                            "value0": 0.0,
+                                            "value1": 0.0,
+                                            "value2": 0.0,
+                                            "value3": 1.0
+                                        }
                                     }
                                 }
                             },
@@ -32,77 +52,98 @@
                                         "Component": {
                                             "value0": true
                                         },
-                                        "value0": 1.302605152130127
+                                        "value0": {
+                                            "value0": {
+                                                "value0": 0.999997615814209,
+                                                "value1": -0.0,
+                                                "value2": 0.0021846576128154995,
+                                                "value3": -0.0
+                                            },
+                                            "value1": {
+                                                "value0": -0.0,
+                                                "value1": 1.0,
+                                                "value2": -0.0,
+                                                "value3": 0.0
+                                            },
+                                            "value2": {
+                                                "value0": -0.0021846576128154995,
+                                                "value1": -0.0,
+                                                "value2": 0.999997615814209,
+                                                "value3": -0.0
+                                            },
+                                            "value3": {
+                                                "value0": 5.820766091346741e-11,
+                                                "value1": -0.0,
+                                                "value2": 0.28378063440322878,
+                                                "value3": 1.0
+                                            }
+                                        },
+                                        "value1": {
+                                            "value0": {
+                                                "value0": 0.9257813096046448,
+                                                "value1": 0.0,
+                                                "value2": 0.0,
+                                                "value3": 0.0
+                                            },
+                                            "value1": {
+                                                "value0": 0.0,
+                                                "value1": 1.0,
+                                                "value2": 0.0,
+                                                "value3": 0.0
+                                            },
+                                            "value2": {
+                                                "value0": 0.0,
+                                                "value1": 0.0,
+                                                "value2": -1.0,
+                                                "value3": 0.0
+                                            },
+                                            "value3": {
+                                                "value0": -0.0,
+                                                "value1": -0.0,
+                                                "value2": -0.0,
+                                                "value3": 1.0
+                                            }
+                                        },
+                                        "value2": {
+                                            "value0": {
+                                                "value0": 0.9257791042327881,
+                                                "value1": 0.0,
+                                                "value2": -0.0021846576128154995,
+                                                "value3": 0.0
+                                            },
+                                            "value1": {
+                                                "value0": 0.0,
+                                                "value1": 1.0,
+                                                "value2": 0.0,
+                                                "value3": 0.0
+                                            },
+                                            "value2": {
+                                                "value0": -0.002022515283897519,
+                                                "value1": 0.0,
+                                                "value2": -0.999997615814209,
+                                                "value3": 0.0
+                                            },
+                                            "value3": {
+                                                "value0": 5.388756454949295e-11,
+                                                "value1": 0.0,
+                                                "value2": -0.28378063440322878,
+                                                "value3": 1.0
+                                            }
+                                        },
+                                        "value3": true,
+                                        "value4": 1.0,
+                                        "value5": 1.0801687240600587
                                     }
                                 }
                             },
                             {
                                 "polymorphic_id": 2147483651,
-                                "polymorphic_name": "OrthographicCameraControllerComponent",
+                                "polymorphic_name": "PerspectiveCameraControllerComponent",
                                 "ptr_wrapper": {
                                     "id": 2147483652,
                                     "data": {
                                         "Component": {
                                             "value0": true
                                         },
-                                        "value0": 0.6000000238418579,
-                                        "value1": 0.10000000149011612,
-                                        "value2": 0.10000000149011612
-                                    }
-                                }
-                            }
-                        ]
-                    }
-                }
-            },
-            {
-                "polymorphic_id": 1073741824,
-                "ptr_wrapper": {
-                    "id": 2147483653,
-                    "data": {
-                        "m_Components": [
-                            {
-                                "polymorphic_id": 1,
-                                "ptr_wrapper": {
-                                    "id": 2147483654,
-                                    "data": {
-                                        "Component": {
-                                            "value0": true
-                                        },
-                                        "value0": 1
-                                    }
-                                }
-                            },
-                            {
-                                "polymorphic_id": 2,
-                                "ptr_wrapper": {
-                                    "id": 2147483655,
-                                    "data": {
-                                        "Component": {
-                                            "value0": true
-                                        },
-                                        "value0": 1.7777777910232545
-                                    }
-                                }
-                            },
-                            {
-                                "polymorphic_id": 3,
-                                "ptr_wrapper": {
-                                    "id": 2147483656,
-                                    "data": {
-                                        "Component": {
-                                            "value0": true
-                                        },
-                                        "value0": 0.6000000238418579,
-                                        "value1": 0.10000000149011612,
-                                        "value2": 0.10000000149011612
-                                    }
-                                }
-                            }
-                        ]
-                    }
-                }
-            }
-        ]
-    }
-}
+                                        "value0": 0.800000011920929,
+                                        "value1": 0

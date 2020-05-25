@@ -43,3 +43,39 @@
 #include "Core/Event/ApplicationEvent.h"
 #include "Core/Event/KeyEvent.h"
 #include "Core/Event/MouseEvent.h"
+
+//Todo:
+/////Engine:
+//Fix Crash in Game2D
+//Translate Rasterizer to its own folder in Renderer
+//Fix warnings
+//Model loading
+//GLM make vec's and mat's conversion to string
+//Transform support euler rotations
+
+/////RayTracer
+//Implement multithreading
+//give each ray a random offset, add the samples together to get anti aliasing
+//Raytracer: calculate soft shadows by using a light area, take a random sample to one point of this light, and add the samples together
+//sqrtf the results to make add gamma correction
+//Fix BVH
+//use simd to calculate 4 rays at once.
+//Make MaterialOld a resource
+//Divide the raytracer into grids
+
+/////PathTracer:
+//Debug radiance
+//Split screen in 2 for debugging
+//Stratification
+//Blue noise
+//Filtering
+//Path Guiding
+
+
+//to generate a bvh, use throw all the triangles of all the models in a big array with each triangle to a pointer to the material
+//check dirty for transforms to only recalculate a part of an BVH
+//refitting a BVH : resize the bounding boxes to match they children objects / leaves. (only works if the amount of objects are the same)
+
+//Update Muse.h
+
+

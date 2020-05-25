@@ -27,9 +27,11 @@ namespace Muse
 
         m_Scene = &a_Scene;
 
-        if (!HasComponent<TransformComponent>())
+        m_TransformComponent = GetComponent<TransformComponent>();
+
+        if (m_TransformComponent == nullptr)
         {
-            AddComponent<TransformComponent>();
+            m_TransformComponent = AddComponent<TransformComponent>();
         }
     }
 
@@ -88,21 +90,6 @@ namespace Muse
         {
             component->Disable();
         }
-    }
-
-    Scene* GameObject::GetScene() const
-    {
-        return m_Scene;
-    }
-
-    std::shared_ptr<TransformComponent> GameObject::GetTransform() const
-    {
-        return GetComponent<TransformComponent>();
-    }
-
-    const std::vector<std::shared_ptr<Component>>& GameObject::GetComponents() const
-    {
-        return m_Components;
     }
 }
 

@@ -13,6 +13,7 @@ namespace Muse
         virtual ~OpenGLTexture();
 
         virtual void SetData(void* a_Data, uint32_t a_Size) override;
+        virtual void SetDataF(void* a_Data, uint32_t a_Size) override;
 
         uint32_t GetWidth() const override { return m_Width; }
         uint32_t GetHeight() const override { return m_Height; }

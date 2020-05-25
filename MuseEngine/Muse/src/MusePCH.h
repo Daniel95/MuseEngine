@@ -36,12 +36,15 @@
 #include "spdlog/sinks/stdout_color_sinks.h"
 
 //GLM
+#include <glm/glm.hpp>
+/*
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 #include <glm/mat2x2.hpp>
 #include <glm/mat3x3.hpp>
 #include <glm/mat4x4.hpp>
+*/
 
 /*
 #ifdef MUSE_PLATFORM_WINDOWS

@@ -38,10 +38,10 @@ namespace Muse
         s_RendererAPI->Clear();
     }
 
-    void RenderCommand::DrawIndexed(const std::shared_ptr<VertexArray>& a_VertexArray)
+    void RenderCommand::DrawIndexed(const std::shared_ptr<VertexArray>& a_VertexArray, uint32_t a_IndexCount)
     {
         MUSE_PROFILE_FUNCTION();
 
-        s_RendererAPI->DrawIndexed(a_VertexArray);
+        s_RendererAPI->DrawIndexed(a_VertexArray, a_IndexCount);
     }
 }

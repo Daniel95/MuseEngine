@@ -26,6 +26,7 @@ namespace Muse
 		virtual ~Application();
 
         Window& GetWindow() const { return *m_Window; }
+        std::shared_ptr<FrameBuffer> GetViewport() const { return m_ViewportFramebuffer; }
         float GetDeltaTime() const { return m_DeltaTime; }
 
         void Run();
@@ -76,9 +77,8 @@ namespace Muse
         std::shared_ptr<Window> m_Window;
         std::shared_ptr<SceneManager> m_SceneManager;
         std::shared_ptr<ResourceManager> m_ResourceManager;
-        float m_DeltaTime = 0;
-
         std::shared_ptr<FrameBuffer> m_ViewportFramebuffer;
+        float m_DeltaTime = 0;
 
         ImGuiLayer* m_ImGuiLayer;
         LayerStack m_LayerStack;

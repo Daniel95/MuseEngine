@@ -7,7 +7,7 @@
 #include "imgui/imgui.h"
 #include "PlayerComponent.h"
 
-#include "GameDefines.h"
+#include "Mode.h"
 
 #if GAME_2D
 #include "EntryPoint.h"
@@ -22,7 +22,8 @@ void Game2D::OnStart()
     Muse::RenderCommand::Init();
     Muse::Renderer2D::Init();
 
-    std::shared_ptr<Muse::Scene> scene = Muse::ResourceManager::Create<Muse::Scene>("Game2DTestScene");
+    std::shared_ptr <Muse::Scene> scene = Muse::Scene::Create();
+    Muse::ResourceManager::Add("Game2DTestScene", scene);
     Muse::SceneManager::SwitchScene(scene);
 
     {
@@ -33,14 +34,14 @@ void Game2D::OnStart()
     {
         auto gameObject = scene->AddGameObject();
         auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
-        gameObject->GetTransform()->SetPosition({ 1.1f, 0, 0 });
+        gameObject->GetTransform()->SetLocalPosition({ 1.1f, 0, 0 });
     }
 
     {
         auto gameObject = scene->AddGameObject();
         auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
-        gameObject->GetTransform()->SetPosition({ -1, -1, 0 });
-        gameObject->GetTransform()->SetScale({ 2, 1 });
+        gameObject->GetTransform()->SetLocalPosition({ -1, -1, 0 });
+        gameObject->GetTransform()->SetLocalScale({ 2, 1 });
     }
 
     m_Texture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
@@ -57,6 +58,48 @@ void Game2D::OnStart()
 void Game2D::OnRender()
 {
     //Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+    Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+    Muse::RenderCommand::Clear();
+
+    Muse::Renderer2D::BeginScene(*Muse::CameraComponent::GetMain());
+
+    //Muse::Renderer2D::DrawQuad(quadProperties);
+
+    const Muse::Renderer2D::QuadProperties quadProperties(
+        { 0, 0, 0.1f },
+        glm::vec2(1),
+        45,
+        { 0.5f, 0.5f, 0.5f, 0.5f }
+        //m_Texture
+    );
+
+    Muse::Renderer2D::DrawQuad(
+        { 0.25f, 0.25f, 0 },
+        { 0.5f, 0.5f },
+        { 0.0f, 1.0f, 0.0f, 1.0f }
+    );
+
+    Muse::Renderer2D::DrawQuad(
+        { -0.25f, -0.25f, 0 },
+        { 0.5f, 0.5f },
+        { 1.0f, 0.0f, 0.0f, 1.0f }
+    );
+
+    /*
+    Muse::Renderer2D::DrawQuad(
+        { 0, 1, 0 },
+        glm::vec2(1),
+        { 1.0f, 0.0f, 0.0f, 1.0f }
+    );
+    */
+
+    Muse::Renderer2D::EndScene();
+}
+
+/*
+void Game2D::OnRender()
+{
+    //Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
     Muse::RenderCommand::SetClearColor({ 0.9f, 0.9f, 0.9f, 1 });
     Muse::RenderCommand::Clear();
 
@@ -70,7 +113,7 @@ void Game2D::OnRender()
         if(meshComponent != nullptr)
         {
             const Muse::Renderer2D::QuadPropertiesTransform quadPropertiesTransform(
-                gameObject->GetTransform()->GetModelMatrix(),
+                gameObject->GetTransform()->GetWorldModelMatrix(),
                 { 0.8f, 0.2f, 0.3f, 1.0f });
 
             Muse::Renderer2D::DrawQuad(quadPropertiesTransform);
@@ -88,6 +131,7 @@ void Game2D::OnRender()
 
 	Muse::Renderer2D::EndScene();
 }
+*/
 
 void Game2D::OnImGuiRender()
 {

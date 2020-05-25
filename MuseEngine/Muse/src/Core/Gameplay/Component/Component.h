@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <rttr/registration>
 #include <rttr/type>
 #include <rttr/registration_friend.h>
@@ -53,6 +52,7 @@ namespace Muse
     private:
         std::shared_ptr<GameObject> m_GameObject = nullptr;
 		bool m_isEnabled = true;
+        bool m_Initialized = false;
 
     };
 }

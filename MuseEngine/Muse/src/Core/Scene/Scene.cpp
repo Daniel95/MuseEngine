@@ -21,6 +21,16 @@
 #include <cereal/types/vector.hpp>
 #include <cereal/types/memory.hpp>
 #include <cereal/cereal.hpp>
+#include "Core/Renderer/RayTracer/AmbientLightSource.h"
+#include "Core/Renderer/RayTracer/BVH/BVH.h"
+
+#include "Core/Renderer/RayTracer/AmbientLightSource.h"
+#include "Core/Renderer/RayTracer/BVH/BVH.h"
+#include "Core/Renderer/RayTracer/Ray.h"
+#include "Core/Renderer/RayTracer/AmbientLightSource.h"
+#include "Core/Gameplay/Component/RenderComponent.h"
+#include "Core/Renderer/RayTracer/RayHitData.h"
+#include "Core/Gameplay/Component/PerspectiveCameraControllerComponent.h"
 
 namespace Muse
 {
@@ -36,7 +46,7 @@ namespace Muse
         MUSE_PROFILE_FUNCTION();
 
         Unload();
-        ASSERT_ENGINE(m_GameObjectsToUpdate.size() == 0, "Not all gameobjects have been destroyed!");
+        ASSERT_ENGINE(m_GameObjects.size() == 0, "Not all gameobjects have been destroyed!");
     }
 
     void Scene::Unload()
@@ -50,11 +60,11 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        for (std::shared_ptr<GameObject> gameObject : m_GameObjectsToUpdate)
+        for (std::shared_ptr<GameObject> gameObject : m_GameObjects)
         {
             gameObject.reset();
         }
-        m_GameObjectsToUpdate.clear();
+        m_GameObjects.clear();
 
         for (std::shared_ptr<GameObject> gameObject : m_GameObjectsToAdd)
         {
@@ -84,8 +94,8 @@ namespace Muse
         MUSE_PROFILE_FUNCTION();
 
         std::shared_ptr<GameObject> gameObject = AddGameObject();
-        gameObject->GetTransform()->SetPosition(a_Position);
-        gameObject->GetTransform()->SetScale(a_Size);
+        gameObject->GetTransform()->SetLocalPosition(a_Position);
+        gameObject->GetTransform()->SetLocalScale(a_Size);
         return gameObject;
     }
 
@@ -94,8 +104,8 @@ namespace Muse
         MUSE_PROFILE_FUNCTION();
 
         std::shared_ptr<GameObject> gameObject = AddGameObject();
-        gameObject->GetTransform()->SetPosition(a_Position);
-        gameObject->GetTransform()->SetScale(a_Size);
+        gameObject->GetTransform()->SetLocalPosition(a_Position);
+        gameObject->GetTransform()->SetLocalScale(a_Size);
         return gameObject;
     }
 
@@ -113,11 +123,11 @@ namespace Muse
 
         for (auto gameObject : m_GameObjectsToAdd)
         {
-            m_GameObjectsToUpdate.push_back(gameObject);
+            m_GameObjects.push_back(gameObject);
         }
         m_GameObjectsToAdd.clear();
 
-        for (auto gameObject : m_GameObjectsToUpdate)
+        for (auto gameObject : m_GameObjects)
         {
             gameObject->Update(a_DeltaTime);
         }
@@ -137,7 +147,7 @@ namespace Muse
             {
                 LOG_ENGINE_INFO("SAVE");
 
-                std::string path = Editor::GetSavePath("txt");
+                const std::string path = Editor::GetSavePath("txt");
                 Save(path);
             }
         }
@@ -147,7 +157,7 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        for (const auto gameObject : m_GameObjectsToUpdate)
+        for (const auto gameObject : m_GameObjects)
         {
             gameObject->FixedUpdate(a_TimeStep);
         }
@@ -164,7 +174,7 @@ namespace Muse
 
         for (auto gameObject : m_GameObjectsToAdd)
         {
-            m_GameObjectsToUpdate.push_back(gameObject);
+            m_GameObjects.push_back(gameObject);
         }
         m_GameObjectsToAdd.clear();
 
@@ -202,7 +212,7 @@ namespace Muse
         MUSE_PROFILE_FUNCTION();
 
         m_GameObjectsToAdd.erase(std::remove(m_GameObjectsToAdd.begin(), m_GameObjectsToAdd.end(), a_GameObject), m_GameObjectsToAdd.end());
-        m_GameObjectsToUpdate.erase(std::remove(m_GameObjectsToUpdate.begin(), m_GameObjectsToUpdate.end(), a_GameObject), m_GameObjectsToUpdate.end());
+        m_GameObjects.erase(std::remove(m_GameObjects.begin(), m_GameObjects.end(), a_GameObject), m_GameObjects.end());
     }
 
     std::shared_ptr<GameObject> Scene::GetEditorCamera() const
@@ -210,7 +220,7 @@ namespace Muse
         MUSE_PROFILE_FUNCTION();
 
         std::shared_ptr<GameObject> editorCameraGameObject = nullptr;
-        for (const auto gameObject : m_GameObjectsToUpdate)
+        for (const auto gameObject : m_GameObjects)
         {
             std::shared_ptr<CameraComponent> camera = gameObject->GetComponent<CameraComponent>();
 
@@ -243,9 +253,22 @@ namespace Muse
         std::shared_ptr<GameObject> gameObject = AddGameObject();
 
         gameObject->AddComponent<CameraComponent>()->MakeEditorCamera();
+        //gameObject->AddComponent<PerspectiveCameraControllerComponent>();
         gameObject->AddComponent<OrthographicCameraControllerComponent>();
 
         return gameObject;
+    }
+
+    glm::vec3 Scene::GetAmbientLight() const
+    {
+        return m_AmbientLight->GetLight(glm::vec3(0));
+    }
+
+    void Scene::ConstructBVH()
+    {
+        ASSERT_ENGINE(m_BVH != nullptr, "Not BVH set!");
+        m_BVH->ConstructHierarchy(RenderComponent::GetAll());
+        m_BVH->PrintHierarchy();
     }
 
     std::shared_ptr<Scene> Scene::Load(const std::string& a_FilePath)

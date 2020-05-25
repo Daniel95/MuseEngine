@@ -87,6 +87,16 @@ namespace Muse
         glTextureSubImage2D(m_RendererId, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_UNSIGNED_BYTE, a_Data);
     }
 
+    void OpenGLTexture::SetDataF(void* a_Data, uint32_t a_Size)
+    {
+        MUSE_PROFILE_FUNCTION();
+
+        uint32_t bpp = m_DataFormat == GL_RGBA ? 4 : 3;
+
+        ASSERT_ENGINE(a_Size == m_Width * m_Height * bpp, "Data must be entire texture!");
+        glTextureSubImage2D(m_RendererId, 0, 0, 0, m_Width, m_Height, m_DataFormat, GL_FLOAT, a_Data);
+    }
+
     void OpenGLTexture::Bind(uint32_t a_Slot) const
     {
         MUSE_PROFILE_FUNCTION();

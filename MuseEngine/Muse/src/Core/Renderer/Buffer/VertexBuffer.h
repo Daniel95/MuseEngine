@@ -21,6 +21,9 @@ namespace Muse
         virtual void Bind() const = 0;
         virtual void Unbind() const = 0;
 
+        virtual void SetData(const void* a_Data, uint32_t a_Size) const = 0;
+
+        static std::shared_ptr<VertexBuffer> Create(uint32_t a_Size);
         static std::shared_ptr<VertexBuffer> Create(float* a_Vertices, uint32_t a_Size);
     };
 }

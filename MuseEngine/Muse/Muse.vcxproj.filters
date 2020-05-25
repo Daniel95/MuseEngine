@@ -58,6 +58,9 @@
     <Filter Include="src\Examples">
       <UniqueIdentifier>{5B3F7059-47A2-FFFD-F027-38B4DC69CB80}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Examples\Cereal">
+      <UniqueIdentifier>{36BDD84F-A21E-B65D-2B8C-FC0F97ECEC1C}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Platform">
       <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
     </Filter>
@@ -228,12 +231,6 @@
     <ClInclude Include="src\Core\Utilities\Utilities.h">
       <Filter>src\Core\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Utilities\json - Original\from_json.h">
-      <Filter>src\Core\Utilities\json - Original</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Utilities\json - Original\to_json.h">
-      <Filter>src\Core\Utilities\json - Original</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\Utilities\json\from_json.h">
       <Filter>src\Core\Utilities\json</Filter>
     </ClInclude>
@@ -255,6 +252,9 @@
     <ClInclude Include="src\EntryPoint.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Examples\Cereal\CerealExample.h">
+      <Filter>src\Examples\Cereal</Filter>
+    </ClInclude>
     <ClInclude Include="src\Examples\RTTRExample.h">
       <Filter>src\Examples</Filter>
     </ClInclude>
@@ -262,6 +262,9 @@
       <Filter>src\Examples</Filter>
     </ClInclude>
     <ClInclude Include="src\Examples\SerializeTest.h">
+      <Filter>src\Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Examples\SmartPointerExample.h">
       <Filter>src\Examples</Filter>
     </ClInclude>
     <ClInclude Include="src\Muse.h">
@@ -1389,10 +1392,24 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Examples\SmartPointerExample.h" />
-    <ClInclude Include="src\Examples\Cereal\CerealExample.h">
-      <Filter>src\Examples</Filter>
-    </ClInclude>
+    <ClInclude Include="src\Core\Gameplay\Component\PerspectiveCameraControllerComponent.h" />
+    <ClInclude Include="src\Core\Renderer\Material.h" />
+    <ClInclude Include="src\Core\Utilities\Color.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\BVH\BoundingVolume.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\BVH\BVH.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\BVH\TopDownBVH.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Box.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Plane.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Shape.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Sphere.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\AmbientLightSource.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\GetColorParameters.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\LightSource.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\Ray.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\RayHitData.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\RendererPT.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\RendererRT.h" />
+    <ClInclude Include="src\Core\Renderer\Renderer2DOld.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1491,12 +1508,6 @@
     <ClCompile Include="src\Core\Utilities\Utilities.cpp">
       <Filter>src\Core\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Utilities\json - Original\from_json.cpp">
-      <Filter>src\Core\Utilities\json - Original</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Utilities\json - Original\to_json.cpp">
-      <Filter>src\Core\Utilities\json - Original</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\Utilities\json\from_json.cpp">
       <Filter>src\Core\Utilities\json</Filter>
     </ClCompile>
@@ -1512,10 +1523,16 @@
     <ClCompile Include="src\Editor\ViewPort.cpp">
       <Filter>src\Editor</Filter>
     </ClCompile>
+    <ClCompile Include="src\Examples\Cereal\CerealExample.cpp">
+      <Filter>src\Examples\Cereal</Filter>
+    </ClCompile>
     <ClCompile Include="src\Examples\SerializePntrTest.cpp">
       <Filter>src\Examples</Filter>
     </ClCompile>
     <ClCompile Include="src\Examples\SerializeTest.cpp">
+      <Filter>src\Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Examples\SmartPointerExample.cpp">
       <Filter>src\Examples</Filter>
     </ClCompile>
     <ClCompile Include="src\MusePCH.cpp">
@@ -1554,9 +1571,21 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Examples\SmartPointerExample.cpp" />
-    <ClCompile Include="src\Examples\Cereal\CerealExample.cpp">
-      <Filter>src\Examples</Filter>
-    </ClCompile>
+    <ClCompile Include="src\Core\Gameplay\Component\PerspectiveCameraControllerComponent.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\BVH\BoundingVolume.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\BVH\BVH.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\BVH\TopDownBVH.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Box.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Plane.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Shape.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Sphere.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\AmbientLightSource.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\LightSource.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\Ray.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\RayHitData.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\RendererPT.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\RendererRT.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\GetColorParameter.cpp" />
+    <ClCompile Include="src\Core\Renderer\Renderer2DOld.cpp" />
   </ItemGroup>
 </Project>

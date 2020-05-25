@@ -16,7 +16,9 @@ namespace Muse
     {
 		MUSE_PROFILE_FUNCTION();
 
-        m_GameObject = std::move(a_GameObject);
+        m_GameObject = a_GameObject;
+
+		m_Initialized = true;
 
 		if (m_isEnabled)
 		{
@@ -35,15 +37,21 @@ namespace Muse
 		MUSE_PROFILE_FUNCTION();
 
 		m_isEnabled = true;
-        OnEnable();
+		if(!m_isEnabled)
+		{
+			OnEnable();
+		}
 	}
 
 	void Component::Disable()
 	{
 		MUSE_PROFILE_FUNCTION();
-
+ 
 		m_isEnabled = false;
-        OnDisable();
+		if (m_isEnabled)
+		{
+			OnDisable();
+		}
 	}
 
     std::shared_ptr<TransformComponent> Component::GetTransform() const

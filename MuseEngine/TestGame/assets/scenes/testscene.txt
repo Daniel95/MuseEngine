@@ -3,7 +3,7 @@
         "Resource": {
             "value0": 0
         },
-        "m_GameObjectsToUpdate": [
+        "m_GameObjects": [
             {
                 "polymorphic_id": 1073741824,
                 "ptr_wrapper": {
@@ -33,12 +33,6 @@
                                             "value0": 0.0,
                                             "value1": 0.0,
                                             "value2": 0.0
-                                        },
-                                        "value3": {
-                                            "value0": 0.0,
-                                            "value1": 0.0,
-                                            "value2": 0.0,
-                                            "value3": 1.0
                                         }
                                     }
                                 }
@@ -80,7 +74,7 @@
                                         },
                                         "value1": {
                                             "value0": {
-                                                "value0": 0.5625,
+                                                "value0": 1.0,
                                                 "value1": 0.0,
                                                 "value2": 0.0,
                                                 "value3": 0.0
@@ -132,7 +126,7 @@
                                         },
                                         "value3": true,
                                         "value4": 1.0,
-                                        "value5": 1.7777777910232545
+                                        "value5": 1.0
                                     }
                                 }
                             },
@@ -183,12 +177,6 @@
                                             "value0": 0.0,
                                             "value1": 0.0,
                                             "value2": 0.0
-                                        },
-                                        "value3": {
-                                            "value0": 0.0,
-                                            "value1": 0.0,
-                                            "value2": 0.0,
-                                            "value3": 1.0
                                         }
                                     }
                                 }
@@ -202,21 +190,7 @@
                                         "Component": {
                                             "value0": true
                                         },
-                                        "value0": {
-                                            "polymorphic_id": 0
-                                        },
-                                        "value1": {
-                                            "polymorphic_id": 0
-                                        },
-                                        "value2": {
-                                            "polymorphic_id": 0
-                                        },
-                                        "value3": {
-                                            "polymorphic_id": 0
-                                        },
-                                        "value4": {
-                                            "polymorphic_id": 0
-                                        }
+                                        "value0": 1
                                     }
                                 }
                             }
@@ -252,12 +226,6 @@
                                             "value0": 0.0,
                                             "value1": 0.0,
                                             "value2": 0.0
-                                        },
-                                        "value3": {
-                                            "value0": 0.0,
-                                            "value1": 0.0,
-                                            "value2": 0.0,
-                                            "value3": 1.0
                                         }
                                     }
                                 }
@@ -270,21 +238,7 @@
                                         "Component": {
                                             "value0": true
                                         },
-                                        "value0": {
-                                            "polymorphic_id": 0
-                                        },
-                                        "value1": {
-                                            "polymorphic_id": 0
-                                        },
-                                        "value2": {
-                                            "polymorphic_id": 0
-                                        },
-                                        "value3": {
-                                            "polymorphic_id": 0
-                                        },
-                                        "value4": {
-                                            "polymorphic_id": 0
-                                        }
+                                        "value0": 1
                                     }
                                 }
                             }
@@ -320,12 +274,6 @@
                                             "value0": 0.0,
                                             "value1": 0.0,
                                             "value2": 0.0
-                                        },
-                                        "value3": {
-                                            "value0": 0.0,
-                                            "value1": 0.0,
-                                            "value2": 0.0,
-                                            "value3": 1.0
                                         }
                                     }
                                 }
@@ -338,21 +286,7 @@
                                         "Component": {
                                             "value0": true
                                         },
-                                        "value0": {
-                                            "polymorphic_id": 0
-                                        },
-                                        "value1": {
-                                            "polymorphic_id": 0
-                                        },
-                                        "value2": {
-                                            "polymorphic_id": 0
-                                        },
-                                        "value3": {
-                                            "polymorphic_id": 0
-                                        },
-                                        "value4": {
-                                            "polymorphic_id": 0
-                                        }
+                                        "value0": 1
                                     }
                                 }
                             }

@@ -7,9 +7,9 @@
 #include "PlayerComponent.h"
 #include "Core/Resource/ResourceTest.h"
 
-#include "GameDefines.h"
+#include "Mode.h"
 
-#if !GAME_2D
+#if GAME_3D
 #include "EntryPoint.h"
 Muse::Application* Muse::CreateApplication()
 {
@@ -19,7 +19,8 @@ Muse::Application* Muse::CreateApplication()
 
 void Game3D::OnStart()
 {
-    std::shared_ptr<Muse::Scene> scene = Muse::ResourceManager::Create<Muse::Scene>("New Scene");
+    std::shared_ptr <Muse::Scene> scene = Muse::Scene::Create();
+    Muse::ResourceManager::Add("New Scene", scene);
     Muse::SceneManager::SwitchScene(scene);
 
     std::shared_ptr<Muse::Shader> textureShader = Muse::ResourceManager::Load<Muse::Shader>("assets/shaders/Texture.glsl");
@@ -91,7 +92,7 @@ void Game3D::OnStart()
             layout);
         renderComponent->SetShader(m_FlatColorShader);
 
-        gameObject->GetTransform()->SetPosition({ 1.1f, 0, 0 });
+        gameObject->GetTransform()->SetLocalPosition({ 1.1f, 0, 0 });
     }
 
     /////////////////////////////////////////////////////////////////
@@ -124,7 +125,7 @@ void Game3D::OnStart()
         renderComponent->SetShader(vertexColorShader);
 
 
-        gameObject->GetTransform()->SetPosition({ -1, 0, 0 });
+        gameObject->GetTransform()->SetLocalPosition({ -1, 0, 0 });
     }
 
     /////////////////////////////////////////////////////////////////
@@ -146,8 +147,46 @@ void Game3D::OnStart()
             { Muse::ShaderDataType::Float2, "a_TexCoord" },
         };
 
+        m_PlayerGameObject = scene->AddGameObject();
+        m_PlayerGameObject->AddComponent<PlayerComponent>();
+        auto renderComponent = m_PlayerGameObject->AddComponent<Muse::RenderComponent>();
+
+        renderComponent->SetMesh(vertices,
+            5 * 4,
+            indices,
+            6,
+            layout);
+        renderComponent->SetShader(textureShader);
+        renderComponent->SetTexture(raymanTexture);
+
+        textureShader->Bind();
+        textureShader->SetInt("u_Texture", 0);
+
+        m_PlayerGameObject->GetTransform()->SetLocalPosition({ 0, 0, 1 });
+    }
+
+    /////////////////////////////////////////////////////////////////
+    //// Player Child Textured Square /////////////////////////////////////
+    /////////////////////////////////////////////////////////////////
+    {
+        float vertices[5 * 4] =
+        {
+            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+            0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+            0.5f, 0.5f, 0.0f, 1.0f, 1.0f,
+            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f,
+        };
+        uint32_t indices[6] = { 0, 1, 2, 2, 3, 0 };
+
+        const Muse::BufferLayout layout =
+        {
+            { Muse::ShaderDataType::Float3, "a_Position" },
+            { Muse::ShaderDataType::Float2, "a_TexCoord" },
+        };
+
         auto gameObject = scene->AddGameObject();
-        gameObject->AddComponent<PlayerComponent>();
+        m_PlayerGameObject->GetTransform()->AddChild(gameObject->GetTransform());
+
         auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
 
         renderComponent->SetMesh(vertices,
@@ -161,7 +200,8 @@ void Game3D::OnStart()
         textureShader->Bind();
         textureShader->SetInt("u_Texture", 0);
 
-        gameObject->GetTransform()->SetPosition({ 0, 0, 1 });
+        gameObject->GetTransform()->SetLocalPosition({ 1.f, 1.0f, 0.f });
+        //gameObject->GetTransform()->SetLocalScale({ 0.5f, 0.5f, 0.5f });
     }
 }
 
@@ -188,7 +228,14 @@ void Game3D::OnRender()
             {
                 meshComponent->GetTexture()->Bind();
             }
-            Muse::Renderer::Submit(meshComponent->GetShader(), meshComponent->GetVA(), gameObject->GetTransform()->GetModelMatrix());
+
+            if(gameObject->GetTransform()->HasParent())
+            {
+                glm::mat4 model = gameObject->GetTransform()->GetWorldModelMatrix();
+                glm::mat4 test = gameObject->GetTransform()->GetWorldModelMatrix();
+            }
+
+            Muse::Renderer::Submit(meshComponent->GetShader(), meshComponent->GetVA(), gameObject->GetTransform()->GetWorldModelMatrix());
         }
     }
 

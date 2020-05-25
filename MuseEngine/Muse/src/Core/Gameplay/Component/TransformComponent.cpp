@@ -8,160 +8,198 @@
 
 namespace Muse
 {
-    void TransformComponent::SetPosition(const glm::vec3& a_Position)
+    glm::vec3 TransformComponent::GetWorldPosition() const
     {
-		MUSE_PROFILE_FUNCTION();
-
-		m_DirtyPosition = m_DirtyModel = true;
-		m_Position = a_Position;
-    }
-
-    void TransformComponent::SetPosition(const glm::vec2& a_Position)
-    {
-		MUSE_PROFILE_FUNCTION();
-
-		m_DirtyPosition = m_DirtyModel = true;
-		m_Position = glm::vec3(a_Position.x, a_Position.y, m_Position.z);
-    }
-
-    void TransformComponent::Move(const glm::vec3& a_Movement)
-    {
-		MUSE_PROFILE_FUNCTION();
-
-		m_DirtyPosition = m_DirtyModel = true;
-		m_Position += a_Movement;
-    }
-
-    void TransformComponent::Move(const glm::vec2& a_Movement)
-    {
-		MUSE_PROFILE_FUNCTION();
-
-		m_DirtyPosition = m_DirtyModel = true;
-		m_Position += glm::vec3(a_Movement.x, a_Movement.y, 0);
-    }
-
-    void TransformComponent::SetScale(const glm::vec3& a_Scale)
-    {
-		MUSE_PROFILE_FUNCTION();
-
-		m_DirtyScale = m_DirtyModel = true;
-		m_Scale = a_Scale;
-    }
-
-    void TransformComponent::SetScale(const glm::vec2& a_Scale)
-    {
-		MUSE_PROFILE_FUNCTION();
-
-		m_DirtyScale = m_DirtyModel = true;
-		m_Scale = glm::vec3(a_Scale.x, a_Scale.y, m_Scale.z);;
-    }
-
-    void TransformComponent::SetRotation(const glm::vec3& a_Rotation)
-    {
-		MUSE_PROFILE_FUNCTION();
-
-		m_DirtyScale = m_DirtyModel = true;
-		m_Rotation = a_Rotation;
-    }
-
-    void TransformComponent::SetRotationQuat(const glm::quat& a_Rotation)
-    {
-		MUSE_PROFILE_FUNCTION();
-
-		m_DirtyScale = m_DirtyModel = true;
-		m_RotationQuaternion = a_Rotation;
-    }
-
-	const glm::mat4& TransformComponent::GetTranslationMatrix()
-	{
-		MUSE_PROFILE_FUNCTION();
-
-		if (m_DirtyPosition)
+		if (!HasParent())
 		{
-			m_TranslationMatrix = glm::translate(m_Position);
-			m_DirtyPosition = false;
+			return m_LocalPosition;
 		}
 
-		return m_TranslationMatrix;
-	}
+		return m_Parent->TransformPoint(m_LocalPosition);
+    }
 
-	const glm::mat4& TransformComponent::GetRotationMatrix()
+	glm::vec3 TransformComponent::GetWorldScale() const
 	{
-		MUSE_PROFILE_FUNCTION();
-
-		if (m_DirtyRotation)
+		if (!HasParent())
 		{
-			m_RotationMatrix = glm::rotate(m_Rotation.x, glm::vec3(1, 0, 0));
-			m_RotationMatrix = glm::rotate(m_RotationMatrix, m_Rotation.y, glm::vec3(0, 1, 0));
-			m_RotationMatrix = glm::rotate(m_RotationMatrix, m_Rotation.z, glm::vec3(0, 0, 1));
-
-			m_DirtyRotation = false;
+			return m_LocalScale;
 		}
 
-		return m_RotationMatrix;
+		return m_Parent->TransformVector(m_LocalScale);
 	}
 
-	const glm::mat4& TransformComponent::GetScaleMatrix()
+    void TransformComponent::SetLocalPosition(const glm::vec3& a_Position)
+    {
+		MUSE_PROFILE_FUNCTION();
+
+		//m_DirtyPosition = m_DirtyModel = true;
+
+		SetDirty();
+		m_LocalPosition = a_Position;
+    }
+
+    void TransformComponent::SetLocalPosition(const glm::vec2& a_Position)
+    {
+		MUSE_PROFILE_FUNCTION();
+
+		//m_DirtyPosition = m_DirtyModel = true;
+
+		SetDirty();
+		m_LocalPosition = glm::vec3(a_Position.x, a_Position.y, m_LocalPosition.z);
+    }
+
+    void TransformComponent::Translate(const glm::vec3& a_Movement)
+    {
+		MUSE_PROFILE_FUNCTION();
+
+		//m_DirtyPosition = m_DirtyModel = true;
+    	
+		SetDirty();
+		m_LocalPosition += a_Movement;
+    }
+
+    void TransformComponent::Translate(const glm::vec2& a_Movement)
+    {
+		MUSE_PROFILE_FUNCTION();
+
+		//m_DirtyPosition = m_DirtyModel = true;
+    	
+		SetDirty();
+		m_LocalPosition += glm::vec3(a_Movement.x, a_Movement.y, 0);
+    }
+
+    void TransformComponent::SetLocalScale(const glm::vec3& a_Scale)
+    {
+		MUSE_PROFILE_FUNCTION();
+
+		//m_DirtyScale = m_DirtyModel = true;
+    	
+		SetDirty();
+		m_LocalScale = a_Scale;
+    }
+
+    void TransformComponent::SetLocalScale(const glm::vec2& a_Scale)
+    {
+		MUSE_PROFILE_FUNCTION();
+
+		//m_DirtyScale = m_DirtyModel = true;
+    	
+		SetDirty();
+		m_LocalScale = glm::vec3(a_Scale.x, a_Scale.y, m_LocalScale.z);
+    }
+
+	void TransformComponent::ScaleLocal(const glm::vec2& a_Scale)
+	{
+		SetDirty();
+		m_LocalScale += glm::vec3(a_Scale.x, a_Scale.y, 0);
+	}
+
+	void TransformComponent::ScaleLocal(const glm::vec3& a_Scale)
+	{
+		SetDirty();
+		m_LocalScale += a_Scale;
+	}
+
+	void TransformComponent::SetLocalRotation(const glm::vec3& a_Rotation)
+    {
+		MUSE_PROFILE_FUNCTION();
+
+		//m_DirtyRotation = m_DirtyModel = true;
+    	
+		SetDirty();
+		m_LocalRotation = a_Rotation;
+    }
+
+	void TransformComponent::RotateLocal(const glm::vec3& a_Rotation)
+    {
+		MUSE_PROFILE_FUNCTION();
+
+		//m_DirtyRotation = m_DirtyModel = true;
+    	
+		SetDirty();
+		m_LocalRotation += a_Rotation;
+    }
+
+	const glm::mat4& TransformComponent::GetWorldModelMatrix()
 	{
 		MUSE_PROFILE_FUNCTION();
 
-		if (m_DirtyScale)
+		if (m_Dirty)
 		{
-			m_ScaleMatrix = glm::scale(m_Scale);
-
-			m_DirtyScale = false;
+			m_WorldModelMatrix = CalculateWorldTranslationMatrix() * CalculateWorldRotationMatrix() * CalculateWorldScaleMatrix();
+			m_Dirty = false;
 		}
 
-		return m_ScaleMatrix;
+		return m_WorldModelMatrix;
 	}
 
-	const glm::mat4& TransformComponent::GetModelMatrix()
-	{
-		MUSE_PROFILE_FUNCTION();
+    glm::mat4 TransformComponent::CalculateWorldRotationMatrix() const
+    {
+		glm::mat4 localRotationMatrix = glm::rotate(m_LocalRotation.x, glm::vec3(1, 0, 0));
+		localRotationMatrix = glm::rotate(localRotationMatrix, m_LocalRotation.y, glm::vec3(0, 1, 0));
+		localRotationMatrix = glm::rotate(localRotationMatrix, m_LocalRotation.z, glm::vec3(0, 0, 1));
 
-		if (m_DirtyModel)
+		if (!HasParent())
 		{
-			m_ModelMatrix = GetTranslationMatrix() * GetRotationMatrix() * GetScaleMatrix();
-
-			m_DirtyModel = false;
+			return localRotationMatrix;
 		}
 
-		return m_ModelMatrix;
+		return m_Parent->CalculateWorldRotationMatrix() * localRotationMatrix;
+    }
+
+    void TransformComponent::AddChild(const std::shared_ptr<TransformComponent>& a_ChildTransformComponent)
+    {
+		if(a_ChildTransformComponent->HasParent())
+		{
+			a_ChildTransformComponent->GetParent()->RemoveChild(a_ChildTransformComponent);
+		}
+
+		m_Children.push_back(a_ChildTransformComponent);
+		a_ChildTransformComponent->SetParent(shared_from_this());
+    }
+
+    void TransformComponent::RemoveChild(const std::shared_ptr<TransformComponent>& a_ChildTransformComponent)
+	{
+		ASSERT_ENGINE(std::find(m_Children.begin(), m_Children.end(), a_ChildTransformComponent) != m_Children.end(), "Transform to remove as a child is not a child!")
+
+		m_Children.erase(std::remove(m_Children.begin(), m_Children.end(), a_ChildTransformComponent), m_Children.end());
+		a_ChildTransformComponent->SetParent(nullptr);
 	}
 
-	glm::vec3 TransformComponent::InverseTransformPoint(const glm::vec3& worldPoint)
+    void TransformComponent::SetParent(const std::shared_ptr<TransformComponent>& a_ParentTransformComponent)
+    {
+		m_Parent = a_ParentTransformComponent;
+    }
+
+    glm::vec3 TransformComponent::InverseTransformPoint(const glm::vec3& a_WorldPoint)
 	{
 		MUSE_PROFILE_FUNCTION();
 
-		const glm::vec4 transformed = glm::inverse(GetModelMatrix()) * glm::vec4(worldPoint.x, worldPoint.y, worldPoint.z, 1);
+		const glm::vec4 transformed = glm::inverse(GetWorldModelMatrix()) * glm::vec4(a_WorldPoint, 1);
 		return glm::vec3(transformed);
 	}
 
-	glm::vec3 TransformComponent::InverseTransformVector(const glm::vec3& worldVector)
+	glm::vec3 TransformComponent::InverseTransformVector(const glm::vec3& a_WorldVector)
 	{
 		MUSE_PROFILE_FUNCTION();
 
-		const glm::vec4 transformed = glm::inverse(GetModelMatrix()) * glm::vec4(worldVector.x, worldVector.y, worldVector.z, 0);
+		const glm::vec4 transformed = glm::inverse(GetWorldModelMatrix()) * glm::vec4(a_WorldVector, 0);
 		return glm::vec3(transformed);
 	}
 
-	glm::vec3 TransformComponent::TransformPoint(const glm::vec3& localPoint)
+	glm::vec3 TransformComponent::TransformPoint(const glm::vec3& a_LocalPoint)
 	{
 		MUSE_PROFILE_FUNCTION();
 
-		const glm::vec4 transformed = GetModelMatrix() * glm::vec4(localPoint.x, localPoint.y, localPoint.z, 1);
+		const glm::vec4 transformed = GetWorldModelMatrix() * glm::vec4(a_LocalPoint, 1);
 		return glm::vec3(transformed);
 	}
 
-	glm::vec3 TransformComponent::TransformVector(const glm::vec3& localVector)
+	glm::vec3 TransformComponent::TransformVector(const glm::vec3& a_LocalVector)
 	{
 		MUSE_PROFILE_FUNCTION();
 
-		glm::mat4 test;
-
-		test[1][1];
-
-		const glm::vec4 transformed = GetModelMatrix() * glm::vec4(localVector.x, localVector.y, localVector.z, 0);
+		const glm::vec4 transformed = GetWorldModelMatrix() * glm::vec4(a_LocalVector, 0);
 		return glm::vec3(transformed);
 	}
 }

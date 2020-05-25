@@ -13,6 +13,11 @@ namespace Muse
         : Component()
     {
         MUSE_PROFILE_FUNCTION();
+    }
+
+    void CameraComponent::OnInit()
+    {
+        Component::OnInit();
 
         s_MainCamera = this;
     }
@@ -28,7 +33,7 @@ namespace Muse
 
     const glm::mat4& CameraComponent::GetViewMatrix() const
     {
-        return GetGameObject()->GetTransform()->GetModelMatrix();
+        return GetGameObject()->GetTransform()->GetWorldModelMatrix();
     }
 
     void CameraComponent::RecalculateViewMatrix()
@@ -67,5 +72,4 @@ RTTR_REGISTRATION
         .property("m_IsEditorCamera", &Muse::CameraComponent::m_IsEditorCamera)
         .property("m_ZoomLevel", &Muse::CameraComponent::m_ZoomLevel)
         .property("m_AspectRatio", &Muse::CameraComponent::m_AspectRatio);
-
 }
