@@ -42,7 +42,6 @@ namespace Muse
         MUSE_PROFILE_FUNCTION();
 
         uint32_t indexCount = a_IndexCount == 0 ? a_VertexArray->GetIndexBuffer()->GetCount() : a_IndexCount;
-        //uint32_t indexCount = a_IndexCount ? a_VertexArray->GetIndexBuffer()->GetCount() : a_IndexCount;
 
         glDrawElements(GL_TRIANGLES, indexCount, GL_UNSIGNED_INT, nullptr);
         glBindTexture(GL_TEXTURE_2D, 0);

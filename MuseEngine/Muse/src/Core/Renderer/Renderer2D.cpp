@@ -95,9 +95,11 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
+        // Update camera in shader
         s_Data.ColoredTextureShader->Bind();
         s_Data.ColoredTextureShader->SetMat4("u_ViewProjection", a_OrthographicCamera.GetViewProjectionMatrix());
-
+         
+        // Reset QuadIndexCount and QuadVertexBufferPtr
         s_Data.QuadIndexCount = 0;
         s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
     }
@@ -106,12 +108,11 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
+        // Calculate the dataSize, Update the Buffer Data.
         uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
         s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
 
-        s_Data.QuadIndexCount = 0;
-        s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
-
+        //DrawCall
         RenderCommand::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
     }
 
