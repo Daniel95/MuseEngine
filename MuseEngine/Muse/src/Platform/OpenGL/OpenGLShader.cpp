@@ -77,70 +77,45 @@ namespace Muse
 		glUseProgram(0);
 	}
 
-    ///Improvement: cache the uniform location in a map, id is a_Name.
-    void OpenGLShader::SetInt(const std::string& a_Name, int a_Int)
+    void OpenGLShader::SetInt(const std::string& a_Name, int a_Value)
     {
 		MUSE_PROFILE_FUNCTION();
 
-		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
-		ASSERT(location != -1, "Uniform not found!");
-		glUniform1i(location, a_Int);
+        UploadUniformInt(a_Name, a_Value);
     }
 
-    void OpenGLShader::SetFloat1(const std::string& a_Name, float a_Float)
+    void OpenGLShader::SetIntArray(const std::string& a_Name, int* a_Values, uint32_t a_Count)
     {
-		MUSE_PROFILE_FUNCTION();
-
-		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
-		ASSERT(location != -1, "Uniform not found!");
-		glUniform1f(location, a_Float);
+        UploadUniformIntArray(a_Name, a_Values, a_Count);
     }
 
-    void OpenGLShader::SetFloat2(const std::string& a_Name, const glm::vec2& a_Float2)
+    void OpenGLShader::SetFloat(const std::string& a_Name, float a_Value)
     {
 		MUSE_PROFILE_FUNCTION();
 
-		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
-		ASSERT(location != -1, "Uniform not found!");
-		glUniform2f(location, a_Float2.x, a_Float2.y);
+        UploadUniformFloat(a_Name, a_Value);
     }
 
-    void OpenGLShader::SetFloat3(const std::string& a_Name, const glm::vec3& a_Float3)
+    void OpenGLShader::SetFloat3(const std::string& a_Name, const glm::vec3& a_Value)
     {
 		MUSE_PROFILE_FUNCTION();
 
-		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
-		ASSERT(location != -1, "Uniform not found!");
-		glUniform3f(location, a_Float3.x, a_Float3.y, a_Float3.z);
+        UploadUniformFloat3(a_Name, a_Value);
     }
 
-	void OpenGLShader::SetFloat4(const std::string& a_Name, const glm::vec4& a_Float4)
-	{
-		MUSE_PROFILE_FUNCTION();
-
-		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
-		ASSERT(location != -1, "Uniform not found!");
-		glUniform4f(location, a_Float4.x, a_Float4.y, a_Float4.z, a_Float4.w);
-	}
-
-    void OpenGLShader::SetMat3(const std::string& a_Name, const glm::mat3& a_Mat3)
+    void OpenGLShader::SetFloat4(const std::string& a_Name, const glm::vec4& a_Value)
     {
 		MUSE_PROFILE_FUNCTION();
 
-		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
-		ASSERT(location != -1, "Uniform not found!");
-		glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(a_Mat3));
+        UploadUniformFloat4(a_Name, a_Value);
     }
 
-	void OpenGLShader::SetMat4(const std::string& a_Name, const glm::mat4& a_Mat4)
+    void OpenGLShader::SetMat4(const std::string& a_Name, const glm::mat4& a_Value)
     {
 		MUSE_PROFILE_FUNCTION();
 
-		GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
-		ASSERT(location != -1, "Uniform not found!");
-		glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(a_Mat4));
-	}
-
+        UploadUniformMat4(a_Name, a_Value);
+    }
     void OpenGLShader::Compile(const std::string& a_VertexSource, const std::string& a_FragmentSource)
     {
 		MUSE_PROFILE_FUNCTION();
@@ -292,4 +267,52 @@ namespace Muse
 			glDeleteShader(id);
 		}
 	}
+
+    void OpenGLShader::UploadUniformInt(const std::string& a_Name, int a_Value)
+    {
+        GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
+        glUniform1i(location, a_Value);
+    }
+
+    void OpenGLShader::UploadUniformIntArray(const std::string& a_Name, int* a_Values, uint32_t count)
+    {
+        GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
+        glUniform1iv(location, count, a_Values);
+    }
+
+    void OpenGLShader::UploadUniformFloat(const std::string& a_Name, float a_Value)
+    {
+        GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
+        glUniform1f(location, a_Value);
+    }
+
+    void OpenGLShader::UploadUniformFloat2(const std::string& a_Name, const glm::vec2& a_Value)
+    {
+        GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
+        glUniform2f(location, a_Value.x, a_Value.y);
+    }
+
+    void OpenGLShader::UploadUniformFloat3(const std::string& a_Name, const glm::vec3& a_Value)
+    {
+        GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
+        glUniform3f(location, a_Value.x, a_Value.y, a_Value.z);
+    }
+
+    void OpenGLShader::UploadUniformFloat4(const std::string& a_Name, const glm::vec4& a_Value)
+    {
+        GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
+        glUniform4f(location, a_Value.x, a_Value.y, a_Value.z, a_Value.w);
+    }
+
+    void OpenGLShader::UploadUniformMat3(const std::string& a_Name, const glm::mat3& a_Matrix)
+    {
+        GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
+        glUniformMatrix3fv(location, 1, GL_FALSE, glm::value_ptr(a_Matrix));
+    }
+
+    void OpenGLShader::UploadUniformMat4(const std::string& a_Name, const glm::mat4& a_Matrix)
+    {
+        GLint location = glGetUniformLocation(m_RendererID, a_Name.c_str());
+        glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(a_Matrix));
+    }
 }

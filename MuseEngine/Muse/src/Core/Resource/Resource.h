@@ -29,6 +29,12 @@ namespace Muse
             ar(test);
         }
 
+        virtual bool operator==(const Resource a_Resource) const
+        {
+            ASSERT_ENGINE(!m_Path.empty() && !a_Resource.GetPath().empty(), "Resource path cannot be empty when comparing!");
+            return m_Path == a_Resource.GetPath();
+        }
+
     protected:
         std::string m_Name = "";
         std::string m_Path = "";

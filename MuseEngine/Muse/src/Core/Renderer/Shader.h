@@ -14,11 +14,10 @@ namespace Muse
         virtual void Unbind() const = 0;
 
         virtual void SetInt(const std::string& a_Name, int a_Int) = 0;
-        virtual void SetFloat1(const std::string& a_Name, float a_Float1) = 0;
-        virtual void SetFloat2(const std::string& a_Name, const glm::vec2& a_Float2) = 0;
+        virtual void SetIntArray(const std::string& a_Name, int* values, uint32_t a_Count) = 0;
+        virtual void SetFloat(const std::string& a_Name, float a_Float1) = 0;
         virtual void SetFloat3(const std::string& a_Name, const glm::vec3& a_Float3) = 0;
         virtual void SetFloat4(const std::string& a_Name, const glm::vec4& a_Float4) = 0;
-        virtual void SetMat3(const std::string& a_Name, const glm::mat3& a_Mat3) = 0;
         virtual void SetMat4(const std::string& a_Name, const glm::mat4& a_Mat4) = 0;
 
         virtual void Compile(const std::string& a_VertexSource, const std::string& a_FragmentSource) = 0;

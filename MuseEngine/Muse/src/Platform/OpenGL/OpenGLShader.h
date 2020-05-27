@@ -18,15 +18,25 @@ namespace Muse
         virtual void Bind() const override;
         virtual void Unbind() const override;
 
-        virtual void SetInt(const std::string& a_Name, int a_Int) override;
-        virtual void SetFloat1(const std::string& a_Name, float a_Float) override;
-        virtual void SetFloat2(const std::string& a_Name, const glm::vec2& a_Float2) override;
-        virtual void SetFloat3(const std::string& a_Name, const glm::vec3& a_Float3) override;
-        virtual void SetFloat4(const std::string& a_Name, const glm::vec4& a_Float4) override;
-        virtual void SetMat3(const std::string& a_Name, const glm::mat3& a_Mat3) override;
-        virtual void SetMat4(const std::string& a_Name, const glm::mat4& a_Mat4) override;
+        virtual void SetInt(const std::string& a_Name, int a_Value) override;
+        virtual void SetIntArray(const std::string& a_Name, int* a_Values, uint32_t count) override;
+        virtual void SetFloat(const std::string& a_Name, float a_Value) override;
+        virtual void SetFloat3(const std::string& a_Name, const glm::vec3& a_Value) override;
+        virtual void SetFloat4(const std::string& a_Name, const glm::vec4& a_Value) override;
+        virtual void SetMat4(const std::string& a_Name, const glm::mat4& a_Value) override;
 
         void Compile(const std::string& a_VertexSource, const std::string& a_FragmentSource) override;
+
+        void UploadUniformInt(const std::string& a_Name, int a_Value);
+        void UploadUniformIntArray(const std::string& a_Name, int* values, uint32_t a_Count);
+
+        void UploadUniformFloat(const std::string& name, float a_Value);
+        void UploadUniformFloat2(const std::string& name, const glm::vec2& a_Value);
+        void UploadUniformFloat3(const std::string& name, const glm::vec3& a_Value);
+        void UploadUniformFloat4(const std::string& name, const glm::vec4& a_Value);
+
+        void UploadUniformMat3(const std::string& a_Name, const glm::mat3& a_Matrix);
+        void UploadUniformMat4(const std::string& a_Name, const glm::mat4& a_Matrix);
 
     private:
         uint32_t m_RendererID;
