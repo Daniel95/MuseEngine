@@ -177,19 +177,22 @@ namespace Muse
 
         const glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
+        // Check if the texture is stored
         float textureIndex = 0.0f;
         for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
         {
-            if (s_Data.TextureSlots[i] == a_Texture)
+            if (*s_Data.TextureSlots[i].get() == *a_Texture.get())
             {
                 textureIndex = (float)i;
             }
         }
 
+        // If the texture is not yet stored assign it to TextureSlots and increase TextureSlotIndex
         if (textureIndex == 0.0f)
         {
             textureIndex = (float)s_Data.TextureSlotIndex;
             s_Data.TextureSlots[s_Data.TextureSlotIndex] = a_Texture;
+            s_Data.TextureSlotIndex++;
         }
 
         s_Data.QuadVertexBufferPtr->Position = a_Position;

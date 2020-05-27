@@ -82,7 +82,8 @@ void Game2D::OnRender()
     Muse::Renderer2D::DrawQuad(
         { -0.25f, -0.25f, 0 },
         { 0.5f, 0.5f },
-        m_Texture
+        m_Texture,
+        10.0f
     );
 
     /*
