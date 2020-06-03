@@ -73,17 +73,36 @@ void Game2D::OnRender()
 
     m_GridCellRotation += 30 * Application::GetDeltaTime();
 
+    int counter = 0;
+
     for (int y = 0; y < gridHeight; y++)
     {
         for (int x = 0; x < gridWidth; x++)
         {
-            Muse::Renderer2D::DrawQuad(
-                { x * margin, y * margin, 0 },
-                { size, size },
-                m_GridCellRotation,
-                { 1, 0.5f, 0, 1.0f }
-            );
+
+            if (counter % 2 == 0)
+            {
+                Muse::Renderer2D::DrawQuad(
+                    { x * margin, y * margin, 0 },
+                    { size, size },
+                    m_GridCellRotation,
+                    { 1, 0.5f, 0, 1.0f }
+                );
+            }
+            else
+            {
+                Muse::Renderer2D::DrawQuad(
+                    { x * margin, y * margin, 0 },
+                    { size, size },
+                    m_GridCellRotation,
+                    m_RaymanTexture
+                );
+            }
+
+            counter++;
         }
+        counter++;
+
     }
 
     /*

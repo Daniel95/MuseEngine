@@ -150,6 +150,15 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\ECS\Component\ComponentHelper.h" />
+    <ClInclude Include="src\Core\ECS\Component\ComponentManager.h" />
+    <ClInclude Include="src\Core\ECS\Component\ComponentType.h" />
+    <ClInclude Include="src\Core\ECS\Component\TransformComponent.h" />
+    <ClInclude Include="src\Core\ECS\Component\TransformHelper.h" />
+    <ClInclude Include="src\Core\ECS\Entity\Entity.h" />
+    <ClInclude Include="src\Core\ECS\Entity\EntityTracker.h" />
+    <ClInclude Include="src\Core\ECS\Job\Job.h" />
+    <ClInclude Include="src\Core\ECS\Job\JobManager.h" />
     <ClInclude Include="src\Core\Renderer\Renderer2DOld.h" />
     <ClInclude Include="src\Core\Utilities\Color.h" />
     <ClInclude Include="src\Core\Application.h" />
@@ -214,6 +223,7 @@
     <ClInclude Include="src\Core\Utilities\Utilities.h" />
     <ClInclude Include="src\Core\Utilities\json\from_json.h" />
     <ClInclude Include="src\Core\Utilities\json\to_json.h" />
+    <ClInclude Include="src\Core\Utilities\VectorHelper.h" />
     <ClInclude Include="src\Core\Window.h" />
     <ClInclude Include="src\Editor\Editor.h" />
     <ClInclude Include="src\Editor\FileBrowser.h" />
@@ -602,6 +612,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp" />
+    <ClCompile Include="src\Core\ECS\Component\ComponentHelper.cpp" />
+    <ClCompile Include="src\Core\ECS\Component\TransformHelper.cpp" />
+    <ClCompile Include="src\Core\ECS\Entity\Entity.cpp" />
+    <ClCompile Include="src\Core\ECS\Entity\EntityTracker.cpp" />
+    <ClCompile Include="src\Core\ECS\Job\JobManager.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\CameraComponent.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\Component.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\OrthographicCameraControllerComponent.cpp" />
