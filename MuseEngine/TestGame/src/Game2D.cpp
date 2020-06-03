@@ -75,13 +75,28 @@ void Game2D::OnRender()
     );
 
     Muse::Renderer2D::DrawQuad(
-        { 0.25f, 0.25f, 0 },
+        { 1, 1, 0 },
         { 0.5f, 0.5f },
+        0,
+        { 0, 1, 0, 1 }
+    );
+
+    Muse::Renderer2D::DrawQuad(
+        { 1, -1, 0 },
+        { 0.5f, 0.5f },
+        0,
         m_CheckerboardTexture
     );
 
     Muse::Renderer2D::DrawQuad(
-        { -0.25f, -0.25f, 0 },
+        { -1, 1, 0 },
+        { 0.5f, 0.5f },
+        45,
+        { 1, 0.5f, 0, 1.0f }
+    );
+
+    Muse::Renderer2D::DrawQuad(
+        { -1.0f, -1.0f, 0 },
         { 0.5f, 0.5f },
         45,
         m_RaymanTexture
