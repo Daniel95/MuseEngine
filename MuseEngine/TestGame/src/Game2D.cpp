@@ -44,7 +44,8 @@ void Game2D::OnStart()
         gameObject->GetTransform()->SetLocalScale({ 2, 1 });
     }
 
-    m_Texture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
+    m_RaymanTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
+    m_CheckerboardTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Checkerboard.png");
 
     std::string path = "assets/scenes/testscene.txt";
     scene->Save(path);
@@ -76,15 +77,14 @@ void Game2D::OnRender()
     Muse::Renderer2D::DrawQuad(
         { 0.25f, 0.25f, 0 },
         { 0.5f, 0.5f },
-        m_Texture
-
-        //{ 0.0f, 1.0f, 0.0f, 1.0f }
+        m_CheckerboardTexture
     );
 
     Muse::Renderer2D::DrawQuad(
         { -0.25f, -0.25f, 0 },
         { 0.5f, 0.5f },
-        m_Texture
+        45,
+        m_RaymanTexture
     );
 
     /*

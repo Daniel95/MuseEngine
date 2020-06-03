@@ -64,5 +64,6 @@ namespace Muse
         //static void DrawQuad(const QuadProperties& a_QuadProperties);
         static void DrawQuad(const glm::vec3& a_Position, const glm::vec2& a_Size, const glm::vec4& a_Color);
         static void DrawQuad(const glm::vec3& a_Position, const glm::vec2& a_Size, const std::shared_ptr<Texture>& a_Texture, float a_TilingFactor = 1, const glm::vec4& a_TintColor = glm::vec4(1));
+        static void DrawQuad(const glm::vec3& a_Position, const glm::vec2& a_Size, float a_Rotation, const std::shared_ptr<Texture>& a_Texture, float a_TilingFactor = 1, const glm::vec4& a_TintColor = glm::vec4(1));
     };
 }

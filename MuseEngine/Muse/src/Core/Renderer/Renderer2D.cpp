@@ -236,6 +236,65 @@ namespace Muse
         s_Data.QuadIndexCount += 6;
     }
 
+    void Renderer2D::DrawQuad(const glm::vec3& a_Position, const glm::vec2& a_Size, float a_Rotation, const std::shared_ptr<Texture>& a_Texture, float a_TilingFactor, const glm::vec4& a_TintColor)
+    {
+        MUSE_PROFILE_FUNCTION();
+
+        const glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+        // Check if the texture is stored
+        float textureIndex = 0.0f;
+        for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
+        {
+            if (*s_Data.TextureSlots[i].get() == *a_Texture.get())
+            {
+                textureIndex = (float)i;
+            }
+        }
+
+        // If the texture is not yet stored assign it to TextureSlots and increase TextureSlotIndex
+        if (textureIndex == 0.0f)
+        {
+            textureIndex = (float)s_Data.TextureSlotIndex;
+            s_Data.TextureSlots[s_Data.TextureSlotIndex] = a_Texture;
+            s_Data.TextureSlotIndex++;
+        }
+
+        glm::mat4 transform = glm::translate(glm::mat4(1.0f), a_Position)
+            * glm::rotate(glm::mat4(1.0f), glm::radians(a_Rotation), { 0.0f, 0.0f, 1.0f })
+            * glm::scale(glm::mat4(1.0f), { a_Size.x, a_Size.y, 1.0f });
+
+        s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[0];
+        s_Data.QuadVertexBufferPtr->Color = a_TintColor;
+        s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(0.0f, 0.0f);
+        s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+        s_Data.QuadVertexBufferPtr->TilingFactor = a_TilingFactor;
+        s_Data.QuadVertexBufferPtr++;
+
+        s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[1];
+        s_Data.QuadVertexBufferPtr->Color = a_TintColor;
+        s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(1.0f, 0.0f);
+        s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+        s_Data.QuadVertexBufferPtr->TilingFactor = a_TilingFactor;
+        s_Data.QuadVertexBufferPtr++;
+
+        s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[2];
+        s_Data.QuadVertexBufferPtr->Color = a_TintColor;
+        s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(1.0f, 1.0f);
+        s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+        s_Data.QuadVertexBufferPtr->TilingFactor = a_TilingFactor;
+        s_Data.QuadVertexBufferPtr++;
+
+        s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[3];
+        s_Data.QuadVertexBufferPtr->Color = a_TintColor;
+        s_Data.QuadVertexBufferPtr->TexCoord = glm::vec2(0.0f, 1.0f);
+        s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+        s_Data.QuadVertexBufferPtr->TilingFactor = a_TilingFactor;
+        s_Data.QuadVertexBufferPtr++;
+
+        s_Data.QuadIndexCount += 6;
+    }
+
     /*
     void Renderer2D::DrawQuad(const QuadPropertiesTransform& a_QuadPropertiesTransform)
     {
