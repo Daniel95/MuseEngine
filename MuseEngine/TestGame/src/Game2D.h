@@ -31,5 +31,6 @@ private:
     std::shared_ptr<Muse::Texture> m_CheckerboardTexture;
 
     const float m_CameraMoveSpeed = 0.3f;
+    float m_GridCellRotation = 0;
 
 };

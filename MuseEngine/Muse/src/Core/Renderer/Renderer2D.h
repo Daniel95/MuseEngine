@@ -1,6 +1,8 @@
 ﻿#pragma once
 
 #include <memory>
+#include <array>
+#include "glm/glm.hpp"
 
 namespace Muse
 {
@@ -16,7 +18,7 @@ namespace Muse
         struct Statistics
         {
             uint32_t DrawCalls = 0;
-            uint32_t QuadCount;
+            uint32_t QuadCount = 0;
 
             uint32_t GetTotalVertex() { return QuadCount * 4; };
             uint32_t GetTotalIndex() { return QuadCount * 6; };
@@ -33,7 +35,7 @@ namespace Muse
 
         struct Data
         {
-            static const uint32_t MaxQuads = 20000;
+            static const uint32_t MaxQuads = 5000;
             static const uint32_t MaxVertices = MaxQuads * 4;
             static const uint32_t MaxIndices = MaxQuads * 6;
             static const uint32_t MaxTextureSlots = 32; // TODO: RenderCaps
@@ -61,6 +63,7 @@ namespace Muse
 
         static void BeginScene(const CameraComponent& a_OrthographicCamera);
         static void EndScene();
+        static void Flush();
 
         static void DrawQuad(const glm::vec3& a_Position, const glm::vec2& a_Size, float a_Rotation, const glm::vec4& a_Color = glm::vec4(1));
         static void DrawQuad(const glm::vec3& a_Position, const glm::vec2& a_Size, float a_Rotation, const std::shared_ptr<Texture>& a_Texture, float a_TilingFactor = 1, const glm::vec4& a_TintColor = glm::vec4(1));
@@ -74,6 +77,6 @@ namespace Muse
         static Data s_Data;
 
         static void DrawQuad(const glm::mat4& a_Transform, const glm::vec4& a_TintColor, int a_TextureIndex, float a_TilingFactor);
-
+        static void Reset();
     };
 }

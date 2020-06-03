@@ -94,12 +94,8 @@ namespace Muse
         // Update camera in shader
         s_Data.ColoredTextureShader->Bind();
         s_Data.ColoredTextureShader->SetMat4("u_ViewProjection", a_OrthographicCamera.GetViewProjectionMatrix());
-         
-        // Reset QuadIndexCount and QuadVertexBufferPtr
-        s_Data.QuadIndexCount = 0;
-        s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
 
-        s_Data.TextureSlotIndex = 1;
+        Reset();
     }
 
     void Renderer2D::EndScene()
@@ -110,6 +106,11 @@ namespace Muse
         uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
         s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
 
+        Flush();
+    }
+
+    void Renderer2D::Flush()
+    {
         // Bind textures
         for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
         {
@@ -118,6 +119,8 @@ namespace Muse
 
         // DrawCall
         RenderCommand::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
+
+        s_Data.Stats.DrawCalls++;
     }
 
     void Renderer2D::DrawQuad(const glm::vec3& a_Position, const glm::vec2& a_Size, float a_Rotation, const glm::vec4& a_Color)
@@ -172,7 +175,7 @@ namespace Muse
         const float textureIndex = 0.0f;
         const float tilingFactor = 0.0f;
 
-        DrawQuad(a_Transform, a_Color, textureIndex, tilingFactor);
+        DrawQuad(a_Transform, a_Color, 0, 0);
     }
 
     void Renderer2D::DrawQuad(const glm::mat4& a_Transform, const std::shared_ptr<Texture>& a_Texture, float a_TilingFactor, const glm::vec4& a_TintColor)
@@ -202,6 +205,12 @@ namespace Muse
 
     void Renderer2D::DrawQuad(const glm::mat4& a_Transform, const glm::vec4& a_TintColor, int a_TextureIndex, float a_TilingFactor)
     {
+        if (s_Data.QuadIndexCount >= Renderer2D::Data::MaxIndices)
+        {
+            EndScene();
+            Reset();
+        }
+
         for (size_t i = 0; i < 4; i++)
         {
             s_Data.QuadVertexBufferPtr->Position = a_Transform * s_Data.QuadVertexPositions[i];
@@ -213,5 +222,16 @@ namespace Muse
         }
 
         s_Data.QuadIndexCount += 6;
+
+        s_Data.Stats.QuadCount++;
+    }
+
+    void Renderer2D::Reset()
+    {
+        // Reset QuadIndexCount and QuadVertexBufferPtr
+        s_Data.QuadIndexCount = 0;
+        s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
+
+        s_Data.TextureSlotIndex = 1;
     }
 }

@@ -61,9 +61,33 @@ void Game2D::OnRender()
     Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
     Muse::RenderCommand::Clear();
 
+    Muse::Renderer2D::ResetStatistics();
+
     Muse::Renderer2D::BeginScene(*Muse::CameraComponent::GetMain());
 
-    const int amount = 1000;
+    float gridWidth = 250;
+    float gridHeight = 250;
+
+    float margin = 1.5f;
+    float size = 1.0f;
+
+    m_GridCellRotation += 30 * Application::GetDeltaTime();
+
+    for (int y = 0; y < gridHeight; y++)
+    {
+        for (int x = 0; x < gridWidth; x++)
+        {
+            Muse::Renderer2D::DrawQuad(
+                { x * margin, y * margin, 0 },
+                { size, size },
+                m_GridCellRotation,
+                { 1, 0.5f, 0, 1.0f }
+            );
+        }
+    }
+
+    /*
+    const int amount = 50000;
 
     for (size_t i = 0; i < amount; i++)
     {
@@ -74,7 +98,9 @@ void Game2D::OnRender()
             { 1, 0.5f, 0, 1.0f }
         );
     }
+    */
 
+    /*
     Muse::Renderer2D::DrawQuad(
         { 1, 1, 0 },
         { 0.5f, 0.5f },
@@ -82,7 +108,6 @@ void Game2D::OnRender()
         { 0, 1, 0, 1 }
     );
 
-    /*
     Muse::Renderer2D::DrawQuad(
         { 1, -1, 0 },
         { 0.5f, 0.5f },
@@ -155,12 +180,17 @@ void Game2D::OnRender()
 
 void Game2D::OnImGuiRender()
 {
-    ImGui::Begin("Test 1");
-    ImGui::End();
+    ImGui::Begin("Settings");
 
-    ImGui::Begin("Test 2");
-    ImGui::End();
+    auto stats = Muse::Renderer2D::GetStatistics();
 
-    ImGui::Begin("Test 3");
+    ImGui::Text("Renderer2D Statistics:");
+    ImGui::Text("FPS: %f", 1 / GetDeltaTime());
+    ImGui::Text("Draw Calls: %d", stats.DrawCalls);
+    ImGui::Text("Quad Count: %d", stats.QuadCount);
+    ImGui::Text("Vertex Count: %d", stats.GetTotalVertex());
+    ImGui::Text("Index Count: %d", stats.GetTotalIndex());
+
+
     ImGui::End();
 } 
