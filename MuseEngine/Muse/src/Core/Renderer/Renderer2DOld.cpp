@@ -12,14 +12,14 @@
 
 namespace Muse
 {
-    struct Renderer2DStorage
+    struct Storage
     {
         std::shared_ptr<VertexArray> QuadVertexArray;
         std::shared_ptr<Shader> ColoredTextureShader;
         std::shared_ptr<Texture> WhiteTexture;
     };
 
-    static Renderer2DStorage s_Data;
+    static Storage s_Data;
     
     void Renderer2DOld::Init()
     {
