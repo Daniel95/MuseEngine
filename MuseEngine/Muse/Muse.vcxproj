@@ -150,7 +150,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Core\ECS\Job\RenderJob.h" />
+    <ClInclude Include="src\Core\ECS\Job\Render2DJob.h" />
     <ClInclude Include="src\Core\ECS\Component\ComponentHelper.h" />
     <ClInclude Include="src\Core\ECS\Component\ComponentManager.h" />
     <ClInclude Include="src\Core\ECS\Component\ComponentType.h" />
@@ -161,6 +161,7 @@
     <ClInclude Include="src\Core\ECS\Entity\EntityTracker.h" />
     <ClInclude Include="src\Core\ECS\Job\Job.h" />
     <ClInclude Include="src\Core\ECS\Job\JobManager.h" />
+    <ClInclude Include="src\Core\Gameplay\Component\TransformComponentOld.h" />
     <ClInclude Include="src\Core\Utilities\Color.h" />
     <ClInclude Include="src\Core\Application.h" />
     <ClInclude Include="src\Core\Engine.h" />
@@ -174,7 +175,6 @@
     <ClInclude Include="src\Core\Gameplay\Component\PerspectiveCameraControllerComponent.h" />
     <ClInclude Include="src\Core\Gameplay\Component\RenderComponent.h" />
     <ClInclude Include="src\Core\Gameplay\Component\TestComponent.h" />
-    <ClInclude Include="src\Core\Gameplay\Component\TransformComponent.h" />
     <ClInclude Include="src\Core\Gameplay\GameObject.h" />
     <ClInclude Include="src\Core\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Core\Input\Input.h" />
@@ -625,7 +625,7 @@
     <ClCompile Include="src\Core\Gameplay\Component\PerspectiveCameraControllerComponent.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\RenderComponent.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\TestComponent.cpp" />
-    <ClCompile Include="src\Core\Gameplay\Component\TransformComponent.cpp" />
+    <ClCompile Include="src\Core\Gameplay\Component\TransformComponentOld.cpp" />
     <ClCompile Include="src\Core\Gameplay\GameObject.cpp" />
     <ClCompile Include="src\Core\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Core\ImGui\ImGuiLayer.cpp" />

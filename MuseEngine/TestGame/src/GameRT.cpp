@@ -4,7 +4,6 @@
 
 #include "glm/gtc/type_ptr.hpp"
 #include "imgui/imgui.h"
-#include "PlayerComponent.h"
 #include "Core/Resource/ResourceTest.h"
 #include "Core/Window.h"
 

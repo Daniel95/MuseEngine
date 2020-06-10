@@ -11,6 +11,8 @@
 #include "Scene/SceneManager.h"
 #include "Resource/ResourceManager.h"
 #include "Utilities/Defines.h"
+#include "Core/ECS/Job/JobManager.h"
+#include "Core/Renderer/Renderer2D.h"
 
 #include "GLFW/glfw3.h"
 #include "imgui.h"
@@ -49,6 +51,7 @@ namespace Muse
 
         m_SceneManager = std::make_shared<SceneManager>();
         m_ResourceManager = std::make_shared<ResourceManager>();
+        m_JobManager = std::make_shared<JobManager>();
 
         m_ImGuiLayer = new ImGuiLayer();
         PushOverlay(m_ImGuiLayer);
@@ -115,6 +118,7 @@ namespace Muse
         }
 
         m_UpdateEvent.Dispatch(m_DeltaTime);
+        m_JobManager->Update(JobType::Gameplay);
         OnUpdate(m_DeltaTime);
     }
 
@@ -166,7 +170,12 @@ namespace Muse
 
         m_ViewportFramebuffer->Bind();
 
+        Muse::Renderer2D::BeginScene(*Muse::CameraComponent::GetMain());
+        m_JobManager->Update(JobType::Renderer);
+
         OnRender();
+
+        Muse::Renderer2D::EndScene();
 
         m_ViewportFramebuffer->Unbind();
 

@@ -2,7 +2,7 @@
 
 #include "Plane.h"
 #include "Shape.h"
-#include "Core/Gameplay/Component/TransformComponent.h"
+#include "Core/Gameplay/Component/TransformComponentOld.h"
 #include "Core/Renderer/RayTracer/Ray.h"
 
 namespace Muse

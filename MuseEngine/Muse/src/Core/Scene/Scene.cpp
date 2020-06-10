@@ -3,7 +3,7 @@
 #include "Core/Scene/Scene.h"
 #include "Core/Application.h"
 #include "Core/Gameplay/GameObject.h"
-#include "Core/Gameplay/Component/TransformComponent.h"
+#include "Core/Gameplay/Component/TransformComponentOld.h"
 #include "Core/Gameplay/Component/CameraComponent.h"
 #include "Core/Gameplay/Component/Component.h"
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core/Gameplay/Component/Component.h"
-#include "Core/Gameplay/Component/TransformComponent.h"
+#include "Core/Gameplay/Component/TransformComponentOld.h"
 #include "Core/Gameplay/Component/CameraComponent.h"
 
 #include "Core/Utilities/Log.h"
@@ -19,7 +19,7 @@
 namespace Muse 
 {
     class Scene;
-    class TransformComponent;
+    class TransformComponentOld;
     class SystemManager;
 	class GameObject : public std::enable_shared_from_this<GameObject>
 	{
@@ -47,7 +47,7 @@ namespace Muse
         //template <class T>
         //bool TryGetComponent(std::shared_ptr<const T> a_Component) const;
         Scene* GetScene() const { return  m_Scene; }
-        std::shared_ptr<TransformComponent> GetTransform() const
+        std::shared_ptr<TransformComponentOld> GetTransform() const
         {
             ASSERT_ENGINE(m_TransformComponent != nullptr, "No transform component!");
             return m_TransformComponent;
@@ -67,7 +67,7 @@ namespace Muse
         std::vector<std::shared_ptr<Component>> m_Components;
         Scene* m_Scene = nullptr;
         bool m_Destroyed = false;
-        std::shared_ptr<TransformComponent> m_TransformComponent = nullptr;
+        std::shared_ptr<TransformComponentOld> m_TransformComponent = nullptr;
 
 	};
 

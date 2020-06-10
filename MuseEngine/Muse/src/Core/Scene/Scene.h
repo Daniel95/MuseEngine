@@ -23,7 +23,7 @@ namespace Muse
     class RayHitData;
     class Component;
     class GameObject;
-    class TransformComponent;
+    class TransformComponentOld;
     class CameraComponent;
     class Application;
     class AmbientLightSource;

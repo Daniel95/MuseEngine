@@ -5,7 +5,6 @@
 #include "Platform/OpenGL/OpenGLShader.h"
 #include "glm/gtc/type_ptr.hpp"
 #include "imgui/imgui.h"
-#include "PlayerComponent.h"
 
 #include "Mode.h"
 

@@ -1,5 +1,11 @@
 #pragma once
 
-struct Player {};
-struct Health {};
-struct Collider {};
+struct PlayerComponent 
+{
+    float speed = 1;
+};
+
+struct HealthComponent 
+{
+    float health = 100;
+};

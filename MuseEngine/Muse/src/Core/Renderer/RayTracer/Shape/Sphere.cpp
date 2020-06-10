@@ -1,7 +1,7 @@
 #include "MusePCH.h"
 
 #include "Sphere.h"
-#include "Core/Gameplay/Component/TransformComponent.h"
+#include "Core/Gameplay/Component/TransformComponentOld.h"
 #include "Core/Renderer/RayTracer/Ray.h"
 #include "Core/Utilities/Log.h"
 

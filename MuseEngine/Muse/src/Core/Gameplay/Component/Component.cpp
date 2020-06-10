@@ -2,7 +2,7 @@
 
 #include "Core/Gameplay/Component/Component.h"
 #include "Core/Gameplay/GameObject.h"
-#include "TransformComponent.h"
+#include "TransformComponentOld.h"
 #include "Core/Instrumentor.h"
 #include <utility>
 
@@ -54,7 +54,7 @@ namespace Muse
 		}
 	}
 
-    std::shared_ptr<TransformComponent> Component::GetTransform() const
+    std::shared_ptr<TransformComponentOld> Component::GetTransform() const
     {
 		return m_GameObject->GetTransform();
     }

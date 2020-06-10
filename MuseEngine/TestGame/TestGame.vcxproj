@@ -147,7 +147,6 @@
     <ClInclude Include="src\GamePT.h" />
     <ClInclude Include="src\GameRT.h" />
     <ClInclude Include="src\Mode.h" />
-    <ClInclude Include="src\PlayerComponent.h" />
     <ClInclude Include="src\RayTracer\SceneLibraryRT.h" />
     <ClInclude Include="src\TestGame.h" />
   </ItemGroup>
@@ -159,7 +158,6 @@
     <ClCompile Include="src\Game3D.cpp" />
     <ClCompile Include="src\GamePT.cpp" />
     <ClCompile Include="src\GameRT.cpp" />
-    <ClCompile Include="src\PlayerComponent.cpp" />
     <ClCompile Include="src\RayTracer\SceneLibraryRT.cpp" />
     <ClCompile Include="src\TestGame.cpp" />
   </ItemGroup>

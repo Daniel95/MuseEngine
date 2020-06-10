@@ -4,7 +4,6 @@
 
 #include "glm/gtc/type_ptr.hpp"
 #include "imgui/imgui.h"
-#include "PlayerComponent.h"
 #include "Core/Resource/ResourceTest.h"
 
 #include "Mode.h"
@@ -148,7 +147,7 @@ void Game3D::OnStart()
         };
 
         m_PlayerGameObject = scene->AddGameObject();
-        m_PlayerGameObject->AddComponent<PlayerComponent>();
+       // m_PlayerGameObject->AddComponent<PlayerComponent>();
         auto renderComponent = m_PlayerGameObject->AddComponent<Muse::RenderComponent>();
 
         renderComponent->SetMesh(vertices,

@@ -9,9 +9,9 @@ namespace Muse
 {
 	struct Render2DComponent
 	{
-        std::shared_ptr<Texture> texture;
-        glm::vec4 color;
-        glm::mat4 modelMatrix;
-        float tilingFactor;
+        std::shared_ptr<Texture> texture = nullptr;
+        glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
+        glm::mat4 modelMatrix = glm::identity<glm::mat4>();
+        float tilingFactor = 1;
 	};
 }

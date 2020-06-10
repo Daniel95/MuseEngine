@@ -132,9 +132,6 @@
     <ClInclude Include="src\Core\Gameplay\Component\TestComponent.h">
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Gameplay\Component\TransformComponent.h">
-      <Filter>src\Core\Gameplay\Component</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\Gameplay\GameObject.h">
       <Filter>src\Core\Gameplay</Filter>
     </ClInclude>
@@ -1419,8 +1416,9 @@
     <ClInclude Include="src\Core\ECS\Component\ComponentType.h" />
     <ClInclude Include="src\Core\ECS\Component\TransformHelper.h" />
     <ClInclude Include="src\Core\ECS\Component\TransformComponent.h" />
-    <ClInclude Include="src\Core\ECS\Job\RenderJob.h" />
     <ClInclude Include="src\Core\ECS\Component\Render2DComponent.h" />
+    <ClInclude Include="src\Core\ECS\Job\Render2DJob.h" />
+    <ClInclude Include="src\Core\Gameplay\Component\TransformComponentOld.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1439,9 +1437,6 @@
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Gameplay\Component\TestComponent.cpp">
-      <Filter>src\Core\Gameplay\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Gameplay\Component\TransformComponent.cpp">
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Gameplay\GameObject.cpp">
@@ -1603,5 +1598,6 @@
     <ClCompile Include="src\Core\ECS\Component\ComponentHelper.cpp" />
     <ClCompile Include="src\Core\ECS\Component\TransformHelper.cpp" />
     <ClCompile Include="src\Core\ECS\Job\Render2DJob.cpp" />
+    <ClCompile Include="src\Core\Gameplay\Component\TransformComponentOld.cpp" />
   </ItemGroup>
 </Project>

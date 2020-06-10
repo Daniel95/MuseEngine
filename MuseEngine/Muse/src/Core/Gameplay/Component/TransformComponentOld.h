@@ -18,20 +18,20 @@ namespace Muse
 {
 	class GameObject;
 
-	class TransformComponent : public Component, public std::enable_shared_from_this<TransformComponent>
+	class TransformComponentOld : public Component, public std::enable_shared_from_this<TransformComponentOld>
 	{
 		RTTR_ENABLE(Component)
 		RTTR_REGISTRATION_FRIEND
 
 	public:
-		TransformComponent() = default;
-		virtual ~TransformComponent() = default;
+		TransformComponentOld() = default;
+		virtual ~TransformComponentOld() = default;
 
 		bool HasParent() const { return m_Parent != nullptr; };
-		const std::shared_ptr<TransformComponent>& GetParent() const { return m_Parent; };
+		const std::shared_ptr<TransformComponentOld>& GetParent() const { return m_Parent; };
 
-		void AddChild(const std::shared_ptr<TransformComponent>& a_ChildTransformComponent);
-		void RemoveChild(const std::shared_ptr<TransformComponent>& a_ChildTransformComponent);
+		void AddChild(const std::shared_ptr<TransformComponentOld>& a_ChildTransformComponent);
+		void RemoveChild(const std::shared_ptr<TransformComponentOld>& a_ChildTransformComponent);
 
 		glm::vec3 GetWorldPosition() const;
 		glm::vec3 GetWorldScale() const;
@@ -117,15 +117,15 @@ namespace Muse
 		//glm::mat4 m_WorldScaleMatrix = glm::identity<glm::mat4>();
 		glm::mat4 m_WorldModelMatrix = glm::identity<glm::mat4>();
 
-		std::vector<std::shared_ptr<TransformComponent>> m_Children;
-		std::shared_ptr<TransformComponent> m_Parent = nullptr;
+		std::vector<std::shared_ptr<TransformComponentOld>> m_Children;
+		std::shared_ptr<TransformComponentOld> m_Parent = nullptr;
 
-		void SetParent(const std::shared_ptr<TransformComponent>& a_ParentTransformComponent);
+		void SetParent(const std::shared_ptr<TransformComponentOld>& a_ParentTransformComponent);
 	};
 }
 
-CEREAL_REGISTER_TYPE_WITH_NAME(Muse::TransformComponent, "TransformComponent")
-CEREAL_REGISTER_POLYMORPHIC_RELATION(Muse::Component, Muse::TransformComponent)
+CEREAL_REGISTER_TYPE_WITH_NAME(Muse::TransformComponentOld, "TransformComponentOld")
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Muse::Component, Muse::TransformComponentOld)
 
 namespace glm
 {

@@ -5,7 +5,7 @@
 
 //Gameplay
 #include "Core/Gameplay/GameObject.h"
-#include "Core/Gameplay/Component/TransformComponent.h"
+#include "Core/Gameplay/Component/TransformComponentOld.h"
 #include "Core/Gameplay/Component/CameraComponent.h"
 #include "Core/Gameplay/Component/RenderComponent.h"
 
@@ -43,6 +43,14 @@
 #include "Core/Event/ApplicationEvent.h"
 #include "Core/Event/KeyEvent.h"
 #include "Core/Event/MouseEvent.h"
+
+//ECS
+#include "Core/ECS/Job/Job.h"
+#include "Core/ECS/Job/JobManager.h"
+#include "Core/ECS/Job/Render2DJob.h"
+#include "Core/ECS/Component/Render2DComponent.h"
+#include "Core/ECS/Component/TransformComponent.h"
+
 
 //Todo:
 /////Engine:

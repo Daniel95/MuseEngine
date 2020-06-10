@@ -1,6 +1,6 @@
 #include "MusePCH.h"
 
-#include "Core/Gameplay/Component/TransformComponent.h"
+#include "Core/Gameplay/Component/TransformComponentOld.h"
 
 #include <glm/gtx/matrix_decompose.hpp>
 #include <glm/gtx/transform.hpp>
@@ -8,7 +8,7 @@
 
 namespace Muse
 {
-    glm::vec3 TransformComponent::GetWorldPosition() const
+    glm::vec3 TransformComponentOld::GetWorldPosition() const
     {
 		if (!HasParent())
 		{
@@ -18,7 +18,7 @@ namespace Muse
 		return m_Parent->TransformPoint(m_LocalPosition);
     }
 
-	glm::vec3 TransformComponent::GetWorldScale() const
+	glm::vec3 TransformComponentOld::GetWorldScale() const
 	{
 		if (!HasParent())
 		{
@@ -28,7 +28,7 @@ namespace Muse
 		return m_Parent->TransformVector(m_LocalScale);
 	}
 
-    void TransformComponent::SetLocalPosition(const glm::vec3& a_Position)
+    void TransformComponentOld::SetLocalPosition(const glm::vec3& a_Position)
     {
 		MUSE_PROFILE_FUNCTION();
 
@@ -38,7 +38,7 @@ namespace Muse
 		m_LocalPosition = a_Position;
     }
 
-    void TransformComponent::SetLocalPosition(const glm::vec2& a_Position)
+    void TransformComponentOld::SetLocalPosition(const glm::vec2& a_Position)
     {
 		MUSE_PROFILE_FUNCTION();
 
@@ -48,7 +48,7 @@ namespace Muse
 		m_LocalPosition = glm::vec3(a_Position.x, a_Position.y, m_LocalPosition.z);
     }
 
-    void TransformComponent::Translate(const glm::vec3& a_Movement)
+    void TransformComponentOld::Translate(const glm::vec3& a_Movement)
     {
 		MUSE_PROFILE_FUNCTION();
 
@@ -58,7 +58,7 @@ namespace Muse
 		m_LocalPosition += a_Movement;
     }
 
-    void TransformComponent::Translate(const glm::vec2& a_Movement)
+    void TransformComponentOld::Translate(const glm::vec2& a_Movement)
     {
 		MUSE_PROFILE_FUNCTION();
 
@@ -68,7 +68,7 @@ namespace Muse
 		m_LocalPosition += glm::vec3(a_Movement.x, a_Movement.y, 0);
     }
 
-    void TransformComponent::SetLocalScale(const glm::vec3& a_Scale)
+    void TransformComponentOld::SetLocalScale(const glm::vec3& a_Scale)
     {
 		MUSE_PROFILE_FUNCTION();
 
@@ -78,7 +78,7 @@ namespace Muse
 		m_LocalScale = a_Scale;
     }
 
-    void TransformComponent::SetLocalScale(const glm::vec2& a_Scale)
+    void TransformComponentOld::SetLocalScale(const glm::vec2& a_Scale)
     {
 		MUSE_PROFILE_FUNCTION();
 
@@ -88,19 +88,19 @@ namespace Muse
 		m_LocalScale = glm::vec3(a_Scale.x, a_Scale.y, m_LocalScale.z);
     }
 
-	void TransformComponent::ScaleLocal(const glm::vec2& a_Scale)
+	void TransformComponentOld::ScaleLocal(const glm::vec2& a_Scale)
 	{
 		SetDirty();
 		m_LocalScale += glm::vec3(a_Scale.x, a_Scale.y, 0);
 	}
 
-	void TransformComponent::ScaleLocal(const glm::vec3& a_Scale)
+	void TransformComponentOld::ScaleLocal(const glm::vec3& a_Scale)
 	{
 		SetDirty();
 		m_LocalScale += a_Scale;
 	}
 
-	void TransformComponent::SetLocalRotation(const glm::vec3& a_Rotation)
+	void TransformComponentOld::SetLocalRotation(const glm::vec3& a_Rotation)
     {
 		MUSE_PROFILE_FUNCTION();
 
@@ -110,7 +110,7 @@ namespace Muse
 		m_LocalRotation = a_Rotation;
     }
 
-	void TransformComponent::RotateLocal(const glm::vec3& a_Rotation)
+	void TransformComponentOld::RotateLocal(const glm::vec3& a_Rotation)
     {
 		MUSE_PROFILE_FUNCTION();
 
@@ -120,7 +120,7 @@ namespace Muse
 		m_LocalRotation += a_Rotation;
     }
 
-	const glm::mat4& TransformComponent::GetWorldModelMatrix()
+	const glm::mat4& TransformComponentOld::GetWorldModelMatrix()
 	{
 		MUSE_PROFILE_FUNCTION();
 
@@ -133,7 +133,7 @@ namespace Muse
 		return m_WorldModelMatrix;
 	}
 
-    glm::mat4 TransformComponent::CalculateWorldRotationMatrix() const
+    glm::mat4 TransformComponentOld::CalculateWorldRotationMatrix() const
     {
 		glm::mat4 localRotationMatrix = glm::rotate(m_LocalRotation.x, glm::vec3(1, 0, 0));
 		localRotationMatrix = glm::rotate(localRotationMatrix, m_LocalRotation.y, glm::vec3(0, 1, 0));
@@ -147,7 +147,7 @@ namespace Muse
 		return m_Parent->CalculateWorldRotationMatrix() * localRotationMatrix;
     }
 
-    void TransformComponent::AddChild(const std::shared_ptr<TransformComponent>& a_ChildTransformComponent)
+    void TransformComponentOld::AddChild(const std::shared_ptr<TransformComponentOld>& a_ChildTransformComponent)
     {
 		if(a_ChildTransformComponent->HasParent())
 		{
@@ -158,7 +158,7 @@ namespace Muse
 		a_ChildTransformComponent->SetParent(shared_from_this());
     }
 
-    void TransformComponent::RemoveChild(const std::shared_ptr<TransformComponent>& a_ChildTransformComponent)
+    void TransformComponentOld::RemoveChild(const std::shared_ptr<TransformComponentOld>& a_ChildTransformComponent)
 	{
 		ASSERT_ENGINE(std::find(m_Children.begin(), m_Children.end(), a_ChildTransformComponent) != m_Children.end(), "Transform to remove as a child is not a child!")
 
@@ -166,12 +166,12 @@ namespace Muse
 		a_ChildTransformComponent->SetParent(nullptr);
 	}
 
-    void TransformComponent::SetParent(const std::shared_ptr<TransformComponent>& a_ParentTransformComponent)
+    void TransformComponentOld::SetParent(const std::shared_ptr<TransformComponentOld>& a_ParentTransformComponent)
     {
 		m_Parent = a_ParentTransformComponent;
     }
 
-    glm::vec3 TransformComponent::InverseTransformPoint(const glm::vec3& a_WorldPoint)
+    glm::vec3 TransformComponentOld::InverseTransformPoint(const glm::vec3& a_WorldPoint)
 	{
 		MUSE_PROFILE_FUNCTION();
 
@@ -179,7 +179,7 @@ namespace Muse
 		return glm::vec3(transformed);
 	}
 
-	glm::vec3 TransformComponent::InverseTransformVector(const glm::vec3& a_WorldVector)
+	glm::vec3 TransformComponentOld::InverseTransformVector(const glm::vec3& a_WorldVector)
 	{
 		MUSE_PROFILE_FUNCTION();
 
@@ -187,7 +187,7 @@ namespace Muse
 		return glm::vec3(transformed);
 	}
 
-	glm::vec3 TransformComponent::TransformPoint(const glm::vec3& a_LocalPoint)
+	glm::vec3 TransformComponentOld::TransformPoint(const glm::vec3& a_LocalPoint)
 	{
 		MUSE_PROFILE_FUNCTION();
 
@@ -195,7 +195,7 @@ namespace Muse
 		return glm::vec3(transformed);
 	}
 
-	glm::vec3 TransformComponent::TransformVector(const glm::vec3& a_LocalVector)
+	glm::vec3 TransformComponentOld::TransformVector(const glm::vec3& a_LocalVector)
 	{
 		MUSE_PROFILE_FUNCTION();
 

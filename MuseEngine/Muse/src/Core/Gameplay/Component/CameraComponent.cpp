@@ -2,7 +2,7 @@
 
 #include "CameraComponent.h"
 #include "Core/Gameplay/GameObject.h"
-#include "Core/Gameplay/Component/TransformComponent.h"
+#include "Core/Gameplay/Component/TransformComponentOld.h"
 #include "Core/Instrumentor.h"
 
 namespace Muse

@@ -14,7 +14,7 @@ namespace Muse
 {
     class GameObject;
     class BoxCollider2D;
-    class TransformComponent;
+    class TransformComponentOld;
 
     class Component
     {
@@ -32,7 +32,7 @@ namespace Muse
         void Disable();
 
         std::shared_ptr<GameObject> GetGameObject() const { return m_GameObject; }
-        std::shared_ptr<TransformComponent> GetTransform() const;
+        std::shared_ptr<TransformComponentOld> GetTransform() const;
 		bool IsEnabled() const { return m_isEnabled; };
         //template<typename T>
         //T* GetComponent() { return m_GameObject->GetComponent<T>(); }

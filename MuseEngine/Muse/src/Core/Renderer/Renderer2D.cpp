@@ -205,6 +205,8 @@ namespace Muse
 
     void Renderer2D::DrawQuad(const glm::mat4& a_Transform, const glm::vec4& a_TintColor, int a_TextureIndex, float a_TilingFactor)
     {
+        ASSERT_ENGINE(s_Data.QuadVertexBufferPtr != nullptr, "QuadVertexBufferPtr is null! Can only draw after BeginScene and before DrawScene.");
+
         if (s_Data.QuadIndexCount >= Renderer2D::Data::MaxIndices)
         {
             EndScene();

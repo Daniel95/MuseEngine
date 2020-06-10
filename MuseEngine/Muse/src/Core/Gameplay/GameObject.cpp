@@ -1,7 +1,7 @@
 #include "MusePCH.h"
 
 #include "Core/Gameplay/GameObject.h"
-#include "Core/Gameplay/Component/TransformComponent.h"
+#include "Core/Gameplay/Component/TransformComponentOld.h"
 #include "Core/Scene/Scene.h"
 #include "Core/Instrumentor.h"
 
@@ -27,11 +27,11 @@ namespace Muse
 
         m_Scene = &a_Scene;
 
-        m_TransformComponent = GetComponent<TransformComponent>();
+        m_TransformComponent = GetComponent<TransformComponentOld>();
 
         if (m_TransformComponent == nullptr)
         {
-            m_TransformComponent = AddComponent<TransformComponent>();
+            m_TransformComponent = AddComponent<TransformComponentOld>();
         }
     }
 

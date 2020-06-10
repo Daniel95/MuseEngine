@@ -1,12 +1,19 @@
 #include "BulletHell.h"
 
-#include "Muse.h"
-
-#include "Platform/OpenGL/OpenGLShader.h"
-#include "glm/gtc/type_ptr.hpp"
 #include "imgui/imgui.h"
 
+#include "Muse.h"
 #include "Mode.h"
+
+#include "Core/ECS/Job/Job.h"
+#include "Core/ECS/Job/JobManager.h"
+#include "Core/ECS/Job/Render2DJob.h"
+#include "Core/ECS/Component/Render2DComponent.h"
+#include "Core/ECS/Component/TransformComponent.h"
+
+#include "BulletHell/Job/PlayerJob.h"
+#include "BulletHell/Job/HealthJob.h"
+#include "BulletHell/Component/Components.h"
 
 #if GAME_BULLETHELL
 #include "EntryPoint.h"
@@ -25,34 +32,25 @@ void BulletHell::OnStart()
     Muse::ResourceManager::Add("Game2DTestScene", scene);
     Muse::SceneManager::SwitchScene(scene);
 
-    {
-        auto gameObject = scene->AddGameObject();
-        auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
-    }
-
-    {
-        auto gameObject = scene->AddGameObject();
-        auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
-        gameObject->GetTransform()->SetLocalPosition({ 1.1f, 0, 0 });
-    }
-
-    {
-        auto gameObject = scene->AddGameObject();
-        auto renderComponent = gameObject->AddComponent<Muse::RenderComponent>();
-        gameObject->GetTransform()->SetLocalPosition({ -1, -1, 0 });
-        gameObject->GetTransform()->SetLocalScale({ 2, 1 });
-    }
-
     m_RaymanTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
     m_CheckerboardTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Checkerboard.png");
 
-    std::string path = "assets/scenes/testscene.txt";
-    scene->Save(path);
+    GetJobManager()->Add<Muse::Render2DJob>(Muse::JobType::Renderer);
+    GetJobManager()->Add<PlayerJob>(Muse::JobType::Gameplay);
 
-    Muse::ResourceManager::UnloadResource<Muse::Scene>(path);
+    auto playerEntity = Muse::Entity::Create();
 
-    std::shared_ptr<Muse::Scene> loadedScene = Muse::ResourceManager::Load<Muse::Scene>(path);
-    Muse::SceneManager::SwitchScene(loadedScene);
+    Muse::Render2DComponent render2DComponent
+    {
+        m_RaymanTexture,
+    };
+
+    Muse::ComponentManager<Muse::Render2DComponent>::Add(playerEntity, render2DComponent);
+    Muse::ComponentManager<Muse::TransformComponent>::Add(playerEntity, { });
+    Muse::ComponentManager<PlayerComponent>::Add(playerEntity, { });
+
+    auto transforms = Muse::ComponentManager<Muse::TransformComponent>::GetComponents();
+    auto render2DComponents = Muse::ComponentManager<Muse::Render2DComponent>::GetComponents();
 }
 
 void BulletHell::OnRender()
@@ -61,8 +59,6 @@ void BulletHell::OnRender()
     Muse::RenderCommand::Clear();
 
     Muse::Renderer2D::ResetStatistics();
-
-    Muse::Renderer2D::BeginScene(*Muse::CameraComponent::GetMain());
 
     Muse::Renderer2D::DrawQuad(
         { 1, 1, 0 },
@@ -99,8 +95,6 @@ void BulletHell::OnRender()
         { 1.0f, 0.0f, 0.0f, 1.0f }
     );
     */
-
-    Muse::Renderer2D::EndScene();
 }
 
 

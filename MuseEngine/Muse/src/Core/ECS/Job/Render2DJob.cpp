@@ -1,5 +1,5 @@
 #include "MusePCH.h"
-#include "RenderJob.h"
+#include "Render2DJob.h"
 #include "Core/ECS/Component/TransformComponent.h"
 #include "Core/ECS/Component/Render2DComponent.h"
 #include "Core/ECS/Component/TransformHelper.h"
@@ -26,8 +26,15 @@ namespace Muse
                 {
                     Renderer2D::DrawQuad(renderIt->second.modelMatrix, renderIt->second.texture, renderIt->second.tilingFactor, renderIt->second.color);
                 }
+                else
+                {
+                    Renderer2D::DrawQuad(renderIt->second.modelMatrix, renderIt->second.color);
+                }
             }
         };
+
+        auto transforms = Muse::ComponentManager<Muse::TransformComponent>::GetComponents();
+        auto render2DComponents = Muse::ComponentManager<Muse::Render2DComponent>::GetComponents();
 
         Run<TransformComponent, Render2DComponent>(func);
     }

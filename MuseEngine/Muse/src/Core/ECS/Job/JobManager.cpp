@@ -30,13 +30,12 @@ namespace Muse
 	{
 		MUSE_PROFILE_FUNCTION();
 
-		for (const auto& pair : m_Jobs)
-		{
-			for (const auto& job : pair.second)
-			{
-				job->Update();
-			}
-		}
+		auto jobsOfType = m_Jobs[a_JobType];
+
+        for (const auto& job : jobsOfType)
+        {
+            job->Update();
+        }
 
 		for(auto& tasks : m_TaskQueue)
 		{

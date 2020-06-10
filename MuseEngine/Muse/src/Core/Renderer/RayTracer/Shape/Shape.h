@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 #include "Core/Gameplay/Component/Component.h"
-#include "Core/Gameplay/Component/TransformComponent.h"
+#include "Core/Gameplay/Component/TransformComponentOld.h"
 #include <memory>
 
 namespace Muse
@@ -22,7 +22,7 @@ namespace Muse
 		const glm::vec3& GetPosition() const { return m_TransformComponent->GetLocalPosition(); }
 
 	private:
-		std::shared_ptr<TransformComponent> m_TransformComponent;
+		std::shared_ptr<TransformComponentOld> m_TransformComponent;
 
 	};
 }
