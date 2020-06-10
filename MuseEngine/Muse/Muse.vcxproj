@@ -150,16 +150,17 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\ECS\Job\RenderJob.h" />
     <ClInclude Include="src\Core\ECS\Component\ComponentHelper.h" />
     <ClInclude Include="src\Core\ECS\Component\ComponentManager.h" />
     <ClInclude Include="src\Core\ECS\Component\ComponentType.h" />
+    <ClInclude Include="src\Core\ECS\Component\Render2DComponent.h" />
     <ClInclude Include="src\Core\ECS\Component\TransformComponent.h" />
     <ClInclude Include="src\Core\ECS\Component\TransformHelper.h" />
     <ClInclude Include="src\Core\ECS\Entity\Entity.h" />
     <ClInclude Include="src\Core\ECS\Entity\EntityTracker.h" />
     <ClInclude Include="src\Core\ECS\Job\Job.h" />
     <ClInclude Include="src\Core\ECS\Job\JobManager.h" />
-    <ClInclude Include="src\Core\Renderer\Renderer2DOld.h" />
     <ClInclude Include="src\Core\Utilities\Color.h" />
     <ClInclude Include="src\Core\Application.h" />
     <ClInclude Include="src\Core\Engine.h" />
@@ -611,6 +612,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\ECS\Job\Render2DJob.cpp" />
     <ClCompile Include="src\Core\Application.cpp" />
     <ClCompile Include="src\Core\ECS\Component\ComponentHelper.cpp" />
     <ClCompile Include="src\Core\ECS\Component\TransformHelper.cpp" />
@@ -650,7 +652,6 @@
     <ClCompile Include="src\Core\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Core\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Core\Renderer\Renderer2D.cpp" />
-    <ClCompile Include="src\Core\Renderer\Renderer2DOld.cpp" />
     <ClCompile Include="src\Core\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Core\Renderer\Shader.cpp" />
     <ClCompile Include="src\Core\Renderer\Texture.cpp" />

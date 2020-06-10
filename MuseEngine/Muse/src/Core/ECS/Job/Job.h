@@ -12,10 +12,10 @@ namespace Muse
 		virtual ~Job() = default;
 		
 		void Update();
-		virtual void OnUpdate(int a_ThreadId) = 0;
+		virtual void OnUpdate() = 0;
 		
-		template <typename T1, typename T2>
-		void Schedule(const std::function<void(const std::vector<int>&, std::unordered_map<int, T1>&, std::unordered_map<int, T2>&)>& a_Func, int a_ThreadId = -1);
+		//template <typename T1, typename T2>
+		//void Schedule(const std::function<void(const std::vector<int>&, std::unordered_map<int, T1>&, std::unordered_map<int, T2>&)>& a_Func, int a_ThreadId = -1);
 
 		template <typename T1, typename T2>
 		void Run(const std::function<void(const std::vector<int>&, std::unordered_map<int, T1>&, std::unordered_map<int, T2>&)>& a_Func);
@@ -24,9 +24,10 @@ namespace Muse
 
 	inline void Job::Update()
 	{
-		OnUpdate(-1);
+		OnUpdate();
 	}
 
+	/*
 	template <typename T1, typename T2>
 	void Job::Schedule(const std::function<void(const std::vector<int>&, std::unordered_map<int, T1>&, std::unordered_map<int, T2>&)>& a_Func, int a_ThreadId)
 	{
@@ -47,6 +48,7 @@ namespace Muse
 
 		Application::Get().GetJobManager()->ScheduleTask(task, a_ThreadId);
 	}
+	*/
 
 	template <typename T1, typename T2>
 	void Job::Run(

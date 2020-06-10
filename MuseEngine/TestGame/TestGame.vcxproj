@@ -138,6 +138,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\BulletHell\Job\PlayerJob.h" />
+    <ClInclude Include="src\BulletHell\Job\HealthJob.h" />
+    <ClInclude Include="src\BulletHell.h" />
+    <ClInclude Include="src\BulletHell\Component\Components.h" />
     <ClInclude Include="src\Game2D.h" />
     <ClInclude Include="src\Game3D.h" />
     <ClInclude Include="src\GamePT.h" />
@@ -148,6 +152,9 @@
     <ClInclude Include="src\TestGame.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\BulletHell\Job\PlayerJob.cpp" />
+    <ClCompile Include="src\BulletHell\Job\HealthJob.cpp" />
+    <ClCompile Include="src\BulletHell.cpp" />
     <ClCompile Include="src\Game2D.cpp" />
     <ClCompile Include="src\Game3D.cpp" />
     <ClCompile Include="src\GamePT.cpp" />

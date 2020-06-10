@@ -1409,7 +1409,6 @@
     <ClInclude Include="src\Core\Renderer\RayTracer\RayHitData.h" />
     <ClInclude Include="src\Core\Renderer\RayTracer\RendererPT.h" />
     <ClInclude Include="src\Core\Renderer\RayTracer\RendererRT.h" />
-    <ClInclude Include="src\Core\Renderer\Renderer2DOld.h" />
     <ClInclude Include="src\Core\ECS\Entity\Entity.h" />
     <ClInclude Include="src\Core\ECS\Entity\EntityTracker.h" />
     <ClInclude Include="src\Core\Utilities\VectorHelper.h" />
@@ -1420,6 +1419,8 @@
     <ClInclude Include="src\Core\ECS\Component\ComponentType.h" />
     <ClInclude Include="src\Core\ECS\Component\TransformHelper.h" />
     <ClInclude Include="src\Core\ECS\Component\TransformComponent.h" />
+    <ClInclude Include="src\Core\ECS\Job\RenderJob.h" />
+    <ClInclude Include="src\Core\ECS\Component\Render2DComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1596,11 +1597,11 @@
     <ClCompile Include="src\Core\Renderer\RayTracer\RendererPT.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracer\RendererRT.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracer\GetColorParameter.cpp" />
-    <ClCompile Include="src\Core\Renderer\Renderer2DOld.cpp" />
     <ClCompile Include="src\Core\ECS\Entity\Entity.cpp" />
     <ClCompile Include="src\Core\ECS\Entity\EntityTracker.cpp" />
     <ClCompile Include="src\Core\ECS\Job\JobManager.cpp" />
     <ClCompile Include="src\Core\ECS\Component\ComponentHelper.cpp" />
     <ClCompile Include="src\Core\ECS\Component\TransformHelper.cpp" />
+    <ClCompile Include="src\Core\ECS\Job\Render2DJob.cpp" />
   </ItemGroup>
 </Project>
