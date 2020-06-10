@@ -22,15 +22,19 @@ Muse::Application* Muse::CreateApplication()
     return new BulletHell();
 }
 #endif
+#include <Core\Gameplay\Component\CameraComponent.cpp>
 
 void BulletHell::OnStart()
 {
     Muse::RenderCommand::Init();
     Muse::Renderer2D::Init();
 
-    std::shared_ptr <Muse::Scene> scene = Muse::Scene::Create();
+    std::shared_ptr<Muse::Scene> scene = Muse::Scene::Create();
     Muse::ResourceManager::Add("Game2DTestScene", scene);
     Muse::SceneManager::SwitchScene(scene);
+
+    Muse::CameraComponent* cameraComponent = Muse::CameraComponent::GetMain();
+    cameraComponent->SetZoomLevel(5);
 
     m_RaymanTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
     m_CheckerboardTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Checkerboard.png");

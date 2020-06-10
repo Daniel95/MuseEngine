@@ -2,53 +2,53 @@
 #include "Core/ECS/Component/ComponentManager.h"
 
 #include "Core/Input/Input.h"
+#include <Muse.h>
+#include "../Component/Components.h"
 
 void PlayerJob::OnUpdate()
 {
-    /*
     auto move = [](
         const std::vector<int>& a_Entities,
-        std::unordered_map<int, Crown::TransformComponent>& a_TransformComponents,
-        std::unordered_map<int, MoveComponent>& a_MoveComponents
+        std::unordered_map<int, Muse::TransformComponent>& a_TransformComponents,
+        std::unordered_map<int, PlayerComponent>& a_PlayerComponent
         )
     {
-        float deltaTime = Crown::Application::Get().GetDeltaTime();
+        float deltaTime = Muse::Application::Get().GetDeltaTime();
 
-        Crown::Input* input = Crown::Application::Get().GetInput();
+        glm::vec2 inputDirection = glm::vec2(0);
 
-        glm::vec2 horizontalInput = glm::vec3(0);
 
-        if (input->GetKeyboard().IsKeyDown(GLFW_KEY_W))
+        if (Muse::Input::GetKeyDown(MUSE_KEY_A))
         {
-            horizontalInput.y = -1;
+            inputDirection.x = -1;
         }
-        if (input->GetKeyboard().IsKeyDown(GLFW_KEY_S))
+        else if (Muse::Input::GetKeyDown(MUSE_KEY_D))
         {
-            horizontalInput.y = 1;
-        }
-        if (input->GetKeyboard().IsKeyDown(GLFW_KEY_A))
-        {
-            horizontalInput.x = -1;
-        }
-        if (input->GetKeyboard().IsKeyDown(GLFW_KEY_D))
-        {
-            horizontalInput.x = 1;
+            inputDirection.x = 1;
         }
 
-        if (horizontalInput != glm::vec2(0))
+        if (Muse::Input::GetKeyDown(MUSE_KEY_S))
+        {
+            inputDirection.y = -1;
+        }
+        else if (Muse::Input::GetKeyDown(MUSE_KEY_W))
+        {
+            inputDirection.y = 1;
+        }
+
+        if (inputDirection != glm::vec2(0))
         {
             for (int entity : a_Entities)
             {
                 auto transformIt = a_TransformComponents.find(entity);
-                const auto moveIt = a_MoveComponents.find(entity);
+                const auto moveIt = a_PlayerComponent.find(entity);
 
-                const glm::vec2 movement = horizontalInput * moveIt->second.speed * deltaTime;
+                const glm::vec2 movement = inputDirection * moveIt->second.speed * deltaTime;
 
-                Crown::TransformHelper::TranslateLocal(transformIt->second, glm::vec3(movement.x, 0, movement.y));
+                Muse::TransformHelper::TranslateLocal(transformIt->second, glm::vec3(movement.x, movement.y, 0));
             }
         }
     };
 
-    Run<Crown::TransformComponent, MoveComponent>(move);
-    */
+    Run<Muse::TransformComponent, PlayerComponent>(move);
 }

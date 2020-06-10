@@ -254,7 +254,7 @@ namespace Muse
 
         gameObject->AddComponent<CameraComponent>()->MakeEditorCamera();
         //gameObject->AddComponent<PerspectiveCameraControllerComponent>();
-        gameObject->AddComponent<OrthographicCameraControllerComponent>();
+        //gameObject->AddComponent<OrthographicCameraControllerComponent>();
 
         return gameObject;
     }
