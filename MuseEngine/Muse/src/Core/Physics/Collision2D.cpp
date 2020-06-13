@@ -7,28 +7,23 @@
 
 namespace Muse
 {
-    void Collision2D::GetEntityHits(const std::vector<int>& entities, std::vector<std::pair<int, int>>& hits)
+    void Collision2D::GetEntityHits(const std::vector<int>& entityGroup1, const std::vector<int>& entityGroup2, std::vector<std::pair<int, int>>& hits)
     {
-        std::unordered_map<int, Collider2DComponent>& collider2DComponents = ComponentManager<Collider2DComponent>::GetComponents();
-        std::unordered_map<int, TransformComponent>& transformComponents = ComponentManager<TransformComponent>::GetComponents();
+        const std::unordered_map<int, Collider2DComponent>& collider2DComponents = ComponentManager<Collider2DComponent>::GetComponents();
+        const std::unordered_map<int, TransformComponent>& transformComponents = ComponentManager<TransformComponent>::GetComponents();
 
-        for (auto thisEntity : entities)
+        for (auto entity1 : entityGroup1)
         {
-            for (auto otherEntity : entities)
+            for (auto entity2 : entityGroup2)
             {
-                if (thisEntity != otherEntity)
-                {
-                    BoundingBox thisBounds(transformComponents[thisEntity].localPosition, transformComponents[thisEntity].localScale);
-                    BoundingBox otherBounds(transformComponents[otherEntity].localPosition, transformComponents[otherEntity].localScale);
+                BoundingBox thisBounds(transformComponents.at(entity1).localPosition, transformComponents.at(entity1).localScale);
+                BoundingBox otherBounds(transformComponents.at(entity2).localPosition, transformComponents.at(entity2).localScale);
 
-                    if (AABBCheck(thisBounds, otherBounds))
-                    {
-                        hits.push_back({ thisEntity, otherEntity });
-                    }
+                if (AABBCheck(thisBounds, otherBounds))
+                {
+                    hits.push_back({ entity1, entity2 });
                 }
             }
-
-            collider2DComponents.erase(thisEntity);
         }
     }
 

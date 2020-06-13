@@ -45,16 +45,9 @@ void BulletHell::OnStart()
     GetJobManager()->Add<PlayerMovementJob>(Muse::JobType::Gameplay);
     GetJobManager()->Add<HealthJob>(Muse::JobType::Gameplay);
 
-    auto playerEntity = Muse::Entity::Create();
-
-    Muse::Render2DComponent render2DComponent
-    {
-        m_RaymanTexture,
-    };
-
-    Muse::ComponentManager<Muse::Render2DComponent>::Add(playerEntity, render2DComponent);
-    Muse::ComponentManager<Muse::TransformComponent>::Add(playerEntity, { });
-    Muse::ComponentManager<PlayerComponent>::Add(playerEntity, { });
+    CreatePlayer({ 0, 0 });
+    CreateObstacle({ 2, 2 });
+    CreateObstacle({ -2, 2 });
 }
 
 void BulletHell::OnRender()
@@ -64,6 +57,7 @@ void BulletHell::OnRender()
 
     Muse::Renderer2D::ResetStatistics();
 
+    /*
     Muse::Renderer2D::DrawQuad(
         { 1, 1, 0 },
         { 0.5f, 0.5f },
@@ -92,7 +86,6 @@ void BulletHell::OnRender()
         m_RaymanTexture
     );
 
-    /*
     Muse::Renderer2D::DrawQuad(
         { 0, 1, 0 },
         glm::vec2(1),
@@ -115,6 +108,67 @@ void BulletHell::OnImGuiRender()
     ImGui::Text("Vertex Count: %d", stats.GetTotalVertex());
     ImGui::Text("Index Count: %d", stats.GetTotalIndex());
 
+    ImGui::Text("Entity Data:");
+
+    //Muse components:
+    ImGui::Text("Muse Components:");
+
+    ImGui::Text("Render2DComponent Count: %d", Muse::ComponentManager<Muse::Render2DComponent>::GetComponents().size());
+    ImGui::Text("TransformComponent Count: %d", Muse::ComponentManager<Muse::TransformComponent>::GetComponents().size());
+    ImGui::Text("Collider2DComponent Count: %d", Muse::ComponentManager<Muse::Collider2DComponent>::GetComponents().size());
+
+    //BulletHell Components
+    ImGui::Text("BulletHell Components:");
+
+    ImGui::Text("PlayerComponent Count: %d", Muse::ComponentManager<PlayerComponent>::GetComponents().size());
+    ImGui::Text("ObstacleComponent Count: %d", Muse::ComponentManager<ObstacleComponent>::GetComponents().size());
 
     ImGui::End();
+}
+
+int BulletHell::CreatePlayer(const glm::vec2& a_Position)
+{
+    auto playerEntity = Muse::Entity::Create();
+
+    Muse::Render2DComponent render2DComponent
+    {
+        m_RaymanTexture,
+    };
+
+    Muse::TransformComponent transformComponent
+    {
+        glm::vec3(a_Position.x, a_Position.y, 0)
+    };
+
+    Muse::ComponentManager<Muse::Render2DComponent>::Add(playerEntity, render2DComponent);
+    Muse::ComponentManager<Muse::TransformComponent>::Add(playerEntity, transformComponent);
+    Muse::ComponentManager<Muse::Collider2DComponent>::Add(playerEntity, { });
+
+    Muse::ComponentManager<PlayerComponent>::Add(playerEntity, { });
+
+    return playerEntity;
+}
+
+int BulletHell::CreateObstacle(const glm::vec2& a_Position, const glm::vec2& a_Scale)
+{
+    auto obstacleEntity = Muse::Entity::Create();
+
+    Muse::Render2DComponent render2DComponent
+    {
+        m_CheckerboardTexture,
+    };
+
+    Muse::TransformComponent transformComponent
+    {
+        glm::vec3(a_Position.x, a_Position.y, 0),
+        glm::vec3(a_Scale.x, a_Scale.y, 0)
+    };
+
+    Muse::ComponentManager<Muse::Render2DComponent>::Add(obstacleEntity, render2DComponent);
+    Muse::ComponentManager<Muse::TransformComponent>::Add(obstacleEntity, transformComponent);
+    Muse::ComponentManager<Muse::Collider2DComponent>::Add(obstacleEntity, { });
+
+    Muse::ComponentManager<ObstacleComponent>::Add(obstacleEntity, { });
+
+    return obstacleEntity;
 }

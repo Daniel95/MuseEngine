@@ -33,14 +33,14 @@ namespace Muse
     template <typename T1, typename T2>
     void Job::Run(const std::function<void(int, T1&, T2&)>& a_Func)
     {
-        std::vector<int> entitiesWithComponents = ComponentHelper::GetEntitiesWith<T1, T2>();
+        const std::vector<int> entitiesWithComponents = ComponentHelper::GetEntitiesWith<T1, T2>();
 
-        std::unordered_map<int, T1>& components1 = ComponentManager<T1>::GetComponents();
-        std::unordered_map<int, T2>& components2 = ComponentManager<T2>::GetComponents();
+        //const std::unordered_map<int, T1>& components1 = ComponentManager<T1>::GetComponents();
+        //const std::unordered_map<int, T2>& components2 = ComponentManager<T2>::GetComponents();
 
         for (auto entity : entitiesWithComponents)
         {
-            a_Func(entity, components1[entity], components2[entity]);
+            a_Func(entity, ComponentManager<T1>::Get(entity), ComponentManager<T2>::Get(entity));
         }
     }
 
@@ -54,18 +54,25 @@ namespace Muse
     template <typename T1, typename T2>
     void Job::RunCollision(const std::function<void(int, T1&, T2&)>& a_Func)
     {
-        std::vector<int> entitiesWithComponents = ComponentHelper::GetEntitiesWith<T1, T2, Collider2DComponent, TransformComponent>();
+        const std::vector<int> entityGroup1 = ComponentHelper::GetEntitiesWith<T1, Collider2DComponent, TransformComponent>();
+        const std::vector<int> entityGroup2 = ComponentHelper::GetEntitiesWith<T2, Collider2DComponent, TransformComponent>();
+
+        if (entityGroup1.empty() || entityGroup2.empty()) { return; }
 
         std::vector<std::pair<int, int>> hits;
-        Collision2D::GetEntityHits(entitiesWithComponents, hits);
+        Collision2D::GetEntityHits(entityGroup1, entityGroup2, hits);
 
-        std::unordered_map<int, T1>& components1 = ComponentManager<T1>::GetComponents();
-        std::unordered_map<int, T2>& components2 = ComponentManager<T2>::GetComponents();
+        //const std::unordered_map<int, T1>& components1 = ComponentManager<T1>::GetComponents();
+        //const std::unordered_map<int, T2>& components2 = ComponentManager<T2>::GetComponents();
 
         for (auto hit : hits)
         {
-            a_Func(hit.first, components1[hit.first], components2[hit.first]);
-            a_Func(hit.second, components1[hit.second], components2[hit.first]);
+            a_Func(hit.first, ComponentManager<T1>::Get(hit.first), ComponentManager<T2>::Get(hit.second));
+            a_Func(hit.second, ComponentManager<T1>::Get(hit.first), ComponentManager<T2>::Get(hit.second));
+
+
+            //a_Func(hit.first, components1[hit.first], components2[hit.first]);
+            //a_Func(hit.second, components1[hit.second], components2[hit.first]);
         }
     }
 }

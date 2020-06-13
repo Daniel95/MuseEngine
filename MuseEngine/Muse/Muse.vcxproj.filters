@@ -1601,7 +1601,6 @@
     <ClCompile Include="src\Core\ECS\Component\TransformHelper.cpp" />
     <ClCompile Include="src\Core\ECS\Job\Render2DJob.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\TransformComponentOld.cpp" />
-    <ClCompile Include="src\Core\ECS\Job\Job.cpp" />
     <ClCompile Include="src\Core\Physics\Collision2D.cpp" />
   </ItemGroup>
 </Project>

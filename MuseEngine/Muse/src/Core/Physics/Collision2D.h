@@ -25,7 +25,7 @@ namespace Muse
             float maxY;
         };
 
-        static void GetEntityHits(const std::vector<int>& entities, std::vector<std::pair<int, int>>& hits);
+        static void GetEntityHits(const std::vector<int>& entityGroup1, const std::vector<int>& entityGroup2, std::vector<std::pair<int, int>>& hits);
         static bool AABBCheck(const BoundingBox& a_Collider1, const BoundingBox& a_Collider2);
 
     };

@@ -615,7 +615,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Physics\Collision2D.cpp" />
-    <ClCompile Include="src\Core\ECS\Job\Job.cpp" />
     <ClCompile Include="src\Core\ECS\Job\Render2DJob.cpp" />
     <ClCompile Include="src\Core\Application.cpp" />
     <ClCompile Include="src\Core\ECS\Component\ComponentHelper.cpp" />
