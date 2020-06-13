@@ -11,8 +11,9 @@
 #include "Core/ECS/Component/Render2DComponent.h"
 #include "Core/ECS/Component/TransformComponent.h"
 
-#include "BulletHell/Job/PlayerMovementJob.h"
+#include "BulletHell/Job/PlayerJob.h"
 #include "BulletHell/Job/PlayerObstacleCollisionJob.h"
+#include "BulletHell/Job/MoveForwardJob.h"
 #include "BulletHell/Job/HealthJob.h"
 #include "BulletHell/Component/Components.h"
 
@@ -42,8 +43,9 @@ void BulletHell::OnStart()
 
     GetJobManager()->Add<Muse::Render2DJob>(Muse::JobType::Renderer);
     GetJobManager()->Add<PlayerObstacleCollisionJob>(Muse::JobType::Gameplay);
-    GetJobManager()->Add<PlayerMovementJob>(Muse::JobType::Gameplay);
+    GetJobManager()->Add<PlayerJob>(Muse::JobType::Gameplay);
     GetJobManager()->Add<HealthJob>(Muse::JobType::Gameplay);
+    GetJobManager()->Add<MoveForwardJob>(Muse::JobType::Gameplay);
 
     CreatePlayer({ 0, 0 });
     CreateObstacle({ 2, 2 });
@@ -122,6 +124,7 @@ void BulletHell::OnImGuiRender()
 
     ImGui::Text("PlayerComponent Count: %d", Muse::ComponentManager<PlayerComponent>::GetComponents().size());
     ImGui::Text("ObstacleComponent Count: %d", Muse::ComponentManager<ObstacleComponent>::GetComponents().size());
+    ImGui::Text("MoveForwardComponent Count: %d", Muse::ComponentManager<MoveForwardComponent>::GetComponents().size());
 
     ImGui::End();
 }

@@ -138,8 +138,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\BulletHell\Job\MoveForwardJob.h" />
     <ClInclude Include="src\BulletHell\Job\PlayerObstacleCollisionJob.h" />
-    <ClInclude Include="src\BulletHell\Job\PlayerMovementJob.h" />
+    <ClInclude Include="src\BulletHell\Job\PlayerJob.h" />
     <ClInclude Include="src\BulletHell\Job\HealthJob.h" />
     <ClInclude Include="src\BulletHell.h" />
     <ClInclude Include="src\BulletHell\Component\Components.h" />
@@ -152,8 +153,9 @@
     <ClInclude Include="src\TestGame.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\BulletHell\Job\MoveForwardJob.cpp" />
     <ClCompile Include="src\BulletHell\Job\PlayerObstacleCollisionJob.cpp" />
-    <ClCompile Include="src\BulletHell\Job\PlayerMovementJob.cpp" />
+    <ClCompile Include="src\BulletHell\Job\PlayerJob.cpp" />
     <ClCompile Include="src\BulletHell\Job\HealthJob.cpp" />
     <ClCompile Include="src\BulletHell.cpp" />
     <ClCompile Include="src\Game2D.cpp" />

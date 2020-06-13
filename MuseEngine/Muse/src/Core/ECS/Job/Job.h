@@ -21,7 +21,7 @@ namespace Muse
         void Run(const std::function<void(int, T1&, T2&)>& a_Func);
 
         template <typename T1, typename T2>
-        void RunCollision(const std::function<void(int, T1&, T2&)>& a_Func);
+        void RunCollision(const std::function<void(int, T1&, T2&)>& a_Func1, const std::function<void(int, T1&, T2&)>& a_Func2);
 
 	};
 
@@ -52,7 +52,7 @@ namespace Muse
     /// <typeparam name="T2">Other Component</typeparam>
     /// <param name="a_Func"The Lambda></param>
     template <typename T1, typename T2>
-    void Job::RunCollision(const std::function<void(int, T1&, T2&)>& a_Func)
+    void Job::RunCollision(const std::function<void(int, T1&, T2&)>& a_Func1, const std::function<void(int, T1&, T2&)>& a_Func2)
     {
         const std::vector<int> entityGroup1 = ComponentHelper::GetEntitiesWith<T1, Collider2DComponent, TransformComponent>();
         const std::vector<int> entityGroup2 = ComponentHelper::GetEntitiesWith<T2, Collider2DComponent, TransformComponent>();
@@ -62,17 +62,10 @@ namespace Muse
         std::vector<std::pair<int, int>> hits;
         Collision2D::GetEntityHits(entityGroup1, entityGroup2, hits);
 
-        //const std::unordered_map<int, T1>& components1 = ComponentManager<T1>::GetComponents();
-        //const std::unordered_map<int, T2>& components2 = ComponentManager<T2>::GetComponents();
-
         for (auto hit : hits)
         {
-            a_Func(hit.first, ComponentManager<T1>::Get(hit.first), ComponentManager<T2>::Get(hit.second));
-            a_Func(hit.second, ComponentManager<T1>::Get(hit.first), ComponentManager<T2>::Get(hit.second));
-
-
-            //a_Func(hit.first, components1[hit.first], components2[hit.first]);
-            //a_Func(hit.second, components1[hit.second], components2[hit.first]);
+            a_Func1(hit.first, ComponentManager<T1>::Get(hit.first), ComponentManager<T2>::Get(hit.second));
+            a_Func2(hit.second, ComponentManager<T1>::Get(hit.first), ComponentManager<T2>::Get(hit.second));
         }
     }
 }

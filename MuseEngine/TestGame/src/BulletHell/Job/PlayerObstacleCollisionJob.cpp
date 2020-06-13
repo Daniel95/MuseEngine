@@ -5,14 +5,25 @@
 
 void PlayerObstacleCollisionJob::OnUpdate()
 {
-    auto moveSimple = [](
-        int entitiy,
+    auto playerCollision = [](
+        int playerEntitiy,
         PlayerComponent& a_PlayerComponent,
         ObstacleComponent& a_ObstacleComponent
         )
     {
-        LOG_INFO("Collision");
+        a_PlayerComponent.health -= a_ObstacleComponent.damage;
+
+        LOG_INFO("Collision %d", a_PlayerComponent.health);
     };
 
-    RunCollision<PlayerComponent, ObstacleComponent>(moveSimple);
+    auto obstacleCollision = [](
+        int obstacleEntitiy,
+        PlayerComponent& a_PlayerComponent,
+        ObstacleComponent& a_ProjectileComponent
+        )
+    {
+        LOG_INFO("a_ProjectileComponent");
+    };
+
+    RunCollision<PlayerComponent, ObstacleComponent>(playerCollision, obstacleCollision);
 }
