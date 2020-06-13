@@ -3,7 +3,7 @@
 
 #include "Core/Input/Input.h"
 #include <Muse.h>
-#include "../Component/Components.h"
+#include "BulletHell/Component/Components.h"
 
 void PlayerMovementJob::OnUpdate()
 {
@@ -35,8 +35,6 @@ void PlayerMovementJob::OnUpdate()
         PlayerComponent& a_PlayerComponent
         )
     {
-        LOG_INFO(inputDirection.x);
-        LOG_INFO(inputDirection.y);
         if (inputDirection != glm::vec2(0))
         {
             const glm::vec2 direction = glm::normalize(inputDirection);

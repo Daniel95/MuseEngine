@@ -1420,8 +1420,7 @@
     <ClInclude Include="src\Core\ECS\Job\Render2DJob.h" />
     <ClInclude Include="src\Core\Gameplay\Component\TransformComponentOld.h" />
     <ClInclude Include="src\Core\ECS\Component\Collider2DComponent.h" />
-    <ClInclude Include="Collision2DJob.h" />
-    <ClInclude Include="src\Core\ECS\Component\Collision2DHelper.h" />
+    <ClInclude Include="src\Core\Physics\Collision2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1602,7 +1601,7 @@
     <ClCompile Include="src\Core\ECS\Component\TransformHelper.cpp" />
     <ClCompile Include="src\Core\ECS\Job\Render2DJob.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\TransformComponentOld.cpp" />
-    <ClCompile Include="Collision2DJob.cpp" />
-    <ClCompile Include="src\Core\ECS\Component\Collision2DHelper.cpp" />
+    <ClCompile Include="src\Core\ECS\Job\Job.cpp" />
+    <ClCompile Include="src\Core\Physics\Collision2D.cpp" />
   </ItemGroup>
 </Project>

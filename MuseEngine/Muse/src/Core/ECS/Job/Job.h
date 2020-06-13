@@ -1,10 +1,11 @@
 #pragma once
 #include "Core/ECS/Component/ComponentHelper.h"
-#include "Core/ECS/Component/Collider2DComponent.h"
-#include "Core/ECS/Component/Collision2DHelper.h"
+
+#include "Core/Physics/Collision2D.h"
 
 #include "Core/ECS/Job/JobManager.h"
-
+#include "Core/ECS/Component/Collider2DComponent.h"
+#include "Core/ECS/Component/TransformComponent.h"
 namespace Muse
 {
 	class Job
@@ -55,29 +56,8 @@ namespace Muse
     {
         std::vector<int> entitiesWithComponents = ComponentHelper::GetEntitiesWith<T1, T2, Collider2DComponent, TransformComponent>();
 
-        std::unordered_map<int, Collider2DComponent>& collider2DComponents = ComponentManager<Collider2DComponent>::GetComponents();
-        std::unordered_map<int, TransformComponent>& transformComponents = ComponentManager<Collider2DComponent>::GetComponents();
-
         std::vector<std::pair<int, int>> hits;
-
-        for (auto thisEntity : entitiesWithComponents)
-        {
-            for (auto otherEntity : entitiesWithComponents)
-            {
-                if (thisEntity != otherEntity)
-                {
-                    BoundingBox thisBounds = {  };
-                    BoundingBox otherBounds = {  };
-
-                    if (Collision2DHelper::AABBCheck())
-                    {
-                        hits.push_back({ thisEntity, otherEntity });
-                    }
-                }
-            }
-
-            collider2DComponents.erase(thisEntity);
-        }
+        Collision2D::GetEntityHits(entitiesWithComponents, hits);
 
         std::unordered_map<int, T1>& components1 = ComponentManager<T1>::GetComponents();
         std::unordered_map<int, T2>& components2 = ComponentManager<T2>::GetComponents();

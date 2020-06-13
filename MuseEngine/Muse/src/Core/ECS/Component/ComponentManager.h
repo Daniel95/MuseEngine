@@ -1,9 +1,9 @@
 ﻿#pragma once
 #include "CORE/Utilities/Defines.h"
+#include "Core/ECS/Entity/Entity.h"
 
 #include <unordered_map>
 #include <memory>
-#include "Core/ECS/Entity/Entity.h"
 
 namespace Muse
 {

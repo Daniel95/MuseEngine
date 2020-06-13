@@ -2,7 +2,7 @@
 
 #include "Core/ECS/Job/Job.h"
 
-class PlayerObstacleCollisionJob : Muse::Job
+class PlayerObstacleCollisionJob : public Muse::Job
 {
 public:
     virtual void OnUpdate() override;

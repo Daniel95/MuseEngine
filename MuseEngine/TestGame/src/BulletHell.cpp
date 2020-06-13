@@ -41,8 +41,9 @@ void BulletHell::OnStart()
     m_CheckerboardTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Checkerboard.png");
 
     GetJobManager()->Add<Muse::Render2DJob>(Muse::JobType::Renderer);
-    GetJobManager()->Add<PlayerMovementJob>(Muse::JobType::Gameplay);
     GetJobManager()->Add<PlayerObstacleCollisionJob>(Muse::JobType::Gameplay);
+    GetJobManager()->Add<PlayerMovementJob>(Muse::JobType::Gameplay);
+    GetJobManager()->Add<HealthJob>(Muse::JobType::Gameplay);
 
     auto playerEntity = Muse::Entity::Create();
 

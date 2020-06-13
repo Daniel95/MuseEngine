@@ -61,6 +61,9 @@ namespace Muse
 		}
 		
 		const std::shared_ptr<Job> job = std::dynamic_pointer_cast<Job>(type);
+
+		ASSERT_ENGINE(job != nullptr, "Adding this job resulted in a nullptr, this is probably because the derived job type doesn't pulbicly inherit from Job!");
+
 		m_Jobs.at(a_JobType).push_back(job);
 
 		return type;
