@@ -150,6 +150,9 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Collision2DJob.h" />
+    <ClInclude Include="src\Core\ECS\Component\Collider2DComponent.h" />
+    <ClInclude Include="src\Core\ECS\Component\Collision2DHelper.h" />
     <ClInclude Include="src\Core\ECS\Job\Render2DJob.h" />
     <ClInclude Include="src\Core\ECS\Component\ComponentHelper.h" />
     <ClInclude Include="src\Core\ECS\Component\ComponentManager.h" />
@@ -612,6 +615,8 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Collision2DJob.cpp" />
+    <ClCompile Include="src\Core\ECS\Component\Collision2DHelper.cpp" />
     <ClCompile Include="src\Core\ECS\Job\Render2DJob.cpp" />
     <ClCompile Include="src\Core\Application.cpp" />
     <ClCompile Include="src\Core\ECS\Component\ComponentHelper.cpp" />

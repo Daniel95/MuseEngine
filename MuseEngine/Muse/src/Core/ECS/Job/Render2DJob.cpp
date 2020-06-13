@@ -9,6 +9,7 @@ namespace Muse
 {
     void Render2DJob::OnUpdate()
     {
+        /*
         auto func = [](
             const std::vector<int>& a_Entities,
             std::unordered_map<int, TransformComponent>& a_TransformComponents,
@@ -35,6 +36,25 @@ namespace Muse
 
         auto transforms = Muse::ComponentManager<Muse::TransformComponent>::GetComponents();
         auto render2DComponents = Muse::ComponentManager<Muse::Render2DComponent>::GetComponents();
+        */
+
+        auto func = [](
+            int a_Entity,
+            TransformComponent& a_TransformComponent,
+            Render2DComponent& a_Render2DComponent
+            )
+        {
+            a_Render2DComponent.modelMatrix = TransformHelper::GetWorldModelMatrix(a_TransformComponent);
+
+            if (a_Render2DComponent.texture != nullptr)
+            {
+                Renderer2D::DrawQuad(a_Render2DComponent.modelMatrix, a_Render2DComponent.texture, a_Render2DComponent.tilingFactor, a_Render2DComponent.color);
+            }
+            else
+            {
+                Renderer2D::DrawQuad(a_Render2DComponent.modelMatrix, a_Render2DComponent.color);
+            }
+        };
 
         Run<TransformComponent, Render2DComponent>(func);
     }

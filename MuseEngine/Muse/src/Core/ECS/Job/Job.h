@@ -1,5 +1,7 @@
 #pragma once
 #include "Core/ECS/Component/ComponentHelper.h"
+#include "Core/ECS/Component/Collider2DComponent.h"
+#include "Core/ECS/Component/Collision2DHelper.h"
 
 #include "Core/ECS/Job/JobManager.h"
 
@@ -12,13 +14,13 @@ namespace Muse
 		virtual ~Job() = default;
 		
 		void Update();
-		virtual void OnUpdate() = 0;
+        virtual void OnUpdate() = 0;
 		
-		//template <typename T1, typename T2>
-		//void Schedule(const std::function<void(const std::vector<int>&, std::unordered_map<int, T1>&, std::unordered_map<int, T2>&)>& a_Func, int a_ThreadId = -1);
+        template <typename T1, typename T2>
+        void Run(const std::function<void(int, T1&, T2&)>& a_Func);
 
-		template <typename T1, typename T2>
-		void Run(const std::function<void(const std::vector<int>&, std::unordered_map<int, T1>&, std::unordered_map<int, T2>&)>& a_Func);
+        template <typename T1, typename T2>
+        void RunCollision(const std::function<void(int, T1&, T2&)>& a_Func);
 
 	};
 
@@ -27,38 +29,63 @@ namespace Muse
 		OnUpdate();
 	}
 
-	/*
-	template <typename T1, typename T2>
-	void Job::Schedule(const std::function<void(const std::vector<int>&, std::unordered_map<int, T1>&, std::unordered_map<int, T2>&)>& a_Func, int a_ThreadId)
-	{
-		const std::function<void(std::function<void()>)> task = [a_Func](const std::function<void()> a_CallBack)
-		{
-			std::vector<int> entitiesWithComponents = ComponentHelper::GetEntitiesWith<T1, T2>();
+    template <typename T1, typename T2>
+    void Job::Run(const std::function<void(int, T1&, T2&)>& a_Func)
+    {
+        std::vector<int> entitiesWithComponents = ComponentHelper::GetEntitiesWith<T1, T2>();
 
-			std::unordered_map<int, T1>& components1 = ComponentManager<T1>::GetComponents();
-			std::unordered_map<int, T2>& components2 = ComponentManager<T2>::GetComponents();
+        std::unordered_map<int, T1>& components1 = ComponentManager<T1>::GetComponents();
+        std::unordered_map<int, T2>& components2 = ComponentManager<T2>::GetComponents();
 
-			a_Func(entitiesWithComponents, components1, components2);
+        for (auto entity : entitiesWithComponents)
+        {
+            a_Func(entity, components1[entity], components2[entity]);
+        }
+    }
 
-			if(a_CallBack != nullptr)
-			{
-				a_CallBack();
-			}
-		};
+    /// <summary>
+    /// Executes the lambda when a entity that has component T1 collides with another entity that has T2.
+    /// Is executes for both entities that collide with each other.
+    /// </summary>
+    /// <typeparam name="T1">This Component</typeparam>
+    /// <typeparam name="T2">Other Component</typeparam>
+    /// <param name="a_Func"The Lambda></param>
+    template <typename T1, typename T2>
+    void Job::RunCollision(const std::function<void(int, T1&, T2&)>& a_Func)
+    {
+        std::vector<int> entitiesWithComponents = ComponentHelper::GetEntitiesWith<T1, T2, Collider2DComponent, TransformComponent>();
 
-		Application::Get().GetJobManager()->ScheduleTask(task, a_ThreadId);
-	}
-	*/
+        std::unordered_map<int, Collider2DComponent>& collider2DComponents = ComponentManager<Collider2DComponent>::GetComponents();
+        std::unordered_map<int, TransformComponent>& transformComponents = ComponentManager<Collider2DComponent>::GetComponents();
 
-	template <typename T1, typename T2>
-	void Job::Run(
-		const std::function<void(const std::vector<int>&, std::unordered_map<int, T1>&, std::unordered_map<int, T2>&)>& a_Func)
-	{
-		std::vector<int> entitiesWithComponents = ComponentHelper::GetEntitiesWith<T1, T2>();
+        std::vector<std::pair<int, int>> hits;
 
-		std::unordered_map<int, T1>& components1 = ComponentManager<T1>::GetComponents();
-		std::unordered_map<int, T2>& components2 = ComponentManager<T2>::GetComponents();
+        for (auto thisEntity : entitiesWithComponents)
+        {
+            for (auto otherEntity : entitiesWithComponents)
+            {
+                if (thisEntity != otherEntity)
+                {
+                    BoundingBox thisBounds = {  };
+                    BoundingBox otherBounds = {  };
 
-		a_Func(entitiesWithComponents, components1, components2);
-	}
+                    if (Collision2DHelper::AABBCheck())
+                    {
+                        hits.push_back({ thisEntity, otherEntity });
+                    }
+                }
+            }
+
+            collider2DComponents.erase(thisEntity);
+        }
+
+        std::unordered_map<int, T1>& components1 = ComponentManager<T1>::GetComponents();
+        std::unordered_map<int, T2>& components2 = ComponentManager<T2>::GetComponents();
+
+        for (auto hit : hits)
+        {
+            a_Func(hit.first, components1[hit.first], components2[hit.first]);
+            a_Func(hit.second, components1[hit.second], components2[hit.first]);
+        }
+    }
 }

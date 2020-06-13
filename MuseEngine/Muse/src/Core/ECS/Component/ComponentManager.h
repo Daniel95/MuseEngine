@@ -13,7 +13,7 @@ namespace Muse
 	public:
 		static void Add(Entity a_Entity, T a_Component);
 		static void Remove(Entity a_Entity);
-		static std::unordered_map<int, T>& GetComponents() { return  s_Components; }
+		static std::unordered_map<int, T>& GetComponents() { return s_Components; }
 		static T& Get(Entity a_Entity);
 		static void Set(Entity a_Entity, T& a_Component);
 		

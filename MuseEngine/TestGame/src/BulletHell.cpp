@@ -11,7 +11,8 @@
 #include "Core/ECS/Component/Render2DComponent.h"
 #include "Core/ECS/Component/TransformComponent.h"
 
-#include "BulletHell/Job/PlayerJob.h"
+#include "BulletHell/Job/PlayerMovementJob.h"
+#include "BulletHell/Job/PlayerObstacleCollisionJob.h"
 #include "BulletHell/Job/HealthJob.h"
 #include "BulletHell/Component/Components.h"
 
@@ -40,7 +41,8 @@ void BulletHell::OnStart()
     m_CheckerboardTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Checkerboard.png");
 
     GetJobManager()->Add<Muse::Render2DJob>(Muse::JobType::Renderer);
-    GetJobManager()->Add<PlayerJob>(Muse::JobType::Gameplay);
+    GetJobManager()->Add<PlayerMovementJob>(Muse::JobType::Gameplay);
+    GetJobManager()->Add<PlayerObstacleCollisionJob>(Muse::JobType::Gameplay);
 
     auto playerEntity = Muse::Entity::Create();
 
@@ -52,9 +54,6 @@ void BulletHell::OnStart()
     Muse::ComponentManager<Muse::Render2DComponent>::Add(playerEntity, render2DComponent);
     Muse::ComponentManager<Muse::TransformComponent>::Add(playerEntity, { });
     Muse::ComponentManager<PlayerComponent>::Add(playerEntity, { });
-
-    auto transforms = Muse::ComponentManager<Muse::TransformComponent>::GetComponents();
-    auto render2DComponents = Muse::ComponentManager<Muse::Render2DComponent>::GetComponents();
 }
 
 void BulletHell::OnRender()

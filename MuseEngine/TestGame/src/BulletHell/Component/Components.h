@@ -2,7 +2,12 @@
 
 struct PlayerComponent 
 {
-    float speed = 1;
+    float speed = 3.5f;
+};
+
+struct ObstacleComponent
+{
+    float damage = 0;
 };
 
 struct HealthComponent 
