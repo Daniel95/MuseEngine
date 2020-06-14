@@ -12,7 +12,7 @@ void DeleteOutOfBoundsJob::OnUpdate()
         DeleteOutOfBoundsComponent& a_DeleteOutOfBoundsComponent
         )
     {
-        if (a_TransformComponent.localPosition.y > 5 || a_TransformComponent.localPosition.y < -5)
+        if (a_TransformComponent.localPosition.y > 4 || a_TransformComponent.localPosition.y < -5)
         {
             Muse::Entity::Destroy(a_Entity);
         }

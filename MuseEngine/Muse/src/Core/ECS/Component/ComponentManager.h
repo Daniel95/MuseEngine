@@ -23,21 +23,29 @@ namespace Muse
 
 	private:
         static std::unordered_map<int, T> s_Components;
-        static ullong s_Id;
+		static bool s_Initiated;
 
 	};
 
 	template<class T>
 	std::unordered_map<int, T> ComponentManager<T>::s_Components;
+
+    template<class T>
+	bool ComponentManager<T>::s_Initiated = false;
 	
 	template <class T>
 	void ComponentManager<T>::Add(Entity a_Entity, T a_Component)
 	{
 		ASSERT_ENGINE(!Exist(a_Entity), "Component for this entity already exists!");
 		
-		if (s_Components.empty())
+		if (!s_Initiated)
 		{
-			Entity::s_DestroyEvent.Subscribe([](int a_Entity) { ComponentManager<T>::OnEntityDestroy(a_Entity); });
+  			Entity::s_DestroyEvent.Subscribe([](int a_Entity)
+			{ 
+				ComponentManager<T>::OnEntityDestroy(a_Entity);
+			});
+
+			s_Initiated = true;
 		}
 
 		std::pair<int, T> pair{ a_Entity, a_Component };
@@ -73,8 +81,8 @@ namespace Muse
 	{
 		if (Exist(a_Entity))
 		{
-            s_Components.erase(a_Entity);
-			//Remove(a_Entity);
+            //s_Components.erase(a_Entity);
+			Remove(a_Entity);
 		}
 	}
 }

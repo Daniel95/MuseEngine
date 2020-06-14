@@ -36,8 +36,6 @@ void PlayerJob::OnUpdate()
         PlayerComponent& a_PlayerComponent
         )
     {
-        LOG_INFO(a_TransformComponent.localPosition.y);
-
         if (inputDirection != glm::vec2(0))
         {
             const glm::vec2 direction = glm::normalize(inputDirection);
@@ -46,8 +44,8 @@ void PlayerJob::OnUpdate()
             Muse::TransformHelper::TranslateLocal(a_TransformComponent, glm::vec3(movement.x, movement.y, 0));
         }
 
-        if (Muse::Input::GetKeyDown(MUSE_KEY_SPACE))
-        {
+        //if (Muse::Input::GetKeyDown(MUSE_KEY_SPACE))
+        //{
             auto projectileEntity = Muse::Entity::Create();
 
             Muse::Render2DComponent render2DComponent
@@ -68,7 +66,7 @@ void PlayerJob::OnUpdate()
             Muse::ComponentManager<ObstacleComponent>::Add(projectileEntity, { });
             Muse::ComponentManager<MoveForwardComponent>::Add(projectileEntity, { });
             Muse::ComponentManager<DeleteOutOfBoundsComponent>::Add(projectileEntity, { });
-        }
+        //}
     };
 
     Run<Muse::TransformComponent, PlayerComponent>(moveSimple);

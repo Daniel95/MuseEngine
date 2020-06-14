@@ -60,48 +60,13 @@ void BulletHell::OnRender()
     Muse::RenderCommand::Clear();
 
     Muse::Renderer2D::ResetStatistics();
-
-    /*
-    Muse::Renderer2D::DrawQuad(
-        { 1, 1, 0 },
-        { 0.5f, 0.5f },
-        0,
-        { 0, 1, 0, 1 }
-    );
-
-    Muse::Renderer2D::DrawQuad(
-        { 1, -1, 0 },
-        { 0.5f, 0.5f },
-        0,
-        m_CheckerboardTexture
-    );
-
-    Muse::Renderer2D::DrawQuad(
-        { -1, 1, 0 },
-        { 0.5f, 0.5f },
-        45,
-        { 1, 0.5f, 0, 1.0f }
-    );
-
-    Muse::Renderer2D::DrawQuad(
-        { -1.0f, -1.0f, 0 },
-        { 0.5f, 0.5f },
-        45,
-        m_RaymanTexture
-    );
-
-    Muse::Renderer2D::DrawQuad(
-        { 0, 1, 0 },
-        glm::vec2(1),
-        { 1.0f, 0.0f, 0.0f, 1.0f }
-    );
-    */
 }
 
 
 void BulletHell::OnImGuiRender()
 {
     ImGui::Begin("Settings");
+    ImGui::Spacing();
 
     auto stats = Muse::Renderer2D::GetStatistics();
 
@@ -112,16 +77,24 @@ void BulletHell::OnImGuiRender()
     ImGui::Text("Vertex Count: %d", stats.GetTotalVertex());
     ImGui::Text("Index Count: %d", stats.GetTotalIndex());
 
+    ImGui::Spacing();
+    ImGui::Separator();
+    ImGui::Spacing();
+
+
     ImGui::Text("Entity Data:");
 
     //Muse components:
+    ImGui::Spacing();
     ImGui::Text("Muse Components:");
 
     ImGui::Text("Render2DComponent Count: %d", Muse::ComponentManager<Muse::Render2DComponent>::GetComponents().size());
     ImGui::Text("TransformComponent Count: %d", Muse::ComponentManager<Muse::TransformComponent>::GetComponents().size());
     ImGui::Text("Collider2DComponent Count: %d", Muse::ComponentManager<Muse::Collider2DComponent>::GetComponents().size());
 
+
     //BulletHell Components
+    ImGui::Spacing();
     ImGui::Text("BulletHell Components:");
 
     ImGui::Text("PlayerComponent Count: %d", Muse::ComponentManager<PlayerComponent>::GetComponents().size());
