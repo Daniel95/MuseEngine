@@ -614,6 +614,7 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\ECS\Component\ComponentManager.cpp" />
     <ClCompile Include="src\Core\Physics\Collision2D.cpp" />
     <ClCompile Include="src\Core\ECS\Job\Render2DJob.cpp" />
     <ClCompile Include="src\Core\Application.cpp" />

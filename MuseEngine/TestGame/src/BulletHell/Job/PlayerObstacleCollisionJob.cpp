@@ -22,6 +22,8 @@ void PlayerObstacleCollisionJob::OnUpdate()
         ObstacleComponent& a_ProjectileComponent
         )
     {
+        Muse::Entity::Destroy(obstacleEntitiy);
+
         LOG_INFO("a_ProjectileComponent");
     };
 

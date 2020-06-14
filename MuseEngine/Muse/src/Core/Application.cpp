@@ -24,7 +24,6 @@
 #include "Editor/Editor.h"
 #include "Editor/FileBrowser.h"
 
-
 namespace Muse
 {
     Application* Application::s_Instance = nullptr;
@@ -32,6 +31,8 @@ namespace Muse
     Application::Application()
     {
         MUSE_PROFILE_FUNCTION();
+
+        std::srand(0);
 
         ASSERT_ENGINE(!s_Instance, "A instance of Application already exists!");
         s_Instance = this;
@@ -57,8 +58,6 @@ namespace Muse
         PushOverlay(m_ImGuiLayer);
 
         m_ViewportFramebuffer = FrameBuffer::Create(m_Window->GetWidth(), m_Window->GetWidth(), FramebufferFormat::RGBA16F);
-
-        std::srand(0);
     }
 
     Application::~Application()
