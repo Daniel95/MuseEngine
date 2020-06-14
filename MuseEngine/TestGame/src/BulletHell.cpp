@@ -13,6 +13,7 @@
 
 #include "BulletHell/Job/PlayerJob.h"
 #include "BulletHell/Job/PlayerObstacleCollisionJob.h"
+#include "BulletHell/Job/DeleteOutOfBoundsJob.h"
 #include "BulletHell/Job/MoveForwardJob.h"
 #include "BulletHell/Job/HealthJob.h"
 #include "BulletHell/Component/Components.h"
@@ -46,6 +47,7 @@ void BulletHell::OnStart()
     GetJobManager()->Add<PlayerJob>(Muse::JobType::Gameplay);
     GetJobManager()->Add<HealthJob>(Muse::JobType::Gameplay);
     GetJobManager()->Add<MoveForwardJob>(Muse::JobType::Gameplay);
+    GetJobManager()->Add<DeleteOutOfBoundsJob>(Muse::JobType::Gameplay);
 
     CreatePlayer({ 0, 0 });
     CreateObstacle({ 2, 2 });

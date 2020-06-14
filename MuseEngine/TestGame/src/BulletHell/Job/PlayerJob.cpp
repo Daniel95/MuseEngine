@@ -36,6 +36,8 @@ void PlayerJob::OnUpdate()
         PlayerComponent& a_PlayerComponent
         )
     {
+        LOG_INFO(a_TransformComponent.localPosition.y);
+
         if (inputDirection != glm::vec2(0))
         {
             const glm::vec2 direction = glm::normalize(inputDirection);
@@ -65,6 +67,7 @@ void PlayerJob::OnUpdate()
 
             Muse::ComponentManager<ObstacleComponent>::Add(projectileEntity, { });
             Muse::ComponentManager<MoveForwardComponent>::Add(projectileEntity, { });
+            Muse::ComponentManager<DeleteOutOfBoundsComponent>::Add(projectileEntity, { });
         }
     };
 

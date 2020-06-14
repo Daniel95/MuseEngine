@@ -15,3 +15,5 @@ struct MoveForwardComponent
 {
     float speed = 3.5f;
 };
+
+struct DeleteOutOfBoundsComponent { };

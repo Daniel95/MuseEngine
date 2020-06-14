@@ -33,12 +33,12 @@ namespace Muse
 	template <class T>
 	void ComponentManager<T>::Add(Entity a_Entity, T a_Component)
 	{
-		ASSERT_ENGINE(!Exist(), "Component for this entity already exists!");
+		ASSERT_ENGINE(!Exist(a_Entity), "Component for this entity already exists!");
 		
-		//Entity::s_DestroyEvent;
-		Entity::s_DestroyEvent.Subscribe([](int a_Entity) { ComponentManager<T>::OnEntityDestroy(a_Entity); });
-
-		//LOG_INFO(Entity::s_DestroyEvent.GetSubscriptionCount());
+		if (s_Components.empty())
+		{
+			Entity::s_DestroyEvent.Subscribe([](int a_Entity) { ComponentManager<T>::OnEntityDestroy(a_Entity); });
+		}
 
 		std::pair<int, T> pair{ a_Entity, a_Component };
 		s_Components.insert(pair);
@@ -47,7 +47,7 @@ namespace Muse
 	template <class T>
 	void ComponentManager<T>::Remove(Entity a_Entity)
 	{
-		ASSERT_ENGINE(Exist(), "Component for this entity does not exist!");
+		ASSERT_ENGINE(Exist(a_Entity), "Component for this entity does not exist!");
 
 		s_Components.erase(a_Entity);
 	}
@@ -55,7 +55,7 @@ namespace Muse
 	template <class T>
 	T& ComponentManager<T>::Get(Entity a_Entity)
 	{
-		ASSERT_ENGINE(Exist(), "Component for this entity does not exist!");
+		ASSERT_ENGINE(Exist(a_Entity), "Component for this entity does not exist!");
 
 		return s_Components[a_Entity];
 	}
@@ -63,7 +63,7 @@ namespace Muse
 	template <class T>
 	void ComponentManager<T>::Set(Entity a_Entity, T& a_Component)
 	{
-		ASSERT_ENGINE(Exist(), "Component for this entity does not exist!");
+		ASSERT_ENGINE(Exist(a_Entity), "Component for this entity does not exist!");
 		
 		s_Components[a_Entity] = a_Component;
 	}
@@ -73,10 +73,7 @@ namespace Muse
 	{
 		if (Exist(a_Entity))
 		{
-			LOG_INFO(s_Components.size());
             s_Components.erase(a_Entity);
-			LOG_INFO(s_Components.size());
-
 			//Remove(a_Entity);
 		}
 	}
