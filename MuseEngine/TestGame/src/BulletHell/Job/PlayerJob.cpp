@@ -44,8 +44,13 @@ void PlayerJob::OnUpdate()
             Muse::TransformHelper::TranslateLocal(a_TransformComponent, glm::vec3(movement.x, movement.y, 0));
         }
 
-        //if (Muse::Input::GetKeyDown(MUSE_KEY_SPACE))
-        //{
+        a_PlayerComponent.fireTimer += deltaTime;
+
+        if (Muse::Input::GetKeyDown(MUSE_KEY_SPACE) && 
+            a_PlayerComponent.fireTimer > a_PlayerComponent.fireCD)
+        {
+            a_PlayerComponent.fireTimer = 0;
+
             auto projectileEntity = Muse::Entity::Create();
 
             Muse::Render2DComponent render2DComponent
@@ -63,10 +68,11 @@ void PlayerJob::OnUpdate()
             Muse::ComponentManager<Muse::TransformComponent>::Add(projectileEntity, transformComponent);
             Muse::ComponentManager<Muse::Collider2DComponent>::Add(projectileEntity, { });
 
+            //hits itself...
             Muse::ComponentManager<ObstacleComponent>::Add(projectileEntity, { });
-            Muse::ComponentManager<MoveForwardComponent>::Add(projectileEntity, { });
-            Muse::ComponentManager<DeleteOutOfBoundsComponent>::Add(projectileEntity, { });
-        //}
+            Muse::ComponentManager<ProjectileComponent>::Add(projectileEntity, { 12 });
+            Muse::ComponentManager<DestroyOutOfBoundsComponent>::Add(projectileEntity, { });
+        }
     };
 
     Run<Muse::TransformComponent, PlayerComponent>(moveSimple);

@@ -2,7 +2,7 @@
 
 #include "Core/ECS/Job/Job.h"
 
-class MoveForwardJob : public Muse::Job
+class ProjectileJob : public Muse::Job
 {
     virtual void OnUpdate() override;
 };

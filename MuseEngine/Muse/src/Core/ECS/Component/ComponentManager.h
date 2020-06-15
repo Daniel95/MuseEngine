@@ -18,7 +18,6 @@ namespace Muse
 		static T& Get(Entity a_Entity);
         static void Set(Entity a_Entity, T& a_Component);
 		static bool Exist(Entity a_Entity) { return s_Components.find(a_Entity) != s_Components.end(); }
-		
 		static void OnEntityDestroy(int a_Entity);
 
 	private:

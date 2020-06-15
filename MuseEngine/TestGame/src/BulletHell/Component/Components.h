@@ -1,9 +1,13 @@
 #pragma once
 
+#include "glm/glm.hpp"
+
 struct PlayerComponent 
 {
     float speed = 3.5f;
     float health = 100;
+    float fireCD = 0.2f;
+    float fireTimer = 0;
 };
 
 struct ObstacleComponent
@@ -11,15 +15,13 @@ struct ObstacleComponent
     float damage = 0;
 };
 
-struct MoveForwardComponent 
+struct ProjectileComponent 
 {
     float speed = 3.5f;
 };
 
-struct DeleteOutOfBoundsComponent
+struct DestroyOutOfBoundsComponent
 { 
-    float minX = -5.0f;
-    float maxX = 5.0f;
-    float minY = -5.0f;
-    float maxY = 5.0f;
+    glm::vec2 min = glm::vec2(-5.0f, -5.0f);
+    glm::vec2 max = glm::vec2(5.0f, 5.0f);
 };

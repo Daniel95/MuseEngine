@@ -12,9 +12,10 @@
 #include "Core/ECS/Component/TransformComponent.h"
 
 #include "BulletHell/Job/PlayerJob.h"
+#include "BulletHell/Job/DestroyOutOfBoundsJob.h"
+#include "BulletHell/Job/ProjectileJob.h"
+#include "BulletHell/Job/ProjectileObstacleCollisionJob.h"
 #include "BulletHell/Job/PlayerObstacleCollisionJob.h"
-#include "BulletHell/Job/DeleteOutOfBoundsJob.h"
-#include "BulletHell/Job/MoveForwardJob.h"
 #include "BulletHell/Job/HealthJob.h"
 #include "BulletHell/Component/Components.h"
 
@@ -43,11 +44,12 @@ void BulletHell::OnStart()
     m_CheckerboardTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Checkerboard.png");
 
     GetJobManager()->Add<Muse::Render2DJob>(Muse::JobType::Renderer);
-    GetJobManager()->Add<PlayerObstacleCollisionJob>(Muse::JobType::Gameplay);
     GetJobManager()->Add<PlayerJob>(Muse::JobType::Gameplay);
     GetJobManager()->Add<HealthJob>(Muse::JobType::Gameplay);
-    GetJobManager()->Add<MoveForwardJob>(Muse::JobType::Gameplay);
-    GetJobManager()->Add<DeleteOutOfBoundsJob>(Muse::JobType::Gameplay);
+    GetJobManager()->Add<ProjectileJob>(Muse::JobType::Gameplay);
+    GetJobManager()->Add<DestroyOutOfBoundsJob>(Muse::JobType::Gameplay);
+    GetJobManager()->Add<PlayerObstacleCollisionJob>(Muse::JobType::Gameplay);
+    GetJobManager()->Add<ProjectileObstacleCollisionJob>(Muse::JobType::Gameplay);
 
     CreatePlayer({ 0, 0 });
     CreateObstacle({ 2, 2 });
@@ -81,7 +83,6 @@ void BulletHell::OnImGuiRender()
     ImGui::Separator();
     ImGui::Spacing();
 
-
     ImGui::Text("Entity Data:");
 
     //Muse components:
@@ -92,14 +93,13 @@ void BulletHell::OnImGuiRender()
     ImGui::Text("TransformComponent Count: %d", Muse::ComponentManager<Muse::TransformComponent>::GetComponents().size());
     ImGui::Text("Collider2DComponent Count: %d", Muse::ComponentManager<Muse::Collider2DComponent>::GetComponents().size());
 
-
     //BulletHell Components
     ImGui::Spacing();
     ImGui::Text("BulletHell Components:");
 
     ImGui::Text("PlayerComponent Count: %d", Muse::ComponentManager<PlayerComponent>::GetComponents().size());
     ImGui::Text("ObstacleComponent Count: %d", Muse::ComponentManager<ObstacleComponent>::GetComponents().size());
-    ImGui::Text("MoveForwardComponent Count: %d", Muse::ComponentManager<MoveForwardComponent>::GetComponents().size());
+    ImGui::Text("MoveForwardComponent Count: %d", Muse::ComponentManager<ProjectileComponent>::GetComponents().size());
 
     ImGui::End();
 }

@@ -16,12 +16,15 @@ namespace Muse
         {
             for (auto entity2 : entityGroup2)
             {
-                BoundingBox thisBounds(transformComponents.at(entity1).localPosition, transformComponents.at(entity1).localScale);
-                BoundingBox otherBounds(transformComponents.at(entity2).localPosition, transformComponents.at(entity2).localScale);
-
-                if (AABBCheck(thisBounds, otherBounds))
+                if (entity1 != entity2)
                 {
-                    hits.push_back({ entity1, entity2 });
+                    BoundingBox thisBounds(transformComponents.at(entity1).localPosition, transformComponents.at(entity1).localScale);
+                    BoundingBox otherBounds(transformComponents.at(entity2).localPosition, transformComponents.at(entity2).localScale);
+
+                    if (AABBCheck(thisBounds, otherBounds))
+                    {
+                        hits.push_back({ entity1, entity2 });
+                    }
                 }
             }
         }
