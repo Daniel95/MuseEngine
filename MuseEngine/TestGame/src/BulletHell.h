@@ -29,5 +29,6 @@ private:
 
     int CreatePlayer(const glm::vec2& a_Position);
     int CreateObstacle(const glm::vec2& a_Position, const glm::vec2& a_Scale = glm::vec2(1, 1));
-
+    int CreateEnemy(const glm::vec2& a_Position, const glm::vec2& a_Scale = glm::vec2(1, 1));
+    
 };

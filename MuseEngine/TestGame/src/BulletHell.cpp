@@ -10,12 +10,13 @@
 #include "Core/ECS/Job/Render2DJob.h"
 #include "Core/ECS/Component/Render2DComponent.h"
 #include "Core/ECS/Component/TransformComponent.h"
+#include "Core/Gameplay/Component/CameraComponent.cpp"
 
 #include "BulletHell/Job/PlayerJob.h"
+#include "BulletHell/Job/EnemyJob.h"
 #include "BulletHell/Job/DestroyOutOfBoundsJob.h"
 #include "BulletHell/Job/ProjectileJob.h"
-#include "BulletHell/Job/ProjectileObstacleCollisionJob.h"
-#include "BulletHell/Job/PlayerObstacleCollisionJob.h"
+#include "BulletHell/Job/ObstacleCollisionJob.h"
 #include "BulletHell/Job/HealthJob.h"
 #include "BulletHell/Component/Components.h"
 
@@ -26,7 +27,6 @@ Muse::Application* Muse::CreateApplication()
     return new BulletHell();
 }
 #endif
-#include <Core\Gameplay\Component\CameraComponent.cpp>
 
 void BulletHell::OnStart()
 {
@@ -48,11 +48,11 @@ void BulletHell::OnStart()
     GetJobManager()->Add<HealthJob>(Muse::JobType::Gameplay);
     GetJobManager()->Add<ProjectileJob>(Muse::JobType::Gameplay);
     GetJobManager()->Add<DestroyOutOfBoundsJob>(Muse::JobType::Gameplay);
-    GetJobManager()->Add<PlayerObstacleCollisionJob>(Muse::JobType::Gameplay);
-    GetJobManager()->Add<ProjectileObstacleCollisionJob>(Muse::JobType::Gameplay);
+    GetJobManager()->Add<ObstacleCollisionJob>(Muse::JobType::Gameplay);
+    GetJobManager()->Add<EnemyJob>(Muse::JobType::Gameplay);
 
     CreatePlayer({ 0, 0 });
-    CreateObstacle({ 2, 2 });
+    CreateEnemy({ 2, 2 });
     CreateObstacle({ -2, 2 });
 }
 
@@ -63,7 +63,6 @@ void BulletHell::OnRender()
 
     Muse::Renderer2D::ResetStatistics();
 }
-
 
 void BulletHell::OnImGuiRender()
 {
@@ -147,6 +146,32 @@ int BulletHell::CreateObstacle(const glm::vec2& a_Position, const glm::vec2& a_S
     Muse::ComponentManager<Muse::Collider2DComponent>::Add(obstacleEntity, { });
 
     Muse::ComponentManager<ObstacleComponent>::Add(obstacleEntity, { });
+
+    return obstacleEntity;
+}
+
+int BulletHell::CreateEnemy(const glm::vec2& a_Position, const glm::vec2& a_Scale)
+{
+    auto obstacleEntity = Muse::Entity::Create();
+
+    Muse::Render2DComponent render2DComponent
+    {
+        m_RaymanTexture,
+    };
+
+    Muse::TransformComponent transformComponent
+    {
+        glm::vec3(a_Position.x, a_Position.y, 0),
+        glm::vec3(a_Scale.x, a_Scale.y, 0),
+        glm::vec3(0, 0, glm::radians(180.0f))
+    };
+
+    Muse::ComponentManager<Muse::Render2DComponent>::Add(obstacleEntity, render2DComponent);
+    Muse::ComponentManager<Muse::TransformComponent>::Add(obstacleEntity, transformComponent);
+    Muse::ComponentManager<Muse::Collider2DComponent>::Add(obstacleEntity, { });
+
+    Muse::ComponentManager<ObstacleComponent>::Add(obstacleEntity, { });
+    Muse::ComponentManager<EnemyComponent>::Add(obstacleEntity, { });
 
     return obstacleEntity;
 }

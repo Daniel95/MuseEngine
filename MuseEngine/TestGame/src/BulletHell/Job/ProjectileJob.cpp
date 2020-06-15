@@ -16,7 +16,7 @@ void ProjectileJob::OnUpdate()
         )
     {
         float movement = a_MoveforwardComponent.speed * deltaTime;
-        Muse::TransformHelper::TranslateLocal(a_TransformComponent, glm::vec3(0, movement, 0));
+        Muse::TransformHelper::TranslateLocal(a_TransformComponent, Muse::TransformHelper::GetUp(a_TransformComponent) * movement);
     };
 
     Run<ProjectileComponent, Muse::TransformComponent>(moveForward);

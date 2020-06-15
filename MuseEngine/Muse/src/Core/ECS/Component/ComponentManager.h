@@ -91,6 +91,7 @@ namespace Muse
 	{
 		if (Exist(a_Entity))
 		{
+			ASSERT_ENGINE(std::find(s_EntitiesToRemove.begin(), s_EntitiesToRemove.end(), a_Entity) == s_EntitiesToRemove.end(), "Entity is already destroyed!");
 			s_EntitiesToRemove.push_back(a_Entity);
 		}
 	}

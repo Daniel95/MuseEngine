@@ -12,6 +12,7 @@ namespace Muse
     {
         glm::vec3 localPosition = glm::vec3(0);
         glm::vec3 localScale = glm::vec3(1);
+        //Radians
         glm::vec3 localRotation = glm::vec3(0);
 
         glm::mat4 worldModelMatrix = glm::identity<glm::mat4>();

@@ -138,10 +138,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\BulletHell\Job\ProjectileObstacleCollisionJob.h" />
+    <ClInclude Include="src\BulletHell\Job\EnemyJob.h" />
     <ClInclude Include="src\BulletHell\Job\DestroyOutOfBoundsJob.h" />
     <ClInclude Include="src\BulletHell\Job\ProjectileJob.h" />
-    <ClInclude Include="src\BulletHell\Job\PlayerObstacleCollisionJob.h" />
+    <ClInclude Include="src\BulletHell\Job\ObstacleCollisionJob.h" />
     <ClInclude Include="src\BulletHell\Job\PlayerJob.h" />
     <ClInclude Include="src\BulletHell\Job\HealthJob.h" />
     <ClInclude Include="src\BulletHell.h" />
@@ -155,10 +155,10 @@
     <ClInclude Include="src\TestGame.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\BulletHell\Job\ProjectileObstacleCollisionJob.cpp" />
+    <ClCompile Include="src\BulletHell\Job\EnemyJob.cpp" />
     <ClCompile Include="src\BulletHell\Job\DestroyOutOfBoundsJob.cpp" />
     <ClCompile Include="src\BulletHell\Job\ProjectileJob.cpp" />
-    <ClCompile Include="src\BulletHell\Job\PlayerObstacleCollisionJob.cpp" />
+    <ClCompile Include="src\BulletHell\Job\ObstacleCollisionJob.cpp" />
     <ClCompile Include="src\BulletHell\Job\PlayerJob.cpp" />
     <ClCompile Include="src\BulletHell\Job\HealthJob.cpp" />
     <ClCompile Include="src\BulletHell.cpp" />
