@@ -28,6 +28,9 @@ Muse::Application* Muse::CreateApplication()
 }
 #endif
 
+std::shared_ptr<Muse::Texture> BulletHell::s_RaymanTexture = nullptr;
+std::shared_ptr<Muse::Texture> BulletHell::s_CheckerboardTexture = nullptr;
+
 void BulletHell::OnStart()
 {
     Muse::RenderCommand::Init();
@@ -40,8 +43,8 @@ void BulletHell::OnStart()
     Muse::CameraComponent* cameraComponent = Muse::CameraComponent::GetMain();
     cameraComponent->SetZoomLevel(5);
 
-    m_RaymanTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
-    m_CheckerboardTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Checkerboard.png");
+    s_RaymanTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
+    s_CheckerboardTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Checkerboard.png");
 
     GetJobManager()->Add<Muse::Render2DJob>(Muse::JobType::Renderer);
     GetJobManager()->Add<PlayerJob>(Muse::JobType::Gameplay);
@@ -109,7 +112,7 @@ int BulletHell::CreatePlayer(const glm::vec2& a_Position)
 
     Muse::Render2DComponent render2DComponent
     {
-        m_RaymanTexture,
+        s_RaymanTexture,
     };
 
     Muse::TransformComponent transformComponent
@@ -132,7 +135,7 @@ int BulletHell::CreateObstacle(const glm::vec2& a_Position, const glm::vec2& a_S
 
     Muse::Render2DComponent render2DComponent
     {
-        m_CheckerboardTexture,
+        s_CheckerboardTexture,
     };
 
     Muse::TransformComponent transformComponent
@@ -156,7 +159,7 @@ int BulletHell::CreateEnemy(const glm::vec2& a_Position, const glm::vec2& a_Scal
 
     Muse::Render2DComponent render2DComponent
     {
-        m_RaymanTexture,
+        s_RaymanTexture,
     };
 
     Muse::TransformComponent transformComponent
@@ -174,4 +177,24 @@ int BulletHell::CreateEnemy(const glm::vec2& a_Position, const glm::vec2& a_Scal
     Muse::ComponentManager<EnemyComponent>::Add(obstacleEntity, { });
 
     return obstacleEntity;
+}
+
+int BulletHell::CreateProjectile(Muse::TransformComponent& a_TransformComponent, float a_Speed)
+{
+    auto projectileEntity = Muse::Entity::Create();
+
+    Muse::Render2DComponent render2DComponent
+    {
+        s_CheckerboardTexture,
+    };
+
+    Muse::ComponentManager<Muse::Render2DComponent>::Add(projectileEntity, render2DComponent);
+    Muse::ComponentManager<Muse::TransformComponent>::Add(projectileEntity, a_TransformComponent);
+    Muse::ComponentManager<Muse::Collider2DComponent>::Add(projectileEntity, { });
+
+    Muse::ComponentManager<ObstacleComponent>::Add(projectileEntity, { });
+    Muse::ComponentManager<ProjectileComponent>::Add(projectileEntity, { 12 });
+    Muse::ComponentManager<DestroyOutOfBoundsComponent>::Add(projectileEntity, { });
+
+    return projectileEntity;
 }

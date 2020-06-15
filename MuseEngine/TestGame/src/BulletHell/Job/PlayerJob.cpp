@@ -3,6 +3,7 @@
 #include "Core/Input/Input.h"
 #include <Muse.h>
 #include "BulletHell/Component/Components.h"
+#include "BulletHell.h"
 
 void PlayerJob::OnUpdate()
 {
@@ -28,9 +29,7 @@ void PlayerJob::OnUpdate()
         inputDirection.y = 1;
     }
 
-    std::shared_ptr<Muse::Texture> m_ProjectileTexture = Muse::ResourceManager::Get<Muse::Texture>("assets/textures/Checkerboard.png");
-
-    auto moveSimple = [inputDirection, deltaTime, m_ProjectileTexture](
+    auto moveSimple = [inputDirection, deltaTime](
         int entity,
         Muse::TransformComponent& a_TransformComponent,
         PlayerComponent& a_PlayerComponent
@@ -51,27 +50,13 @@ void PlayerJob::OnUpdate()
         {
             a_PlayerComponent.fireTimer = 0;
 
-            auto projectileEntity = Muse::Entity::Create();
-
-            Muse::Render2DComponent render2DComponent
-            {
-                m_ProjectileTexture,
-            };
-
-            Muse::TransformComponent transformComponent
+            Muse::TransformComponent projectileTransformComponent
             {
                 glm::vec3(a_TransformComponent.localPosition.x, a_TransformComponent.localPosition.y + 1.1f, 0),
                 glm::vec3(1, 1, 0)
             };
 
-            Muse::ComponentManager<Muse::Render2DComponent>::Add(projectileEntity, render2DComponent);
-            Muse::ComponentManager<Muse::TransformComponent>::Add(projectileEntity, transformComponent);
-            Muse::ComponentManager<Muse::Collider2DComponent>::Add(projectileEntity, { });
-
-            //hits itself...
-            Muse::ComponentManager<ObstacleComponent>::Add(projectileEntity, { });
-            Muse::ComponentManager<ProjectileComponent>::Add(projectileEntity, { 12 });
-            Muse::ComponentManager<DestroyOutOfBoundsComponent>::Add(projectileEntity, { });
+            BulletHell::CreateProjectile(projectileTransformComponent, 1.0f);
         }
     };
 

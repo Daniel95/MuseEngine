@@ -138,6 +138,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="EnemySpawner.h" />
     <ClInclude Include="src\BulletHell\Job\EnemyJob.h" />
     <ClInclude Include="src\BulletHell\Job\DestroyOutOfBoundsJob.h" />
     <ClInclude Include="src\BulletHell\Job\ProjectileJob.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="src\TestGame.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EnemySpawner.cpp" />
     <ClCompile Include="src\BulletHell\Job\EnemyJob.cpp" />
     <ClCompile Include="src\BulletHell\Job\DestroyOutOfBoundsJob.cpp" />
     <ClCompile Include="src\BulletHell\Job\ProjectileJob.cpp" />
