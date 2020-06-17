@@ -11,6 +11,7 @@
 #include "Core/ECS/Component/Render2DComponent.h"
 #include "Core/ECS/Component/TransformComponent.h"
 #include "Core/Gameplay/Component/CameraComponent.cpp"
+#include "Core/ECS/Entity/EntityDebugger.h"
 
 #include "BulletHell/Job/PlayerJob.h"
 #include "BulletHell/Job/EnemyJob.h"
@@ -45,6 +46,13 @@ void BulletHell::OnStart()
 
     s_RaymanTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
     s_CheckerboardTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Checkerboard.png");
+
+    //BulletHell
+    Muse::ComponentManager<PlayerComponent>::Register("PlayerComponent");
+    Muse::ComponentManager<ObstacleComponent>::Register("ObstacleComponent");
+    Muse::ComponentManager<ProjectileComponent>::Register("ProjectileComponent");
+    Muse::ComponentManager<DestroyOutOfBoundsComponent>::Register("DestroyOutOfBoundsComponent");
+    Muse::ComponentManager<EnemyComponent>::Register("EnemyComponent");
 
     GetJobManager()->Add<Muse::Render2DJob>(Muse::JobType::Renderer);
     GetJobManager()->Add<PlayerJob>(Muse::JobType::Gameplay);
@@ -86,29 +94,36 @@ void BulletHell::OnImGuiRender()
     ImGui::Spacing();
 
     ImGui::Text("Entity Data:");
+    const std::unordered_map<int, std::vector<std::string>>& entityData = Muse::EntityDebugger::GetEntityData();
 
-    //Muse components:
-    ImGui::Spacing();
-    ImGui::Text("Muse Components:");
+    for (const auto& pair : entityData)
+    {
+        ImGui::Spacing();
+        Muse::EntityDebugger::GetEntityData();
 
-    ImGui::Text("Render2DComponent Count: %d", Muse::ComponentManager<Muse::Render2DComponent>::GetComponents().size());
-    ImGui::Text("TransformComponent Count: %d", Muse::ComponentManager<Muse::TransformComponent>::GetComponents().size());
-    ImGui::Text("Collider2DComponent Count: %d", Muse::ComponentManager<Muse::Collider2DComponent>::GetComponents().size());
+        if (Muse::EntityDebugger::HasEntityName(pair.first))
+        {
+            ImGui::Text("Entity: %d", Muse::EntityDebugger::GetEntityName(pair.first));
+        }
+        else
+        {
+            ImGui::Text("Entity: %d", pair.first);
+        }
 
-    //BulletHell Components
-    ImGui::Spacing();
-    ImGui::Text("BulletHell Components:");
+        for (const auto& componentName : pair.second)
+        {
+            ImGui::Text("Component: %s", componentName.c_str());
+        }
+    }
 
-    ImGui::Text("PlayerComponent Count: %d", Muse::ComponentManager<PlayerComponent>::GetComponents().size());
-    ImGui::Text("ObstacleComponent Count: %d", Muse::ComponentManager<ObstacleComponent>::GetComponents().size());
-    ImGui::Text("MoveForwardComponent Count: %d", Muse::ComponentManager<ProjectileComponent>::GetComponents().size());
+    Muse::EntityDebugger::ClearEntityData();
 
     ImGui::End();
 }
 
 int BulletHell::CreatePlayer(const glm::vec2& a_Position)
 {
-    auto playerEntity = Muse::Entity::Create();
+    auto playerEntity = Muse::Entity::Create("Player");
 
     Muse::Render2DComponent render2DComponent
     {
@@ -131,7 +146,7 @@ int BulletHell::CreatePlayer(const glm::vec2& a_Position)
 
 int BulletHell::CreateObstacle(const glm::vec2& a_Position, const glm::vec2& a_Scale)
 {
-    auto obstacleEntity = Muse::Entity::Create();
+    auto obstacleEntity = Muse::Entity::Create("Obstacle");
 
     Muse::Render2DComponent render2DComponent
     {
@@ -155,7 +170,7 @@ int BulletHell::CreateObstacle(const glm::vec2& a_Position, const glm::vec2& a_S
 
 int BulletHell::CreateEnemy(const glm::vec2& a_Position, const glm::vec2& a_Scale)
 {
-    auto obstacleEntity = Muse::Entity::Create();
+    auto obstacleEntity = Muse::Entity::Create("Enemy");
 
     Muse::Render2DComponent render2DComponent
     {

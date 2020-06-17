@@ -1421,6 +1421,7 @@
     <ClInclude Include="src\Core\Gameplay\Component\TransformComponentOld.h" />
     <ClInclude Include="src\Core\ECS\Component\Collider2DComponent.h" />
     <ClInclude Include="src\Core\Physics\Collision2D.h" />
+    <ClInclude Include="src\Core\ECS\Entity\EntityDebugger.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1603,5 +1604,6 @@
     <ClCompile Include="src\Core\Gameplay\Component\TransformComponentOld.cpp" />
     <ClCompile Include="src\Core\Physics\Collision2D.cpp" />
     <ClCompile Include="src\Core\ECS\Component\ComponentManager.cpp" />
+    <ClCompile Include="src\Core\ECS\Entity\EntityDebugger.cpp" />
   </ItemGroup>
 </Project>

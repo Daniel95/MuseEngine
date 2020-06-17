@@ -19,32 +19,14 @@ namespace Muse
 		Entity(int a_Id);
 		~Entity() = default;
 		operator int() const { return m_Id; }
-
-		static Entity Create();
-
-		//template<typename T>
-		//void AddComponent(T a_Component) const;
-        //template<typename T>
-        //void RemoveComponent() const;
-		static void Destroy(int a_Entity);
-		
 		int GetId() const { return m_Id; }
+
+        static Entity Create();
+        static Entity Create(const std::string& a_Name);
+		static void Destroy(int a_Entity);
 		
 	private:
 		 int m_Id = 0;
 		
 	};
-
-	/*
-	template<typename T>
-	inline void Entity::AddComponent(T a_Component) const
-	{
-	}
-
-	template<typename T>
-	inline void Entity::RemoveComponent() const
-	{
-	}
-	*/
-
 }

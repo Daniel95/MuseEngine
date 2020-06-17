@@ -12,7 +12,12 @@
 #include "Resource/ResourceManager.h"
 #include "Utilities/Defines.h"
 #include "Core/ECS/Job/JobManager.h"
+#include "Core/ECS/Entity/EntityDebugger.h"
 #include "Core/Renderer/Renderer2D.h"
+#include "Core/ECS/Component/ComponentManager.h"
+//#include "Core/ECS/Component/Render2DComponent.h"
+#include "Core/ECS/Component/TransformComponent.h"
+#include "Core/ECS/Component/Collider2DComponent.h"
 
 #include "GLFW/glfw3.h"
 #include "imgui.h"
@@ -58,6 +63,11 @@ namespace Muse
         PushOverlay(m_ImGuiLayer);
 
         m_ViewportFramebuffer = FrameBuffer::Create(m_Window->GetWidth(), m_Window->GetWidth(), FramebufferFormat::RGBA16F);
+
+        //Engine Components
+        ComponentManager<TransformComponent>::Register("TransformComponent");
+        //ComponentManager<Render2DComponent>::Register("Render2DComponent");
+        ComponentManager<Collider2DComponent>::Register("Collider2DComponent");
     }
 
     Application::~Application()

@@ -2,6 +2,7 @@
 
 #include "Core/Application.h"
 #include "Core/ECS/Component/TransformComponent.h"
+#include "Core/ECS/Entity/EntityDebugger.h"
 
 #include "glm/glm.hpp"
 #include <vector>

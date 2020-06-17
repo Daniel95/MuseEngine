@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "Core/Utilities/Defines.h"
 #include "Core/ECS/Entity/Entity.h"
+#include "Core/ECS/Entity/EntityDebugger.h"
 
 #include <unordered_map>
 #include <vector>
@@ -19,7 +20,8 @@ namespace Muse
 		static T& Get(Entity a_Entity);
         static void Set(Entity a_Entity, T& a_Component);
 		static bool Exist(Entity a_Entity) { return s_Components.find(a_Entity) != s_Components.end(); }
-		static void OnEntityDestroy(int a_Entity);
+        static void OnEntityDestroy(int a_Entity);
+		static std::vector<int> GetEntities();
 		static void Register(const std::string& a_RegisterName);
         static void Update(float a_DeltaTime);
         static void LateUpdate(float a_DeltaTime);
@@ -97,6 +99,19 @@ namespace Muse
 	}
 
 	template<class T>
+	inline std::vector<int> ComponentManager<T>::GetEntities()
+	{
+		std::vector<int> entities;
+
+		for (auto pair : s_Components)
+		{
+			entities.push_back(pair.first);
+		}
+
+		return entities;
+	}
+
+	template<class T>
 	inline void ComponentManager<T>::Register(const std::string& a_RegisterName)
 	{
         s_Name = a_RegisterName;
@@ -121,7 +136,7 @@ namespace Muse
 	template<class T>
 	inline void ComponentManager<T>::Update(float a_DeltaTime)
 	{
-
+		EntityDebugger::SetComponentEntities(s_Name, GetEntities());
 	}
 
 	template<class T>
