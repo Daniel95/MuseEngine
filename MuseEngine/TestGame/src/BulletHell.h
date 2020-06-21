@@ -31,7 +31,12 @@ protected:
     virtual void OnImGuiRender() override;
 
 private:
-    static std::shared_ptr<Muse::Texture> s_RaymanTexture;
-    static std::shared_ptr<Muse::Texture> s_CheckerboardTexture;
+    static std::shared_ptr<Muse::Texture> s_PlayerTexture;
+    static std::shared_ptr<Muse::Texture> s_EnemyTexture;
+    static std::shared_ptr<Muse::Texture> s_ProjectileTexture;
+    static std::shared_ptr<Muse::Texture> s_MeteorTexture;
+    static std::shared_ptr<Muse::Texture> s_Star1;
+    static std::shared_ptr<Muse::Texture> s_Star2;
+    static std::shared_ptr<Muse::Texture> s_Star3;
 
 };

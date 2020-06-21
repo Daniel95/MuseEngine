@@ -31,8 +31,13 @@ Muse::Application* Muse::CreateApplication()
 }
 #endif
 
-std::shared_ptr<Muse::Texture> BulletHell::s_RaymanTexture = nullptr;
-std::shared_ptr<Muse::Texture> BulletHell::s_CheckerboardTexture = nullptr;
+std::shared_ptr<Muse::Texture> BulletHell::s_PlayerTexture = nullptr;
+std::shared_ptr<Muse::Texture> BulletHell::s_EnemyTexture = nullptr;
+std::shared_ptr<Muse::Texture> BulletHell::s_ProjectileTexture = nullptr;
+std::shared_ptr<Muse::Texture> BulletHell::s_MeteorTexture = nullptr;
+std::shared_ptr<Muse::Texture> BulletHell::s_Star1 = nullptr;
+std::shared_ptr<Muse::Texture> BulletHell::s_Star2 = nullptr;
+std::shared_ptr<Muse::Texture> BulletHell::s_Star3 = nullptr;
 
 void BulletHell::OnStart()
 {
@@ -46,8 +51,13 @@ void BulletHell::OnStart()
     Muse::CameraComponent* cameraComponent = Muse::CameraComponent::GetMain();
     cameraComponent->SetZoomLevel(5);
 
-    s_RaymanTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
-    s_CheckerboardTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Checkerboard.png");
+    s_PlayerTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/playerShip1_blue.png");
+    s_EnemyTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Enemies/enemyBlack1.png");
+    s_MeteorTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Meteors/meteorBrown_med1.png");
+    s_ProjectileTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Lasers/laserRed04.png");
+    s_Star1 = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Effects/star1.png");
+    s_Star2 = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Effects/star2.png");
+    s_Star3 = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Effects/star3.png");
 
     //BulletHell
     Muse::ComponentManager<PlayerComponent>::Register("PlayerComponent");
@@ -134,7 +144,7 @@ int BulletHell::CreatePlayer(const glm::vec2& a_Position)
 
     Muse::Render2DComponent render2DComponent
     {
-        s_RaymanTexture,
+        s_PlayerTexture,
     };
 
     Muse::TransformComponent transformComponent
@@ -157,7 +167,7 @@ int BulletHell::CreateObstacle(const glm::vec2& a_Position, const glm::vec2& a_S
 
     Muse::Render2DComponent render2DComponent
     {
-        s_CheckerboardTexture,
+        s_MeteorTexture,
     };
 
     Muse::TransformComponent transformComponent
@@ -182,7 +192,7 @@ int BulletHell::CreateEnemy(const glm::vec2& a_Position, const glm::vec2& a_Scal
 
     Muse::Render2DComponent render2DComponent
     {
-        s_RaymanTexture,
+        s_EnemyTexture,
     };
 
     Muse::TransformComponent transformComponent
@@ -209,7 +219,7 @@ int BulletHell::CreateProjectile(Muse::TransformComponent& a_TransformComponent,
 
     Muse::Render2DComponent render2DComponent
     {
-        s_CheckerboardTexture,
+        s_ProjectileTexture,
     };
 
     Muse::ComponentManager<Muse::Render2DComponent>::Add(projectileEntity, render2DComponent);
