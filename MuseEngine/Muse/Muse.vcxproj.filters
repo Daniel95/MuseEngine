@@ -1422,6 +1422,7 @@
     <ClInclude Include="src\Core\ECS\Component\Collider2DComponent.h" />
     <ClInclude Include="src\Core\Physics\Collision2D.h" />
     <ClInclude Include="src\Core\ECS\Entity\EntityDebugger.h" />
+    <ClInclude Include="src\Core\ECS\Entity\EntityEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">

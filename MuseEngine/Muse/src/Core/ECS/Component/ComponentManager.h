@@ -7,6 +7,8 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <iostream>
+#include <cstring>
 
 namespace Muse
 {
@@ -20,7 +22,7 @@ namespace Muse
 		static T& Get(Entity a_Entity);
         static void Set(Entity a_Entity, T& a_Component);
 		static bool Exist(Entity a_Entity) { return s_Components.find(a_Entity) != s_Components.end(); }
-        static void OnEntityDestroy(int a_Entity);
+        static void OnEntityDestroy(Entity a_Entity);
 		static std::vector<int> GetEntities();
 		static void Register(const std::string& a_RegisterName);
         static void Update(float a_DeltaTime);
@@ -53,7 +55,7 @@ namespace Muse
 	template <class T>
 	void ComponentManager<T>::Add(Entity a_Entity, T a_Component)
 	{
-		ASSERT_ENGINE(!Exist(a_Entity), "Component for this entity already exists!");
+		ASSERT_ENGINE(!Exist(a_Entity), "Component for this entity already exists: " + a_Entity.GetName());
 		
 		if (!s_Initiated)
 		{
@@ -67,7 +69,7 @@ namespace Muse
 	template <class T>
 	void ComponentManager<T>::Remove(Entity a_Entity)
 	{
-		ASSERT_ENGINE(Exist(a_Entity), "Component for this entity does not exist!");
+		ASSERT_ENGINE(Exist(a_Entity), "Component for this entity does not exist: " + a_Entity.GetName());
 
 		s_Components.erase(a_Entity);
 	}
@@ -75,7 +77,7 @@ namespace Muse
 	template <class T>
 	T& ComponentManager<T>::Get(Entity a_Entity)
 	{
-		ASSERT_ENGINE(Exist(a_Entity), "Component for this entity does not exist!");
+        ASSERT_ENGINE(Exist(a_Entity), "Component for this entity does not exist: " + a_Entity.GetName());
 
 		return s_Components[a_Entity];
 	}
@@ -83,18 +85,17 @@ namespace Muse
 	template <class T>
 	void ComponentManager<T>::Set(Entity a_Entity, T& a_Component)
 	{
-		ASSERT_ENGINE(Exist(a_Entity), "Component for this entity does not exist!");
+        ASSERT_ENGINE(Exist(a_Entity), "Component for this entity does not exist: " + a_Entity.GetName());
 		
 		s_Components[a_Entity] = a_Component;
 	}
 
 	template<class T>
-	inline void ComponentManager<T>::OnEntityDestroy(int a_Entity)
+	inline void ComponentManager<T>::OnEntityDestroy(Entity a_Entity)
 	{
-		if (Exist(a_Entity))
+		if (Exist(a_Entity) && std::find(s_EntitiesToRemove.begin(), s_EntitiesToRemove.end(), a_Entity) == s_EntitiesToRemove.end())
 		{
-			ASSERT_ENGINE(std::find(s_EntitiesToRemove.begin(), s_EntitiesToRemove.end(), a_Entity) == s_EntitiesToRemove.end(), "Entity is already destroyed!");
-			s_EntitiesToRemove.push_back(a_Entity);
+            s_EntitiesToRemove.push_back(a_Entity);
 		}
 	}
 
@@ -117,7 +118,7 @@ namespace Muse
         s_Name = a_RegisterName;
         s_Initiated = true;
 
-        Entity::s_DestroyEvent.Subscribe([](int a_Entity)
+        Entity::s_DestroyEvent.Subscribe([](Entity a_Entity)
         {
             ComponentManager<T>::OnEntityDestroy(a_Entity);
         });

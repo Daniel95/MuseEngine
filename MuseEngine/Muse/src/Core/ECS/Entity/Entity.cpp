@@ -13,6 +13,18 @@ namespace Muse
 	{
 	}
 
+	std::string Entity::GetName() const
+	{
+        if (Muse::EntityDebugger::HasEntityName(m_Id))
+        {
+            return Muse::EntityDebugger::GetEntityName(m_Id);
+		}
+		else
+		{
+			return std::to_string(m_Id);
+		}
+	}
+
 	Entity Entity::Create()
 	{
 		return Entity{ EntityTracker::Increment() };
@@ -27,7 +39,7 @@ namespace Muse
         return Entity{ id };
 	}
 
-	void Entity::Destroy(int a_Entity)
+	void Entity::Destroy(Entity a_Entity)
 	{
         EntityDebugger::RemoveEntityName(a_Entity);
 

@@ -103,12 +103,14 @@ void BulletHell::OnImGuiRender()
 
         if (Muse::EntityDebugger::HasEntityName(pair.first))
         {
-            ImGui::Text("Entity: %d", Muse::EntityDebugger::GetEntityName(pair.first));
+            ImGui::Text("Entity: %s", Muse::EntityDebugger::GetEntityName(pair.first).c_str());
         }
         else
         {
-            ImGui::Text("Entity: %d", pair.first);
+            ImGui::Text("Entity: unregistered");
         }
+
+        ImGui::Text("Id: %d", pair.first);
 
         for (const auto& componentName : pair.second)
         {
@@ -196,7 +198,7 @@ int BulletHell::CreateEnemy(const glm::vec2& a_Position, const glm::vec2& a_Scal
 
 int BulletHell::CreateProjectile(Muse::TransformComponent& a_TransformComponent, float a_Speed)
 {
-    auto projectileEntity = Muse::Entity::Create();
+    auto projectileEntity = Muse::Entity::Create("Projectile");
 
     Muse::Render2DComponent render2DComponent
     {
