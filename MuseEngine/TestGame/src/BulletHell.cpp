@@ -19,6 +19,8 @@
 #include "BulletHell/Job/ProjectileJob.h"
 #include "BulletHell/Job/ObstacleCollisionJob.h"
 #include "BulletHell/Job/HealthJob.h"
+#include "BulletHell/Job/ScrollingJob.h"
+#include "BulletHell/Job/SpawnerJob.h"
 #include "BulletHell/Component/Components.h"
 
 #if GAME_BULLETHELL
@@ -53,6 +55,7 @@ void BulletHell::OnStart()
     Muse::ComponentManager<ProjectileComponent>::Register("ProjectileComponent");
     Muse::ComponentManager<DestroyOutOfBoundsComponent>::Register("DestroyOutOfBoundsComponent");
     Muse::ComponentManager<EnemyComponent>::Register("EnemyComponent");
+    Muse::ComponentManager<ScrollingComponent>::Register("ScrollingComponent");
 
     GetJobManager()->Add<Muse::Render2DJob>(Muse::JobType::Renderer);
     GetJobManager()->Add<PlayerJob>(Muse::JobType::Gameplay);
@@ -61,6 +64,8 @@ void BulletHell::OnStart()
     GetJobManager()->Add<DestroyOutOfBoundsJob>(Muse::JobType::Gameplay);
     GetJobManager()->Add<ObstacleCollisionJob>(Muse::JobType::Gameplay);
     GetJobManager()->Add<EnemyJob>(Muse::JobType::Gameplay);
+    GetJobManager()->Add<ScrollingJob>(Muse::JobType::Gameplay);
+    GetJobManager()->Add<SpawnerJob>(Muse::JobType::Gameplay);
 
     CreatePlayer({ 0, 0 });
     CreateEnemy({ 2, 2 });
@@ -166,13 +171,14 @@ int BulletHell::CreateObstacle(const glm::vec2& a_Position, const glm::vec2& a_S
     Muse::ComponentManager<Muse::Collider2DComponent>::Add(obstacleEntity, { });
 
     Muse::ComponentManager<ObstacleComponent>::Add(obstacleEntity, { });
+    Muse::ComponentManager<ScrollingComponent>::Add(obstacleEntity, { });
 
     return obstacleEntity;
 }
 
 int BulletHell::CreateEnemy(const glm::vec2& a_Position, const glm::vec2& a_Scale)
 {
-    auto obstacleEntity = Muse::Entity::Create("Enemy");
+    auto enemyEntity = Muse::Entity::Create("Enemy");
 
     Muse::Render2DComponent render2DComponent
     {
@@ -186,14 +192,15 @@ int BulletHell::CreateEnemy(const glm::vec2& a_Position, const glm::vec2& a_Scal
         glm::vec3(0, 0, glm::radians(180.0f))
     };
 
-    Muse::ComponentManager<Muse::Render2DComponent>::Add(obstacleEntity, render2DComponent);
-    Muse::ComponentManager<Muse::TransformComponent>::Add(obstacleEntity, transformComponent);
-    Muse::ComponentManager<Muse::Collider2DComponent>::Add(obstacleEntity, { });
+    Muse::ComponentManager<Muse::Render2DComponent>::Add(enemyEntity, render2DComponent);
+    Muse::ComponentManager<Muse::TransformComponent>::Add(enemyEntity, transformComponent);
+    Muse::ComponentManager<Muse::Collider2DComponent>::Add(enemyEntity, { });
 
-    Muse::ComponentManager<ObstacleComponent>::Add(obstacleEntity, { });
-    Muse::ComponentManager<EnemyComponent>::Add(obstacleEntity, { });
+    Muse::ComponentManager<ObstacleComponent>::Add(enemyEntity, { });
+    Muse::ComponentManager<EnemyComponent>::Add(enemyEntity, { });
+    Muse::ComponentManager<ScrollingComponent>::Add(enemyEntity, { });
 
-    return obstacleEntity;
+    return enemyEntity;
 }
 
 int BulletHell::CreateProjectile(Muse::TransformComponent& a_TransformComponent, float a_Speed)
@@ -212,6 +219,7 @@ int BulletHell::CreateProjectile(Muse::TransformComponent& a_TransformComponent,
     Muse::ComponentManager<ObstacleComponent>::Add(projectileEntity, { });
     Muse::ComponentManager<ProjectileComponent>::Add(projectileEntity, { 12 });
     Muse::ComponentManager<DestroyOutOfBoundsComponent>::Add(projectileEntity, { });
+    Muse::ComponentManager<ScrollingComponent>::Add(projectileEntity, { });
 
     return projectileEntity;
 }

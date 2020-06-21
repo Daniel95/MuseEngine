@@ -139,7 +139,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Chunks.h" />
-    <ClInclude Include="src\BulletHell\Job\ChunkSpawner.h" />
+    <ClInclude Include="src\BulletHell\Job\ScrollingJob.h" />
+    <ClInclude Include="src\BulletHell\Job\SpawnerJob.h" />
     <ClInclude Include="src\BulletHell\Job\EnemyJob.h" />
     <ClInclude Include="src\BulletHell\Job\DestroyOutOfBoundsJob.h" />
     <ClInclude Include="src\BulletHell\Job\ProjectileJob.h" />
@@ -158,7 +159,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Chunks.cpp" />
-    <ClCompile Include="src\BulletHell\Job\ChunkSpawner.cpp" />
+    <ClCompile Include="src\BulletHell\Job\ScrollingJob.cpp" />
+    <ClCompile Include="src\BulletHell\Job\SpawnerJob.cpp" />
     <ClCompile Include="src\BulletHell\Job\EnemyJob.cpp" />
     <ClCompile Include="src\BulletHell\Job\DestroyOutOfBoundsJob.cpp" />
     <ClCompile Include="src\BulletHell\Job\ProjectileJob.cpp" />

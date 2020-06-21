@@ -33,3 +33,7 @@ struct EnemyComponent
     float fireCD = 0.2f;
     float fireTimer = 0;
 };
+
+struct ScrollingComponent
+{
+};
