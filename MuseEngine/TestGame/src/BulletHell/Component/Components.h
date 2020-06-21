@@ -12,7 +12,7 @@ struct PlayerComponent
 
 struct ObstacleComponent
 {
-    float damage = 0;
+    float damage = 10;
 };
 
 struct ProjectileComponent 

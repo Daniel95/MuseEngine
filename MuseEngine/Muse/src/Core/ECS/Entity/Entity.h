@@ -13,7 +13,8 @@ namespace Muse
 	class Entity
 	{
 	public:
-		static DestroyEvent s_DestroyEvent;
+        static DestroyEvent s_DestroyEvent;
+		static DestroyAllEvent s_DestroyAllEvent;
 
 		Entity(int a_Id);
 		~Entity() = default;
@@ -23,7 +24,8 @@ namespace Muse
 
         static Entity Create();
         static Entity Create(const std::string& a_Name);
-		static void Destroy(Entity a_Entity);
+        static void Destroy(Entity a_Entity);
+        static void DestroyAll();
 		
 	private:
 		 int m_Id = 0;

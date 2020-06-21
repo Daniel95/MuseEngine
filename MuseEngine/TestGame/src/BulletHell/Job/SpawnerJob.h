@@ -12,7 +12,7 @@ private:
     float m_Timer;
     float m_SpawnMinX = -5;
     float m_SpawnMaxX = 5;
-    float m_SpawnY = 5;
+    float m_SpawnY = 7;
 
 };
 

@@ -7,4 +7,5 @@ namespace Muse
     class Entity;
 
     class DestroyEvent : public Event<Entity> {};
+    class DestroyAllEvent: public Event<> {};
 }

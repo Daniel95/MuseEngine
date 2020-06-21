@@ -1,7 +1,10 @@
 #include "MusePCH.h"
 
+#include "Core/ECS/Entity/Entity.h"
+
 #include "ObstacleCollisionJob.h"
 #include "BulletHell/Component/Components.h"
+#include "BulletHell.h"
 
 void ObstacleCollisionJob::OnUpdate()
 {
@@ -15,6 +18,12 @@ void ObstacleCollisionJob::OnUpdate()
         //Player
         a_PlayerComponent.health -= a_ObstacleComponent.damage;
 
+        if (a_PlayerComponent.health < 0)
+        {
+            Muse::Entity::DestroyAll();
+            BulletHell::CreatePlayer();
+        }
+   
         //Obstacle
         Muse::Entity::Destroy(obstacleEntitiy);
     };

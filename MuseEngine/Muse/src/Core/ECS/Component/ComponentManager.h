@@ -23,6 +23,7 @@ namespace Muse
         static void Set(Entity a_Entity, T& a_Component);
 		static bool Exist(Entity a_Entity) { return s_Components.find(a_Entity) != s_Components.end(); }
         static void OnEntityDestroy(Entity a_Entity);
+        static void OnEntityDestroyAll();
 		static std::vector<int> GetEntities();
 		static void Register(const std::string& a_RegisterName);
         static void Update(float a_DeltaTime);
@@ -100,6 +101,15 @@ namespace Muse
 	}
 
 	template<class T>
+	inline void ComponentManager<T>::OnEntityDestroyAll()
+	{
+        for (auto pair : s_Components)
+        {
+            s_EntitiesToRemove.push_back(pair.first);
+        }
+	}
+
+	template<class T>
 	inline std::vector<int> ComponentManager<T>::GetEntities()
 	{
 		std::vector<int> entities;
@@ -121,6 +131,11 @@ namespace Muse
         Entity::s_DestroyEvent.Subscribe([](Entity a_Entity)
         {
             ComponentManager<T>::OnEntityDestroy(a_Entity);
+        });
+
+        Entity::s_DestroyAllEvent.Subscribe([]()
+        {
+            ComponentManager<T>::OnEntityDestroyAll();
         });
 
         Application::Get().m_UpdateEvent.Subscribe([](float a_DeltaTime)

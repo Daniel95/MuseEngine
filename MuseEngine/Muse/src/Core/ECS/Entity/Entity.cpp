@@ -6,7 +6,8 @@
 
 namespace Muse
 {
-	DestroyEvent Entity::s_DestroyEvent;
+    DestroyEvent Entity::s_DestroyEvent;
+	DestroyAllEvent Entity::s_DestroyAllEvent;
 
 	Entity::Entity(int a_Id)
 		: m_Id(a_Id)
@@ -44,5 +45,12 @@ namespace Muse
         EntityDebugger::RemoveEntityName(a_Entity);
 
 		s_DestroyEvent.Dispatch(a_Entity);
+	}
+
+	void Entity::DestroyAll()
+	{
+        EntityDebugger::ClearEntityData();
+
+        s_DestroyAllEvent.Dispatch();
 	}
 }

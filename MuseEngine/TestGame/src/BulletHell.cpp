@@ -77,9 +77,7 @@ void BulletHell::OnStart()
     GetJobManager()->Add<ScrollingJob>(Muse::JobType::Gameplay);
     GetJobManager()->Add<SpawnerJob>(Muse::JobType::Gameplay);
 
-    CreatePlayer({ 0, 0 });
-    CreateEnemy({ 2, 2 });
-    CreateObstacle({ -2, 2 });
+    CreatePlayer();
 }
 
 void BulletHell::OnRender()
