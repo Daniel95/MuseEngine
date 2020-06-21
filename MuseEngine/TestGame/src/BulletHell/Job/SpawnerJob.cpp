@@ -19,7 +19,7 @@ void SpawnerJob::OnUpdate()
 
         m_Timer -= m_SpawnTime;
 
-        if (Muse::Random() < 0.3f)
+        if (Muse::Random() > 0.3f)
         {
             BulletHell::CreateObstacle(spawnPosition);
         }

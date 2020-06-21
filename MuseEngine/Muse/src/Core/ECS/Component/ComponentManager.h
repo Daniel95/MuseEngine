@@ -105,7 +105,10 @@ namespace Muse
 	{
         for (auto pair : s_Components)
         {
-            s_EntitiesToRemove.push_back(pair.first);
+			if (std::find(s_EntitiesToRemove.begin(), s_EntitiesToRemove.end(), pair.first) == s_EntitiesToRemove.end())
+			{
+				s_EntitiesToRemove.push_back(pair.first);
+			}
         }
 	}
 
@@ -138,10 +141,12 @@ namespace Muse
             ComponentManager<T>::OnEntityDestroyAll();
         });
 
+#ifdef MUSE_DEBUG
         Application::Get().m_UpdateEvent.Subscribe([](float a_DeltaTime)
         {
             ComponentManager<T>::Update(a_DeltaTime);
         });
+#endif
 
 		Application::Get().m_LateUpdateEvent.Subscribe([](float a_DeltaTime)
         {

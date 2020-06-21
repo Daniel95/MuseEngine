@@ -15,7 +15,7 @@ void ScrollingJob::OnUpdate()
         ScrollingComponent& a_ScrollingComponent
         )
     {
-        glm::vec3 newPosition = a_TransformComponent.localPosition + glm::vec3(0, -deltaTime, 0);
+        glm::vec3 newPosition = a_TransformComponent.localPosition + glm::vec3(0, -a_ScrollingComponent.speed * deltaTime , 0);
 
         Muse::TransformHelper::SetLocalPosition(a_TransformComponent, newPosition);
     };

@@ -24,11 +24,11 @@ void EnemyJob::OnUpdate()
             Muse::TransformComponent projectileTransformComponent
             {
                 a_TransformComponent.localPosition + Muse::TransformHelper::GetUp(a_TransformComponent),
-                glm::vec3(1, 1, 0),
+                glm::vec3(0.5f, 0.5f, 0.5f),
                 a_TransformComponent.localRotation,
             };
 
-            BulletHell::CreateProjectile(projectileTransformComponent, 1.0f);
+            BulletHell::CreateProjectile(projectileTransformComponent, 7);
         }
     };
 

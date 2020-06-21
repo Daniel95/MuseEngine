@@ -225,7 +225,7 @@ int BulletHell::CreateProjectile(Muse::TransformComponent& a_TransformComponent,
     Muse::ComponentManager<Muse::Collider2DComponent>::Add(projectileEntity, { });
 
     Muse::ComponentManager<ObstacleComponent>::Add(projectileEntity, { });
-    Muse::ComponentManager<ProjectileComponent>::Add(projectileEntity, { 12 });
+    Muse::ComponentManager<ProjectileComponent>::Add(projectileEntity, { a_Speed });
     Muse::ComponentManager<DestroyOutOfBoundsComponent>::Add(projectileEntity, { });
     Muse::ComponentManager<ScrollingComponent>::Add(projectileEntity, { });
 

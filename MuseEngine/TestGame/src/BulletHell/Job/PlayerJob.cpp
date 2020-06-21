@@ -50,13 +50,40 @@ void PlayerJob::OnUpdate()
         {
             a_PlayerComponent.fireTimer = 0;
 
-            Muse::TransformComponent projectileTransformComponent
-            {
-                glm::vec3(a_TransformComponent.localPosition.x, a_TransformComponent.localPosition.y + 1.1f, 0),
-                glm::vec3(1, 1, 0)
-            };
+            float projectileSpeed = 36.0f;
+            float offset = 0.7f;
 
-            BulletHell::CreateProjectile(projectileTransformComponent, 1.0f);
+            {
+                Muse::TransformComponent projectileTransformComponent
+                {
+                    glm::vec3(a_TransformComponent.localPosition.x, a_TransformComponent.localPosition.y + 1.1f, 0),
+                    glm::vec3(0.5f, 0.5f, 0.5f),
+                };
+
+                BulletHell::CreateProjectile(projectileTransformComponent, projectileSpeed);
+            }
+
+            {
+                Muse::TransformComponent projectileTransformComponent
+                {
+                    glm::vec3(a_TransformComponent.localPosition.x - offset, a_TransformComponent.localPosition.y + 1.1f, 0),
+                    glm::vec3(0.5f, 0.5f, 0.5f),
+                    glm::vec3(0, 0, glm::radians(15.0f)),
+                };
+
+                BulletHell::CreateProjectile(projectileTransformComponent, projectileSpeed);
+            }
+
+            {
+                Muse::TransformComponent projectileTransformComponent
+                {
+                    glm::vec3(a_TransformComponent.localPosition.x + offset, a_TransformComponent.localPosition.y + 1.1f, 0),
+                    glm::vec3(0.5f, 0.5f, 0.5f),
+                    glm::vec3(0, 0, glm::radians(-15.0f))
+                };
+
+                BulletHell::CreateProjectile(projectileTransformComponent, projectileSpeed);
+            }
         }
     };
 

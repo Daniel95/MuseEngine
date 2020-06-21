@@ -21,7 +21,7 @@ public:
     static int CreatePlayer(const glm::vec2& a_Position = glm::vec2(0, 0));
     static int CreateObstacle(const glm::vec2& a_Position, const glm::vec2& a_Scale = glm::vec2(1, 1));
     static int CreateEnemy(const glm::vec2& a_Position, const glm::vec2& a_Scale = glm::vec2(1, 1));
-    static int CreateProjectile(Muse::TransformComponent& a_TransformComponent, float a_Speed);
+    static int CreateProjectile(Muse::TransformComponent& a_TransformComponent, float a_Speed = 5);
 
 protected:
     virtual void OnStart() override;
