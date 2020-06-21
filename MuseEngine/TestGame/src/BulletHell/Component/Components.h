@@ -30,11 +30,11 @@ struct EnemyComponent
 {
     float speed = 3.5f;
     float health = 100;
-    float fireCD = 0.4f;
+    float fireCD = 0.25f;
     float fireTimer = 0;
 };
 
 struct ScrollingComponent
 {
-    float speed = 4.5f;
+    float speed = 3.5f;
 };

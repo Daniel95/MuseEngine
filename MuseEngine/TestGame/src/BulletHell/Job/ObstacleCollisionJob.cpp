@@ -64,7 +64,7 @@ void ObstacleCollisionJob::OnUpdate()
 
 void ObstacleCollisionJob::SpawnBullets(glm::vec2 a_Position, float a_ProjectileSpeed)
 {
-    float offset = 1.0f;
+    float offset = 0.7f;
 
     //Up
     {
