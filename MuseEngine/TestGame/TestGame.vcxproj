@@ -138,9 +138,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\BulletHell\Job\BackgroundParticleSpawner.h" />
     <ClInclude Include="Chunks.h" />
     <ClInclude Include="src\BulletHell\Job\ScrollingJob.h" />
-    <ClInclude Include="src\BulletHell\Job\SpawnerJob.h" />
+    <ClInclude Include="src\BulletHell\Job\ObstacleSpawnerJob.h" />
     <ClInclude Include="src\BulletHell\Job\EnemyJob.h" />
     <ClInclude Include="src\BulletHell\Job\DestroyOutOfBoundsJob.h" />
     <ClInclude Include="src\BulletHell\Job\ProjectileJob.h" />
@@ -158,9 +159,10 @@
     <ClInclude Include="src\TestGame.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\BulletHell\Job\BackgroundParticleSpawner.cpp" />
     <ClCompile Include="Chunks.cpp" />
     <ClCompile Include="src\BulletHell\Job\ScrollingJob.cpp" />
-    <ClCompile Include="src\BulletHell\Job\SpawnerJob.cpp" />
+    <ClCompile Include="src\BulletHell\Job\ObstacleSpawnerJob.cpp" />
     <ClCompile Include="src\BulletHell\Job\EnemyJob.cpp" />
     <ClCompile Include="src\BulletHell\Job\DestroyOutOfBoundsJob.cpp" />
     <ClCompile Include="src\BulletHell\Job\ProjectileJob.cpp" />

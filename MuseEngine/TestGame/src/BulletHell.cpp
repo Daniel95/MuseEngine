@@ -20,7 +20,8 @@
 #include "BulletHell/Job/ObstacleCollisionJob.h"
 #include "BulletHell/Job/HealthJob.h"
 #include "BulletHell/Job/ScrollingJob.h"
-#include "BulletHell/Job/SpawnerJob.h"
+#include "BulletHell/Job/ObstacleSpawnerJob.h"
+#include "BulletHell/Job/BackgroundParticleSpawner.h"
 #include "BulletHell/Component/Components.h"
 
 #if GAME_BULLETHELL
@@ -75,14 +76,15 @@ void BulletHell::OnStart()
     GetJobManager()->Add<ObstacleCollisionJob>(Muse::JobType::Gameplay);
     GetJobManager()->Add<EnemyJob>(Muse::JobType::Gameplay);
     GetJobManager()->Add<ScrollingJob>(Muse::JobType::Gameplay);
-    GetJobManager()->Add<SpawnerJob>(Muse::JobType::Gameplay);
+    GetJobManager()->Add<ObstacleSpawnerJob>(Muse::JobType::Gameplay);
+    GetJobManager()->Add<BackgroundParticleSpawner>(Muse::JobType::Gameplay);
 
     CreatePlayer();
 }
 
 void BulletHell::OnRender()
 {
-    Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+    Muse::RenderCommand::SetClearColor({ 0.9f, 0.9f, 0.9f, 1 });
     Muse::RenderCommand::Clear();
 
     Muse::Renderer2D::ResetStatistics();
@@ -180,6 +182,7 @@ int BulletHell::CreateObstacle(const glm::vec2& a_Position, const glm::vec2& a_S
 
     Muse::ComponentManager<ObstacleComponent>::Add(obstacleEntity, { });
     Muse::ComponentManager<ScrollingComponent>::Add(obstacleEntity, { });
+    Muse::ComponentManager<DestroyOutOfBoundsComponent>::Add(obstacleEntity, { });
 
     return obstacleEntity;
 }
@@ -206,6 +209,7 @@ int BulletHell::CreateEnemy(const glm::vec2& a_Position, const glm::vec2& a_Scal
 
     Muse::ComponentManager<ObstacleComponent>::Add(enemyEntity, { });
     Muse::ComponentManager<EnemyComponent>::Add(enemyEntity, { });
+    Muse::ComponentManager<DestroyOutOfBoundsComponent>::Add(enemyEntity, { });
     Muse::ComponentManager<ScrollingComponent>::Add(enemyEntity, { });
 
     return enemyEntity;
@@ -230,4 +234,32 @@ int BulletHell::CreateProjectile(Muse::TransformComponent& a_TransformComponent,
     Muse::ComponentManager<ScrollingComponent>::Add(projectileEntity, { });
 
     return projectileEntity;
+}
+
+int BulletHell::CreateBackgroundParticle1(const glm::vec2& a_Position)
+{
+    Muse::TransformComponent transformComponent
+    {
+        glm::vec3(a_Position.x, a_Position.y, -0.1f)
+    };
+
+    return CreateBackgroundParticle(transformComponent, s_Star1, 1);
+}
+
+int BulletHell::CreateBackgroundParticle(Muse::TransformComponent& a_TransformComponent, const std::shared_ptr<Muse::Texture>& a_Texture, float a_ScrollingSpeed)
+{
+    auto particleEntity = Muse::Entity::Create("Particle");
+
+    Muse::Render2DComponent render2DComponent
+    {
+        a_Texture,
+    };
+
+    Muse::ComponentManager<Muse::Render2DComponent>::Add(particleEntity, render2DComponent);
+    Muse::ComponentManager<Muse::TransformComponent>::Add(particleEntity, a_TransformComponent);
+
+    Muse::ComponentManager<DestroyOutOfBoundsComponent>::Add(particleEntity, { });
+    Muse::ComponentManager<ScrollingComponent>::Add(particleEntity, { a_ScrollingSpeed });
+
+    return particleEntity;
 }

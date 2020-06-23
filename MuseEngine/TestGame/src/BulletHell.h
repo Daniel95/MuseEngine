@@ -22,6 +22,10 @@ public:
     static int CreateObstacle(const glm::vec2& a_Position, const glm::vec2& a_Scale = glm::vec2(1, 1));
     static int CreateEnemy(const glm::vec2& a_Position, const glm::vec2& a_Scale = glm::vec2(1, 1));
     static int CreateProjectile(Muse::TransformComponent& a_TransformComponent, float a_Speed = 5);
+    static int CreateBackgroundParticle1(const glm::vec2& a_Position);
+    //static int CreateBackgroundParticle2(Muse::TransformComponent& a_TransformComponent);
+    //static int CreateBackgroundParticle3(Muse::TransformComponent& a_TransformComponent);
+    static int CreateBackgroundParticle(Muse::TransformComponent& a_TransformComponent, const std::shared_ptr<Muse::Texture>& a_Texture, float a_ScrollingSpeed);
 
 protected:
     virtual void OnStart() override;

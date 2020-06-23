@@ -1,14 +1,13 @@
-#include "SpawnerJob.h"
+#include "BackgroundParticleSpawner.h"
 
 #include <glm/glm.hpp>
 
-#include "Core/Application.h"
-#include "Core/Utilities/Utilities.h"
-
 #include "BulletHell/Component/Components.h"
 #include "BulletHell.h"
+#include "Core/Utilities/Utilities.h"
+#include "Core/Application.h"
 
-void SpawnerJob::OnUpdate()
+void BackgroundParticleSpawner::OnUpdate()
 {
     m_Timer += Muse::Application::Get().GetDeltaTime();
 
@@ -19,13 +18,6 @@ void SpawnerJob::OnUpdate()
 
         m_Timer -= m_SpawnTime;
 
-        if (Muse::Random() > 0.3f)
-        {
-            BulletHell::CreateObstacle(spawnPosition);
-        }
-        else
-        {
-            BulletHell::CreateEnemy(spawnPosition);
-        }
+        BulletHell::CreateBackgroundParticle1(spawnPosition);
     }
 }

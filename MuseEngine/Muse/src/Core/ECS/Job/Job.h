@@ -89,12 +89,14 @@ namespace Muse
 
         for (auto hit : hits)
         {
-            a_Func(hit.first, 
+            a_Func(
+                hit.first, 
                 ComponentManager<T1>::Get(hit.first),
                 ComponentManager<TransformComponent>::Get(hit.first), 
                 hit.second, 
                 ComponentManager<T2>::Get(hit.second), 
-                ComponentManager<TransformComponent>::Get(hit.second));
+                ComponentManager<TransformComponent>::Get(hit.second)
+            );
         }
     }
 

@@ -2,7 +2,7 @@
 
 #include "Core/ECS/Job/Job.h"
 
-class SpawnerJob : public Muse::Job
+class BackgroundParticleSpawner : public Muse::Job
 {
 public:
     virtual void OnUpdate() override;
