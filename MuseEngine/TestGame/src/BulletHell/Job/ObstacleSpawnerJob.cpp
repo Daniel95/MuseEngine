@@ -21,7 +21,7 @@ void ObstacleSpawnerJob::OnUpdate()
 
         if (Muse::Random() > 0.3f)
         {
-            BulletHell::CreateObstacle(spawnPosition);
+            BulletHell::CreateMeteor(spawnPosition);
         }
         else
         {

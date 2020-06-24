@@ -28,7 +28,7 @@ void EnemyJob::OnUpdate()
                 a_TransformComponent.localRotation,
             };
 
-            BulletHell::CreateProjectile(projectileTransformComponent, 7);
+            BulletHell::CreateProjectileRed(projectileTransformComponent, 7);
         }
     };
 

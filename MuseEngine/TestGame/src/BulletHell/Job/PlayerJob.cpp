@@ -60,7 +60,7 @@ void PlayerJob::OnUpdate()
                     glm::vec3(0.5f, 0.5f, 0.5f),
                 };
 
-                BulletHell::CreateProjectile(projectileTransformComponent, projectileSpeed);
+                BulletHell::CreateProjectileBlue(projectileTransformComponent, projectileSpeed);
             }
 
             {
@@ -71,7 +71,7 @@ void PlayerJob::OnUpdate()
                     glm::vec3(0, 0, glm::radians(15.0f)),
                 };
 
-                BulletHell::CreateProjectile(projectileTransformComponent, projectileSpeed);
+                BulletHell::CreateProjectileBlue(projectileTransformComponent, projectileSpeed);
             }
 
             {
@@ -82,7 +82,7 @@ void PlayerJob::OnUpdate()
                     glm::vec3(0, 0, glm::radians(-15.0f))
                 };
 
-                BulletHell::CreateProjectile(projectileTransformComponent, projectileSpeed);
+                BulletHell::CreateProjectileBlue(projectileTransformComponent, projectileSpeed);
             }
         }
     };

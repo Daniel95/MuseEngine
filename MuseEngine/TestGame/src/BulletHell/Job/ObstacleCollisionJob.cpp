@@ -60,6 +60,23 @@ void ObstacleCollisionJob::OnUpdate()
     };
 
     RunCollision<EnemyComponent, ProjectileComponent>(projectileOnEnemyCollision);
+
+    auto projectileOnMeteorCollision = [](
+        int a_EnemyEntitiy,
+        MeteorComponent& a_MeteorComponent,
+        Muse::TransformComponent& a_TransformComponent1,
+        int a_ProjectileEntitiy,
+        ProjectileComponent& a_ProjectileComponent,
+        Muse::TransformComponent& a_TransformComponent2
+        )
+    {
+        Muse::Entity::Destroy(a_EnemyEntitiy);
+        Muse::Entity::Destroy(a_ProjectileEntitiy);
+
+        SpawnBullets(a_TransformComponent1.localPosition);
+    };
+
+    //RunCollision<MeteorComponent, ProjectileComponent>(projectileOnMeteorCollision);
 }
 
 void ObstacleCollisionJob::SpawnBullets(glm::vec2 a_Position, float a_ProjectileSpeed)
@@ -74,7 +91,7 @@ void ObstacleCollisionJob::SpawnBullets(glm::vec2 a_Position, float a_Projectile
             glm::vec3(0.5f, 0.5f, 0.5f),
         };
 
-        BulletHell::CreateProjectile(projectileTransformComponent, a_ProjectileSpeed);
+        BulletHell::CreateProjectileRed(projectileTransformComponent, a_ProjectileSpeed);
     }
 
     //Up left
@@ -86,7 +103,7 @@ void ObstacleCollisionJob::SpawnBullets(glm::vec2 a_Position, float a_Projectile
             glm::vec3(0, 0, glm::radians(45.0f)),
         };
 
-        BulletHell::CreateProjectile(projectileTransformComponent, a_ProjectileSpeed);
+        BulletHell::CreateProjectileRed(projectileTransformComponent, a_ProjectileSpeed);
     }
 
     //left
@@ -98,7 +115,7 @@ void ObstacleCollisionJob::SpawnBullets(glm::vec2 a_Position, float a_Projectile
             glm::vec3(0, 0, glm::radians(90.0f)),
         };
 
-        BulletHell::CreateProjectile(projectileTransformComponent, a_ProjectileSpeed);
+        BulletHell::CreateProjectileRed(projectileTransformComponent, a_ProjectileSpeed);
     }
 
     //Down left
@@ -110,7 +127,7 @@ void ObstacleCollisionJob::SpawnBullets(glm::vec2 a_Position, float a_Projectile
             glm::vec3(0, 0, glm::radians(135.0f)),
         };
 
-        BulletHell::CreateProjectile(projectileTransformComponent, a_ProjectileSpeed);
+        BulletHell::CreateProjectileRed(projectileTransformComponent, a_ProjectileSpeed);
     }
 
     //Down
@@ -122,7 +139,7 @@ void ObstacleCollisionJob::SpawnBullets(glm::vec2 a_Position, float a_Projectile
             glm::vec3(0, 0, glm::radians(180.0f)),
         };
 
-        BulletHell::CreateProjectile(projectileTransformComponent, a_ProjectileSpeed);
+        BulletHell::CreateProjectileRed(projectileTransformComponent, a_ProjectileSpeed);
     }
 
     //Down right
@@ -134,7 +151,7 @@ void ObstacleCollisionJob::SpawnBullets(glm::vec2 a_Position, float a_Projectile
             glm::vec3(0, 0, glm::radians(225.0f)),
         };
 
-        BulletHell::CreateProjectile(projectileTransformComponent, a_ProjectileSpeed);
+        BulletHell::CreateProjectileRed(projectileTransformComponent, a_ProjectileSpeed);
     }
 
     //Right
@@ -146,7 +163,7 @@ void ObstacleCollisionJob::SpawnBullets(glm::vec2 a_Position, float a_Projectile
             glm::vec3(0, 0, glm::radians(270.0f)),
         };
 
-        BulletHell::CreateProjectile(projectileTransformComponent, a_ProjectileSpeed);
+        BulletHell::CreateProjectileRed(projectileTransformComponent, a_ProjectileSpeed);
     }
 
     //Up Right
@@ -158,6 +175,6 @@ void ObstacleCollisionJob::SpawnBullets(glm::vec2 a_Position, float a_Projectile
             glm::vec3(0, 0, glm::radians(315.0f)),
         };
 
-        BulletHell::CreateProjectile(projectileTransformComponent, a_ProjectileSpeed);
+        BulletHell::CreateProjectileRed(projectileTransformComponent, a_ProjectileSpeed);
     }
 }

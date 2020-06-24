@@ -18,6 +18,24 @@ void BackgroundParticleSpawner::OnUpdate()
 
         m_Timer -= m_SpawnTime;
 
-        BulletHell::CreateBackgroundParticle1(spawnPosition);
+        if (counter == 0)
+        {
+            BulletHell::CreateBackgroundParticle1(spawnPosition);
+        }
+        else if(counter == 1)
+        {
+            BulletHell::CreateBackgroundParticle2(spawnPosition);
+        }
+        else
+        {
+            BulletHell::CreateBackgroundParticle3(spawnPosition);
+        }
+
+        counter++;
+
+        if (counter > 2)
+        {
+            counter = 0;
+        }
     }
 }

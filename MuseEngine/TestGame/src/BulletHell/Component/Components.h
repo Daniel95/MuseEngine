@@ -36,5 +36,9 @@ struct EnemyComponent
 
 struct ScrollingComponent
 {
-    float speed = 3.5f;
+    float speed = 4.0f;
+};
+
+struct MeteorComponent
+{
 };

@@ -34,7 +34,8 @@ Muse::Application* Muse::CreateApplication()
 
 std::shared_ptr<Muse::Texture> BulletHell::s_PlayerTexture = nullptr;
 std::shared_ptr<Muse::Texture> BulletHell::s_EnemyTexture = nullptr;
-std::shared_ptr<Muse::Texture> BulletHell::s_ProjectileTexture = nullptr;
+std::shared_ptr<Muse::Texture> BulletHell::s_ProjectileRedTexture = nullptr;
+std::shared_ptr<Muse::Texture> BulletHell::s_ProjectileBlueTexture = nullptr;
 std::shared_ptr<Muse::Texture> BulletHell::s_MeteorTexture = nullptr;
 std::shared_ptr<Muse::Texture> BulletHell::s_Star1 = nullptr;
 std::shared_ptr<Muse::Texture> BulletHell::s_Star2 = nullptr;
@@ -52,10 +53,11 @@ void BulletHell::OnStart()
     Muse::CameraComponent* cameraComponent = Muse::CameraComponent::GetMain();
     cameraComponent->SetZoomLevel(5);
 
-    s_PlayerTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/playerShip1_blue.png");
-    s_EnemyTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Enemies/enemyBlack1.png");
+    s_PlayerTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/playerShip3_blue.png");
+    s_EnemyTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Enemies/enemyBlack3.png");
     s_MeteorTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Meteors/meteorBrown_med1.png");
-    s_ProjectileTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Lasers/laserRed04.png");
+    s_ProjectileRedTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Lasers/laserRed04.png");
+    s_ProjectileBlueTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Lasers/laserBlue04.png");
     s_Star1 = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Effects/star1.png");
     s_Star2 = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Effects/star2.png");
     s_Star3 = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Effects/star3.png");
@@ -84,7 +86,7 @@ void BulletHell::OnStart()
 
 void BulletHell::OnRender()
 {
-    Muse::RenderCommand::SetClearColor({ 0.9f, 0.9f, 0.9f, 1 });
+    Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
     Muse::RenderCommand::Clear();
 
     Muse::Renderer2D::ResetStatistics();
@@ -161,9 +163,9 @@ int BulletHell::CreatePlayer(const glm::vec2& a_Position)
     return playerEntity;
 }
 
-int BulletHell::CreateObstacle(const glm::vec2& a_Position, const glm::vec2& a_Scale)
+int BulletHell::CreateMeteor(const glm::vec2& a_Position, const glm::vec2& a_Scale)
 {
-    auto obstacleEntity = Muse::Entity::Create("Obstacle");
+    auto meteorEntity = Muse::Entity::Create("Meteor");
 
     Muse::Render2DComponent render2DComponent
     {
@@ -176,15 +178,16 @@ int BulletHell::CreateObstacle(const glm::vec2& a_Position, const glm::vec2& a_S
         glm::vec3(a_Scale.x, a_Scale.y, 0)
     };
 
-    Muse::ComponentManager<Muse::Render2DComponent>::Add(obstacleEntity, render2DComponent);
-    Muse::ComponentManager<Muse::TransformComponent>::Add(obstacleEntity, transformComponent);
-    Muse::ComponentManager<Muse::Collider2DComponent>::Add(obstacleEntity, { });
+    Muse::ComponentManager<Muse::Render2DComponent>::Add(meteorEntity, render2DComponent);
+    Muse::ComponentManager<Muse::TransformComponent>::Add(meteorEntity, transformComponent);
+    Muse::ComponentManager<Muse::Collider2DComponent>::Add(meteorEntity, { });
 
-    Muse::ComponentManager<ObstacleComponent>::Add(obstacleEntity, { });
-    Muse::ComponentManager<ScrollingComponent>::Add(obstacleEntity, { });
-    Muse::ComponentManager<DestroyOutOfBoundsComponent>::Add(obstacleEntity, { });
+    Muse::ComponentManager<MeteorComponent>::Add(meteorEntity, { });
+    Muse::ComponentManager<ObstacleComponent>::Add(meteorEntity, { });
+    Muse::ComponentManager<ScrollingComponent>::Add(meteorEntity, { });
+    Muse::ComponentManager<DestroyOutOfBoundsComponent>::Add(meteorEntity, { });
 
-    return obstacleEntity;
+    return meteorEntity;
 }
 
 int BulletHell::CreateEnemy(const glm::vec2& a_Position, const glm::vec2& a_Scale)
@@ -215,13 +218,13 @@ int BulletHell::CreateEnemy(const glm::vec2& a_Position, const glm::vec2& a_Scal
     return enemyEntity;
 }
 
-int BulletHell::CreateProjectile(Muse::TransformComponent& a_TransformComponent, float a_Speed)
+int BulletHell::CreateProjectile(Muse::TransformComponent& a_TransformComponent, const std::shared_ptr<Muse::Texture> a_Texture, float a_Speed)
 {
     auto projectileEntity = Muse::Entity::Create("Projectile");
 
     Muse::Render2DComponent render2DComponent
     {
-        s_ProjectileTexture,
+        a_Texture,
     };
 
     Muse::ComponentManager<Muse::Render2DComponent>::Add(projectileEntity, render2DComponent);
@@ -240,10 +243,33 @@ int BulletHell::CreateBackgroundParticle1(const glm::vec2& a_Position)
 {
     Muse::TransformComponent transformComponent
     {
-        glm::vec3(a_Position.x, a_Position.y, -0.1f)
+        glm::vec3(a_Position.x, a_Position.y, -0.1f),
+        glm::vec3(0.2f, 0.2f, 0.2f)
     };
 
     return CreateBackgroundParticle(transformComponent, s_Star1, 1);
+}
+
+int BulletHell::CreateBackgroundParticle2(const glm::vec2& a_Position)
+{
+    Muse::TransformComponent transformComponent
+    {
+        glm::vec3(a_Position.x, a_Position.y, -0.1f),
+        glm::vec3(0.2f, 0.2f, 0.2f)
+    };
+
+    return CreateBackgroundParticle(transformComponent, s_Star2, 1);
+}
+
+int BulletHell::CreateBackgroundParticle3(const glm::vec2& a_Position)
+{
+    Muse::TransformComponent transformComponent
+    {
+        glm::vec3(a_Position.x, a_Position.y, -0.1f),
+        glm::vec3(0.15f, 0.15f, 0.15f)
+    };
+
+    return CreateBackgroundParticle(transformComponent, s_Star3, 1);
 }
 
 int BulletHell::CreateBackgroundParticle(Muse::TransformComponent& a_TransformComponent, const std::shared_ptr<Muse::Texture>& a_Texture, float a_ScrollingSpeed)

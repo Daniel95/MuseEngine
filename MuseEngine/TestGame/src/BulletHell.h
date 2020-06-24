@@ -19,12 +19,14 @@ public:
     virtual ~BulletHell() = default;
 
     static int CreatePlayer(const glm::vec2& a_Position = glm::vec2(0, 0));
-    static int CreateObstacle(const glm::vec2& a_Position, const glm::vec2& a_Scale = glm::vec2(1, 1));
+    static int CreateMeteor(const glm::vec2& a_Position, const glm::vec2& a_Scale = glm::vec2(1, 1));
     static int CreateEnemy(const glm::vec2& a_Position, const glm::vec2& a_Scale = glm::vec2(1, 1));
-    static int CreateProjectile(Muse::TransformComponent& a_TransformComponent, float a_Speed = 5);
+    static int CreateProjectileRed(Muse::TransformComponent& a_TransformComponent, float a_Speed = 5) { return CreateProjectile(a_TransformComponent, s_ProjectileRedTexture, a_Speed); }
+    static int CreateProjectileBlue(Muse::TransformComponent& a_TransformComponent, float a_Speed = 5) { return CreateProjectile(a_TransformComponent, s_ProjectileBlueTexture, a_Speed); }
+    static int CreateProjectile(Muse::TransformComponent& a_TransformComponent, const std::shared_ptr<Muse::Texture> a_Texture, float a_Speed = 5);
     static int CreateBackgroundParticle1(const glm::vec2& a_Position);
-    //static int CreateBackgroundParticle2(Muse::TransformComponent& a_TransformComponent);
-    //static int CreateBackgroundParticle3(Muse::TransformComponent& a_TransformComponent);
+    static int CreateBackgroundParticle2(const glm::vec2& a_Position);
+    static int CreateBackgroundParticle3(const glm::vec2& a_Position);
     static int CreateBackgroundParticle(Muse::TransformComponent& a_TransformComponent, const std::shared_ptr<Muse::Texture>& a_Texture, float a_ScrollingSpeed);
 
 protected:
@@ -37,7 +39,8 @@ protected:
 private:
     static std::shared_ptr<Muse::Texture> s_PlayerTexture;
     static std::shared_ptr<Muse::Texture> s_EnemyTexture;
-    static std::shared_ptr<Muse::Texture> s_ProjectileTexture;
+    static std::shared_ptr<Muse::Texture> s_ProjectileBlueTexture;
+    static std::shared_ptr<Muse::Texture> s_ProjectileRedTexture;
     static std::shared_ptr<Muse::Texture> s_MeteorTexture;
     static std::shared_ptr<Muse::Texture> s_Star1;
     static std::shared_ptr<Muse::Texture> s_Star2;
