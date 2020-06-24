@@ -53,7 +53,6 @@ namespace Muse
         m_Width = a_Properties.Width;
         m_Height = a_Properties.Height;
 
-
         if(!GLFWInitialized)
         {
             const int success = glfwInit();
@@ -64,7 +63,7 @@ namespace Muse
             GLFWInitialized = true;
         }
 
-
+        //m_Window = glfwCreateWindow(static_cast<int>(a_Properties.Width), static_cast<int>(a_Properties.Height), m_Title.c_str(), glfwGetPrimaryMonitor(), nullptr);
         m_Window = glfwCreateWindow(static_cast<int>(a_Properties.Width), static_cast<int>(a_Properties.Height), m_Title.c_str(), nullptr, nullptr);
         m_Context = new OpenGLContext(m_Window);
         m_Context->Init();

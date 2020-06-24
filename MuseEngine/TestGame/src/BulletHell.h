@@ -19,9 +19,9 @@ public:
     virtual ~BulletHell() = default;
 
     static int CreatePlayer(const glm::vec2& a_Position = glm::vec2(0, 0));
-    static int CreateMeteor(const glm::vec2& a_Position, const glm::vec2& a_Scale = glm::vec2(1, 1));
-    static int CreateEnemy(const glm::vec2& a_Position, const glm::vec2& a_Scale = glm::vec2(1, 1));
-    static int CreateProjectileRed(Muse::TransformComponent& a_TransformComponent, float a_Speed = 5) { return CreateProjectile(a_TransformComponent, s_ProjectileRedTexture, a_Speed); }
+    static int CreateMeteor(const glm::vec2& a_Position, const glm::vec2& a_Scale = glm::vec2(0.5f, 0.5f));
+    static int CreateEnemy(const glm::vec2& a_Position, const glm::vec2& a_Scale = glm::vec2(0.5f, 0.5f));
+    static int CreateProjectileRed(Muse::TransformComponent& a_TransformComponent, float a_Speed = 7) { return CreateProjectile(a_TransformComponent, s_ProjectileRedTexture, a_Speed); }
     static int CreateProjectileBlue(Muse::TransformComponent& a_TransformComponent, float a_Speed = 5) { return CreateProjectile(a_TransformComponent, s_ProjectileBlueTexture, a_Speed); }
     static int CreateProjectile(Muse::TransformComponent& a_TransformComponent, const std::shared_ptr<Muse::Texture> a_Texture, float a_Speed = 5);
     static int CreateBackgroundParticle1(const glm::vec2& a_Position);

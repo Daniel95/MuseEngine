@@ -6,7 +6,7 @@ struct PlayerComponent
 {
     float speed = 4.5f;
     float health = 10000000;
-    float fireCD = 0.3f;
+    float fireCD = 0.2f;
     float fireTimer = 0;
 };
 
@@ -22,8 +22,8 @@ struct ProjectileComponent
 
 struct DestroyOutOfBoundsComponent
 { 
-    glm::vec2 min = glm::vec2(-20.0f, -20.0f);
-    glm::vec2 max = glm::vec2(20.0f, 20.0f);
+    glm::vec2 min = glm::vec2(-10.0f, -10.0f);
+    glm::vec2 max = glm::vec2(10.0f, 20.0f);
 };
 
 struct EnemyComponent
@@ -36,7 +36,7 @@ struct EnemyComponent
 
 struct ScrollingComponent
 {
-    float speed = 4.0f;
+    float speed = 5.0f;
 };
 
 struct MeteorComponent

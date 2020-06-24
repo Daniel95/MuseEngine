@@ -155,6 +155,7 @@ namespace Muse
         Editor::StartDockSpace();
 
         ViewPort::Render(m_ViewportFramebuffer->GetColorAttachmentRendererID());
+
         FileBrowser::Render();
 
         m_ImGuiRenderEvent.Dispatch();
@@ -187,9 +188,6 @@ namespace Muse
         Muse::Renderer2D::EndScene();
 
         m_ViewportFramebuffer->Unbind();
-
-        RenderCommand::SetClearColor({ 0.9f, 0.9f, 0.9f, 1 });
-        RenderCommand::Clear();
     }
 
     void Application::PushLayer(Layer* a_Layer)

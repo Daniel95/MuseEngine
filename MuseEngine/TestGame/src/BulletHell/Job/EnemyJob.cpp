@@ -24,7 +24,7 @@ void EnemyJob::OnUpdate()
             Muse::TransformComponent projectileTransformComponent
             {
                 a_TransformComponent.localPosition + Muse::TransformHelper::GetUp(a_TransformComponent),
-                glm::vec3(0.5f, 0.5f, 0.5f),
+                glm::vec3(0.25f),
                 a_TransformComponent.localRotation,
             };
 

@@ -113,6 +113,9 @@ void BulletHell::OnImGuiRender()
     ImGui::Text("Entity Data:");
     const std::unordered_map<int, std::vector<std::string>>& entityData = Muse::EntityDebugger::GetEntityData();
 
+    ImGui::Text("Entity Count: %d", entityData.size());
+
+    /*
     for (const auto& pair : entityData)
     {
         ImGui::Spacing();
@@ -134,6 +137,7 @@ void BulletHell::OnImGuiRender()
             ImGui::Text("Component: %s", componentName.c_str());
         }
     }
+    */
 
     Muse::EntityDebugger::ClearEntityData();
 
@@ -151,7 +155,8 @@ int BulletHell::CreatePlayer(const glm::vec2& a_Position)
 
     Muse::TransformComponent transformComponent
     {
-        glm::vec3(a_Position.x, a_Position.y, 0)
+        glm::vec3(a_Position.x, a_Position.y, 0),
+        glm::vec3(0.5f, 0.5f, 0.5f),
     };
 
     Muse::ComponentManager<Muse::Render2DComponent>::Add(playerEntity, render2DComponent);
@@ -244,7 +249,7 @@ int BulletHell::CreateBackgroundParticle1(const glm::vec2& a_Position)
     Muse::TransformComponent transformComponent
     {
         glm::vec3(a_Position.x, a_Position.y, -0.1f),
-        glm::vec3(0.2f, 0.2f, 0.2f)
+        glm::vec3(0.1f)
     };
 
     return CreateBackgroundParticle(transformComponent, s_Star1, 1);
@@ -255,7 +260,7 @@ int BulletHell::CreateBackgroundParticle2(const glm::vec2& a_Position)
     Muse::TransformComponent transformComponent
     {
         glm::vec3(a_Position.x, a_Position.y, -0.1f),
-        glm::vec3(0.2f, 0.2f, 0.2f)
+        glm::vec3(0.1f)
     };
 
     return CreateBackgroundParticle(transformComponent, s_Star2, 1);
@@ -266,7 +271,7 @@ int BulletHell::CreateBackgroundParticle3(const glm::vec2& a_Position)
     Muse::TransformComponent transformComponent
     {
         glm::vec3(a_Position.x, a_Position.y, -0.1f),
-        glm::vec3(0.15f, 0.15f, 0.15f)
+        glm::vec3(0.1f)
     };
 
     return CreateBackgroundParticle(transformComponent, s_Star3, 1);

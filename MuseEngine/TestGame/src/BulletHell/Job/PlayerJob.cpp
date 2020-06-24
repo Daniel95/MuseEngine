@@ -50,14 +50,15 @@ void PlayerJob::OnUpdate()
         {
             a_PlayerComponent.fireTimer = 0;
 
-            float projectileSpeed = 36.0f;
-            float offset = 0.7f;
+            float projectileSpeed = 50.0f;
+            float offsetX = 0.3f;
+            float offsetY = 0.5f;
 
             {
                 Muse::TransformComponent projectileTransformComponent
                 {
-                    glm::vec3(a_TransformComponent.localPosition.x, a_TransformComponent.localPosition.y + 1.1f, 0),
-                    glm::vec3(0.5f, 0.5f, 0.5f),
+                    glm::vec3(a_TransformComponent.localPosition.x, a_TransformComponent.localPosition.y + offsetY, 0),
+                    glm::vec3(0.25f),
                 };
 
                 BulletHell::CreateProjectileBlue(projectileTransformComponent, projectileSpeed);
@@ -66,8 +67,8 @@ void PlayerJob::OnUpdate()
             {
                 Muse::TransformComponent projectileTransformComponent
                 {
-                    glm::vec3(a_TransformComponent.localPosition.x - offset, a_TransformComponent.localPosition.y + 1.1f, 0),
-                    glm::vec3(0.5f, 0.5f, 0.5f),
+                    glm::vec3(a_TransformComponent.localPosition.x - offsetX, a_TransformComponent.localPosition.y + offsetY, 0),
+                    glm::vec3(0.25f),
                     glm::vec3(0, 0, glm::radians(15.0f)),
                 };
 
@@ -77,8 +78,8 @@ void PlayerJob::OnUpdate()
             {
                 Muse::TransformComponent projectileTransformComponent
                 {
-                    glm::vec3(a_TransformComponent.localPosition.x + offset, a_TransformComponent.localPosition.y + 1.1f, 0),
-                    glm::vec3(0.5f, 0.5f, 0.5f),
+                    glm::vec3(a_TransformComponent.localPosition.x + offsetX, a_TransformComponent.localPosition.y + offsetY, 0),
+                    glm::vec3(0.25f),
                     glm::vec3(0, 0, glm::radians(-15.0f))
                 };
 

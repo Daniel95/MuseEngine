@@ -8,11 +8,11 @@ public:
     virtual void OnUpdate() override;
 
 private:
-    const float m_SpawnTime = 0.1f;
+    const float m_SpawnTime = 0.005f;
     float m_Timer;
-    float m_SpawnMinX = -5;
-    float m_SpawnMaxX = 5;
-    float m_SpawnY = 7;
+    float m_SpawnMinX = -10;
+    float m_SpawnMaxX = 10;
+    float m_SpawnY = 10;
 
 };
 
