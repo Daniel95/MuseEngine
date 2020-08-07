@@ -156,6 +156,7 @@
     <ClInclude Include="src\Mode.h" />
     <ClInclude Include="src\RayTracer\SceneLibraryRT.h" />
     <ClInclude Include="src\TestGame.h" />
+    <ClInclude Include="src\TopDown.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\BulletHell.cpp" />
@@ -174,6 +175,7 @@
     <ClCompile Include="src\GameRT.cpp" />
     <ClCompile Include="src\RayTracer\SceneLibraryRT.cpp" />
     <ClCompile Include="src\TestGame.cpp" />
+    <ClCompile Include="src\TopDown.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Muse\Muse.vcxproj">
