@@ -138,17 +138,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\BulletHell.h" />
-    <ClInclude Include="src\BulletHell\Component\Components.h" />
-    <ClInclude Include="src\BulletHell\Job\BackgroundParticleSpawner.h" />
-    <ClInclude Include="src\BulletHell\Job\DestroyOutOfBoundsJob.h" />
-    <ClInclude Include="src\BulletHell\Job\EnemyJob.h" />
-    <ClInclude Include="src\BulletHell\Job\HealthJob.h" />
-    <ClInclude Include="src\BulletHell\Job\ObstacleCollisionJob.h" />
-    <ClInclude Include="src\BulletHell\Job\ObstacleSpawnerJob.h" />
-    <ClInclude Include="src\BulletHell\Job\PlayerJob.h" />
-    <ClInclude Include="src\BulletHell\Job\ProjectileJob.h" />
-    <ClInclude Include="src\BulletHell\Job\ScrollingJob.h" />
     <ClInclude Include="src\Game2D.h" />
     <ClInclude Include="src\Game3D.h" />
     <ClInclude Include="src\GamePT.h" />
@@ -159,16 +148,6 @@
     <ClInclude Include="src\TopDown.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\BulletHell.cpp" />
-    <ClCompile Include="src\BulletHell\Job\BackgroundParticleSpawner.cpp" />
-    <ClCompile Include="src\BulletHell\Job\DestroyOutOfBoundsJob.cpp" />
-    <ClCompile Include="src\BulletHell\Job\EnemyJob.cpp" />
-    <ClCompile Include="src\BulletHell\Job\HealthJob.cpp" />
-    <ClCompile Include="src\BulletHell\Job\ObstacleCollisionJob.cpp" />
-    <ClCompile Include="src\BulletHell\Job\ObstacleSpawnerJob.cpp" />
-    <ClCompile Include="src\BulletHell\Job\PlayerJob.cpp" />
-    <ClCompile Include="src\BulletHell\Job\ProjectileJob.cpp" />
-    <ClCompile Include="src\BulletHell\Job\ScrollingJob.cpp" />
     <ClCompile Include="src\Game2D.cpp" />
     <ClCompile Include="src\Game3D.cpp" />
     <ClCompile Include="src\GamePT.cpp" />

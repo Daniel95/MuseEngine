@@ -34,7 +34,7 @@ void TopDown::OnStart()
     cameraComponent->SetZoomLevel(5);
 
 
-    m_SpriteSheet = Muse::ResourceManager::Get<Muse::Texture>("assets\topdown\kenneyrpgpack\Spritesheet\RPGpack_sheet_2X.png");
+    m_SpriteSheet = Muse::ResourceManager::Load<Muse::Texture>("assets/topdown/kenneyrpgpack/Spritesheet/RPGpack_sheet_2X.png");
 }
 
 void TopDown::OnRender()
