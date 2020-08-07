@@ -77,7 +77,7 @@
       <PrecompiledHeaderFile>MusePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;MUSE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\rapidjson\include;vendor\rttr\include;vendor\stb_image;vendor\cereal\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\rapidjson\include;vendor\rttr\include;vendor\stb_image;vendor\cereal\include;vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -101,7 +101,7 @@
       <PrecompiledHeaderFile>MusePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;MUSE_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\rapidjson\include;vendor\rttr\include;vendor\stb_image;vendor\cereal\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\rapidjson\include;vendor\rttr\include;vendor\stb_image;vendor\cereal\include;vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -128,7 +128,7 @@
       <PrecompiledHeaderFile>MusePCH.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;MUSE_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\rapidjson\include;vendor\rttr\include;vendor\stb_image;vendor\cereal\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\rapidjson\include;vendor\rttr\include;vendor\stb_image;vendor\cereal\include;vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -150,11 +150,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Core\ECS\Entity\EntityDebugger.h" />
-    <ClInclude Include="src\Core\ECS\Entity\EntityEvent.h" />
-    <ClInclude Include="src\Core\Physics\Collision2D.h" />
+    <ClInclude Include="src\Core\Application.h" />
     <ClInclude Include="src\Core\ECS\Component\Collider2DComponent.h" />
-    <ClInclude Include="src\Core\ECS\Job\Render2DJob.h" />
     <ClInclude Include="src\Core\ECS\Component\ComponentHelper.h" />
     <ClInclude Include="src\Core\ECS\Component\ComponentManager.h" />
     <ClInclude Include="src\Core\ECS\Component\ComponentType.h" />
@@ -162,12 +159,12 @@
     <ClInclude Include="src\Core\ECS\Component\TransformComponent.h" />
     <ClInclude Include="src\Core\ECS\Component\TransformHelper.h" />
     <ClInclude Include="src\Core\ECS\Entity\Entity.h" />
+    <ClInclude Include="src\Core\ECS\Entity\EntityDebugger.h" />
+    <ClInclude Include="src\Core\ECS\Entity\EntityEvent.h" />
     <ClInclude Include="src\Core\ECS\Entity\EntityTracker.h" />
     <ClInclude Include="src\Core\ECS\Job\Job.h" />
     <ClInclude Include="src\Core\ECS\Job\JobManager.h" />
-    <ClInclude Include="src\Core\Gameplay\Component\TransformComponentOld.h" />
-    <ClInclude Include="src\Core\Utilities\Color.h" />
-    <ClInclude Include="src\Core\Application.h" />
+    <ClInclude Include="src\Core\ECS\Job\Render2DJob.h" />
     <ClInclude Include="src\Core\Engine.h" />
     <ClInclude Include="src\Core\Event\ApplicationEvent.h" />
     <ClInclude Include="src\Core\Event\Event.h" />
@@ -179,6 +176,7 @@
     <ClInclude Include="src\Core\Gameplay\Component\PerspectiveCameraControllerComponent.h" />
     <ClInclude Include="src\Core\Gameplay\Component\RenderComponent.h" />
     <ClInclude Include="src\Core\Gameplay\Component\TestComponent.h" />
+    <ClInclude Include="src\Core\Gameplay\Component\TransformComponentOld.h" />
     <ClInclude Include="src\Core\Gameplay\GameObject.h" />
     <ClInclude Include="src\Core\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Core\Input\Input.h" />
@@ -187,6 +185,7 @@
     <ClInclude Include="src\Core\Instrumentor.h" />
     <ClInclude Include="src\Core\Layer\Layer.h" />
     <ClInclude Include="src\Core\Layer\LayerStack.h" />
+    <ClInclude Include="src\Core\Physics\Collision2D.h" />
     <ClInclude Include="src\Core\Renderer\Buffer\BufferLayout.h" />
     <ClInclude Include="src\Core\Renderer\Buffer\FrameBuffer.h" />
     <ClInclude Include="src\Core\Renderer\Buffer\IndexBuffer.h" />
@@ -194,19 +193,19 @@
     <ClInclude Include="src\Core\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Core\Renderer\Material.h" />
     <ClInclude Include="src\Core\Renderer\RayTracer\AmbientLightSource.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\RendererPT.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\BVH\BoundingVolume.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\RendererRT.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Box.h" />
     <ClInclude Include="src\Core\Renderer\RayTracer\BVH\BVH.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\BVH\BoundingVolume.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\BVH\TopDownBVH.h" />
     <ClInclude Include="src\Core\Renderer\RayTracer\GetColorParameters.h" />
     <ClInclude Include="src\Core\Renderer\RayTracer\LightSource.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Plane.h" />
     <ClInclude Include="src\Core\Renderer\RayTracer\Ray.h" />
     <ClInclude Include="src\Core\Renderer\RayTracer\RayHitData.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\RendererPT.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\RendererRT.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Box.h" />
+    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Plane.h" />
     <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Shape.h" />
     <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Sphere.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\BVH\TopDownBVH.h" />
     <ClInclude Include="src\Core\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Core\Renderer\Renderer.h" />
     <ClInclude Include="src\Core\Renderer\Renderer2D.h" />
@@ -222,13 +221,14 @@
     <ClInclude Include="src\Core\System\Manager\ISystem.h" />
     <ClInclude Include="src\Core\System\Manager\SystemID.h" />
     <ClInclude Include="src\Core\System\Manager\SystemManager.h" />
+    <ClInclude Include="src\Core\Utilities\Color.h" />
     <ClInclude Include="src\Core\Utilities\Defines.h" />
     <ClInclude Include="src\Core\Utilities\HardCodedMesh.h" />
     <ClInclude Include="src\Core\Utilities\Log.h" />
     <ClInclude Include="src\Core\Utilities\Utilities.h" />
+    <ClInclude Include="src\Core\Utilities\VectorHelper.h" />
     <ClInclude Include="src\Core\Utilities\json\from_json.h" />
     <ClInclude Include="src\Core\Utilities\json\to_json.h" />
-    <ClInclude Include="src\Core\Utilities\VectorHelper.h" />
     <ClInclude Include="src\Core\Window.h" />
     <ClInclude Include="src\Editor\Editor.h" />
     <ClInclude Include="src\Editor\FileBrowser.h" />
@@ -616,16 +616,15 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Core\ECS\Entity\EntityDebugger.cpp" />
-    <ClCompile Include="src\Core\ECS\Component\ComponentManager.cpp" />
-    <ClCompile Include="src\Core\Physics\Collision2D.cpp" />
-    <ClCompile Include="src\Core\ECS\Job\Render2DJob.cpp" />
     <ClCompile Include="src\Core\Application.cpp" />
     <ClCompile Include="src\Core\ECS\Component\ComponentHelper.cpp" />
+    <ClCompile Include="src\Core\ECS\Component\ComponentManager.cpp" />
     <ClCompile Include="src\Core\ECS\Component\TransformHelper.cpp" />
     <ClCompile Include="src\Core\ECS\Entity\Entity.cpp" />
+    <ClCompile Include="src\Core\ECS\Entity\EntityDebugger.cpp" />
     <ClCompile Include="src\Core\ECS\Entity\EntityTracker.cpp" />
     <ClCompile Include="src\Core\ECS\Job\JobManager.cpp" />
+    <ClCompile Include="src\Core\ECS\Job\Render2DJob.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\CameraComponent.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\Component.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\OrthographicCameraControllerComponent.cpp" />
@@ -638,24 +637,25 @@
     <ClCompile Include="src\Core\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Core\Layer\Layer.cpp" />
     <ClCompile Include="src\Core\Layer\LayerStack.cpp" />
+    <ClCompile Include="src\Core\Physics\Collision2D.cpp" />
     <ClCompile Include="src\Core\Renderer\Buffer\BufferLayout.cpp" />
     <ClCompile Include="src\Core\Renderer\Buffer\FrameBuffer.cpp" />
     <ClCompile Include="src\Core\Renderer\Buffer\IndexBuffer.cpp" />
     <ClCompile Include="src\Core\Renderer\Buffer\VertexBuffer.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracer\AmbientLightSource.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\GetColorParameter.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\RendererPT.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\BVH\BoundingVolume.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\RendererRT.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\Ray.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Box.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracer\BVH\BVH.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\BVH\BoundingVolume.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\BVH\TopDownBVH.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\GetColorParameter.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracer\LightSource.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Plane.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\Ray.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracer\RayHitData.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\RendererPT.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\RendererRT.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Box.cpp" />
+    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Plane.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Shape.cpp" />
     <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Sphere.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\BVH\TopDownBVH.cpp" />
     <ClCompile Include="src\Core\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Core\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Core\Renderer\Renderer2D.cpp" />
@@ -672,12 +672,8 @@
     <ClCompile Include="src\Core\System\Manager\SystemManager.cpp" />
     <ClCompile Include="src\Core\Utilities\Log.cpp" />
     <ClCompile Include="src\Core\Utilities\Utilities.cpp" />
-    <ClCompile Include="src\Core\Utilities\json\from_json.cpp">
-      <ObjectFileName>$(IntDir)\from_json1.obj</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="src\Core\Utilities\json\to_json.cpp">
-      <ObjectFileName>$(IntDir)\to_json1.obj</ObjectFileName>
-    </ClCompile>
+    <ClCompile Include="src\Core\Utilities\json\from_json.cpp" />
+    <ClCompile Include="src\Core\Utilities\json\to_json.cpp" />
     <ClCompile Include="src\Editor\Editor.cpp" />
     <ClCompile Include="src\Editor\FileBrowser.cpp" />
     <ClCompile Include="src\Editor\ViewPort.cpp" />

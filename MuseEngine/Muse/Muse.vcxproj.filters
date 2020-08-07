@@ -7,6 +7,18 @@
     <Filter Include="src\Core">
       <UniqueIdentifier>{A5D31CCF-91A0-77DA-BAB9-6582A6E5AC68}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Core\ECS">
+      <UniqueIdentifier>{6F1213F3-5B75-A297-04FB-DA4DF03C6E1A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core\ECS\Component">
+      <UniqueIdentifier>{9101B6FD-7DFB-DE4F-6668-7560520145BC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core\ECS\Entity">
+      <UniqueIdentifier>{DB2B233C-478D-004A-D0FA-46FC3C5B3709}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core\ECS\Job">
+      <UniqueIdentifier>{39C13F92-25BA-5EE4-4EEC-43693A443EF0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Core\Event">
       <UniqueIdentifier>{B6BC3D04-A28A-310A-8B1E-A230778B0D6F}</UniqueIdentifier>
     </Filter>
@@ -25,11 +37,23 @@
     <Filter Include="src\Core\Layer">
       <UniqueIdentifier>{3138B104-1D06-A50A-069A-1531F206816F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Core\Physics">
+      <UniqueIdentifier>{17AC243A-03A5-438C-2CD7-2811182F2398}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Core\Renderer">
       <UniqueIdentifier>{EB009555-5717-93EB-A08E-1E0D0CE46373}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Core\Renderer\Buffer">
       <UniqueIdentifier>{74ECC740-6011-17C1-895C-FC5075E015DF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core\Renderer\RayTracer">
+      <UniqueIdentifier>{27BC2B41-93C9-5927-1CB0-551288BC25DE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core\Renderer\RayTracer\BVH">
+      <UniqueIdentifier>{9661862B-0245-956B-0B48-C3A777AA5BBC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Core\Renderer\RayTracer\Shape">
+      <UniqueIdentifier>{A717E327-1386-38A7-5C6F-F3A6C81C2E43}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Core\Resource">
       <UniqueIdentifier>{5C9F0E62-C8B5-0CF8-112D-98197D82DD7F}</UniqueIdentifier>
@@ -48,9 +72,6 @@
     </Filter>
     <Filter Include="src\Core\Utilities\json">
       <UniqueIdentifier>{1914C77A-854B-0F12-8E55-7335FA0B360B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Core\Utilities\json - Original">
-      <UniqueIdentifier>{7BB7A7B8-67F3-AA22-D005-C319BC60533D}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Editor">
       <UniqueIdentifier>{C3F37E0D-AFAB-C05A-18B3-99B6048A5B4B}</UniqueIdentifier>
@@ -102,6 +123,48 @@
     <ClInclude Include="src\Core\Application.h">
       <Filter>src\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\ECS\Component\Collider2DComponent.h">
+      <Filter>src\Core\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\ECS\Component\ComponentHelper.h">
+      <Filter>src\Core\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\ECS\Component\ComponentManager.h">
+      <Filter>src\Core\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\ECS\Component\ComponentType.h">
+      <Filter>src\Core\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\ECS\Component\Render2DComponent.h">
+      <Filter>src\Core\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\ECS\Component\TransformComponent.h">
+      <Filter>src\Core\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\ECS\Component\TransformHelper.h">
+      <Filter>src\Core\ECS\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\ECS\Entity\Entity.h">
+      <Filter>src\Core\ECS\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\ECS\Entity\EntityDebugger.h">
+      <Filter>src\Core\ECS\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\ECS\Entity\EntityEvent.h">
+      <Filter>src\Core\ECS\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\ECS\Entity\EntityTracker.h">
+      <Filter>src\Core\ECS\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\ECS\Job\Job.h">
+      <Filter>src\Core\ECS\Job</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\ECS\Job\JobManager.h">
+      <Filter>src\Core\ECS\Job</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\ECS\Job\Render2DJob.h">
+      <Filter>src\Core\ECS\Job</Filter>
+    </ClInclude>
     <ClInclude Include="src\Core\Engine.h">
       <Filter>src\Core</Filter>
     </ClInclude>
@@ -126,10 +189,16 @@
     <ClInclude Include="src\Core\Gameplay\Component\OrthographicCameraControllerComponent.h">
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Gameplay\Component\PerspectiveCameraControllerComponent.h">
+      <Filter>src\Core\Gameplay\Component</Filter>
+    </ClInclude>
     <ClInclude Include="src\Core\Gameplay\Component\RenderComponent.h">
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Gameplay\Component\TestComponent.h">
+      <Filter>src\Core\Gameplay\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Gameplay\Component\TransformComponentOld.h">
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Gameplay\GameObject.h">
@@ -156,6 +225,9 @@
     <ClInclude Include="src\Core\Layer\LayerStack.h">
       <Filter>src\Core\Layer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Physics\Collision2D.h">
+      <Filter>src\Core\Physics</Filter>
+    </ClInclude>
     <ClInclude Include="src\Core\Renderer\Buffer\BufferLayout.h">
       <Filter>src\Core\Renderer\Buffer</Filter>
     </ClInclude>
@@ -170,6 +242,51 @@
     </ClInclude>
     <ClInclude Include="src\Core\Renderer\GraphicsContext.h">
       <Filter>src\Core\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Renderer\Material.h">
+      <Filter>src\Core\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Renderer\RayTracer\AmbientLightSource.h">
+      <Filter>src\Core\Renderer\RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Renderer\RayTracer\BVH\BVH.h">
+      <Filter>src\Core\Renderer\RayTracer\BVH</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Renderer\RayTracer\BVH\BoundingVolume.h">
+      <Filter>src\Core\Renderer\RayTracer\BVH</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Renderer\RayTracer\BVH\TopDownBVH.h">
+      <Filter>src\Core\Renderer\RayTracer\BVH</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Renderer\RayTracer\GetColorParameters.h">
+      <Filter>src\Core\Renderer\RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Renderer\RayTracer\LightSource.h">
+      <Filter>src\Core\Renderer\RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Renderer\RayTracer\Ray.h">
+      <Filter>src\Core\Renderer\RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Renderer\RayTracer\RayHitData.h">
+      <Filter>src\Core\Renderer\RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Renderer\RayTracer\RendererPT.h">
+      <Filter>src\Core\Renderer\RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Renderer\RayTracer\RendererRT.h">
+      <Filter>src\Core\Renderer\RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Box.h">
+      <Filter>src\Core\Renderer\RayTracer\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Plane.h">
+      <Filter>src\Core\Renderer\RayTracer\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Shape.h">
+      <Filter>src\Core\Renderer\RayTracer\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Sphere.h">
+      <Filter>src\Core\Renderer\RayTracer\Shape</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Renderer\RenderCommand.h">
       <Filter>src\Core\Renderer</Filter>
@@ -216,6 +333,9 @@
     <ClInclude Include="src\Core\System\Manager\SystemManager.h">
       <Filter>src\Core\System\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Utilities\Color.h">
+      <Filter>src\Core\Utilities</Filter>
+    </ClInclude>
     <ClInclude Include="src\Core\Utilities\Defines.h">
       <Filter>src\Core\Utilities</Filter>
     </ClInclude>
@@ -226,6 +346,9 @@
       <Filter>src\Core\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Utilities\Utilities.h">
+      <Filter>src\Core\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Utilities\VectorHelper.h">
       <Filter>src\Core\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\Utilities\json\from_json.h">
@@ -1389,44 +1512,34 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Gameplay\Component\PerspectiveCameraControllerComponent.h" />
-    <ClInclude Include="src\Core\Renderer\Material.h" />
-    <ClInclude Include="src\Core\Utilities\Color.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\BVH\BoundingVolume.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\BVH\BVH.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\BVH\TopDownBVH.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Box.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Plane.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Shape.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\Shape\Sphere.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\AmbientLightSource.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\GetColorParameters.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\LightSource.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\Ray.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\RayHitData.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\RendererPT.h" />
-    <ClInclude Include="src\Core\Renderer\RayTracer\RendererRT.h" />
-    <ClInclude Include="src\Core\ECS\Entity\Entity.h" />
-    <ClInclude Include="src\Core\ECS\Entity\EntityTracker.h" />
-    <ClInclude Include="src\Core\Utilities\VectorHelper.h" />
-    <ClInclude Include="src\Core\ECS\Job\Job.h" />
-    <ClInclude Include="src\Core\ECS\Job\JobManager.h" />
-    <ClInclude Include="src\Core\ECS\Component\ComponentHelper.h" />
-    <ClInclude Include="src\Core\ECS\Component\ComponentManager.h" />
-    <ClInclude Include="src\Core\ECS\Component\ComponentType.h" />
-    <ClInclude Include="src\Core\ECS\Component\TransformHelper.h" />
-    <ClInclude Include="src\Core\ECS\Component\TransformComponent.h" />
-    <ClInclude Include="src\Core\ECS\Component\Render2DComponent.h" />
-    <ClInclude Include="src\Core\ECS\Job\Render2DJob.h" />
-    <ClInclude Include="src\Core\Gameplay\Component\TransformComponentOld.h" />
-    <ClInclude Include="src\Core\ECS\Component\Collider2DComponent.h" />
-    <ClInclude Include="src\Core\Physics\Collision2D.h" />
-    <ClInclude Include="src\Core\ECS\Entity\EntityDebugger.h" />
-    <ClInclude Include="src\Core\ECS\Entity\EntityEvent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
       <Filter>src\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\ECS\Component\ComponentHelper.cpp">
+      <Filter>src\Core\ECS\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\ECS\Component\ComponentManager.cpp">
+      <Filter>src\Core\ECS\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\ECS\Component\TransformHelper.cpp">
+      <Filter>src\Core\ECS\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\ECS\Entity\Entity.cpp">
+      <Filter>src\Core\ECS\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\ECS\Entity\EntityDebugger.cpp">
+      <Filter>src\Core\ECS\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\ECS\Entity\EntityTracker.cpp">
+      <Filter>src\Core\ECS\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\ECS\Job\JobManager.cpp">
+      <Filter>src\Core\ECS\Job</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\ECS\Job\Render2DJob.cpp">
+      <Filter>src\Core\ECS\Job</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Gameplay\Component\CameraComponent.cpp">
       <Filter>src\Core\Gameplay\Component</Filter>
@@ -1437,10 +1550,16 @@
     <ClCompile Include="src\Core\Gameplay\Component\OrthographicCameraControllerComponent.cpp">
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Gameplay\Component\PerspectiveCameraControllerComponent.cpp">
+      <Filter>src\Core\Gameplay\Component</Filter>
+    </ClCompile>
     <ClCompile Include="src\Core\Gameplay\Component\RenderComponent.cpp">
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Gameplay\Component\TestComponent.cpp">
+      <Filter>src\Core\Gameplay\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Gameplay\Component\TransformComponentOld.cpp">
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Gameplay\GameObject.cpp">
@@ -1458,6 +1577,9 @@
     <ClCompile Include="src\Core\Layer\LayerStack.cpp">
       <Filter>src\Core\Layer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Physics\Collision2D.cpp">
+      <Filter>src\Core\Physics</Filter>
+    </ClCompile>
     <ClCompile Include="src\Core\Renderer\Buffer\BufferLayout.cpp">
       <Filter>src\Core\Renderer\Buffer</Filter>
     </ClCompile>
@@ -1469,6 +1591,48 @@
     </ClCompile>
     <ClCompile Include="src\Core\Renderer\Buffer\VertexBuffer.cpp">
       <Filter>src\Core\Renderer\Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Renderer\RayTracer\AmbientLightSource.cpp">
+      <Filter>src\Core\Renderer\RayTracer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Renderer\RayTracer\BVH\BVH.cpp">
+      <Filter>src\Core\Renderer\RayTracer\BVH</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Renderer\RayTracer\BVH\BoundingVolume.cpp">
+      <Filter>src\Core\Renderer\RayTracer\BVH</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Renderer\RayTracer\BVH\TopDownBVH.cpp">
+      <Filter>src\Core\Renderer\RayTracer\BVH</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Renderer\RayTracer\GetColorParameter.cpp">
+      <Filter>src\Core\Renderer\RayTracer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Renderer\RayTracer\LightSource.cpp">
+      <Filter>src\Core\Renderer\RayTracer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Renderer\RayTracer\Ray.cpp">
+      <Filter>src\Core\Renderer\RayTracer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Renderer\RayTracer\RayHitData.cpp">
+      <Filter>src\Core\Renderer\RayTracer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Renderer\RayTracer\RendererPT.cpp">
+      <Filter>src\Core\Renderer\RayTracer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Renderer\RayTracer\RendererRT.cpp">
+      <Filter>src\Core\Renderer\RayTracer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Box.cpp">
+      <Filter>src\Core\Renderer\RayTracer\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Plane.cpp">
+      <Filter>src\Core\Renderer\RayTracer\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Shape.cpp">
+      <Filter>src\Core\Renderer\RayTracer\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Sphere.cpp">
+      <Filter>src\Core\Renderer\RayTracer\Shape</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Renderer\RenderCommand.cpp">
       <Filter>src\Core\Renderer</Filter>
@@ -1581,30 +1745,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Gameplay\Component\PerspectiveCameraControllerComponent.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\BVH\BoundingVolume.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\BVH\BVH.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\BVH\TopDownBVH.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Box.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Plane.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Shape.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\Shape\Sphere.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\AmbientLightSource.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\LightSource.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\Ray.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\RayHitData.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\RendererPT.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\RendererRT.cpp" />
-    <ClCompile Include="src\Core\Renderer\RayTracer\GetColorParameter.cpp" />
-    <ClCompile Include="src\Core\ECS\Entity\Entity.cpp" />
-    <ClCompile Include="src\Core\ECS\Entity\EntityTracker.cpp" />
-    <ClCompile Include="src\Core\ECS\Job\JobManager.cpp" />
-    <ClCompile Include="src\Core\ECS\Component\ComponentHelper.cpp" />
-    <ClCompile Include="src\Core\ECS\Component\TransformHelper.cpp" />
-    <ClCompile Include="src\Core\ECS\Job\Render2DJob.cpp" />
-    <ClCompile Include="src\Core\Gameplay\Component\TransformComponentOld.cpp" />
-    <ClCompile Include="src\Core\Physics\Collision2D.cpp" />
-    <ClCompile Include="src\Core\ECS\Component\ComponentManager.cpp" />
-    <ClCompile Include="src\Core\ECS\Entity\EntityDebugger.cpp" />
   </ItemGroup>
 </Project>

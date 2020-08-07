@@ -5,7 +5,7 @@
 struct PlayerComponent 
 {
     float speed = 4.5f;
-    float health = 10000000;
+    float health = 100;
     float fireCD = 0.2f;
     float fireTimer = 0;
 };
