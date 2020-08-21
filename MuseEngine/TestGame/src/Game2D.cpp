@@ -43,8 +43,8 @@ void Game2D::OnStart()
         gameObject->GetTransform()->SetLocalScale({ 2, 1 });
     }
 
-    m_RaymanTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/rayman.png");
-    m_CheckerboardTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Checkerboard.png");
+    m_RaymanTexture = Muse::ResourceManager::Load<Muse::Texture2D>("assets/textures/rayman.png");
+    m_CheckerboardTexture = Muse::ResourceManager::Load<Muse::Texture2D>("assets/textures/Checkerboard.png");
 
     std::string path = "assets/scenes/testscene.txt";
     scene->Save(path);

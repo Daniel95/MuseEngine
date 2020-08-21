@@ -7,7 +7,8 @@
 
 namespace Muse
 {
-    class Texture;
+    class Texture2D;
+    class SubTexture2D;
 }
 
 class TopDown : public Muse::Application
@@ -24,7 +25,8 @@ protected:
     virtual void OnImGuiRender() override;
 
 private:
-    std::shared_ptr<Muse::Texture> m_SpriteSheet;
-    std::shared_ptr<Muse::Texture> m_EnemyTexture;
+    std::shared_ptr<Muse::Texture2D> m_SpriteSheet;
+    std::shared_ptr<Muse::SubTexture2D> m_SubTexture;
+    std::shared_ptr<Muse::Texture2D> m_EnemyTexture;
 
 };

@@ -13,7 +13,6 @@ namespace Muse
 {
     class RenderComponent;
     struct Ray;
-    class Texture;
     class Shader;
 }
 

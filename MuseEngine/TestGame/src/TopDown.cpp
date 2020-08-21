@@ -11,6 +11,7 @@
 #include "Core/ECS/Component/Render2DComponent.h"
 #include "Core/ECS/Component/TransformComponent.h"
 #include "Core/Gameplay/Component/CameraComponent.cpp"
+#include "Core/Renderer/SubTexture2D.h"
 #include "Core/ECS/Entity/EntityDebugger.h"
 
 #if GAME_TOPDOWN
@@ -34,7 +35,7 @@ void TopDown::OnStart()
     cameraComponent->SetZoomLevel(5);
 
 
-    m_SpriteSheet = Muse::ResourceManager::Load<Muse::Texture>("assets/topdown/kenneyrpgpack/Spritesheet/RPGpack_sheet_2X.png");
+    m_SpriteSheet = Muse::ResourceManager::Load<Muse::Texture2D>("assets/topdown/kenneyrpgpack/Spritesheet/RPGpack_sheet_2X.png");
 }
 
 void TopDown::OnRender()
@@ -42,9 +43,9 @@ void TopDown::OnRender()
     Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
     Muse::RenderCommand::Clear();
 
+    std::shared_ptr<Muse::SubTexture2D> subTexture = Muse::SubTexture2D::Create(m_SpriteSheet, 6, 4, { 128.0f, 128.0f, });
 
-
-    Muse::Renderer2D::DrawQuad({ 0, 0, 0 }, { 1, 1 }, 0, m_SpriteSheet);
+    Muse::Renderer2D::DrawQuad({ 0, 0, 0 }, { 1, 1 }, 0, subTexture);
 
     Muse::Renderer2D::ResetStatistics();
 }

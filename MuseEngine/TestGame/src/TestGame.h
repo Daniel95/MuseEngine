@@ -8,7 +8,6 @@
 
 namespace Muse
 {
-    class Texture;
     class Shader;
     class VertexBuffer;
     class VertexArray;

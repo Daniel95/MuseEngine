@@ -28,6 +28,7 @@
 #include "Core/Renderer/Renderer2D.h"
 #include "Core/Renderer/Shader.h"
 #include "Core/Renderer/Texture.h"
+#include "Core/Renderer/SubTexture2D.h"
 #include "Core/Renderer/Buffer/BufferLayout.h"
 #include "Core/Renderer/Buffer/VertexBuffer.h"
 #include "Core/Renderer/Buffer/IndexBuffer.h"

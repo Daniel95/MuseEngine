@@ -25,6 +25,8 @@ namespace Muse
 
     class Texture2D : public Texture
     {
-
+    public:
+        static std::shared_ptr<Texture2D> Load(const std::string& a_Path) { return std::static_pointer_cast<Texture2D>(Texture::Load(a_Path)); }
+        static std::shared_ptr<Texture2D> Create(uint32_t a_Width, uint32_t a_Height) { return std::static_pointer_cast<Texture2D>(Texture::Create(a_Width, a_Height)); }
     };
 }

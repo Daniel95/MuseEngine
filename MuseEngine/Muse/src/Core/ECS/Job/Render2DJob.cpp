@@ -9,35 +9,6 @@ namespace Muse
 {
     void Render2DJob::OnUpdate()
     {
-        /*
-        auto func = [](
-            const std::vector<int>& a_Entities,
-            std::unordered_map<int, TransformComponent>& a_TransformComponents,
-            std::unordered_map<int, Render2DComponent>& a_Render2DComponents
-            )
-        {
-            for (int entity : a_Entities)
-            {
-                auto transformIt = a_TransformComponents.find(entity);
-                auto renderIt = a_Render2DComponents.find(entity);
-
-                renderIt->second.modelMatrix = TransformHelper::GetWorldModelMatrix(transformIt->second);
-
-                if (renderIt->second.texture != nullptr)
-                {
-                    Renderer2D::DrawQuad(renderIt->second.modelMatrix, renderIt->second.texture, renderIt->second.tilingFactor, renderIt->second.color);
-                }
-                else
-                {
-                    Renderer2D::DrawQuad(renderIt->second.modelMatrix, renderIt->second.color);
-                }
-            }
-        };
-
-        auto transforms = Muse::ComponentManager<Muse::TransformComponent>::GetComponents();
-        auto render2DComponents = Muse::ComponentManager<Muse::Render2DComponent>::GetComponents();
-        */
-
         auto func = [](
             int a_Entity,
             TransformComponent& a_TransformComponent,
