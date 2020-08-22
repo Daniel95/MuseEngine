@@ -10,12 +10,18 @@ namespace Muse
     class SubTexture2D
     {
     public:
-        SubTexture2D(const std::shared_ptr<Texture2D>& a_Texture, int a_X, int a_Y, glm::vec2 a_SpriteSize);
+        SubTexture2D(const std::shared_ptr<Texture2D>& a_Texture,
+            const glm::vec2& a_CellCoords, 
+            const glm::vec2& a_CellSize, 
+            const glm::vec2& a_SpriteSize = { 1, 1 });
 
         const std::shared_ptr<Texture2D> GetTexture() const { return m_Texture; }
         const glm::vec2* GetTextureCoords() const { return m_TextureCoords; }
 
-        static std::shared_ptr<SubTexture2D> Create(const std::shared_ptr<Texture2D>& a_Texture, int a_X, int a_Y, glm::vec2 a_SpriteSize) { return std::make_shared<SubTexture2D>(a_Texture, a_X, a_Y, a_SpriteSize); }
+        static std::shared_ptr<SubTexture2D> Create(const std::shared_ptr<Texture2D>& a_Texture, 
+            const glm::vec2& a_CellCoords, 
+            const glm::vec2& a_CellSize, 
+            const glm::vec2& a_SpriteSize = { 1, 1 }) { return std::make_shared<SubTexture2D>(a_Texture, a_CellCoords, a_CellSize, a_SpriteSize); }
 
     private:
         std::shared_ptr<Texture2D> m_Texture;

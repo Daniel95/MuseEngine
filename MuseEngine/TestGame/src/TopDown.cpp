@@ -14,6 +14,18 @@
 #include "Core/Renderer/SubTexture2D.h"
 #include "Core/ECS/Entity/EntityDebugger.h"
 
+static uint32_t s_MapWidth = 24;
+static const char* s_MapTiles =
+"WWWWWWWWDDDDWWWWWWWWWWWW"
+"WWWWWDDDWWWWDDDWWWWWWWWW"
+"WWWWDDWWWWWWWWDDWWWWWWWW"
+"WWWDDWWWWWWWWWDDDWWWWWWW"
+"WWWWWDDWWWWWWWWWDWWWWWWW"
+"WWWWWWDDWWWWWWWWDWWWWWWW"
+"WWWWWWWWDDDDDDDWWWWWWWWW"
+"WWWWWWWWWWDDDWWWWWWWWWWW";
+
+
 #if GAME_TOPDOWN
 #include "EntryPoint.h"
 Muse::Application* Muse::CreateApplication()
@@ -34,8 +46,15 @@ void TopDown::OnStart()
     Muse::CameraComponent* cameraComponent = Muse::CameraComponent::GetMain();
     cameraComponent->SetZoomLevel(5);
 
-
     m_SpriteSheet = Muse::ResourceManager::Load<Muse::Texture2D>("assets/topdown/kenneyrpgpack/Spritesheet/RPGpack_sheet_2X.png");
+
+    m_TreeTexture = Muse::SubTexture2D::Create(m_SpriteSheet, { 0, 1 }, { 128.0f, 128.0f }, { 1, 2 });
+
+    m_TextureMap['D'] = Muse::SubTexture2D::Create(m_SpriteSheet, { 6, 11 }, { 128.0f, 128.0f });
+    m_TextureMap['W'] = Muse::SubTexture2D::Create(m_SpriteSheet, { 11, 11 }, { 128.0f, 128.0f });
+
+    m_MapWidth = s_MapWidth;
+    m_MapHeight = strlen(s_MapTiles) / s_MapWidth;
 }
 
 void TopDown::OnRender()
@@ -43,9 +62,22 @@ void TopDown::OnRender()
     Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
     Muse::RenderCommand::Clear();
 
-    std::shared_ptr<Muse::SubTexture2D> subTexture = Muse::SubTexture2D::Create(m_SpriteSheet, 6, 4, { 128.0f, 128.0f, });
+    for (uint32_t y = 0; y < m_MapHeight; y++)
+    {
+        for (uint32_t x = 0; x < m_MapWidth; x++)
+        {
+            char tileType = s_MapTiles[x + y * m_MapWidth];
 
-    Muse::Renderer2D::DrawQuad({ 0, 0, 0 }, { 1, 1 }, 0, subTexture);
+            if (m_TextureMap.find(tileType) == m_TextureMap.end())
+            {
+                continue;
+            }
+
+            Muse::Renderer2D::DrawQuad({ x, y, 0 }, { 1, 1 }, 0, m_TextureMap[tileType]);
+        }
+    }
+
+    Muse::Renderer2D::DrawQuad({ 0, 0, 0 }, { 1, 2 }, 0, m_TreeTexture);
 
     Muse::Renderer2D::ResetStatistics();
 }

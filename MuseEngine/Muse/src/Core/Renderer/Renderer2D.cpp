@@ -172,11 +172,13 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
+        const std::shared_ptr<Texture2D> texture = a_SubTexture->GetTexture();
+
         // Check if the texture is stored
         float textureIndex = 0.0f;
         for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
         {
-            if (*s_Data.TextureSlots[i].get() == *a_SubTexture->GetTexture().get())
+            if (*s_Data.TextureSlots[i].get() == *texture.get())
             {
                 textureIndex = (float)i;
             }
@@ -237,11 +239,13 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
+        const std::shared_ptr<Texture2D> texture = a_SubTexture->GetTexture();
+
         // Check if the texture is stored
         float textureIndex = 0.0f;
         for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
         {
-            if (*s_Data.TextureSlots[i].get() == *a_SubTexture->GetTexture().get())
+            if (*s_Data.TextureSlots[i].get() == *texture.get())
             {
                 textureIndex = (float)i;
             }

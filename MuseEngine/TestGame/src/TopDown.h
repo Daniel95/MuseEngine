@@ -26,7 +26,10 @@ protected:
 
 private:
     std::shared_ptr<Muse::Texture2D> m_SpriteSheet;
-    std::shared_ptr<Muse::SubTexture2D> m_SubTexture;
-    std::shared_ptr<Muse::Texture2D> m_EnemyTexture;
+    std::shared_ptr<Muse::SubTexture2D> m_TreeTexture;
+
+    uint32_t m_MapWidth, m_MapHeight;
+
+    std::unordered_map<char, std::shared_ptr<Muse::SubTexture2D>> m_TextureMap;
 
 };
