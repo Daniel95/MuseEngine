@@ -15,16 +15,16 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        Application::Get().GetWindow().MouseScrolledEvent.Subscribe(SUB_FN(PerspectiveCameraControllerComponent::OnMouseScrolledEvent, std::placeholders::_1, std::placeholders::_2));
-        Application::Get().GetWindow().WindowResizeEvent.Subscribe(SUB_FN(PerspectiveCameraControllerComponent::OnWindowResizeEvent, std::placeholders::_1, std::placeholders::_2));
+        Application::Get().GetWindow()->MouseScrolledEvent.Subscribe(SUB_FN(PerspectiveCameraControllerComponent::OnMouseScrolledEvent, std::placeholders::_1, std::placeholders::_2));
+        Application::Get().GetWindow()->WindowResizeEvent.Subscribe(SUB_FN(PerspectiveCameraControllerComponent::OnWindowResizeEvent, std::placeholders::_1, std::placeholders::_2));
     }
 
     PerspectiveCameraControllerComponent::~PerspectiveCameraControllerComponent()
     {
         MUSE_PROFILE_FUNCTION();
 
-        Application::Get().GetWindow().MouseScrolledEvent.Unsubscribe(this);
-        Application::Get().GetWindow().WindowResizeEvent.Unsubscribe(this);
+        Application::Get().GetWindow()->MouseScrolledEvent.Unsubscribe(this);
+        Application::Get().GetWindow()->WindowResizeEvent.Unsubscribe(this);
     }
 
     void PerspectiveCameraControllerComponent::OnInit()
@@ -35,8 +35,8 @@ namespace Muse
 
         ASSERT_ENGINE(m_CameraComponent != nullptr, "CameraComponent on PerspectiveCameraControllerComponent GameObject is missing!");
 
-        const float width = static_cast<float>(Application::Get().GetWindow().GetWidth());
-        const float height = static_cast<float>(Application::Get().GetWindow().GetHeight());
+        const float width = static_cast<float>(Application::Get().GetWindow()->GetWidth());
+        const float height = static_cast<float>(Application::Get().GetWindow()->GetHeight());
         const float aspectRatio = width / height;
 
         m_CameraComponent->SetProjection(aspectRatio, m_CameraComponent->GetZoomLevel());

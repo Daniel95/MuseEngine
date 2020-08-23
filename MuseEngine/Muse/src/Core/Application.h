@@ -22,10 +22,10 @@ namespace Muse
 	public:
         static Application& Get() { return *s_Instance; }
 
-		Application();
+		Application(const std::string& a_Name = "Muse Application");
 		virtual ~Application();
 
-        Window& GetWindow() const { return *m_Window; }
+        std::shared_ptr<Window> GetWindow() const { return m_Window; }
         std::shared_ptr<FrameBuffer> GetViewport() const { return m_ViewportFramebuffer; }
         float GetDeltaTime() const { return m_DeltaTime; }
         std::shared_ptr<JobManager> GetJobManager() const { return m_JobManager; }

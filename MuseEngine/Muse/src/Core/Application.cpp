@@ -33,7 +33,7 @@ namespace Muse
 {
     Application* Application::s_Instance = nullptr;
 
-    Application::Application()
+    Application::Application(const std::string& a_Name)
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -45,6 +45,7 @@ namespace Muse
         WindowProperties windowProperties;
         windowProperties.Width = 1280;
         windowProperties.Height = 720;
+        windowProperties.Title = a_Name;
         m_Window = Window::Create(windowProperties);
 
         m_Window->WindowCloseEvent.Subscribe(SUB_FN(Application::WindowCloseEvent));
@@ -65,11 +66,11 @@ namespace Muse
         m_ImGuiLayer = new ImGuiLayer();
         PushOverlay(m_ImGuiLayer);
 
-        FrameBufferProperties frameBufferSpecification;
+        //FrameBufferProperties frameBufferSpecification;
 
-        frameBufferSpecification.Width = m_Window->GetWidth();
-        frameBufferSpecification.Height = m_Window->GetWidth();
-        m_ViewportFramebuffer = FrameBuffer::Create(frameBufferSpecification);
+        //frameBufferSpecification.Width = m_Window->GetWidth();
+        //frameBufferSpecification.Height = m_Window->GetWidth();
+        //m_ViewportFramebuffer = FrameBuffer::Create(frameBufferSpecification);
 
         //Engine Components
         ComponentManager<TransformComponent>::Register("TransformComponent");
@@ -108,7 +109,7 @@ namespace Muse
                 Update();
                 //FixedUpdate();
                 LateUpdate();
-                Render();
+                //Render();
                 ImGuiRender();
                 m_Window->OnUpdate();
             }
@@ -161,7 +162,6 @@ namespace Muse
 
         Editor::StartDockSpace();
 
-        ViewPort::Render(m_ViewportFramebuffer->GetColorAttachmentRendererID());
 
         FileBrowser::Render();
 
@@ -183,9 +183,9 @@ namespace Muse
 
         //If Editor...
         //m_ViewportFramebuffer->Resize(GetWindow().GetWidth(), GetWindow().GetHeight());
-        m_ViewportFramebuffer->Resize(ViewPort::GetWidth(), GetWindow().GetHeight());
+        //m_ViewportFramebuffer->Resize(ViewPort::GetWidth(), GetWindow()->GetHeight());
 
-        m_ViewportFramebuffer->Bind();
+        //m_ViewportFramebuffer->Bind();
 
         Muse::Renderer2D::BeginScene(*Muse::CameraComponent::GetMain());
         m_JobManager->Update(JobType::Renderer);
@@ -194,7 +194,7 @@ namespace Muse
 
         Muse::Renderer2D::EndScene();
 
-        m_ViewportFramebuffer->Unbind();
+        //m_ViewportFramebuffer->Unbind();
     }
 
     void Application::Close()

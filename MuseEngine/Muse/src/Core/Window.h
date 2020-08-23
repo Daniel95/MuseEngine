@@ -11,12 +11,12 @@ namespace Muse
     struct WindowProperties
     {
         std::string Title;
-        unsigned int Width;
-        unsigned int Height;
+        uint32_t Width;
+        uint32_t Height;
 
-        WindowProperties(const std::string& a_Title = "Muse Engine",
-            const unsigned int a_Width = 1280,
-            const unsigned int a_Height = 720)
+        WindowProperties(const std::string& a_Title = "Muse Application",
+            uint32_t a_Width = 1280,
+            uint32_t a_Height = 720)
             : Title(a_Title), Width(a_Width), Height(a_Height)
         {
         }

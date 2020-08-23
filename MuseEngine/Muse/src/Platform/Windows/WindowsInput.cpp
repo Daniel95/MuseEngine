@@ -12,7 +12,7 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        const auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+        const auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow()->GetNativeWindow());
         const auto state = glfwGetKey(window, a_Keycode);
         return state == static_cast<const int>(GLFW_PRESS || GLFW_REPEAT);
     }
@@ -21,7 +21,7 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        const auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+        const auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow()->GetNativeWindow());
         const auto state = glfwGetMouseButton(window, a_Button);
         return state == GLFW_PRESS;
     }
@@ -30,7 +30,7 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        const auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow().GetNativeWindow());
+        const auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow()->GetNativeWindow());
         double xPos, yPos;
         glfwGetCursorPos(window, &xPos, &yPos);
 

@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ImGui", "Muse\vendor\imgui\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Muse", "Muse\Muse.vcxproj", "{9F49897C-8B80-8A0D-346D-70102083060F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Muse-Editor", "Muse-Editor\Muse-Editor.vcxproj", "{73243E9B-DFD9-B690-68CE-B067D482AD94}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -50,6 +52,12 @@ Global
 		{9F49897C-8B80-8A0D-346D-70102083060F}.Dist|x64.Build.0 = Dist|x64
 		{9F49897C-8B80-8A0D-346D-70102083060F}.Release|x64.ActiveCfg = Release|x64
 		{9F49897C-8B80-8A0D-346D-70102083060F}.Release|x64.Build.0 = Release|x64
+		{73243E9B-DFD9-B690-68CE-B067D482AD94}.Debug|x64.ActiveCfg = Debug|x64
+		{73243E9B-DFD9-B690-68CE-B067D482AD94}.Debug|x64.Build.0 = Debug|x64
+		{73243E9B-DFD9-B690-68CE-B067D482AD94}.Dist|x64.ActiveCfg = Dist|x64
+		{73243E9B-DFD9-B690-68CE-B067D482AD94}.Dist|x64.Build.0 = Dist|x64
+		{73243E9B-DFD9-B690-68CE-B067D482AD94}.Release|x64.ActiveCfg = Release|x64
+		{73243E9B-DFD9-B690-68CE-B067D482AD94}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

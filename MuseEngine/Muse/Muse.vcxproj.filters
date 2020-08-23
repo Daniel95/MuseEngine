@@ -303,6 +303,9 @@
     <ClInclude Include="src\Core\Renderer\Shader.h">
       <Filter>src\Core\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Renderer\SubTexture2D.h">
+      <Filter>src\Core\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Core\Renderer\Texture.h">
       <Filter>src\Core\Renderer</Filter>
     </ClInclude>
@@ -1512,7 +1515,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Renderer\SubTexture2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1650,6 +1652,9 @@
     <ClCompile Include="src\Core\Renderer\Shader.cpp">
       <Filter>src\Core\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Core\Renderer\SubTexture2D.cpp">
+      <Filter>src\Core\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Core\Renderer\Texture.cpp">
       <Filter>src\Core\Renderer</Filter>
     </ClCompile>
@@ -1746,6 +1751,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Renderer\SubTexture2D.cpp" />
   </ItemGroup>
 </Project>

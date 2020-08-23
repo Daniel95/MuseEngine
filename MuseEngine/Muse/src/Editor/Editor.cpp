@@ -120,7 +120,7 @@ namespace Muse
 		// Initialize OPENFILENAME
 		ZeroMemory(&ofn, sizeof(OPENFILENAME));
 		ofn.lStructSize = sizeof(OPENFILENAME);
-		ofn.hwndOwner = glfwGetWin32Window((GLFWwindow*)Application::Get().GetWindow().GetNativeWindow());
+		ofn.hwndOwner = glfwGetWin32Window((GLFWwindow*)Application::Get().GetWindow()->GetNativeWindow());
 		ofn.lpstrFile = szFile;
 		ofn.nMaxFile = sizeof(szFile);
 		ofn.lpstrFilter = "All\0*.*\0";
@@ -145,7 +145,7 @@ namespace Muse
 		// Initialize OPENFILENAME
 		ZeroMemory(&ofn, sizeof(OPENFILENAME));
 		ofn.lStructSize = sizeof(OPENFILENAME);
-		ofn.hwndOwner = glfwGetWin32Window((GLFWwindow*)Application::Get().GetWindow().GetNativeWindow());
+		ofn.hwndOwner = glfwGetWin32Window((GLFWwindow*)Application::Get().GetWindow()->GetNativeWindow());
 		ofn.lpstrFile = szFile;
 		ofn.nMaxFile = sizeof(szFile);
 		ofn.lpstrFilter = "Text Files (*.txt)\0*.txt\0All Files (*.*)\0*.*\0";

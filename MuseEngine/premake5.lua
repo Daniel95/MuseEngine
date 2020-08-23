@@ -122,6 +122,61 @@ project "Muse"
 		optimize "on"
 		links "rttr_core_lib_s.lib"
 
+project "Muse-Editor"
+	location "Muse-Editor"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp"
+	}
+
+	includedirs
+	{
+		"%{prj.name}/src",
+		"Muse/vendor/spdlog/include",
+		"Muse/vendor",
+		"Muse/src",
+		"Muse/vendor",
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.rttr}",
+		"%{IncludeDir.cereal}",
+		"%{IncludeDir.entt}",
+	}
+
+	links
+	{
+		"Muse"
+	}
+
+	buildoptions { "/bigobj" } 
+
+	filter "system:windows"
+		systemversion "latest"
+		
+	filter "configurations:Debug"
+		defines "MUSE_DEBUG"
+		runtime "Debug" 
+		symbols "on"
+
+	filter "configurations:Release"
+		defines "MUSE_RELEASE"
+		runtime "Release"
+		optimize "on"
+
+	filter "configurations:Dist"
+		defines "MUSE_DIST"
+		runtime "Release"
+		optimize "on"
+
+
 project "TestGame"
 	location "TestGame"
 	kind "ConsoleApp"
