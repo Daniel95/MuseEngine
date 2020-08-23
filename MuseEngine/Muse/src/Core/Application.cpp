@@ -42,9 +42,12 @@ namespace Muse
         ASSERT_ENGINE(!s_Instance, "A instance of Application already exists!");
         s_Instance = this;
 
-        m_Window = std::unique_ptr<Window>(Window::Create());
+        WindowProperties windowProperties;
+        windowProperties.Width = 1280;
+        windowProperties.Height = 720;
+        m_Window = std::unique_ptr<Window>(Window::Create(windowProperties));
 
-        m_Window->WindowCloseEvent.Subscribe( SUB_FN(Application::WindowCloseEvent));
+        m_Window->WindowCloseEvent.Subscribe(SUB_FN(Application::WindowCloseEvent));
         m_Window->WindowResizeEvent.Subscribe(SUB_FN(Application::WindowResizeEvent, std::placeholders::_1, std::placeholders::_2));
         m_Window->KeyPressedEvent.Subscribe(SUB_FN(Application::KeyPressedEvent, std::placeholders::_1, std::placeholders::_2));
         m_Window->KeyReleasedEvent.Subscribe(SUB_FN(Application::KeyReleasedEvent, std::placeholders::_1));
@@ -62,7 +65,11 @@ namespace Muse
         m_ImGuiLayer = new ImGuiLayer();
         PushOverlay(m_ImGuiLayer);
 
-        m_ViewportFramebuffer = FrameBuffer::Create(m_Window->GetWidth(), m_Window->GetWidth(), FramebufferFormat::RGBA16F);
+        FrameBufferSpecification frameBufferSpecification;
+
+        frameBufferSpecification.Width = m_Window->GetWidth();
+        frameBufferSpecification.Height = m_Window->GetWidth();
+        m_ViewportFramebuffer = FrameBuffer::Create(frameBufferSpecification);
 
         //Engine Components
         ComponentManager<TransformComponent>::Register("TransformComponent");
@@ -188,6 +195,11 @@ namespace Muse
         Muse::Renderer2D::EndScene();
 
         m_ViewportFramebuffer->Unbind();
+    }
+
+    void Application::Close()
+    {
+        m_Running = false;
     }
 
     void Application::PushLayer(Layer* a_Layer)

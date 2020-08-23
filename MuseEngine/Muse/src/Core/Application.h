@@ -36,6 +36,7 @@ namespace Muse
         void LateUpdate();
         void ImGuiRender();
         void Render();
+        void Close();
 
         void PushLayer(Layer* a_Layer);
         void PushOverlay(Layer* a_Layer);

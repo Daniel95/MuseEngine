@@ -6,6 +6,23 @@
 
 namespace Muse
 {
+    std::shared_ptr<FrameBuffer> FrameBuffer::Create(const FrameBufferSpecification& spec)
+    {
+        switch (Renderer::GetAPI())
+        {
+            case RendererAPI::API::None:    ASSERT_ENGINE(false, "RendererAPI::None is currently not supported!"); return nullptr;
+            case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLFrameBuffer>(spec);
+        }
+
+        ASSERT_ENGINE(false, "Unknown RendererAPI!");
+        return nullptr;
+    }
+
+}
+
+/*
+namespace Muse
+{
     std::shared_ptr<FrameBuffer> FrameBuffer::Create(uint32_t a_Width, uint32_t a_Height, FramebufferFormat a_Format)
     {
         MUSE_PROFILE_FUNCTION();
@@ -27,3 +44,5 @@ namespace Muse
         }
     }
 }
+
+*/

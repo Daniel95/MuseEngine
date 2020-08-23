@@ -6,6 +6,37 @@ namespace Muse
     class OpenGLFrameBuffer : public FrameBuffer
     {
     public:
+        OpenGLFrameBuffer(const FrameBufferSpecification& spec);
+        virtual ~OpenGLFrameBuffer();
+
+        void Invalidate();
+
+        virtual void Bind() override;
+        virtual void Unbind() override;
+
+        virtual void Resize(uint32_t width, uint32_t height) override;
+        virtual void SetData(void* a_Data, uint32_t a_Size) const override;
+        virtual void BindTexture(uint32_t a_Slot) const override;
+
+        virtual uint32_t GetRendererID() const override { return m_RendererID; }
+        virtual uint32_t GetColorAttachmentRendererID() const override { return m_ColorAttachment; }
+        virtual uint32_t GetDepthAttachmentRendererID() const override { return m_DepthAttachment; }
+
+        virtual const FrameBufferSpecification& GetSpecification() const override { return m_Specification; }
+    private:
+        uint32_t m_RendererID = 0;
+        uint32_t m_ColorAttachment = 0, m_DepthAttachment = 0;
+        FrameBufferSpecification m_Specification;
+    };
+
+}
+
+/*
+namespace Muse
+{
+    class OpenGLFrameBuffer : public FrameBuffer
+    {
+    public:
         OpenGLFrameBuffer(uint32_t a_Width, uint32_t a_Height, FramebufferFormat a_Format);
         virtual ~OpenGLFrameBuffer();
 
@@ -29,3 +60,5 @@ namespace Muse
         uint32_t m_ColorAttachment, m_DepthAttachment;
     };
 }
+
+*/

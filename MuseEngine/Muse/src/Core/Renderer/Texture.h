@@ -12,6 +12,7 @@ namespace Muse
         virtual ~Texture() = default;
         virtual uint32_t GetWidth() const = 0;
         virtual uint32_t GetHeight() const = 0;
+        virtual uint32_t GetRendererID() const = 0;
 
         virtual void SetData(void* a_Data, uint32_t a_Size) = 0;
         virtual void SetDataF(void* a_Data, uint32_t a_Size) = 0;

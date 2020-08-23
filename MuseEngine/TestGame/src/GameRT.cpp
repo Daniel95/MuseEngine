@@ -37,8 +37,8 @@ void GameRT::OnStart()
     Muse::ResourceManager::Add("GameRTScene", scene);
     Muse::SceneManager::SwitchScene(scene);
 
-    m_Height = GetViewport()->GetHeight();
-    m_Width = GetViewport()->GetHeight();
+    m_Height = GetViewport()->GetSpecification().Height;
+    m_Width = GetViewport()->GetSpecification().Width;
 
     m_ScreenData.resize(m_Height * m_Width * 4);
 
@@ -66,8 +66,8 @@ void GameRT::OnRender()
 
     Muse::Renderer2D::BeginScene(*camera);
 
-    const unsigned int height = GetViewport()->GetHeight();
-    const unsigned int width = GetViewport()->GetWidth();
+    const unsigned int height = GetViewport()->GetSpecification().Height;
+    const unsigned int width = GetViewport()->GetSpecification().Width;
 
     const unsigned int stride = 4;
     const uint32_t size = height * width * stride;
@@ -143,7 +143,7 @@ void GameRT::OnRender()
     }
 
     GetViewport()->BindTexture();
-    GetViewport()->SetDataF(&m_ScreenData[0], size);
+    GetViewport()->SetData(&m_ScreenData[0], size);
 
     Muse::Renderer2D::EndScene();
 }
