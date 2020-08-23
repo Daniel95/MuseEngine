@@ -6,7 +6,7 @@ namespace Muse
     class OpenGLFrameBuffer : public FrameBuffer
     {
     public:
-        OpenGLFrameBuffer(const FrameBufferSpecification& spec);
+        OpenGLFrameBuffer(const FrameBufferProperties& spec);
         virtual ~OpenGLFrameBuffer();
 
         void Invalidate();
@@ -22,11 +22,11 @@ namespace Muse
         virtual uint32_t GetColorAttachmentRendererID() const override { return m_ColorAttachment; }
         virtual uint32_t GetDepthAttachmentRendererID() const override { return m_DepthAttachment; }
 
-        virtual const FrameBufferSpecification& GetSpecification() const override { return m_Specification; }
+        virtual const FrameBufferProperties& GetProperties() const override { return m_Properties; }
     private:
         uint32_t m_RendererID = 0;
         uint32_t m_ColorAttachment = 0, m_DepthAttachment = 0;
-        FrameBufferSpecification m_Specification;
+        FrameBufferProperties m_Properties;
     };
 
 }

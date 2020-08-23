@@ -45,7 +45,7 @@ namespace Muse
         WindowProperties windowProperties;
         windowProperties.Width = 1280;
         windowProperties.Height = 720;
-        m_Window = std::unique_ptr<Window>(Window::Create(windowProperties));
+        m_Window = Window::Create(windowProperties);
 
         m_Window->WindowCloseEvent.Subscribe(SUB_FN(Application::WindowCloseEvent));
         m_Window->WindowResizeEvent.Subscribe(SUB_FN(Application::WindowResizeEvent, std::placeholders::_1, std::placeholders::_2));
@@ -65,7 +65,7 @@ namespace Muse
         m_ImGuiLayer = new ImGuiLayer();
         PushOverlay(m_ImGuiLayer);
 
-        FrameBufferSpecification frameBufferSpecification;
+        FrameBufferProperties frameBufferSpecification;
 
         frameBufferSpecification.Width = m_Window->GetWidth();
         frameBufferSpecification.Height = m_Window->GetWidth();

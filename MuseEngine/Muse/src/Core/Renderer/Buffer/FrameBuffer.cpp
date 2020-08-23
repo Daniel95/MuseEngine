@@ -6,7 +6,7 @@
 
 namespace Muse
 {
-    std::shared_ptr<FrameBuffer> FrameBuffer::Create(const FrameBufferSpecification& spec)
+    std::shared_ptr<FrameBuffer> FrameBuffer::Create(const FrameBufferProperties& spec)
     {
         switch (Renderer::GetAPI())
         {

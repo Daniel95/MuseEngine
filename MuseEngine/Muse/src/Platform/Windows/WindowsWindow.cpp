@@ -22,11 +22,11 @@ namespace Muse
         LOG_ENGINE_ERROR("GLFW Error ({0}): {1}", a_Error, a_Description);
     }
 
-    Window* Window::Create(const WindowProperties& a_Properties)
+    std::shared_ptr<Window> Window::Create(const WindowProperties& a_Properties)
     {
         MUSE_PROFILE_FUNCTION();
 
-        return new WindowsWindow(a_Properties);
+        return std::make_shared<WindowsWindow>(a_Properties);
     }
 
     WindowsWindow::WindowsWindow(const WindowProperties& a_Properties)

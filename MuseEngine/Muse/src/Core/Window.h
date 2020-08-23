@@ -57,6 +57,6 @@ namespace Muse
 
         virtual void* GetNativeWindow() const = 0;
 
-        static Window* Create(const WindowProperties& a_Properties = WindowProperties());
+        static std::shared_ptr<Window> Create(const WindowProperties& a_Properties = WindowProperties());
     };
 }
