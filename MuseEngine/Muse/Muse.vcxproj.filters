@@ -73,9 +73,6 @@
     <Filter Include="src\Core\Utilities\json">
       <UniqueIdentifier>{1914C77A-854B-0F12-8E55-7335FA0B360B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Editor">
-      <UniqueIdentifier>{C3F37E0D-AFAB-C05A-18B3-99B6048A5B4B}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Examples">
       <UniqueIdentifier>{5B3F7059-47A2-FFFD-F027-38B4DC69CB80}</UniqueIdentifier>
     </Filter>
@@ -362,15 +359,6 @@
     </ClInclude>
     <ClInclude Include="src\Core\Window.h">
       <Filter>src\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Editor\Editor.h">
-      <Filter>src\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Editor\FileBrowser.h">
-      <Filter>src\Editor</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Editor\ViewPort.h">
-      <Filter>src\Editor</Filter>
     </ClInclude>
     <ClInclude Include="src\EntryPoint.h">
       <Filter>src</Filter>
@@ -1693,15 +1681,6 @@
     </ClCompile>
     <ClCompile Include="src\Core\Utilities\json\to_json.cpp">
       <Filter>src\Core\Utilities\json</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Editor\Editor.cpp">
-      <Filter>src\Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Editor\FileBrowser.cpp">
-      <Filter>src\Editor</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Editor\ViewPort.cpp">
-      <Filter>src\Editor</Filter>
     </ClCompile>
     <ClCompile Include="src\Examples\Cereal\CerealExample.cpp">
       <Filter>src\Examples\Cereal</Filter>

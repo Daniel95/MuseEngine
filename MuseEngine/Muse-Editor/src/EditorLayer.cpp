@@ -1,5 +1,6 @@
 #include "EditorLayer.h"
 #include "Core/Application.h"
+#include "ViewPort.h"
 
 namespace Muse
 {

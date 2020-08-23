@@ -28,7 +28,11 @@ namespace Muse
 		m_Width = viewportSize.x;
 		m_Height = viewportSize.y;
 		m_AspectRatio = viewportSize.x / viewportSize.y;
-		CameraComponent::GetMain()->SetProjection(m_AspectRatio, CameraComponent::GetMain()->GetZoomLevel());
+
+		if (CameraComponent::GetMain() != nullptr)
+		{
+			CameraComponent::GetMain()->SetProjection(m_AspectRatio, CameraComponent::GetMain()->GetZoomLevel());
+		}
 
 		ImGui::Image((void*)a_ColorAttachmentRendererId, viewportSize, { 0, 1 }, { 1, 0 });
 		ImGui::End();
