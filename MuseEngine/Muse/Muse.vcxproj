@@ -217,8 +217,8 @@
     <ClInclude Include="src\Core\Resource\Resource.h" />
     <ClInclude Include="src\Core\Resource\ResourceManager.h" />
     <ClInclude Include="src\Core\Resource\ResourceTest.h" />
-    <ClInclude Include="src\Core\Scene\Scene.h" />
-    <ClInclude Include="src\Core\Scene\SceneManager.h" />
+    <ClInclude Include="src\Core\Scene\SceneOld.h" />
+    <ClInclude Include="src\Core\Scene\SceneManagerOld.h" />
     <ClInclude Include="src\Core\System\Manager\ISystem.h" />
     <ClInclude Include="src\Core\System\Manager\SystemID.h" />
     <ClInclude Include="src\Core\System\Manager\SystemManager.h" />
@@ -665,8 +665,8 @@
     <ClCompile Include="src\Core\Resource\Resource.cpp" />
     <ClCompile Include="src\Core\Resource\ResourceManager.cpp" />
     <ClCompile Include="src\Core\Resource\ResourceTest.cpp" />
-    <ClCompile Include="src\Core\Scene\Scene.cpp" />
-    <ClCompile Include="src\Core\Scene\SceneManager.cpp" />
+    <ClCompile Include="src\Core\Scene\SceneOld.cpp" />
+    <ClCompile Include="src\Core\Scene\SceneManagerOld.cpp" />
     <ClCompile Include="src\Core\System\Manager\ISystem.cpp" />
     <ClCompile Include="src\Core\System\Manager\SystemManager.cpp" />
     <ClCompile Include="src\Core\Utilities\Log.cpp" />
@@ -706,4 +706,4 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
-</Project> 
+</Project>

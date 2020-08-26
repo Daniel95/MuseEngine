@@ -8,7 +8,7 @@
 
 namespace Muse
 {
-	TopDownBVH::TopDownBVH(Scene& scene)
+	TopDownBVH::TopDownBVH(SceneOld& scene)
 		: BVH(scene)
 	{
 	}

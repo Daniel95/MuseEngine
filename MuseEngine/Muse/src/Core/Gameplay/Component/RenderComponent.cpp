@@ -8,12 +8,9 @@
 #include "Core/Instrumentor.h"
 #include "Core/Renderer/RayTracer/Shape/Shape.h"
 #include "Core/Gameplay/GameObject.h"
-#include "Core/Scene/Scene.h"
+#include "Core/Scene/SceneOld.h"
 #include "Core/Renderer/RayTracer/RayHitData.h"
-#include "Core/Scene/SceneManager.h"
-#include "glm/common.hpp"
-#include "glm/common.hpp"
-#include "glm/common.hpp"
+#include "Core/Scene/SceneManagerOld.h"
 #include "glm/common.hpp"
 
 namespace Muse

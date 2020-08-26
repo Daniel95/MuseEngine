@@ -2,7 +2,7 @@
 
 #include "Core/System/Manager/ISystem.h"
 #include "Core/Utilities/Defines.h"
-#include "Core/Scene/Scene.h"
+#include "Core/Scene/SceneOld.h"
 #include "Core/Resource/Resource.h"
 #include "Core/Renderer/Shader.h"
 #include "Core/Renderer/Texture.h"
@@ -10,7 +10,7 @@
 #include <unordered_map>
 #include <filesystem>
 #include <fstream>
-#include "Core/Scene/SceneManager.h"
+#include "Core/Scene/SceneManagerOld.h"
 #include "Core/Instrumentor.h"
 
 namespace Muse

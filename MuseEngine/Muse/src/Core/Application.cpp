@@ -8,7 +8,7 @@
 #include "ImGui/ImGuiLayer.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/Buffer/FrameBuffer.h"
-#include "Scene/SceneManager.h"
+#include "Scene/SceneManagerOld.h"
 #include "Resource/ResourceManager.h"
 #include "Utilities/Defines.h"
 #include "Core/ECS/Job/JobManager.h"
@@ -25,9 +25,9 @@
 #include "Gameplay/Component/CameraComponent.h"
 #include "Renderer/RenderCommand.h"
 #include "Utilities/HardCodedMesh.h"
-#include "Editor/ViewPort.h"
-#include "Editor/Editor.h"
-#include "Editor/FileBrowser.h"
+//#include "Editor/ViewPort.h"
+//#include "Editor/Editor.h"
+//#include "Editor/FileBrowser.h"
 
 namespace Muse
 {
@@ -59,7 +59,7 @@ namespace Muse
 
         Renderer::Init();
 
-        m_SceneManager = std::make_shared<SceneManager>();
+        m_SceneManager = std::make_shared<SceneManagerOld>();
         m_ResourceManager = std::make_shared<ResourceManager>();
         m_JobManager = std::make_shared<JobManager>();
 
@@ -82,7 +82,7 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        SceneManager::DestroyAllGameObjects();
+        SceneManagerOld::DestroyAllGameObjects();
 
         m_Window->WindowCloseEvent.Unsubscribe(this);
         m_Window->WindowResizeEvent.Unsubscribe(this);
@@ -160,6 +160,14 @@ namespace Muse
 
         m_ImGuiLayer->Begin();
 
+        m_ImGuiRenderEvent.Dispatch();
+        OnImGuiRender();
+        for (Layer* layer : m_LayerStack)
+        {
+            layer->OnImGuiRender();
+        }
+
+        /*
         Editor::StartDockSpace();
 
 
@@ -173,6 +181,7 @@ namespace Muse
         }
 
         Editor::EndDockSpace();
+        */
 
         m_ImGuiLayer->End();
     }

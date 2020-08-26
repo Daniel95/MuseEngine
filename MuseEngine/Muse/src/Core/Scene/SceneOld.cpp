@@ -1,6 +1,6 @@
 #include "MusePCH.h"
 
-#include "Core/Scene/Scene.h"
+#include "Core/Scene/SceneOld.h"
 #include "Core/Application.h"
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Gameplay/Component/TransformComponentOld.h"
@@ -13,7 +13,6 @@
 
 #include <filesystem>
 #include "Core/Gameplay/Component/OrthographicCameraControllerComponent.h"
-#include "Editor/Editor.h"
 #include "Core/Input/Input.h"
 #include "Core/Input/KeyCodes.h"
 
@@ -34,14 +33,14 @@
 
 namespace Muse
 {
-    Scene::Scene()
+    SceneOld::SceneOld()
     {
         MUSE_PROFILE_FUNCTION();
 
         CreateEditorCamera();
     }
 
-    Scene::~Scene()
+    SceneOld::~SceneOld()
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -49,14 +48,14 @@ namespace Muse
         ASSERT_ENGINE(m_GameObjects.size() == 0, "Not all gameobjects have been destroyed!");
     }
 
-    void Scene::Unload()
+    void SceneOld::Unload()
     {
         MUSE_PROFILE_FUNCTION();
 
         DestroyAllGameObjects();
     }
 
-    void Scene::DestroyAllGameObjects()
+    void SceneOld::DestroyAllGameObjects()
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -79,7 +78,7 @@ namespace Muse
         m_GameObjectsToRemove.clear();
     }
 
-    std::shared_ptr<GameObject> Scene::AddGameObject()
+    std::shared_ptr<GameObject> SceneOld::AddGameObject()
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -89,7 +88,7 @@ namespace Muse
         return gameObject;
     }
 
-    std::shared_ptr<GameObject> Scene::AddGameObject(const glm::vec2& a_Position, const glm::vec2& a_Size)
+    std::shared_ptr<GameObject> SceneOld::AddGameObject(const glm::vec2& a_Position, const glm::vec2& a_Size)
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -99,7 +98,7 @@ namespace Muse
         return gameObject;
     }
 
-    std::shared_ptr<GameObject> Scene::AddGameObject(const glm::vec3& a_Position, const glm::vec3& a_Size)
+    std::shared_ptr<GameObject> SceneOld::AddGameObject(const glm::vec3& a_Position, const glm::vec3& a_Size)
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -109,7 +108,7 @@ namespace Muse
         return gameObject;
     }
 
-    void Scene::RemoveGameObject(std::shared_ptr<GameObject> a_GameObject)
+    void SceneOld::RemoveGameObject(std::shared_ptr<GameObject> a_GameObject)
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -117,7 +116,7 @@ namespace Muse
         m_GameObjectsToRemove.push_back(a_GameObject);
     }
 
-    void Scene::Update(float a_DeltaTime)
+    void SceneOld::Update(float a_DeltaTime)
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -138,7 +137,7 @@ namespace Muse
         }
         m_GameObjectsToRemove.clear();
 
-
+        /*
         if (Editor::GetEditorMode())
         {
             bool ctrlS = Input::GetKeyDown(MUSE_KEY_LEFT_CONTROL) && Input::GetKeyDown(MUSE_KEY_S);
@@ -151,9 +150,10 @@ namespace Muse
                 Save(path);
             }
         }
+        */
     }
 
-    void Scene::FixedUpdate(float a_TimeStep)
+    void SceneOld::FixedUpdate(float a_TimeStep)
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -163,12 +163,12 @@ namespace Muse
         }
     }
 
-    void Scene::Save()
+    void SceneOld::Save()
     {
         Save(m_Path);
     }
 
-    void Scene::Save(const std::string& a_FilePath)
+    void SceneOld::Save(const std::string& a_FilePath)
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -207,7 +207,7 @@ namespace Muse
         //DestroyEditorCamera();
     }
 
-    void Scene::DestroyGameObjectImmediate(const std::shared_ptr<GameObject> a_GameObject)
+    void SceneOld::DestroyGameObjectImmediate(const std::shared_ptr<GameObject> a_GameObject)
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -215,7 +215,7 @@ namespace Muse
         m_GameObjects.erase(std::remove(m_GameObjects.begin(), m_GameObjects.end(), a_GameObject), m_GameObjects.end());
     }
 
-    std::shared_ptr<GameObject> Scene::GetEditorCamera() const
+    std::shared_ptr<GameObject> SceneOld::GetEditorCamera() const
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -235,7 +235,7 @@ namespace Muse
         return editorCameraGameObject;
     }
 
-    void Scene::DestroyEditorCamera() const
+    void SceneOld::DestroyEditorCamera() const
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -245,7 +245,7 @@ namespace Muse
         cameraGameObject.reset();
     }
 
-    std::shared_ptr<GameObject> Scene::CreateEditorCamera()
+    std::shared_ptr<GameObject> SceneOld::CreateEditorCamera()
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -259,25 +259,25 @@ namespace Muse
         return gameObject;
     }
 
-    glm::vec3 Scene::GetAmbientLight() const
+    glm::vec3 SceneOld::GetAmbientLight() const
     {
         return m_AmbientLight->GetLight(glm::vec3(0));
     }
 
-    void Scene::ConstructBVH()
+    void SceneOld::ConstructBVH()
     {
         ASSERT_ENGINE(m_BVH != nullptr, "Not BVH set!");
         m_BVH->ConstructHierarchy(RenderComponent::GetAll());
         m_BVH->PrintHierarchy();
     }
 
-    std::shared_ptr<Scene> Scene::Load(const std::string& a_FilePath)
+    std::shared_ptr<SceneOld> SceneOld::Load(const std::string& a_FilePath)
     {
         std::filesystem::path path{ a_FilePath }; //creates TestingFolder object on C:
         std::filesystem::create_directories(path.parent_path()); //add directories based on the object path (without this line it will not work)
         std::ifstream fs(path);
 
-        std::shared_ptr<Scene> scene = std::make_shared<Scene>();
+        std::shared_ptr<SceneOld> scene = std::make_shared<SceneOld>();
 
         {
             cereal::JSONInputArchive iarchive(fs);

@@ -9,7 +9,7 @@ namespace Muse
     bool Ray::Cast() const
     {
     #if MUSE_PROFILE
-        std::shared_ptr<Scene> scene = SceneManager::GetActiveScene();
+        std::shared_ptr<SceneOld> scene = SceneManagerOld::GetActiveScene();
 
         scene->IncreaseRaysSend();
     #endif
@@ -36,7 +36,7 @@ namespace Muse
     bool Ray::Cast(float a_MaxDistance) const
     {
     #if MUSE_PROFILE
-        std::shared_ptr<Scene> scene = SceneManager::GetActiveScene();
+        std::shared_ptr<SceneOld> scene = SceneManagerOld::GetActiveScene();
 
         scene->IncreaseRaysSend();
     #endif
@@ -64,7 +64,7 @@ namespace Muse
     bool Ray::Cast(const std::shared_ptr<const RenderComponent>& a_Ignore, float a_MaxDistance) const
     {
     #if MUSE_PROFILE
-        std::shared_ptr<Scene> scene = SceneManager::GetActiveScene();
+        std::shared_ptr<SceneOld> scene = SceneManagerOld::GetActiveScene();
 
         scene->IncreaseRaysSend();
     #endif
@@ -94,7 +94,7 @@ namespace Muse
     bool Ray::Cast(RayHitData& a_RayHitData, const std::shared_ptr<const RenderComponent>& a_Ignore, float a_MaxDistance) const
     {
     #if MUSE_PROFILE
-        std::shared_ptr<Scene> scene = SceneManager::GetActiveScene();
+        std::shared_ptr<SceneOld> scene = SceneManagerOld::GetActiveScene();
 
         scene->IncreaseRaysSend();
     #endif

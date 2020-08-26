@@ -1,6 +1,8 @@
 #include "EditorLayer.h"
 #include "Core/Application.h"
 #include "ViewPort.h"
+#include "Editor.h"
+#include "FileBrowser.h"
 
 namespace Muse
 {
@@ -41,6 +43,18 @@ namespace Muse
 
     void EditorLayer::OnImGuiRender()
     {
+        Editor::StartDockSpace();
+
+        FileBrowser::Render();
+
         ViewPort::Render(m_Framebuffer->GetColorAttachmentRendererID());
+
+        if (CameraComponent::GetMain() != nullptr)
+        {
+            CameraComponent::GetMain()->SetProjection(ViewPort::GetAspectRatio(), CameraComponent::GetMain()->GetZoomLevel());
+        }
+
+        Editor::EndDockSpace();
+
     }
 }

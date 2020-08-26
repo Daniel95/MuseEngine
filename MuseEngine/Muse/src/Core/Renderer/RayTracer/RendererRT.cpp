@@ -4,10 +4,10 @@
 #include "Core/Renderer/Material.h"
 #include "Core/Renderer/RayTracer/GetColorParameters.h"
 #include "Core/Renderer/RayTracer/LightSource.h"
-#include "Core/Scene/SceneManager.h"
+#include "Core/Scene/SceneManagerOld.h"
 #include "Core/Renderer/RayTracer/Shape/Shape.h"
 #include "Core/Renderer/RayTracer/Ray.h"
-#include "Core/Scene/Scene.h"
+#include "Core/Scene/SceneOld.h"
 
 namespace Muse
 {
@@ -15,7 +15,7 @@ namespace Muse
     {
         if (a_GetColorParameters.Bounces <= 0)
         {
-            return SceneManager::GetActiveScene()->GetBackgroundColor();
+            return SceneManagerOld::GetActiveScene()->GetBackgroundColor();
         }
 
         const Material& material = a_GetColorParameters.GetMaterial();
@@ -74,7 +74,7 @@ namespace Muse
 
     glm::vec3 RendererRT::CalculateDiffuseColor(GetColorParameters& a_GetColorParameters)
     {
-        const std::vector<std::shared_ptr<LightSource>>& lightSources = SceneManager::GetActiveScene()->GetLightSources();
+        const std::vector<std::shared_ptr<LightSource>>& lightSources = SceneManagerOld::GetActiveScene()->GetLightSources();
 
         glm::vec3 totalDiffuse = glm::vec3(0);
         glm::vec3 normal = a_GetColorParameters.GetShape()->GetNormal(a_GetColorParameters.IntersectionPoint);
@@ -101,7 +101,7 @@ namespace Muse
 
     glm::vec3 RendererRT::CalculateSpecularColor(GetColorParameters& a_GetColorParameters)
     {
-        const std::vector<std::shared_ptr<LightSource>>& lightSources = SceneManager::GetActiveScene()->GetLightSources();
+        const std::vector<std::shared_ptr<LightSource>>& lightSources = SceneManagerOld::GetActiveScene()->GetLightSources();
 
         glm::vec3 totalSpecular = glm::vec3(0);
         glm::vec3 normal = a_GetColorParameters.GetShape()->GetNormal(a_GetColorParameters.IntersectionPoint);
@@ -128,7 +128,7 @@ namespace Muse
         glm::vec3 specularAndDiffuse = glm::vec3(0);
         glm::vec3 normal = a_GetColorParameters.GetShape()->GetNormal(a_GetColorParameters.IntersectionPoint);
 
-        const std::vector<std::shared_ptr<LightSource>>& lightSources = SceneManager::GetActiveScene()->GetLightSources();
+        const std::vector<std::shared_ptr<LightSource>>& lightSources = SceneManagerOld::GetActiveScene()->GetLightSources();
 
         Ray ray{ a_GetColorParameters.IntersectionPoint };
 
@@ -149,14 +149,14 @@ namespace Muse
             }
         }
 
-        const glm::vec3 combinedLights = specularAndDiffuse + SceneManager::GetActiveScene()->GetAmbientLight();
+        const glm::vec3 combinedLights = specularAndDiffuse + SceneManagerOld::GetActiveScene()->GetAmbientLight();
 
         return combinedLights;
     }
 
     glm::vec3 RendererRT::CalculateReflectiveColor(GetColorParameters& a_GetColorParameters)
     {
-        glm::vec3 reflectionColor = SceneManager::GetActiveScene()->GetBackgroundColor();
+        glm::vec3 reflectionColor = SceneManagerOld::GetActiveScene()->GetBackgroundColor();
 
         if (a_GetColorParameters.Bounces <= 0)
         {
@@ -185,7 +185,7 @@ namespace Muse
 
     glm::vec3 RendererRT::CalculateRefractiveColor(GetColorParameters& a_GetColorParameters)
     {
-        glm::vec3 refractionColor = SceneManager::GetActiveScene()->GetBackgroundColor();
+        glm::vec3 refractionColor = SceneManagerOld::GetActiveScene()->GetBackgroundColor();
 
         if (a_GetColorParameters.Bounces <= 0)
         {

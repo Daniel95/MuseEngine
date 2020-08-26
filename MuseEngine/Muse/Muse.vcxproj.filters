@@ -318,12 +318,6 @@
     <ClInclude Include="src\Core\Resource\ResourceTest.h">
       <Filter>src\Core\Resource</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Scene\Scene.h">
-      <Filter>src\Core\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Core\Scene\SceneManager.h">
-      <Filter>src\Core\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\System\Manager\ISystem.h">
       <Filter>src\Core\System\Manager</Filter>
     </ClInclude>
@@ -1503,6 +1497,12 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Scene\SceneOld.h">
+      <Filter>src\Core\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Core\Scene\SceneManagerOld.h">
+      <Filter>src\Core\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1658,12 +1658,6 @@
     <ClCompile Include="src\Core\Resource\ResourceTest.cpp">
       <Filter>src\Core\Resource</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\Scene\Scene.cpp">
-      <Filter>src\Core\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Scene\SceneManager.cpp">
-      <Filter>src\Core\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\System\Manager\ISystem.cpp">
       <Filter>src\Core\System\Manager</Filter>
     </ClCompile>
@@ -1729,6 +1723,12 @@
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Scene\SceneOld.cpp">
+      <Filter>src\Core\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Scene\SceneManagerOld.cpp">
+      <Filter>src\Core\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

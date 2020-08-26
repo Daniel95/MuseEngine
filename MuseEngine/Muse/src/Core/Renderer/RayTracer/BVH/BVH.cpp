@@ -5,11 +5,11 @@
 #include "Core/Renderer/RayTracer/Shape/Shape.h"
 #include "Core/Renderer/RayTracer/RayHitData.h"
 #include "Core/Renderer/RayTracer/Ray.h"
-#include "Core/Scene/Scene.h"
+#include "Core/Scene/SceneOld.h"
 
 namespace Muse
 {
-	BVH::BVH(Scene& a_Scene)
+	BVH::BVH(SceneOld& a_Scene)
 		: scene(a_Scene)
 	{
 	}

@@ -16,7 +16,7 @@ namespace Muse
 		: public BVH
 	{
 	public:
-		TopDownBVH(Scene& scenes);
+		TopDownBVH(SceneOld& scenes);
 		virtual ~TopDownBVH();
 
 		virtual void ConstructHierarchy(const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents) override;

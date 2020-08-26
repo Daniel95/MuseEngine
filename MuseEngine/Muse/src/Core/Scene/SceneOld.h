@@ -30,11 +30,11 @@ namespace Muse
     class BVH;
     class LightSource;
 
-	class Scene : public Resource
+	class SceneOld : public Resource
 	{
 	public:
-		Scene();
-        virtual ~Scene();
+		SceneOld();
+        virtual ~SceneOld();
 
         void DestroyAllGameObjects();
         std::shared_ptr<GameObject> AddGameObject();
@@ -74,8 +74,8 @@ namespace Muse
         int GetRaysHit() const { return m_RaysHit; }
         void ResetRaysHit() { m_RaysHit = 0; }
 
-        static std::shared_ptr<Scene> Create() { return std::make_shared<Scene>(); }
-        static std::shared_ptr<Scene> Load(const std::string& a_FilePath);
+        static std::shared_ptr<SceneOld> Create() { return std::make_shared<SceneOld>(); }
+        static std::shared_ptr<SceneOld> Load(const std::string& a_FilePath);
 
         template <class Archive>
         void serialize(Archive& ar)
@@ -105,7 +105,7 @@ namespace Muse
 	};
 
     template <typename T>
-    std::shared_ptr<GameObject> Scene::FindGameObjectOfType()
+    std::shared_ptr<GameObject> SceneOld::FindGameObjectOfType()
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -123,7 +123,7 @@ namespace Muse
     }
 
     template <typename T>
-    const std::vector<std::shared_ptr<GameObject>>& Scene::FindGameObjectsOfType()
+    const std::vector<std::shared_ptr<GameObject>>& SceneOld::FindGameObjectsOfType()
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -141,5 +141,5 @@ namespace Muse
     }
 }
 
-CEREAL_REGISTER_TYPE_WITH_NAME(Muse::Scene, "Scene")
-CEREAL_REGISTER_POLYMORPHIC_RELATION(Muse::Resource, Muse::Scene)
+CEREAL_REGISTER_TYPE_WITH_NAME(Muse::SceneOld, "SceneOld")
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Muse::Resource, Muse::SceneOld)

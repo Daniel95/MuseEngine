@@ -18,7 +18,7 @@
 
 namespace Muse 
 {
-    class Scene;
+    class SceneOld;
     class TransformComponentOld;
     class SystemManager;
 	class GameObject : public std::enable_shared_from_this<GameObject>
@@ -30,7 +30,7 @@ namespace Muse
         GameObject() = default;
 		virtual ~GameObject();
 
-        void Init(Scene& a_Scene);
+        void Init(SceneOld& a_Scene);
         void Update(float a_DeltaTime);
         void FixedUpdate(float a_TimeStep);
         void Enable();
@@ -46,7 +46,7 @@ namespace Muse
         std::shared_ptr<T> GetComponent() const;
         //template <class T>
         //bool TryGetComponent(std::shared_ptr<const T> a_Component) const;
-        Scene* GetScene() const { return  m_Scene; }
+        SceneOld* GetScene() const { return  m_Scene; }
         std::shared_ptr<TransformComponentOld> GetTransform() const
         {
             ASSERT_ENGINE(m_TransformComponent != nullptr, "No transform component!");
@@ -65,7 +65,7 @@ namespace Muse
         }
 	private:
         std::vector<std::shared_ptr<Component>> m_Components;
-        Scene* m_Scene = nullptr;
+        SceneOld* m_Scene = nullptr;
         bool m_Destroyed = false;
         std::shared_ptr<TransformComponentOld> m_TransformComponent = nullptr;
 

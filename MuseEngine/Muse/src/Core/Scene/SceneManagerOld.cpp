@@ -1,33 +1,33 @@
 #include "MusePCH.h"
 
-#include "Core/Scene/SceneManager.h"
+#include "Core/Scene/SceneManagerOld.h"
 #include "Core/Application.h"
 #include "Core/Resource//ResourceManager.h"
-#include "Core/Scene/Scene.h"
+#include "Core/Scene/SceneOld.h"
 #include "Core/Utilities/Log.h"
 #include "Core/Utilities/Defines.h"
 #include "Core/Window.h"
 
 namespace Muse 
 {
-    std::shared_ptr<Scene> SceneManager::m_ActiveScene = nullptr;
-    std::shared_ptr<Scene> SceneManager::m_SceneToSwitchTo = nullptr;
+    std::shared_ptr<SceneOld> SceneManagerOld::m_ActiveScene = nullptr;
+    std::shared_ptr<SceneOld> SceneManagerOld::m_SceneToSwitchTo = nullptr;
 
-    SceneManager::SceneManager()
+    SceneManagerOld::SceneManagerOld()
     {
         MUSE_PROFILE_FUNCTION();
 
-        Application::Get().m_UpdateEvent.Subscribe(SUB_FN(SceneManager::OnUpdate, std::placeholders::_1));
+        Application::Get().m_UpdateEvent.Subscribe(SUB_FN(SceneManagerOld::OnUpdate, std::placeholders::_1));
     }
 
-    SceneManager::~SceneManager()
+    SceneManagerOld::~SceneManagerOld()
     {
         MUSE_PROFILE_FUNCTION();
 
         Application::Get().m_UpdateEvent.Unsubscribe(this);
     }
 
-    void SceneManager::OnUpdate(float a_DeltaTime)
+    void SceneManagerOld::OnUpdate(float a_DeltaTime)
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -43,29 +43,29 @@ namespace Muse
         }
     }
 
-    void SceneManager::SwitchScene(std::shared_ptr<Scene> a_NextScene)
+    void SceneManagerOld::SwitchScene(std::shared_ptr<SceneOld> a_NextScene)
     {
         if (m_ActiveScene != nullptr)
         {
-            ResourceManager::UnloadResource<Scene>(m_ActiveScene->GetPath());
+            ResourceManager::UnloadResource<SceneOld>(m_ActiveScene->GetPath());
         }
 
         m_SceneToSwitchTo = a_NextScene;
     }
 
-    void SceneManager::SwitchScene(const std::string& a_SceneName)
+    void SceneManagerOld::SwitchScene(const std::string& a_SceneName)
     {
-        const std::shared_ptr<Scene> scene = ResourceManager::Get<Scene>(a_SceneName);
+        const std::shared_ptr<SceneOld> scene = ResourceManager::Get<SceneOld>(a_SceneName);
 
         if (m_ActiveScene != nullptr)
         {
-            ResourceManager::UnloadResource<Scene>(m_ActiveScene->GetPath());
+            ResourceManager::UnloadResource<SceneOld>(m_ActiveScene->GetPath());
         }
 
         m_SceneToSwitchTo = scene;
     }
 
-    void SceneManager::ReloadScene()
+    void SceneManagerOld::ReloadScene()
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -74,14 +74,14 @@ namespace Muse
         m_SceneToSwitchTo = m_ActiveScene;
     }
 
-    std::shared_ptr<Scene> SceneManager::GetActiveScene()
+    std::shared_ptr<SceneOld> SceneManagerOld::GetActiveScene()
     {
         MUSE_PROFILE_FUNCTION();
 
         return m_ActiveScene;
     }
 
-    void SceneManager::DestroyAllGameObjects()
+    void SceneManagerOld::DestroyAllGameObjects()
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -91,14 +91,14 @@ namespace Muse
         }
     }
 
-    void SceneManager::SwitchSceneImmediate(std::shared_ptr<Scene> a_NextScene)
+    void SceneManagerOld::SwitchSceneImmediate(std::shared_ptr<SceneOld> a_NextScene)
     {
         MUSE_PROFILE_FUNCTION();
 
         if (m_ActiveScene != nullptr)
         {
             const std::string oldScenePath = GAME_SCENE_PATH + m_ActiveScene->GetName() + ".txt";
-            ResourceManager::UnloadResource<Scene>(oldScenePath);
+            ResourceManager::UnloadResource<SceneOld>(oldScenePath);
         }
 
         m_ActiveScene = a_NextScene;

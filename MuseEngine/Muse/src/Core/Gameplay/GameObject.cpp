@@ -2,7 +2,7 @@
 
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Gameplay/Component/TransformComponentOld.h"
-#include "Core/Scene/Scene.h"
+#include "Core/Scene/SceneOld.h"
 #include "Core/Instrumentor.h"
 
 #include <cereal/archives/json.hpp>
@@ -21,7 +21,7 @@ namespace Muse
         }
     }
 
-    void GameObject::Init(Scene& a_Scene)
+    void GameObject::Init(SceneOld& a_Scene)
     {
         MUSE_PROFILE_FUNCTION();
 

@@ -7,7 +7,7 @@ namespace Muse
 {
     class RenderComponent;
     class BoundingVolume;
-	class Scene;
+	class SceneOld;
 	struct Ray;
 	class RayHitData;
 	class GameObject;
@@ -15,7 +15,7 @@ namespace Muse
 	class BVH
 	{
 	public:
-		BVH(Scene& a_Scene);
+		BVH(SceneOld& a_Scene);
 		virtual ~BVH() = default;
 
 		virtual void ConstructHierarchy(const std::vector<std::shared_ptr<RenderComponent>>& a_RenderComponents) = 0;
@@ -26,7 +26,7 @@ namespace Muse
 		void PrintBoundingVolume(const BoundingVolume& a_BoundingVolume, int a_Layer, int& a_Total) const;
 
 	protected:
-		Scene& scene;
+		SceneOld& scene;
 		std::vector<BoundingVolume*> boundingVolumes;
 
 	};
