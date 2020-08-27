@@ -5,11 +5,7 @@
 
 namespace Muse
 {
-	int ViewPort::m_Width = 1280;
-	int ViewPort::m_Height = 720;
-	float ViewPort::m_AspectRatio = 1.6f;
-
-	void ViewPort::Render(uint32_t a_ColorAttachmentRendererId)
+	void ViewPort::Render(uint32_t a_ColorAttachmentRendererId, glm::vec2& a_ViewPortSize, float& a_AspectRatio)
 	{
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 		ImGui::Begin("Viewport");
@@ -25,13 +21,11 @@ namespace Muse
 
 		auto viewportSize = ImGui::GetContentRegionAvail();
 
-		m_Width = viewportSize.x;
-		m_Height = viewportSize.y;
-		m_AspectRatio = viewportSize.x / viewportSize.y;
+		a_ViewPortSize = { viewportSize.x, viewportSize.y };
+		a_AspectRatio = viewportSize.x / viewportSize.y;
 
 		ImGui::Image((void*)a_ColorAttachmentRendererId, viewportSize, { 0, 1 }, { 1, 0 });
 		ImGui::End();
 		ImGui::PopStyleVar();
 	}
-
 }

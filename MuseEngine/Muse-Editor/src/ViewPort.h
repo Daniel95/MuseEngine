@@ -5,16 +5,7 @@ namespace Muse
     class ViewPort
     {
     public:
-        static void Render(uint32_t a_ColorAttachmentRendererId);
-
-        static int GetWidth() { return m_Width; }
-        static int GetHeight() { return m_Height; }
-        static float GetAspectRatio() { return m_AspectRatio;  }
-
-    private:
-        static int m_Width;
-        static int m_Height;
-        static float m_AspectRatio;
+        static void Render(uint32_t a_ColorAttachmentRendererId, glm::vec2& a_ViewPortSize, float& a_AspectRatio);
 
     };
 }

@@ -196,12 +196,12 @@ namespace Muse
 
         //m_ViewportFramebuffer->Bind();
 
-        Muse::Renderer2D::BeginScene(*Muse::CameraComponent::GetMain());
-        m_JobManager->Update(JobType::Renderer);
+        //Muse::Renderer2D::BeginScene(*Muse::CameraComponent::GetMain());
+        //m_JobManager->Update(JobType::Renderer);
 
-        OnRender();
+        //OnRender();
 
-        Muse::Renderer2D::EndScene();
+        //Muse::Renderer2D::EndScene();
 
         //m_ViewportFramebuffer->Unbind();
     }

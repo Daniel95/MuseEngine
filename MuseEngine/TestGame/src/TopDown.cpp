@@ -39,9 +39,9 @@ void TopDown::OnStart()
     Muse::RenderCommand::Init();
     Muse::Renderer2D::Init();
 
-    std::shared_ptr<Muse::Scene> scene = Muse::Scene::Create();
+    std::shared_ptr<Muse::SceneOld> scene = Muse::SceneOld::Create();
     Muse::ResourceManager::Add("Game2DTestScene", scene);
-    Muse::SceneManager::SwitchScene(scene);
+    Muse::SceneManagerOld::SwitchScene(scene);
 
     Muse::CameraComponent* cameraComponent = Muse::CameraComponent::GetMain();
     cameraComponent->SetZoomLevel(5);
@@ -59,6 +59,9 @@ void TopDown::OnStart()
 
 void TopDown::OnRender()
 {
+    Muse::Renderer2D::BeginScene(*Muse::CameraComponent::GetMain());
+
+
     Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
     Muse::RenderCommand::Clear();
 
@@ -80,6 +83,9 @@ void TopDown::OnRender()
     Muse::Renderer2D::DrawQuad({ 0, 0, 0 }, { 1, 2 }, 0, m_TreeTexture);
 
     Muse::Renderer2D::ResetStatistics();
+
+    Muse::Renderer2D::EndScene();
+
 }
 
 void TopDown::OnImGuiRender()
