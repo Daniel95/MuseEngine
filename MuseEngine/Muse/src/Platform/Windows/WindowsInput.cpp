@@ -1,14 +1,12 @@
 #include "MusePCH.h"
-#include "WindowsInput.h"
+#include "Core/Input/Input.h"
 #include "Core/Application.h"
 #include "GLFW/glfw3.h"
 #include "Core/Window.h"
 
 namespace Muse
 {
-    Input* Input::s_Instance = new WindowsInput();
-
-    bool WindowsInput::GetKeyDownImpl(int a_Keycode) const
+    bool Input::GetKeyDown(int a_Keycode)
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -17,7 +15,7 @@ namespace Muse
         return state == static_cast<const int>(GLFW_PRESS || GLFW_REPEAT);
     }
 
-    bool WindowsInput::GetMouseButtonDownImpl(int a_Button) const
+    bool Input::GetMouseButtonDown(int a_Button)
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -26,7 +24,7 @@ namespace Muse
         return state == GLFW_PRESS;
     }
 
-    glm::vec2 WindowsInput::GetMousePositionImpl() const
+    glm::vec2 Input::GetMousePosition()
     {
         MUSE_PROFILE_FUNCTION();
 
@@ -37,19 +35,19 @@ namespace Muse
         return glm::vec2(xPos, yPos);
     }
 
-    float WindowsInput::GetMouseXImpl() const
+    float Input::GetMouseX()
     {
         MUSE_PROFILE_FUNCTION();
 
-        glm::vec2 mousePosition = GetMousePositionImpl();
+        glm::vec2 mousePosition = GetMousePosition();
         return mousePosition.x;
     }
 
-    float WindowsInput::GetMouseYImpl() const
+    float Input::GetMouseY()
     {
         MUSE_PROFILE_FUNCTION();
 
-        glm::vec2 mousePosition = GetMousePositionImpl();
+        glm::vec2 mousePosition = GetMousePosition();
         return mousePosition.y;
     }
 }
