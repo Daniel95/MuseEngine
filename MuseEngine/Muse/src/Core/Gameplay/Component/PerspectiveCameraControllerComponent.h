@@ -8,7 +8,7 @@
 #include <cereal/types/polymorphic.hpp>
 namespace Muse
 {
-    class CameraComponent;
+    class CameraComponentOld;
 
     class PerspectiveCameraControllerComponent : public Component
     {
@@ -39,7 +39,7 @@ namespace Muse
         float m_BaseRotateSpeed = 0.2f;
         float m_ZoomSpeed = 0.1f;
         float m_MinZoomLevel = 0.1f;
-        std::shared_ptr<CameraComponent> m_CameraComponent = nullptr;
+        std::shared_ptr<CameraComponentOld> m_CameraComponent = nullptr;
 
         void OnMouseScrolledEvent(float a_XOffset, float a_YOffset) const;
         void OnWindowResizeEvent(int a_Width, int a_Height) const;

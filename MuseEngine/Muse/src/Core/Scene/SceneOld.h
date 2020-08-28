@@ -24,7 +24,7 @@ namespace Muse
     class Component;
     class GameObject;
     class TransformComponentOld;
-    class CameraComponent;
+    class CameraComponentOld;
     class Application;
     class AmbientLightSource;
     class BVH;

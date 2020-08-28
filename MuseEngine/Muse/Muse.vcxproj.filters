@@ -177,9 +177,6 @@
     <ClInclude Include="src\Core\Event\MouseEvent.h">
       <Filter>src\Core\Event</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\Gameplay\Component\CameraComponent.h">
-      <Filter>src\Core\Gameplay\Component</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\Gameplay\Component\Component.h">
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClInclude>
@@ -1500,6 +1497,9 @@
     <ClInclude Include="src\Core\Scene\SceneManagerOld.h">
       <Filter>src\Core\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\Gameplay\Component\CameraComponentOld.h">
+      <Filter>src\Core\Gameplay\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1528,9 +1528,6 @@
     </ClCompile>
     <ClCompile Include="src\Core\ECS\Job\Render2DJob.cpp">
       <Filter>src\Core\ECS\Job</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Core\Gameplay\Component\CameraComponent.cpp">
-      <Filter>src\Core\Gameplay\Component</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Gameplay\Component\Component.cpp">
       <Filter>src\Core\Gameplay\Component</Filter>
@@ -1726,6 +1723,9 @@
     </ClCompile>
     <ClCompile Include="src\Core\Scene\SceneManagerOld.cpp">
       <Filter>src\Core\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Core\Gameplay\Component\CameraComponentOld.cpp">
+      <Filter>src\Core\Gameplay\Component</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

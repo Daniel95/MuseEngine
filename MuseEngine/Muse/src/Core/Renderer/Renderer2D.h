@@ -6,7 +6,6 @@
 
 namespace Muse
 {
-    class CameraComponent;
     class Texture2D;
     class SubTexture2D;
     class VertexArray;
@@ -62,7 +61,7 @@ namespace Muse
         static void Init();
         static void ShutDown();
 
-        static void BeginScene(const CameraComponent& a_OrthographicCamera);
+        static void BeginScene(const glm::mat4& a_ViewProjectionMatrix);
         static void EndScene();
         static void Flush();
 

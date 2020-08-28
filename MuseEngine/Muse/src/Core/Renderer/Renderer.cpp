@@ -2,7 +2,6 @@
 #include "Renderer.h"
 #include "RenderCommand.h"
 #include "Shader.h"
-#include "Core/Gameplay/Component/CameraComponent.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 #include "Core/Instrumentor.h"
 
@@ -24,11 +23,11 @@ namespace Muse
         RenderCommand::SetViewport(0, 0, a_Width, a_Height);
     }
 
-    void Renderer::BeginScene(const CameraComponent& a_Camera)
+    void Renderer::BeginScene(const glm::mat4& a_ViewProjectionMatrix)
     {
         MUSE_PROFILE_FUNCTION();
 
-        s_SceneData->ViewProjectionMatrix = a_Camera.GetViewProjectionMatrix();
+        s_SceneData->ViewProjectionMatrix = a_ViewProjectionMatrix;
     }
 
     void Renderer::EndScene()

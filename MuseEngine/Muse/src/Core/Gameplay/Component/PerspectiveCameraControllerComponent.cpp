@@ -5,7 +5,7 @@
 #include "TransformComponentOld.h"
 #include "Core/Application.h"
 #include "Core/Window.h"
-#include "CameraComponent.h"
+#include "CameraComponentOld.h"
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Utilities/Defines.h"
 
@@ -31,7 +31,7 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        m_CameraComponent = GetGameObject()->GetComponent<CameraComponent>();
+        m_CameraComponent = GetGameObject()->GetComponent<CameraComponentOld>();
 
         ASSERT_ENGINE(m_CameraComponent != nullptr, "CameraComponent on PerspectiveCameraControllerComponent GameObject is missing!");
 

@@ -21,6 +21,9 @@ namespace Muse
         template <typename T1, typename T2>
         void Run(const std::function<void(int, T1&, T2&)>& a_Func);
 
+        template <typename T1, typename T2, typename T3>
+        void Run(const std::function<void(int, T1&, T2&, T3&)>& a_Func);
+
         template <typename T1, typename T2>
         void RunCollision(const std::function<void(int, T1&, T2&)>& a_Func1, const std::function<void(int, T1&, T2&)>& a_Func2);
 
@@ -42,6 +45,17 @@ namespace Muse
         for (auto entity : entitiesWithComponents)
         {
             a_Func(entity, ComponentManager<T1>::Get(entity), ComponentManager<T2>::Get(entity));
+        }
+    }
+
+    template <typename T1, typename T2, typename T3>
+    void Job::Run(const std::function<void(int, T1&, T2&, T3&)>& a_Func)
+    {
+        const std::vector<int> entitiesWithComponents = ComponentHelper::GetEntitiesWith<T1, T2, T3>();
+
+        for (auto entity : entitiesWithComponents)
+        {
+            a_Func(entity, ComponentManager<T1>::Get(entity), ComponentManager<T2>::Get(entity), ComponentManager<T3>::Get(entity));
         }
     }
 

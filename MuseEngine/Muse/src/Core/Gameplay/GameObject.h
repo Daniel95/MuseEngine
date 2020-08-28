@@ -2,7 +2,7 @@
 
 #include "Core/Gameplay/Component/Component.h"
 #include "Core/Gameplay/Component/TransformComponentOld.h"
-#include "Core/Gameplay/Component/CameraComponent.h"
+#include "Core/Gameplay/Component/CameraComponentOld.h"
 
 #include "Core/Utilities/Log.h"
 #include "Core/Utilities/Defines.h"
@@ -21,6 +21,7 @@ namespace Muse
     class SceneOld;
     class TransformComponentOld;
     class SystemManager;
+
 	class GameObject : public std::enable_shared_from_this<GameObject>
 	{
         RTTR_ENABLE()

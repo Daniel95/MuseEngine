@@ -3,6 +3,9 @@
 #include "ViewPort.h"
 #include "Editor.h"
 #include "FileBrowser.h"
+#include "Camera/CameraJob.h"
+#include <Camera\CameraComponent.h>
+#include <Camera\OrthographicEditorCameraControllerComponent.h>
 
 namespace Muse
 {
@@ -33,7 +36,11 @@ namespace Muse
         m_Framebuffer = FrameBuffer::Create(frameBufferSpecification);
 
 
+        auto entity = Entity::Create();
 
+        ComponentManager<TransformComponent>::Add(entity, {});
+        ComponentManager<CameraComponent>::Add(entity, {});
+        ComponentManager<OrthographicEditorCameraControllerComponent>::Add(entity, {});
 
         Muse::RenderCommand::Init();
         Muse::Renderer2D::Init();
@@ -42,7 +49,7 @@ namespace Muse
         Muse::ResourceManager::Add("Game2DTestScene", scene);
         Muse::SceneManagerOld::SwitchScene(scene);
 
-        Muse::CameraComponent* cameraComponent = Muse::CameraComponent::GetMain();
+        Muse::CameraComponentOld* cameraComponent = Muse::CameraComponentOld::GetMain();
         cameraComponent->SetZoomLevel(5);
 
         m_SpriteSheet = Muse::ResourceManager::Load<Muse::Texture2D>("assets/topdown/kenneyrpgpack/Spritesheet/RPGpack_sheet_2X.png");
@@ -54,6 +61,8 @@ namespace Muse
 
         m_MapWidth = s_MapWidth;
         m_MapHeight = strlen(s_MapTiles) / s_MapWidth;
+
+        Application::Get().GetJobManager()->Add<CameraJob>(Muse::JobType::Gameplay);
     }
 
     void EditorLayer::OnDetach()
@@ -63,6 +72,7 @@ namespace Muse
 
     void EditorLayer::OnUpdate(float deltaTime)
     {
+        //Resize Framebuffer:
         if (FrameBufferProperties spec = m_Framebuffer->GetProperties();
             m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized framebuffer is invalid
             (spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
@@ -70,9 +80,12 @@ namespace Muse
             m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
         }
 
+        //Rendering:
         m_Framebuffer->Bind();
 
-        Muse::Renderer2D::BeginScene(*Muse::CameraComponent::GetMain());
+
+
+        Muse::Renderer2D::BeginScene(Muse::CameraComponentOld::GetMain()->GetViewMatrix());
 
         Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
         Muse::RenderCommand::Clear();
@@ -107,9 +120,9 @@ namespace Muse
 
         ViewPort::Render(m_Framebuffer->GetColorAttachmentRendererID(), m_ViewportSize, m_AspectRatio);
 
-        if (CameraComponent::GetMain() != nullptr)
+        if (CameraComponentOld::GetMain() != nullptr)
         {
-            CameraComponent::GetMain()->SetProjection(m_AspectRatio, CameraComponent::GetMain()->GetZoomLevel());
+            CameraComponentOld::GetMain()->SetProjection(m_AspectRatio, CameraComponentOld::GetMain()->GetZoomLevel());
         }
 
         Editor::EndDockSpace();

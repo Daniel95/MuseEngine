@@ -4,7 +4,7 @@
 #include "Core/Application.h"
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Gameplay/Component/TransformComponentOld.h"
-#include "Core/Gameplay/Component/CameraComponent.h"
+#include "Core/Gameplay/Component/CameraComponentOld.h"
 #include "Core/Gameplay/Component/Component.h"
 
 #include "Core/Utilities/json/from_json.h"
@@ -222,7 +222,7 @@ namespace Muse
         std::shared_ptr<GameObject> editorCameraGameObject = nullptr;
         for (const auto gameObject : m_GameObjects)
         {
-            std::shared_ptr<CameraComponent> camera = gameObject->GetComponent<CameraComponent>();
+            std::shared_ptr<CameraComponentOld> camera = gameObject->GetComponent<CameraComponentOld>();
 
             if (camera != nullptr
                 && camera->IsEditorCamera())
@@ -252,7 +252,7 @@ namespace Muse
         ASSERT_ENGINE(GetEditorCamera() == nullptr, "EditorCamera already exists!");
         std::shared_ptr<GameObject> gameObject = AddGameObject();
 
-        gameObject->AddComponent<CameraComponent>()->MakeEditorCamera();
+        gameObject->AddComponent<CameraComponentOld>()->MakeEditorCamera();
         //gameObject->AddComponent<PerspectiveCameraControllerComponent>();
         //gameObject->AddComponent<OrthographicCameraControllerComponent>();
 

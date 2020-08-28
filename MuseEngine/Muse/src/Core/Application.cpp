@@ -22,7 +22,6 @@
 #include "GLFW/glfw3.h"
 #include "imgui.h"
 #include "glad/glad.h"
-#include "Gameplay/Component/CameraComponent.h"
 #include "Renderer/RenderCommand.h"
 #include "Utilities/HardCodedMesh.h"
 //#include "Editor/ViewPort.h"

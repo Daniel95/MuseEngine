@@ -170,7 +170,7 @@
     <ClInclude Include="src\Core\Event\Event.h" />
     <ClInclude Include="src\Core\Event\KeyEvent.h" />
     <ClInclude Include="src\Core\Event\MouseEvent.h" />
-    <ClInclude Include="src\Core\Gameplay\Component\CameraComponent.h" />
+    <ClInclude Include="src\Core\Gameplay\Component\CameraComponentOld.h" />
     <ClInclude Include="src\Core\Gameplay\Component\Component.h" />
     <ClInclude Include="src\Core\Gameplay\Component\OrthographicCameraControllerComponent.h" />
     <ClInclude Include="src\Core\Gameplay\Component\PerspectiveCameraControllerComponent.h" />
@@ -622,7 +622,7 @@
     <ClCompile Include="src\Core\ECS\Entity\EntityTracker.cpp" />
     <ClCompile Include="src\Core\ECS\Job\JobManager.cpp" />
     <ClCompile Include="src\Core\ECS\Job\Render2DJob.cpp" />
-    <ClCompile Include="src\Core\Gameplay\Component\CameraComponent.cpp" />
+    <ClCompile Include="src\Core\Gameplay\Component\CameraComponentOld.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\Component.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\OrthographicCameraControllerComponent.cpp" />
     <ClCompile Include="src\Core\Gameplay\Component\PerspectiveCameraControllerComponent.cpp" />

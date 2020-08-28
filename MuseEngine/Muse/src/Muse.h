@@ -9,7 +9,7 @@
 //Gameplay
 #include "Core/Gameplay/GameObject.h"
 #include "Core/Gameplay/Component/TransformComponentOld.h"
-#include "Core/Gameplay/Component/CameraComponent.h"
+#include "Core/Gameplay/Component/CameraComponentOld.h"
 #include "Core/Gameplay/Component/RenderComponent.h"
 
 //Input

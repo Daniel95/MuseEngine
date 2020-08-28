@@ -10,14 +10,14 @@
 
 namespace Muse
 {
-    class CameraComponent : public Component
+    class CameraComponentOld : public Component
     {
         RTTR_ENABLE(Component)
         RTTR_REGISTRATION_FRIEND
 
     public:
-        CameraComponent();
-        virtual ~CameraComponent() = default;
+        CameraComponentOld();
+        virtual ~CameraComponentOld() = default;
 
         void MakeEditorCamera() { m_IsEditorCamera = true; }
         bool IsEditorCamera() const { return m_IsEditorCamera; }
@@ -35,7 +35,7 @@ namespace Muse
         void SetProjectionMatrix(float a_Left, float a_Right, float a_Bottom, float a_Top, float a_Near = -1.0, float a_Far = 1.0);
         void SetProjectionMatrix(const glm::mat4& a_ProjectionMatrix);
 
-        static CameraComponent* GetMain() { return s_MainCamera; }
+        static CameraComponentOld* GetMain() { return s_MainCamera; }
 
         template <class Archive>
         void serialize(Archive& ar)
@@ -62,11 +62,11 @@ namespace Muse
         bool m_IsEditorCamera = false;
         float m_ZoomLevel = 1.0f;
 
-        static CameraComponent* s_MainCamera;
+        static CameraComponentOld* s_MainCamera;
         void RecalculateViewMatrix();
 
     };
 }
 
-CEREAL_REGISTER_TYPE_WITH_NAME(Muse::CameraComponent, "CameraComponent")
-CEREAL_REGISTER_POLYMORPHIC_RELATION(Muse::Component, Muse::CameraComponent)
+CEREAL_REGISTER_TYPE_WITH_NAME(Muse::CameraComponentOld, "CameraComponentOld")
+CEREAL_REGISTER_POLYMORPHIC_RELATION(Muse::Component, Muse::CameraComponentOld)

@@ -1,7 +1,6 @@
 ﻿#include "MusePCH.h"
 #include "Renderer2D.h"
 
-#include "Core/Gameplay/Component/CameraComponent.h"
 #include "VertexArray.h"
 #include "Shader.h"
 #include "Buffer/BufferLayout.h"
@@ -10,6 +9,7 @@
 
 #include "Core/Resource/ResourceManager.h"
 #include "RenderCommand.h"
+#include "../../Muse-Editor/src/Camera/CameraHelper.h"
 
 namespace Muse
 {
@@ -88,13 +88,13 @@ namespace Muse
         MUSE_PROFILE_FUNCTION();
     }
 
-    void Renderer2D::BeginScene(const CameraComponent& a_OrthographicCamera)
+    void Renderer2D::BeginScene(const glm::mat4& a_ViewProjectionMatrix)
     {
         MUSE_PROFILE_FUNCTION();
 
         // Update camera in shader
         s_Data.ColoredTextureShader->Bind();
-        s_Data.ColoredTextureShader->SetMat4("u_ViewProjection", a_OrthographicCamera.GetViewProjectionMatrix());
+        s_Data.ColoredTextureShader->SetMat4("u_ViewProjection", a_ViewProjectionMatrix);
 
         Reset();
     }

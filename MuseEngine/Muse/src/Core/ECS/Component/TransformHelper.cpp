@@ -13,6 +13,14 @@ namespace Muse
 		a_TransformComponent.localPosition = a_Position;
 	}
 
+    void TransformHelper::SetLocalPosition(TransformComponent& a_TransformComponent, const glm::vec2& a_Position)
+    {
+        MUSE_PROFILE_FUNCTION();
+
+        a_TransformComponent.dirty = true;
+        a_TransformComponent.localPosition = glm::vec3(a_Position.x, a_Position.y, a_TransformComponent.localPosition.z);
+    }
+
 	void TransformHelper::TranslateLocal(TransformComponent& a_TransformComponent, const glm::vec3& a_Movement)
 	{
 		MUSE_PROFILE_FUNCTION();
@@ -20,6 +28,14 @@ namespace Muse
 		a_TransformComponent.dirty = true;
 		a_TransformComponent.localPosition += a_Movement;
 	}
+
+    void TransformHelper::TranslateLocal(TransformComponent& a_TransformComponent, const glm::vec2& a_Movement)
+    {
+        MUSE_PROFILE_FUNCTION();
+
+        a_TransformComponent.dirty = true;
+        a_TransformComponent.localPosition += glm::vec3(a_Movement.x, a_Movement.y, 0);
+    }
 
 	void TransformHelper::SetLocalScale(TransformComponent& a_TransformComponent, const glm::vec3& a_Scale)
 	{

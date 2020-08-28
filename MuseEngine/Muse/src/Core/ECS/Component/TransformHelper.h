@@ -11,7 +11,6 @@
 #include <glm/gtx/quaternion.hpp>
 #undef countof
 
-
 namespace Muse
 {
 	struct TransformComponent;
@@ -19,8 +18,10 @@ namespace Muse
 	class TransformHelper
 	{
 	public:
-		static void SetLocalPosition(TransformComponent& a_TransformComponent, const glm::vec3& a_Position);
-		static void TranslateLocal(TransformComponent& a_TransformComponent, const glm::vec3& a_Movement);
+        static void SetLocalPosition(TransformComponent& a_TransformComponent, const glm::vec3& a_Position);
+        static void SetLocalPosition(TransformComponent& a_TransformComponent, const glm::vec2& a_Position);
+        static void TranslateLocal(TransformComponent& a_TransformComponent, const glm::vec3& a_Movement);
+        static void TranslateLocal(TransformComponent& a_TransformComponent, const glm::vec2& a_Movement);
 
 		static void SetLocalScale(TransformComponent& a_TransformComponent, const glm::vec3& a_Scale);
 		static void ScaleLocal(TransformComponent& a_TransformComponent, const glm::vec3& a_Scaling);
