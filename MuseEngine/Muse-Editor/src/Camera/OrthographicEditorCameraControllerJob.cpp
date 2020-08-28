@@ -1,7 +1,6 @@
 #include "OrthographicEditorCameraControllerJob.h"
 #include "OrthographicEditorCameraControllerComponent.h"
 #include "CameraComponent.h"
-#include "CameraHelper.h"
 #include "Core/Input/KeyCodes.h"
 #include "Core/Input/Input.h"
 #include "Core/ECS/Component/TransformHelper.h"
@@ -19,24 +18,32 @@ namespace Muse
             OrthographicEditorCameraControllerComponent& orthographicCameraControllerComponent
             )
         {
-            const float moveSpeed = orthographicCameraControllerComponent.speed * deltaTime * cameraComponent.GetZoomLevel();
+            float zoomLevel = cameraComponent.GetZoomLevel() - (Input::GetMouseScrollDelta() * orthographicCameraControllerComponent.m_ScrollSpeed);
+            LOG_ENGINE_INFO(zoomLevel);
+            zoomLevel = std::min(std::max(zoomLevel, orthographicCameraControllerComponent.m_MinZoomLevel), orthographicCameraControllerComponent.m_MaxZoomLevel);
+            cameraComponent.SetZoomLevel(zoomLevel);
 
-            if (Input::GetKeyDown(MUSE_KEY_A))
-            {
-                TransformHelper::TranslateLocal(transformComponent, glm::vec2(-moveSpeed, 0.0f));
-            }
-            else if (Input::GetKeyDown(MUSE_KEY_D))
-            {
-                TransformHelper::TranslateLocal(transformComponent, glm::vec2(moveSpeed, 0.0f));
-            }
+            if (Input::GetMouseButtonDown(1)) 
+            { 
+                const float moveSpeed = orthographicCameraControllerComponent.m_MoveSpeed * deltaTime * cameraComponent.GetZoomLevel();
 
-            if (Input::GetKeyDown(MUSE_KEY_S))
-            {
-                TransformHelper::TranslateLocal(transformComponent, glm::vec2(0.0f, -moveSpeed));
-            }
-            else if (Input::GetKeyDown(MUSE_KEY_W))
-            {
-                TransformHelper::TranslateLocal(transformComponent, glm::vec2(0.0f, moveSpeed));
+                if (Input::GetKeyDown(MUSE_KEY_A))
+                {
+                    TransformHelper::TranslateLocal(transformComponent, glm::vec2(-moveSpeed, 0.0f));
+                }
+                else if (Input::GetKeyDown(MUSE_KEY_D))
+                {
+                    TransformHelper::TranslateLocal(transformComponent, glm::vec2(moveSpeed, 0.0f));
+                }
+
+                if (Input::GetKeyDown(MUSE_KEY_S))
+                {
+                    TransformHelper::TranslateLocal(transformComponent, glm::vec2(0.0f, -moveSpeed));
+                }
+                else if (Input::GetKeyDown(MUSE_KEY_W))
+                {
+                    TransformHelper::TranslateLocal(transformComponent, glm::vec2(0.0f, moveSpeed));
+                }
             }
         };
 

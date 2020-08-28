@@ -16,7 +16,10 @@ namespace Muse
 
         void Begin();
         void End();
+
+        void SetBlockEvents(bool block) { m_BlockEvents = block; }
     private:
+        bool m_BlockEvents = true;
         float m_Time;
     };
 }

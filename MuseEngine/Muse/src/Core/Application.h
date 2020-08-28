@@ -16,6 +16,7 @@ namespace Muse
     class ImGuiLayer;
     class Window;
     class FrameBuffer;
+    class Input;
 
 	class Application
 	{
@@ -29,6 +30,8 @@ namespace Muse
         std::shared_ptr<FrameBuffer> GetViewport() const { return m_ViewportFramebuffer; }
         float GetDeltaTime() const { return m_DeltaTime; }
         std::shared_ptr<JobManager> GetJobManager() const { return m_JobManager; }
+
+        ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; }
 
         void Run();
         void Update();
@@ -82,6 +85,7 @@ namespace Muse
         std::shared_ptr<FrameBuffer> m_ViewportFramebuffer;
         std::shared_ptr<JobManager> m_JobManager;
         float m_DeltaTime = 0;
+        std::shared_ptr<Input> m_Input;
 
         ImGuiLayer* m_ImGuiLayer;
         LayerStack m_LayerStack;

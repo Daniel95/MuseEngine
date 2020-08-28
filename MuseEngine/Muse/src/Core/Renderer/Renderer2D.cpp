@@ -9,7 +9,9 @@
 
 #include "Core/Resource/ResourceManager.h"
 #include "RenderCommand.h"
-#include "../../Muse-Editor/src/Camera/CameraHelper.h"
+
+#include "glm/glm.hpp"
+#include "glm/ext/matrix_transform.hpp"
 
 namespace Muse
 {

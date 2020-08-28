@@ -3,11 +3,10 @@
 #include "ViewPort.h"
 #include "Editor.h"
 #include "FileBrowser.h"
-#include "Camera/CameraJob.h"
-#include <Camera\CameraComponent.h>
-#include <Camera\OrthographicEditorCameraControllerComponent.h>
+#include "Camera/CameraComponent.h"
+#include "Camera\OrthographicEditorCameraControllerComponent.h"
 #include "Camera/OrthographicEditorCameraControllerJob.h"
-#include "Camera/CameraHelper.h"
+#include "imgui.h"
 
 namespace Muse
 {
@@ -21,11 +20,6 @@ namespace Muse
         "WWWWWWDDWWWWWWWWDWWWWWWW"
         "WWWWWWWWDDDDDDDWWWWWWWWW"
         "WWWWWWWWWWDDDWWWWWWWWWWW";
-
-    EditorLayer::EditorLayer()
-    {
-
-    }
 
     void EditorLayer::OnAttach()
     {
@@ -70,7 +64,6 @@ namespace Muse
         m_MapWidth = s_MapWidth;
         m_MapHeight = strlen(s_MapTiles) / s_MapWidth;
 
-        //Application::Get().GetJobManager()->Add<CameraJob>(Muse::JobType::Gameplay);
         Application::Get().GetJobManager()->Add<OrthographicEditorCameraControllerJob>(Muse::JobType::Gameplay);
     }
 
@@ -128,6 +121,8 @@ namespace Muse
         FileBrowser::Render();
 
         ViewPort::Render(m_Framebuffer->GetColorAttachmentRendererID(), m_ViewportSize, m_AspectRatio);
+
+        m_ViewportFocused = ImGui::IsWindowFocused();
 
         if (CameraComponentOld::GetMain() != nullptr)
         {

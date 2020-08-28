@@ -15,7 +15,6 @@
 #include "Core/ECS/Entity/EntityDebugger.h"
 #include "Core/Renderer/Renderer2D.h"
 #include "Core/ECS/Component/ComponentManager.h"
-//#include "Core/ECS/Component/Render2DComponent.h"
 #include "Core/ECS/Component/TransformComponent.h"
 #include "Core/ECS/Component/Collider2DComponent.h"
 
@@ -24,9 +23,8 @@
 #include "glad/glad.h"
 #include "Renderer/RenderCommand.h"
 #include "Utilities/HardCodedMesh.h"
-//#include "Editor/ViewPort.h"
-//#include "Editor/Editor.h"
-//#include "Editor/FileBrowser.h"
+#include "Input/Input.h"
+
 
 namespace Muse
 {
@@ -41,29 +39,40 @@ namespace Muse
         ASSERT_ENGINE(!s_Instance, "A instance of Application already exists!");
         s_Instance = this;
 
-        WindowProperties windowProperties;
-        windowProperties.Width = 1280;
-        windowProperties.Height = 720;
-        windowProperties.Title = a_Name;
-        m_Window = Window::Create(windowProperties);
+        //Create Window
+        {
+            WindowProperties windowProperties;
+            windowProperties.Width = 1280;
+            windowProperties.Height = 720;
+            windowProperties.Title = a_Name;
+            m_Window = Window::Create(windowProperties);
+        }
 
-        m_Window->WindowCloseEvent.Subscribe(SUB_FN(Application::WindowCloseEvent));
-        m_Window->WindowResizeEvent.Subscribe(SUB_FN(Application::WindowResizeEvent, std::placeholders::_1, std::placeholders::_2));
-        m_Window->KeyPressedEvent.Subscribe(SUB_FN(Application::KeyPressedEvent, std::placeholders::_1, std::placeholders::_2));
-        m_Window->KeyReleasedEvent.Subscribe(SUB_FN(Application::KeyReleasedEvent, std::placeholders::_1));
-        m_Window->MouseButtonPressedEvent.Subscribe(SUB_FN(Application::MouseButtonPressedEvent, std::placeholders::_1));
-        m_Window->MouseButtonReleasedEvent.Subscribe(SUB_FN(Application::MouseButtonReleasedEvent, std::placeholders::_1));
-        m_Window->MouseScrolledEvent.Subscribe(SUB_FN(Application::MouseScrolledEvent, std::placeholders::_1, std::placeholders::_2));
-        m_Window->MouseMovedEvent.Subscribe(SUB_FN(Application::MouseMovedEvent, std::placeholders::_1, std::placeholders::_2));
+        //Subscribe to events
+        {
+            m_Window->WindowCloseEvent.Subscribe(SUB_FN(Application::WindowCloseEvent));
+            m_Window->WindowResizeEvent.Subscribe(SUB_FN(Application::WindowResizeEvent, std::placeholders::_1, std::placeholders::_2));
+            m_Window->KeyPressedEvent.Subscribe(SUB_FN(Application::KeyPressedEvent, std::placeholders::_1, std::placeholders::_2));
+            m_Window->KeyReleasedEvent.Subscribe(SUB_FN(Application::KeyReleasedEvent, std::placeholders::_1));
+            m_Window->MouseButtonPressedEvent.Subscribe(SUB_FN(Application::MouseButtonPressedEvent, std::placeholders::_1));
+            m_Window->MouseButtonReleasedEvent.Subscribe(SUB_FN(Application::MouseButtonReleasedEvent, std::placeholders::_1));
+            m_Window->MouseScrolledEvent.Subscribe(SUB_FN(Application::MouseScrolledEvent, std::placeholders::_1, std::placeholders::_2));
+            m_Window->MouseMovedEvent.Subscribe(SUB_FN(Application::MouseMovedEvent, std::placeholders::_1, std::placeholders::_2));
+        }
 
-        Renderer::Init();
+        //Initializing systems
+        {
+            Renderer::Init();
 
-        m_SceneManager = std::make_shared<SceneManagerOld>();
-        m_ResourceManager = std::make_shared<ResourceManager>();
-        m_JobManager = std::make_shared<JobManager>();
 
-        m_ImGuiLayer = new ImGuiLayer();
-        PushOverlay(m_ImGuiLayer);
+            m_SceneManager = std::make_shared<SceneManagerOld>();
+            m_ResourceManager = std::make_shared<ResourceManager>();
+            m_JobManager = std::make_shared<JobManager>();
+            m_Input = std::make_shared<Input>();
+
+            m_ImGuiLayer = new ImGuiLayer();
+            PushOverlay(m_ImGuiLayer);
+        }
 
         //FrameBufferProperties frameBufferSpecification;
 
@@ -151,6 +160,8 @@ namespace Muse
         MUSE_PROFILE_FUNCTION();
 
         m_LateUpdateEvent.Dispatch(m_DeltaTime);
+
+        m_Input->UpdateMouseScrollDelta(0);
     }
 
     void Application::ImGuiRender()
@@ -277,6 +288,7 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
+        m_Input->UpdateMouseScrollDelta(a_YOffset);
         OnMouseScrolledEvent(a_XOffset, a_YOffset);
     }
 

@@ -632,6 +632,7 @@
     <ClCompile Include="src\Core\Gameplay\GameObject.cpp" />
     <ClCompile Include="src\Core\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Core\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Core\Input\Input.cpp" />
     <ClCompile Include="src\Core\Layer\Layer.cpp" />
     <ClCompile Include="src\Core\Layer\LayerStack.cpp" />
     <ClCompile Include="src\Core\Physics\Collision2D.cpp" />

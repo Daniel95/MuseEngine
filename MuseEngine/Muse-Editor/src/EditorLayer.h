@@ -5,7 +5,7 @@ namespace Muse
     class EditorLayer : public Layer
     {
     public:
-        EditorLayer();
+        EditorLayer() = default;
         virtual ~EditorLayer() = default;
 
         virtual void OnAttach() override;
@@ -26,5 +26,6 @@ namespace Muse
         std::unordered_map<char, std::shared_ptr<Muse::SubTexture2D>> m_TextureMap;
 
         int m_CameraEntity;
+        bool m_ViewportFocused = false, m_ViewportHovered = false;
     };
 }
