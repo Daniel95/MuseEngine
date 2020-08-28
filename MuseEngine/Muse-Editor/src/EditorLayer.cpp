@@ -6,6 +6,8 @@
 #include "Camera/CameraJob.h"
 #include <Camera\CameraComponent.h>
 #include <Camera\OrthographicEditorCameraControllerComponent.h>
+#include "Camera/OrthographicEditorCameraControllerJob.h"
+#include "Camera/CameraHelper.h"
 
 namespace Muse
 {
@@ -35,12 +37,18 @@ namespace Muse
         frameBufferSpecification.Height = Application::Get().GetWindow()->GetHeight();
         m_Framebuffer = FrameBuffer::Create(frameBufferSpecification);
 
+        //Make Camera
+        {
+            m_CameraEntity = Entity::Create();
 
-        auto entity = Entity::Create();
+            ComponentManager<TransformComponent>::Add(m_CameraEntity, {});
 
-        ComponentManager<TransformComponent>::Add(entity, {});
-        ComponentManager<CameraComponent>::Add(entity, {});
-        ComponentManager<OrthographicEditorCameraControllerComponent>::Add(entity, {});
+            CameraComponent cameraComponent = {};
+            cameraComponent.SetZoomLevel(5);
+
+            ComponentManager<CameraComponent>::Add(m_CameraEntity, cameraComponent);
+            ComponentManager<OrthographicEditorCameraControllerComponent>::Add(m_CameraEntity, {});
+        }
 
         Muse::RenderCommand::Init();
         Muse::Renderer2D::Init();
@@ -62,7 +70,8 @@ namespace Muse
         m_MapWidth = s_MapWidth;
         m_MapHeight = strlen(s_MapTiles) / s_MapWidth;
 
-        Application::Get().GetJobManager()->Add<CameraJob>(Muse::JobType::Gameplay);
+        //Application::Get().GetJobManager()->Add<CameraJob>(Muse::JobType::Gameplay);
+        Application::Get().GetJobManager()->Add<OrthographicEditorCameraControllerJob>(Muse::JobType::Gameplay);
     }
 
     void EditorLayer::OnDetach()
@@ -83,9 +92,9 @@ namespace Muse
         //Rendering:
         m_Framebuffer->Bind();
 
+        const glm::mat4& projectionViewMatrix = ComponentManager<CameraComponent>::Get(m_CameraEntity).GetProjectionViewMatrix(ComponentManager<TransformComponent>::Get(m_CameraEntity));
 
-
-        Muse::Renderer2D::BeginScene(Muse::CameraComponentOld::GetMain()->GetViewMatrix());
+        Muse::Renderer2D::BeginScene(projectionViewMatrix);
 
         Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
         Muse::RenderCommand::Clear();

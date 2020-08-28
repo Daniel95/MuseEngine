@@ -24,5 +24,7 @@ namespace Muse
         uint32_t m_MapWidth, m_MapHeight;
 
         std::unordered_map<char, std::shared_ptr<Muse::SubTexture2D>> m_TextureMap;
+
+        int m_CameraEntity;
     };
 }

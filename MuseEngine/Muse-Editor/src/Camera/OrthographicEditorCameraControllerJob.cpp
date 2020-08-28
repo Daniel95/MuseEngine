@@ -19,11 +19,11 @@ namespace Muse
             OrthographicEditorCameraControllerComponent& orthographicCameraControllerComponent
             )
         {
-            const float moveSpeed = orthographicCameraControllerComponent.speed * deltaTime * cameraComponent.m_ZoomLevel;
+            const float moveSpeed = orthographicCameraControllerComponent.speed * deltaTime * cameraComponent.GetZoomLevel();
 
             if (Input::GetKeyDown(MUSE_KEY_A))
             {
-                TransformHelper::TranslateLocal(transformComponent, glm::vec2(moveSpeed, 0.0f));
+                TransformHelper::TranslateLocal(transformComponent, glm::vec2(-moveSpeed, 0.0f));
             }
             else if (Input::GetKeyDown(MUSE_KEY_D))
             {

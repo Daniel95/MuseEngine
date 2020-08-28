@@ -1,7 +1,6 @@
 ﻿#include "MusePCH.h"
 #include "ViewPort.h"
 #include "imgui.h"
-#include "Core/Gameplay/Component/CameraComponent.h"
 
 namespace Muse
 {
