@@ -24,6 +24,7 @@
 #include "Renderer/RenderCommand.h"
 #include "Utilities/HardCodedMesh.h"
 #include "Input/Input.h"
+#include <Core\ECS\Job\InputJob.h>
 
 
 namespace Muse
@@ -64,11 +65,9 @@ namespace Muse
         {
             Renderer::Init();
 
-
             m_SceneManager = std::make_shared<SceneManagerOld>();
             m_ResourceManager = std::make_shared<ResourceManager>();
             m_JobManager = std::make_shared<JobManager>();
-            m_Input = std::make_shared<Input>();
 
             m_ImGuiLayer = new ImGuiLayer();
             PushOverlay(m_ImGuiLayer);
@@ -79,6 +78,9 @@ namespace Muse
         //frameBufferSpecification.Width = m_Window->GetWidth();
         //frameBufferSpecification.Height = m_Window->GetWidth();
         //m_ViewportFramebuffer = FrameBuffer::Create(frameBufferSpecification);
+
+        m_JobManager->Add<InputJob>(Muse::JobType::Late);
+
 
         //Engine Components
         ComponentManager<TransformComponent>::Register("TransformComponent");
@@ -161,7 +163,7 @@ namespace Muse
 
         m_LateUpdateEvent.Dispatch(m_DeltaTime);
 
-        m_Input->UpdateMouseScrollDelta(0);
+        m_JobManager->Update(JobType::Late);
     }
 
     void Application::ImGuiRender()
@@ -288,7 +290,6 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
-        m_Input->UpdateMouseScrollDelta(a_YOffset);
         OnMouseScrolledEvent(a_XOffset, a_YOffset);
     }
 

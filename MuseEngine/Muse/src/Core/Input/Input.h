@@ -13,11 +13,13 @@ namespace Muse
         static float GetMouseX();
         static float GetMouseY();
         static float GetMouseScrollDelta() { return s_MouseScrollDelta; };
+        static void SetBlockInput(bool a_Block) { s_BlockInput = a_Block; };
 
-        void UpdateMouseScrollDelta(float a_MouseScrollDelta) { s_MouseScrollDelta = a_MouseScrollDelta; };
+        void UpdateMouseScrollDelta(float a_MouseScrollDelta);
 
     private:
         static float s_MouseScrollDelta;
+        static bool s_BlockInput;
 
     };
 }

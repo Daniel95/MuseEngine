@@ -1500,6 +1500,7 @@
     <ClInclude Include="src\Core\Gameplay\Component\CameraComponentOld.h">
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClInclude>
+    <ClInclude Include="src\Core\ECS\Job\InputJob.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1728,5 +1729,6 @@
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClCompile>
     <ClCompile Include="src\Core\Input\Input.cpp" />
+    <ClCompile Include="src\Core\ECS\Job\InputJob.cpp" />
   </ItemGroup>
 </Project>

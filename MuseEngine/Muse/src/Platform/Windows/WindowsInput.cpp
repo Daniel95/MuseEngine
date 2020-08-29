@@ -10,6 +10,8 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
+        if (s_BlockInput) { return false; }
+
         const auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow()->GetNativeWindow());
         const auto state = glfwGetKey(window, a_Keycode);
         return state == static_cast<const int>(GLFW_PRESS || GLFW_REPEAT);
@@ -19,6 +21,8 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
+        if (s_BlockInput) { return false; }
+
         const auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow()->GetNativeWindow());
         const auto state = glfwGetMouseButton(window, a_Button);
         return state == GLFW_PRESS;
@@ -27,6 +31,8 @@ namespace Muse
     glm::vec2 Input::GetMousePosition()
     {
         MUSE_PROFILE_FUNCTION();
+
+        if (s_BlockInput) { return {0, 0}; }
 
         const auto window = static_cast<GLFWwindow*>(Application::Get().GetWindow()->GetNativeWindow());
         double xPos, yPos;

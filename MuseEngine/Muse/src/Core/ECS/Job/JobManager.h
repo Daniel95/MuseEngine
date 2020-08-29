@@ -9,7 +9,8 @@ namespace Muse
 {
 	enum class JobType
 	{
-		Gameplay,
+        Late,
+        Gameplay,
 		Renderer,
 	};
 	

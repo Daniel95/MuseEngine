@@ -120,9 +120,24 @@ namespace Muse
 
         FileBrowser::Render();
 
-        ViewPort::Render(m_Framebuffer->GetColorAttachmentRendererID(), m_ViewportSize, m_AspectRatio);
+        //ViewPort
+        {
+            ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
+            ImGui::Begin("Viewport");
 
-        m_ViewportFocused = ImGui::IsWindowFocused();
+            auto viewportSize = ImGui::GetContentRegionAvail();
+
+            m_ViewportSize = { viewportSize.x, viewportSize.y };
+            m_AspectRatio = viewportSize.x / viewportSize.y;
+
+            m_ViewportFocused = ImGui::IsWindowFocused();
+            m_ViewportHovered = ImGui::IsWindowHovered();
+            Input::SetBlockInput(!m_ViewportFocused || !m_ViewportHovered);
+
+            ImGui::Image((void*)m_Framebuffer->GetColorAttachmentRendererID(), viewportSize, { 0, 1 }, { 1, 0 });
+            ImGui::End();
+            ImGui::PopStyleVar();
+        }
 
         if (CameraComponentOld::GetMain() != nullptr)
         {
