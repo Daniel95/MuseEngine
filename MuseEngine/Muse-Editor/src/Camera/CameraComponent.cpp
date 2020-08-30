@@ -16,6 +16,31 @@ namespace Muse
         return m_ViewProjectionMatrix;
     }
 
+    void CameraComponent::SetViewportSize(uint32_t a_Width, uint32_t a_Height)
+    {
+        m_AspectRatio = (float)a_Width / (float)a_Height;
+        RecalculateProjection();
+    }
+
+    void CameraComponent::SetOrthographicSize(float a_Size)
+    {
+        m_OrthographicSize = a_Size;
+        RecalculateProjection();
+    }
+
+    void CameraComponent::RecalculateProjection()
+    {
+        float orthoLeft = -m_OrthographicSize * m_AspectRatio * 0.5f;
+        float orthoRight = m_OrthographicSize * m_AspectRatio * 0.5f;
+        float orthoBottom = -m_OrthographicSize * 0.5f;
+        float orthoTop = m_OrthographicSize * 0.5f;
+
+        m_ProjectionMatrix = glm::ortho(orthoLeft, orthoRight,
+            orthoBottom, orthoTop, m_OrthographicNear, m_OrthographicFar);
+
+        m_IsDirty = true;
+    }
+
     void CameraComponent::SetProjection(float a_AspectRatio, float a_ZoomLevel)
     {
         MUSE_PROFILE_FUNCTION();

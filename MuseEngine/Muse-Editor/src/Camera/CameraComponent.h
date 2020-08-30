@@ -23,12 +23,21 @@ namespace Muse
         void SetFixedAspectRatio(bool a_FixedAspectRatio) { m_FixedAspectRatio = a_FixedAspectRatio; }
         bool GetFixedAspectRatio() { return m_FixedAspectRatio; }
 
+        void SetViewportSize(uint32_t a_Width, uint32_t a_Height);
+
+        void SetOrthographicSize(float a_Size);
+        float GetOrthographicSize() const { return m_OrthographicSize; }
+
     private:
+        void RecalculateProjection();
+
         glm::mat4 m_ViewMatrix = glm::identity<glm::mat4>();
         glm::mat4 m_ProjectionMatrix = glm::identity<glm::mat4>();
         glm::mat4 m_ViewProjectionMatrix = glm::identity<glm::mat4>();
         float m_ZoomLevel = 1.0f;
         float m_AspectRatio = 1.6f;
+        float m_OrthographicSize = 10.0f;
+        float m_OrthographicNear = -1.0f, m_OrthographicFar = 1.0f;
 
         bool m_IsDirty = true;
         bool m_FixedAspectRatio = false;

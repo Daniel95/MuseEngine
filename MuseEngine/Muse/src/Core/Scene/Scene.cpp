@@ -64,7 +64,7 @@ namespace Muse
             auto& camera = view.get<CameraComponent>(entity);
             if (!camera.GetFixedAspectRatio())
             {
-                camera.SetAspectRatio((float)a_Width / (float)a_Height);
+                camera.SetViewportSize(a_Width, a_Height);
             }
         }
     }
