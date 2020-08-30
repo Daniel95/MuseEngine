@@ -5,6 +5,11 @@
 #include "Core/ECS/Component/TransformHelper.h"
 #include "Core/Renderer/Renderer2D.h"
 
+#include "entt.hpp"
+#include "Core/ECS/Entity/Entity.h"
+#include "Core/Scene/Scene.h"
+#include "Core/Scene/SceneManager.h"
+
 namespace Muse
 {
     void Render2DJob::OnUpdate()

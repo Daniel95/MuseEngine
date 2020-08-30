@@ -1,12 +1,17 @@
 #include "EditorLayer.h"
 #include "Core/Application.h"
-#include "ViewPort.h"
+#include "Core/Scene/SceneManager.h"
+#include "Core/Scene/Scene.h"
 #include "Editor.h"
 #include "FileBrowser.h"
 #include "Camera/CameraComponent.h"
-#include "Camera\OrthographicEditorCameraControllerComponent.h"
+#include "Camera/OrthographicEditorCameraControllerComponent.h"
 #include "Camera/OrthographicEditorCameraControllerJob.h"
+#include "Core/ECS/Entity/Entity.h"
+#include "Core/ECS/Component/Render2DComponent.h"
+
 #include "imgui.h"
+#include "Core/ECS/Job/Render2DJob.h"
 
 namespace Muse
 {
@@ -31,39 +36,32 @@ namespace Muse
         frameBufferSpecification.Height = Application::Get().GetWindow()->GetHeight();
         m_Framebuffer = FrameBuffer::Create(frameBufferSpecification);
 
+        std::shared_ptr<Muse::Scene> scene = Muse::Scene::Create();
+        Muse::ResourceManager::Add("EditorTestScene", scene);
+        Muse::SceneManager::SwitchScene(scene);
+
         //Make Camera
         {
             m_CameraEntity = Entity::Create();
 
-            ComponentManager<TransformComponent>::Add(m_CameraEntity, {});
-
             CameraComponent cameraComponent = {};
             cameraComponent.SetZoomLevel(5);
 
-            ComponentManager<CameraComponent>::Add(m_CameraEntity, cameraComponent);
-            ComponentManager<OrthographicEditorCameraControllerComponent>::Add(m_CameraEntity, {});
+            m_CameraEntity.AddComponent<CameraComponent>(cameraComponent);
+            m_CameraEntity.AddComponent<OrthographicEditorCameraControllerComponent>();
+        }
+
+        //Make Level
+        {
+            auto entity = Entity::Create();
+
+            m_CameraEntity.AddComponent<Render2DComponent>();
         }
 
         Muse::RenderCommand::Init();
         Muse::Renderer2D::Init();
 
-        std::shared_ptr<Muse::SceneOld> scene = Muse::SceneOld::Create();
-        Muse::ResourceManager::Add("Game2DTestScene", scene);
-        Muse::SceneManagerOld::SwitchScene(scene);
-
-        Muse::CameraComponentOld* cameraComponent = Muse::CameraComponentOld::GetMain();
-        cameraComponent->SetZoomLevel(5);
-
-        m_SpriteSheet = Muse::ResourceManager::Load<Muse::Texture2D>("assets/topdown/kenneyrpgpack/Spritesheet/RPGpack_sheet_2X.png");
-
-        m_TreeTexture = Muse::SubTexture2D::Create(m_SpriteSheet, { 0, 1 }, { 128.0f, 128.0f }, { 1, 2 });
-
-        m_TextureMap['D'] = Muse::SubTexture2D::Create(m_SpriteSheet, { 6, 11 }, { 128.0f, 128.0f });
-        m_TextureMap['W'] = Muse::SubTexture2D::Create(m_SpriteSheet, { 11, 11 }, { 128.0f, 128.0f });
-
-        m_MapWidth = s_MapWidth;
-        m_MapHeight = strlen(s_MapTiles) / s_MapWidth;
-
+        Application::Get().GetJobManager()->Add<Render2DJob>(Muse::JobType::Renderer);
         Application::Get().GetJobManager()->Add<OrthographicEditorCameraControllerJob>(Muse::JobType::Gameplay);
     }
 
@@ -85,29 +83,16 @@ namespace Muse
         //Rendering:
         m_Framebuffer->Bind();
 
-        const glm::mat4& projectionViewMatrix = ComponentManager<CameraComponent>::Get(m_CameraEntity).GetProjectionViewMatrix(ComponentManager<TransformComponent>::Get(m_CameraEntity));
+        m_CameraEntity.GetComponent<CameraComponent>();
+
+        const glm::mat4& projectionViewMatrix = m_CameraEntity.GetComponent<CameraComponent>().GetProjectionViewMatrix(m_CameraEntity.GetComponent<TransformComponent>());
 
         Muse::Renderer2D::BeginScene(projectionViewMatrix);
 
         Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
         Muse::RenderCommand::Clear();
 
-        for (uint32_t y = 0; y < m_MapHeight; y++)
-        {
-            for (uint32_t x = 0; x < m_MapWidth; x++)
-            {
-                char tileType = s_MapTiles[x + y * m_MapWidth];
-
-                if (m_TextureMap.find(tileType) == m_TextureMap.end())
-                {
-                    continue;
-                }
-
-                Muse::Renderer2D::DrawQuad({ x, y, 0 }, { 1, 1 }, 0, m_TextureMap[tileType]);
-            }
-        }
-
-        Muse::Renderer2D::DrawQuad({ 0, 0, 0 }, { 1, 2 }, 0, m_TreeTexture);
+        Application::Get().GetJobManager()->Update(JobType::Renderer);
 
         Muse::Renderer2D::EndScene();
 

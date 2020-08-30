@@ -1501,6 +1501,8 @@
       <Filter>src\Core\Gameplay\Component</Filter>
     </ClInclude>
     <ClInclude Include="src\Core\ECS\Job\InputJob.h" />
+    <ClInclude Include="src\Core\Scene\Scene.h" />
+    <ClInclude Include="src\Core\Scene\SceneManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">
@@ -1730,5 +1732,7 @@
     </ClCompile>
     <ClCompile Include="src\Core\Input\Input.cpp" />
     <ClCompile Include="src\Core\ECS\Job\InputJob.cpp" />
+    <ClCompile Include="src\Core\Scene\Scene.cpp" />
+    <ClCompile Include="src\Core\Scene\SceneManager.cpp" />
   </ItemGroup>
 </Project>

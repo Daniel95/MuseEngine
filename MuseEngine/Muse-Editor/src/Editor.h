@@ -7,7 +7,6 @@ namespace Muse
     class Editor
     {
     public:
-
         static void StartDockSpace();
         static void EndDockSpace();
 
@@ -19,5 +18,6 @@ namespace Muse
 
     private:
         static bool s_EditorMode;
+
     };
 }

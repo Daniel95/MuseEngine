@@ -1,9 +1,10 @@
 #pragma once
 
-#include "Core/Application.h"
 #include "Core/Utilities/Defines.h"
-#include "Core/Event/Event.h"
-#include "Core/ECS/Entity/EntityEvent.h"
+#include "Core/Scene/SceneManager.h"
+#include "Core/Scene/Scene.h"
+
+#include "entt.hpp"
 
 #include <vector>
 #include <memory>
@@ -13,22 +14,43 @@ namespace Muse
 	class Entity
 	{
 	public:
-        static DestroyEvent s_DestroyEvent;
-		static DestroyAllEvent s_DestroyAllEvent;
-
-		Entity(int a_Id);
-		~Entity() = default;
-		operator int() const { return m_Id; }
-        int GetId() const { return m_Id; }
-		std::string GetName() const;
+        Entity() = default;
+        Entity(entt::entity handle);
+        Entity(const Entity & other) = default;
 
         static Entity Create();
-        static Entity Create(const std::string& a_Name);
-        static void Destroy(Entity a_Entity);
-        static void DestroyAll();
-		
+
+        template<typename T, typename... Args>
+        T& AddComponent(Args&&... args)
+        {
+            ASSERT_ENGINE(!HasComponent<T>(), "Entity already has component!");
+            return SceneManager::GetActiveScene()->GetRegistry().emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
+        }
+
+        template<typename T>
+        T& GetComponent()
+        {
+            ASSERT_ENGINE(HasComponent<T>(), "Entity does not have component!");
+            return SceneManager::GetActiveScene()->GetRegistry().get<T>(m_EntityHandle);
+        }
+
+        template<typename T>
+        bool HasComponent()
+        {
+            return SceneManager::GetActiveScene()->GetRegistry().has<T>(m_EntityHandle);
+        }
+
+        template<typename T>
+        void RemoveComponent()
+        {
+            ASSERT_ENGINE(HasComponent<T>(), "Entity does not have component!");
+            SceneManager::GetActiveScene()->GetRegistry().remove<T>(m_EntityHandle);
+        }
+
+        operator bool() const { return m_EntityHandle != entt::null; }
+
 	private:
-		 int m_Id = 0;
+        entt::entity m_EntityHandle{ entt::null };
 		
 	};
 }

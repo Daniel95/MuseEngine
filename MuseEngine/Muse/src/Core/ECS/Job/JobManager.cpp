@@ -2,6 +2,8 @@
 #include "JobManager.h"
 
 #include "Core/ECS/Job/Job.h"
+#include "Core/Instrumentor.h"
+
 #include <memory>
 
 namespace Muse

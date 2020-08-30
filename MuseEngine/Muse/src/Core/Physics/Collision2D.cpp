@@ -4,11 +4,16 @@
 #include "Core/ECS/Component/Collider2DComponent.h"
 #include "Core/ECS/Component/TransformComponent.h"
 #include "Core/ECS/Component/ComponentManager.h"
+#include "Core/Scene/SceneManager.h"
+#include "Core/Scene/Scene.h"
 
 namespace Muse
 {
     void Collision2D::GetEntityHits(const std::vector<int>& entityGroup1, const std::vector<int>& entityGroup2, std::vector<std::pair<int, int>>& hits)
     {
+        std::shared_ptr<Scene> scene = SceneManager::GetActiveScene();
+
+        /*
         const std::unordered_map<int, Collider2DComponent>& collider2DComponents = ComponentManager<Collider2DComponent>::GetComponents();
         const std::unordered_map<int, TransformComponent>& transformComponents = ComponentManager<TransformComponent>::GetComponents();
 
@@ -28,6 +33,7 @@ namespace Muse
                 }
             }
         }
+        */
     }
 
     bool Collision2D::AABBCheck(const BoundingBox& a_Collider1, const BoundingBox& a_Collider2)

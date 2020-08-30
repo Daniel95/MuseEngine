@@ -4,6 +4,7 @@
 #include "Core/Input/KeyCodes.h"
 #include "Core/Input/Input.h"
 #include "Core/ECS/Component/TransformHelper.h"
+#include "Core/Application.h"
 
 namespace Muse
 {
@@ -19,7 +20,6 @@ namespace Muse
             )
         {
             float zoomLevel = cameraComponent.GetZoomLevel() - (Input::GetMouseScrollDelta() * orthographicCameraControllerComponent.m_ScrollSpeed);
-            LOG_ENGINE_INFO(zoomLevel);
             zoomLevel = std::min(std::max(zoomLevel, orthographicCameraControllerComponent.m_MinZoomLevel), orthographicCameraControllerComponent.m_MaxZoomLevel);
             cameraComponent.SetZoomLevel(zoomLevel);
 

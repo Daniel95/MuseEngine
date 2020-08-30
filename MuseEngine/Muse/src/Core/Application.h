@@ -11,7 +11,7 @@ namespace Muse
     class ResourceManager;
     class JobManager;
     class GameWindow; 
-    class SceneManagerOld;
+    class SceneManager;
     class SystemManager;
     class ImGuiLayer;
     class Window;
@@ -30,6 +30,7 @@ namespace Muse
         std::shared_ptr<FrameBuffer> GetViewport() const { return m_ViewportFramebuffer; }
         float GetDeltaTime() const { return m_DeltaTime; }
         std::shared_ptr<JobManager> GetJobManager() const { return m_JobManager; }
+        std::shared_ptr<SceneManager> GetSceneManager() const { return m_SceneManager; }
 
         ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; }
 
@@ -80,7 +81,7 @@ namespace Muse
         bool m_Running = true;
         bool m_Minimized = false;
         std::shared_ptr<Window> m_Window;
-        std::shared_ptr<SceneManagerOld> m_SceneManager;
+        std::shared_ptr<SceneManager> m_SceneManager;
         std::shared_ptr<ResourceManager> m_ResourceManager;
         std::shared_ptr<FrameBuffer> m_ViewportFramebuffer;
         std::shared_ptr<JobManager> m_JobManager;

@@ -145,6 +145,8 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
+        ASSERT_ENGINE(a_Texture != nullptr, "Texture is null!");
+
         // Check if the texture is stored
         float textureIndex = 0.0f;
         for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
@@ -173,6 +175,8 @@ namespace Muse
     void Renderer2D::DrawQuad(const glm::vec3& a_Position, const glm::vec2& a_Size, float a_Rotation, const std::shared_ptr<SubTexture2D>& a_SubTexture, float a_TilingFactor, const glm::vec4& a_TintColor)
     {
         MUSE_PROFILE_FUNCTION();
+
+        ASSERT_ENGINE(a_SubTexture != nullptr && a_SubTexture->GetTexture() != nullptr, "Texture is null!");
 
         const std::shared_ptr<Texture2D> texture = a_SubTexture->GetTexture();
 
@@ -216,6 +220,8 @@ namespace Muse
     {
         MUSE_PROFILE_FUNCTION();
 
+        ASSERT_ENGINE(a_Texture != nullptr, "Texture is null!");
+
         // Check if the texture is stored
         float textureIndex = 0.0f;
         for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
@@ -240,6 +246,8 @@ namespace Muse
     void Renderer2D::DrawQuad(const glm::mat4& a_Transform, const std::shared_ptr<SubTexture2D>& a_SubTexture, float a_TilingFactor, const glm::vec4& a_TintColor)
     {
         MUSE_PROFILE_FUNCTION();
+
+        ASSERT_ENGINE(a_SubTexture != nullptr && a_SubTexture->GetTexture() != nullptr, "Texture is null!");
 
         const std::shared_ptr<Texture2D> texture = a_SubTexture->GetTexture();
 

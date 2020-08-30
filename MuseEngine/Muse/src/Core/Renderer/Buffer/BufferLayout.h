@@ -64,7 +64,7 @@ namespace Muse
 
         }
 
-        uint32_t GetNumberCount() const
+        uint32_t GetComponentCount() const
         {
             MUSE_PROFILE_FUNCTION();
 

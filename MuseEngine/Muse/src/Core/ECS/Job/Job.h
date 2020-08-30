@@ -2,10 +2,14 @@
 #include "Core/ECS/Component/ComponentHelper.h"
 
 #include "Core/Physics/Collision2D.h"
-
 #include "Core/ECS/Job/JobManager.h"
 #include "Core/ECS/Component/Collider2DComponent.h"
 #include "Core/ECS/Component/TransformComponent.h"
+#include "Core/ECS/Entity/Entity.h"
+#include "Core/Scene/Scene.h"
+#include "Core/Scene/SceneManager.h"
+
+#include "entt.hpp"
 
 namespace Muse
 {
@@ -19,11 +23,12 @@ namespace Muse
         virtual void OnUpdate() = 0;
 		
         template <typename T1, typename T2>
-        void Run(const std::function<void(int, T1&, T2&)>& a_Func);
+        void Run(const std::function<void(Entity, T1&, T2&)>& a_Func);
 
         template <typename T1, typename T2, typename T3>
-        void Run(const std::function<void(int, T1&, T2&, T3&)>& a_Func);
+        void Run(const std::function<void(Entity, T1&, T2&, T3&)>& a_Func);
 
+        /*
         template <typename T1, typename T2>
         void RunCollision(const std::function<void(int, T1&, T2&)>& a_Func1, const std::function<void(int, T1&, T2&)>& a_Func2);
 
@@ -32,33 +37,56 @@ namespace Muse
 
         template <typename T1, typename T2>
         void RunCollision(const std::function<void(int, T1&, TransformComponent&, int, T2&, TransformComponent&)>& a_Func);
+        */
 
         //template <typename T1, typename T2, typename T3, typename T4>
         //void RunCollision(const std::function<void(int, T1&, T2&, int, T3&, T4&)>& a_Func);
 	};
 
     template <typename T1, typename T2>
-    void Job::Run(const std::function<void(int, T1&, T2&)>& a_Func)
+    void Job::Run(const std::function<void(Entity, T1&, T2&)>& a_Func)
     {
+        std::shared_ptr<Scene> scene = SceneManager::GetActiveScene();
+
+        auto view = scene->GetRegistry().view<T1, T2>();
+
+        for (auto entity : view)
+        {
+            a_Func({ entity }, view.get<T1>(entity), view.get<T2>(entity));
+        }
+
+        /*
         const std::vector<int> entitiesWithComponents = ComponentHelper::GetEntitiesWith<T1, T2>();
 
         for (auto entity : entitiesWithComponents)
         {
             a_Func(entity, ComponentManager<T1>::Get(entity), ComponentManager<T2>::Get(entity));
         }
+        */
     }
 
     template <typename T1, typename T2, typename T3>
-    void Job::Run(const std::function<void(int, T1&, T2&, T3&)>& a_Func)
+    void Job::Run(const std::function<void(Entity, T1&, T2&, T3&)>& a_Func)
     {
+        std::shared_ptr<Scene> scene = SceneManager::GetActiveScene();
+
+        auto view = scene->GetRegistry().view<T1, T2, T3>();
+
+        for (auto entity : view)
+        {
+            a_Func({ entity }, view.get<T1>(entity), view.get<T2>(entity), view.get<T3>(entity));
+        }
+
+        /*
         const std::vector<int> entitiesWithComponents = ComponentHelper::GetEntitiesWith<T1, T2, T3>();
 
         for (auto entity : entitiesWithComponents)
         {
             a_Func(entity, ComponentManager<T1>::Get(entity), ComponentManager<T2>::Get(entity), ComponentManager<T3>::Get(entity));
         }
+        */
     }
-
+    /*
     /// <summary>
     /// Executes the lambda when a entity that has component T1 collides with another entity that has T2.
     /// Is executes for both entities that collide with each other.
@@ -138,4 +166,5 @@ namespace Muse
             a_Func2(hit.second, ComponentManager<T1>::Get(hit.first), ComponentManager<T2>::Get(hit.second));
         }
     }
+    */
 }

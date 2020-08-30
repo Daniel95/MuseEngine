@@ -8,7 +8,7 @@
 #include "ImGui/ImGuiLayer.h"
 #include "Renderer/Renderer.h"
 #include "Renderer/Buffer/FrameBuffer.h"
-#include "Scene/SceneManagerOld.h"
+#include "Scene/SceneManager.h"
 #include "Resource/ResourceManager.h"
 #include "Utilities/Defines.h"
 #include "Core/ECS/Job/JobManager.h"
@@ -25,6 +25,7 @@
 #include "Utilities/HardCodedMesh.h"
 #include "Input/Input.h"
 #include <Core\ECS\Job\InputJob.h>
+#include "ECS/Job/Render2DJob.h"
 
 
 namespace Muse
@@ -65,7 +66,7 @@ namespace Muse
         {
             Renderer::Init();
 
-            m_SceneManager = std::make_shared<SceneManagerOld>();
+            m_SceneManager = std::make_shared<SceneManager>();
             m_ResourceManager = std::make_shared<ResourceManager>();
             m_JobManager = std::make_shared<JobManager>();
 
@@ -80,12 +81,12 @@ namespace Muse
         //m_ViewportFramebuffer = FrameBuffer::Create(frameBufferSpecification);
 
         m_JobManager->Add<InputJob>(Muse::JobType::Late);
-
+        //m_JobManager->Add<Render2DJob>(Muse::JobType::Renderer);
 
         //Engine Components
-        ComponentManager<TransformComponent>::Register("TransformComponent");
+        //ComponentManager<TransformComponent>::Register("TransformComponent");
         //ComponentManager<Render2DComponent>::Register("Render2DComponent");
-        ComponentManager<Collider2DComponent>::Register("Collider2DComponent");
+        //ComponentManager<Collider2DComponent>::Register("Collider2DComponent");
     }
 
     Application::~Application()

@@ -24,7 +24,7 @@ namespace Muse
             const glm::vec2& a_SpriteSize = { 1, 1 }) { return std::make_shared<SubTexture2D>(a_Texture, a_CellCoords, a_CellSize, a_SpriteSize); }
 
     private:
-        std::shared_ptr<Texture2D> m_Texture;
+        std::shared_ptr<Texture2D> m_Texture = nullptr;
         glm::vec2 m_TextureCoords[4];
 
     };

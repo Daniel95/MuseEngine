@@ -12,6 +12,7 @@
 
 namespace Muse
 {
+	/*
 	template<class T>
 	class ComponentManager
 	{
@@ -131,6 +132,7 @@ namespace Muse
         s_Name = a_RegisterName;
         s_Initiated = true;
 
+		/*
         Entity::s_DestroyEvent.Subscribe([](Entity a_Entity)
         {
             ComponentManager<T>::OnEntityDestroy(a_Entity);
@@ -148,18 +150,24 @@ namespace Muse
         });
 #endif
 
+		
+		
 		Application::Get().m_LateUpdateEvent.Subscribe([](float a_DeltaTime)
         {
             ComponentManager<T>::LateUpdate(a_DeltaTime);
         });
 	}
+		*/
 
+	/*
 	template<class T>
 	inline void ComponentManager<T>::Update(float a_DeltaTime)
 	{
 		EntityDebugger::SetComponentEntities(s_Name, GetEntities());
 	}
+	*/
 
+	/*
 	template<class T>
 	inline void ComponentManager<T>::LateUpdate(float a_DeltaTime)
 	{
@@ -169,4 +177,5 @@ namespace Muse
 		}
 		s_EntitiesToRemove.clear();
 	}
+	*/
 }
