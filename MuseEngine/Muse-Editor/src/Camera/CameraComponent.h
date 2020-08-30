@@ -20,6 +20,9 @@ namespace Muse
         void SetAspectRatio(float a_AspectRatio) { SetProjection(a_AspectRatio, m_ZoomLevel); }
         float GetAspectRatio() { return m_AspectRatio; }
 
+        void SetFixedAspectRatio(bool a_FixedAspectRatio) { m_FixedAspectRatio = a_FixedAspectRatio; }
+        bool GetFixedAspectRatio() { return m_FixedAspectRatio; }
+
     private:
         glm::mat4 m_ViewMatrix = glm::identity<glm::mat4>();
         glm::mat4 m_ProjectionMatrix = glm::identity<glm::mat4>();
@@ -28,6 +31,7 @@ namespace Muse
         float m_AspectRatio = 1.6f;
 
         bool m_IsDirty = true;
+        bool m_FixedAspectRatio = false;
 
         static CameraComponent* s_MainCamera;
     };

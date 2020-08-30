@@ -3,6 +3,7 @@
 namespace Muse
 {
     class Entity;
+    class CameraComponent;
 
     class EditorLayer : public Layer
     {
@@ -28,6 +29,7 @@ namespace Muse
         std::unordered_map<char, std::shared_ptr<Muse::SubTexture2D>> m_TextureMap;
 
         Entity m_CameraEntity;
+        CameraComponent* m_CameraComponent;
         bool m_ViewportFocused = false, m_ViewportHovered = false;
     };
 }

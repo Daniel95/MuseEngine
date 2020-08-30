@@ -6,6 +6,7 @@
 #include "Core/ECS/Entity/Entity.h"
 
 #include "cereal\archives\json.hpp"
+#include "..\..\Muse-Editor\src\Camera\CameraComponent.h"
 
 namespace Muse
 {
@@ -48,6 +49,24 @@ namespace Muse
         fs.close();
 
         return scene;
+    }
+
+    void Scene::OnViewportResize(uint32_t a_Width, uint32_t a_Height)
+    {
+        m_ViewportWidth = a_Width;
+        m_ViewportHeight = a_Height;
+
+        //Resize our non-FixedAspectRatio camera's
+
+        auto view = m_Registry.view<CameraComponent>();
+        for (auto entity : view)
+        {
+            auto& camera = view.get<CameraComponent>(entity);
+            if (!camera.GetFixedAspectRatio())
+            {
+                camera.SetAspectRatio((float)a_Width / (float)a_Height);
+            }
+        }
     }
 
     void Scene::Save(const std::string& a_FilePath)

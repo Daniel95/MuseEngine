@@ -36,10 +36,8 @@ namespace Muse
         {
             m_CameraEntity = Entity::Create();
 
-            CameraComponent cameraComponent = {};
-            cameraComponent.SetZoomLevel(5);
-
-            m_CameraEntity.AddComponent<CameraComponent>(cameraComponent);
+            m_CameraComponent = &m_CameraEntity.AddComponent<CameraComponent>();
+            m_CameraComponent->SetZoomLevel(5);
             m_CameraEntity.AddComponent<OrthographicEditorCameraControllerComponent>();
         }
 
@@ -73,6 +71,8 @@ namespace Muse
             (spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
         {
             m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+
+            Muse::SceneManager::GetActiveScene()->OnViewportResize(m_ViewportSize.x, m_ViewportSize.y);
         }
 
         //Rendering:
