@@ -11,6 +11,8 @@
 
 namespace Muse
 {
+    struct TransformComponent;
+
 	class Entity
 	{
 	public:
@@ -19,6 +21,7 @@ namespace Muse
         Entity(const Entity & other) = default;
 
         static Entity Create();
+        static Entity Create(TransformComponent& a_TransformComponent);
 
         template<typename T, typename... Args>
         T& AddComponent(Args&&... args)

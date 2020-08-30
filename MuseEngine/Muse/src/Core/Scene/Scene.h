@@ -9,6 +9,7 @@
 namespace Muse
 {
     class Entity;
+    struct TransformComponent;
 
     class Scene : public Resource
     {
@@ -19,6 +20,7 @@ namespace Muse
         entt::registry& GetRegistry() { return m_Registry; }
 
         Entity CreateEntity();
+        Entity CreateEntity(TransformComponent& a_TransformComponent);
 
         static std::shared_ptr<Scene> Create() { return std::make_shared<Scene>(); }
         static std::shared_ptr<Scene> Load(const std::string& a_FilePath);

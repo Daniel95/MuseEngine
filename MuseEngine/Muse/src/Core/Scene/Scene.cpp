@@ -26,6 +26,13 @@ namespace Muse
         return entity;
     }
 
+    Entity Scene::CreateEntity(TransformComponent& a_TransformComponent)
+    {
+        Entity entity = { m_Registry.create() };
+        entity.AddComponent<TransformComponent>(a_TransformComponent);
+        return entity;
+    }
+
     std::shared_ptr<Scene> Scene::Load(const std::string& a_FilePath)
     {
         std::filesystem::path path{ a_FilePath }; //creates TestingFolder object on C:

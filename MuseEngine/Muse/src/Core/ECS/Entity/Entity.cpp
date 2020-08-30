@@ -14,6 +14,12 @@ namespace Muse
 		return entity;
 	}
 
+	Entity Entity::Create(TransformComponent& a_TransformComponent)
+	{
+        Entity entity = SceneManager::GetActiveScene()->CreateEntity(a_TransformComponent);
+        return entity;
+	}
+
 	/*
 	std::string Entity::GetName() const
 	{

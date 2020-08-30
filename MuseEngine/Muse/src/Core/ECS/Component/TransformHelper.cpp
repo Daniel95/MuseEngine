@@ -167,6 +167,10 @@ namespace Muse
 	{
 		MUSE_PROFILE_FUNCTION();
 
+        glm::mat4 translation = glm::translate(GetWorldPosition(a_TransformComponent));
+		glm::mat4 rotation = CalculateWorldRotationMatrix(a_TransformComponent);
+		glm::mat4 scale = glm::scale(GetWorldScale(a_TransformComponent));
+
 		if (a_TransformComponent.dirty)
 		{
 			a_TransformComponent.worldModelMatrix = glm::translate(GetWorldPosition(a_TransformComponent)) * CalculateWorldRotationMatrix(a_TransformComponent) * glm::scale(GetWorldScale(a_TransformComponent));

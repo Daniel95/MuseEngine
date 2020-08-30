@@ -53,9 +53,12 @@ namespace Muse
 
         //Make Level
         {
-            auto entity = Entity::Create();
+            TransformComponent transformComponent = { {0, 9, 0} };
+            TransformHelper::SetLocalPosition(transformComponent, { 0, 2, 0 });
+            auto entity = Entity::Create(transformComponent);
 
-            m_CameraEntity.AddComponent<Render2DComponent>();
+            Render2DComponent& render2DComponent = entity.AddComponent<Render2DComponent>();
+            render2DComponent.color = { 1, 0, 0, 1 };
         }
 
         Muse::RenderCommand::Init();
@@ -63,6 +66,9 @@ namespace Muse
 
         Application::Get().GetJobManager()->Add<Render2DJob>(Muse::JobType::Renderer);
         Application::Get().GetJobManager()->Add<OrthographicEditorCameraControllerJob>(Muse::JobType::Gameplay);
+
+        m_SpriteSheet = Muse::ResourceManager::Load<Muse::Texture2D>("assets/topdown/kenneyrpgpack/Spritesheet/RPGpack_sheet_2X.png");
+        m_TreeTexture = Muse::SubTexture2D::Create(m_SpriteSheet, { 0, 1 }, { 128.0f, 128.0f }, { 1, 2 });
     }
 
     void EditorLayer::OnDetach()
@@ -83,14 +89,14 @@ namespace Muse
         //Rendering:
         m_Framebuffer->Bind();
 
-        m_CameraEntity.GetComponent<CameraComponent>();
-
         const glm::mat4& projectionViewMatrix = m_CameraEntity.GetComponent<CameraComponent>().GetProjectionViewMatrix(m_CameraEntity.GetComponent<TransformComponent>());
 
         Muse::Renderer2D::BeginScene(projectionViewMatrix);
 
         Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
         Muse::RenderCommand::Clear();
+
+        Muse::Renderer2D::DrawQuad({ 0, 0, 0 }, { 1, 2 }, 0, m_TreeTexture);
 
         Application::Get().GetJobManager()->Update(JobType::Renderer);
 
