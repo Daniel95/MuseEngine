@@ -160,7 +160,6 @@
     <ClInclude Include="src\Core\ECS\Component\ComponentType.h" />
     <ClInclude Include="src\Core\ECS\Component\Render2DComponent.h" />
     <ClInclude Include="src\Core\ECS\Component\TransformComponent.h" />
-    <ClInclude Include="src\Core\ECS\Component\TransformHelper.h" />
     <ClInclude Include="src\Core\ECS\Entity\Entity.h" />
     <ClInclude Include="src\Core\ECS\Entity\EntityDebugger.h" />
     <ClInclude Include="src\Core\ECS\Entity\EntityEvent.h" />
@@ -616,13 +615,13 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Core\ECS\Component\TransformComponent.cpp" />
     <ClCompile Include="src\Core\Scene\SceneManager.cpp" />
     <ClCompile Include="src\Core\Scene\Scene.cpp" />
     <ClCompile Include="src\Core\ECS\Job\InputJob.cpp" />
     <ClCompile Include="src\Core\Application.cpp" />
     <ClCompile Include="src\Core\ECS\Component\ComponentHelper.cpp" />
     <ClCompile Include="src\Core\ECS\Component\ComponentManager.cpp" />
-    <ClCompile Include="src\Core\ECS\Component\TransformHelper.cpp" />
     <ClCompile Include="src\Core\ECS\Entity\Entity.cpp" />
     <ClCompile Include="src\Core\ECS\Entity\EntityDebugger.cpp" />
     <ClCompile Include="src\Core\ECS\Entity\EntityTracker.cpp" />

@@ -1,15 +1,14 @@
 #include "CameraComponent.h"
 #include "Core/Instrumentor.h"
-#include "Core/ECS/Component/TransformHelper.h"
 #include "Core/ECS/Component/TransformComponent.h"
 
 namespace Muse
 {
     const glm::mat4& CameraComponent::GetProjectionViewMatrix(TransformComponent& a_TransformComponent)
     {
-        if (m_IsDirty || a_TransformComponent.dirty)
+        if (m_IsDirty || a_TransformComponent.GetDirty())
         {
-            m_ViewMatrix = glm::inverse(TransformHelper::GetWorldModelMatrix(a_TransformComponent));
+            m_ViewMatrix = glm::inverse(a_TransformComponent.GetWorldModelMatrix());
             m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
             m_IsDirty = false;
         }

@@ -55,7 +55,6 @@
 #include "Core/ECS/Job/Render2DJob.h"
 #include "Core/ECS/Component/Render2DComponent.h"
 #include "Core/ECS/Component/TransformComponent.h"
-#include "Core/ECS/Component/TransformHelper.h"
 
 //Camera
 

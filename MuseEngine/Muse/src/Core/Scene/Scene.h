@@ -9,7 +9,7 @@
 namespace Muse
 {
     class Entity;
-    struct TransformComponent;
+    class TransformComponent;
 
     class Scene : public Resource
     {

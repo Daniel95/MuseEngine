@@ -8,7 +8,7 @@
 namespace Muse
 {
     class Texture;
-    struct TransformComponent;
+    class TransformComponent;
 }
 
 class BulletHell : public Muse::Application

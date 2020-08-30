@@ -2,7 +2,6 @@
 #include "Render2DJob.h"
 #include "Core/ECS/Component/TransformComponent.h"
 #include "Core/ECS/Component/Render2DComponent.h"
-#include "Core/ECS/Component/TransformHelper.h"
 #include "Core/Renderer/Renderer2D.h"
 
 #include "entt.hpp"
@@ -20,7 +19,7 @@ namespace Muse
             Render2DComponent& a_Render2DComponent
             )
         {
-            a_Render2DComponent.modelMatrix = TransformHelper::GetWorldModelMatrix(a_TransformComponent);
+            a_Render2DComponent.modelMatrix = a_TransformComponent.GetWorldModelMatrix();
 
             if (a_Render2DComponent.texture != nullptr)
             {

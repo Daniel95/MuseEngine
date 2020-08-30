@@ -3,7 +3,6 @@
 #include "CameraComponent.h"
 #include "Core/Input/KeyCodes.h"
 #include "Core/Input/Input.h"
-#include "Core/ECS/Component/TransformHelper.h"
 #include "Core/Application.h"
 
 namespace Muse
@@ -29,20 +28,20 @@ namespace Muse
 
                 if (Input::GetKeyDown(MUSE_KEY_A))
                 {
-                    TransformHelper::TranslateLocal(transformComponent, glm::vec2(-moveSpeed, 0.0f));
+                    transformComponent.TranslateLocal(glm::vec2(-moveSpeed, 0.0f));
                 }
                 else if (Input::GetKeyDown(MUSE_KEY_D))
                 {
-                    TransformHelper::TranslateLocal(transformComponent, glm::vec2(moveSpeed, 0.0f));
+                    transformComponent.TranslateLocal(glm::vec2(moveSpeed, 0.0f));
                 }
 
                 if (Input::GetKeyDown(MUSE_KEY_S))
                 {
-                    TransformHelper::TranslateLocal(transformComponent, glm::vec2(0.0f, -moveSpeed));
+                    transformComponent.TranslateLocal(glm::vec2(0.0f, -moveSpeed));
                 }
                 else if (Input::GetKeyDown(MUSE_KEY_W))
                 {
-                    TransformHelper::TranslateLocal(transformComponent, glm::vec2(0.0f, moveSpeed));
+                    transformComponent.TranslateLocal(glm::vec2(0.0f, moveSpeed));
                 }
             }
         };

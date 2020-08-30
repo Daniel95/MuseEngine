@@ -5,7 +5,7 @@
 
 namespace Muse
 {
-    struct TransformComponent;
+    class TransformComponent;
 
     class CameraComponent
     {

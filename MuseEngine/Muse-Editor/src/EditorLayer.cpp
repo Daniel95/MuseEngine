@@ -15,17 +15,6 @@
 
 namespace Muse
 {
-    static uint32_t s_MapWidth = 24;
-    static const char* s_MapTiles =
-        "WWWWWWWWDDDDWWWWWWWWWWWW"
-        "WWWWWDDDWWWWDDDWWWWWWWWW"
-        "WWWWDDWWWWWWWWDDWWWWWWWW"
-        "WWWDDWWWWWWWWWDDDWWWWWWW"
-        "WWWWWDDWWWWWWWWWDWWWWWWW"
-        "WWWWWWDDWWWWWWWWDWWWWWWW"
-        "WWWWWWWWDDDDDDDWWWWWWWWW"
-        "WWWWWWWWWWDDDWWWWWWWWWWW";
-
     void EditorLayer::OnAttach()
     {
         MUSE_PROFILE_FUNCTION();
@@ -40,6 +29,9 @@ namespace Muse
         Muse::ResourceManager::Add("EditorTestScene", scene);
         Muse::SceneManager::SwitchScene(scene);
 
+        m_SpriteSheet = Muse::ResourceManager::Load<Muse::Texture2D>("assets/topdown/kenneyrpgpack/Spritesheet/RPGpack_sheet_2X.png");
+        m_TreeTexture = Muse::SubTexture2D::Create(m_SpriteSheet, { 0, 1 }, { 128.0f, 128.0f }, { 1, 2 });
+
         //Make Camera
         {
             m_CameraEntity = Entity::Create();
@@ -53,12 +45,12 @@ namespace Muse
 
         //Make Level
         {
-            TransformComponent transformComponent = { {0, 9, 0} };
-            TransformHelper::SetLocalPosition(transformComponent, { 0, 2, 0 });
+            TransformComponent transformComponent;
+            transformComponent.SetLocalPosition({ 0, 2, 0 });
             auto entity = Entity::Create(transformComponent);
 
             Render2DComponent& render2DComponent = entity.AddComponent<Render2DComponent>();
-            render2DComponent.color = { 1, 0, 0, 1 };
+            render2DComponent.texture = m_TreeTexture->GetTexture();
         }
 
         Muse::RenderCommand::Init();
@@ -66,9 +58,6 @@ namespace Muse
 
         Application::Get().GetJobManager()->Add<Render2DJob>(Muse::JobType::Renderer);
         Application::Get().GetJobManager()->Add<OrthographicEditorCameraControllerJob>(Muse::JobType::Gameplay);
-
-        m_SpriteSheet = Muse::ResourceManager::Load<Muse::Texture2D>("assets/topdown/kenneyrpgpack/Spritesheet/RPGpack_sheet_2X.png");
-        m_TreeTexture = Muse::SubTexture2D::Create(m_SpriteSheet, { 0, 1 }, { 128.0f, 128.0f }, { 1, 2 });
     }
 
     void EditorLayer::OnDetach()

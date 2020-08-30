@@ -138,9 +138,6 @@
     <ClInclude Include="src\Core\ECS\Component\TransformComponent.h">
       <Filter>src\Core\ECS\Component</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\ECS\Component\TransformHelper.h">
-      <Filter>src\Core\ECS\Component</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\ECS\Entity\Entity.h">
       <Filter>src\Core\ECS\Entity</Filter>
     </ClInclude>
@@ -1514,9 +1511,6 @@
     <ClCompile Include="src\Core\ECS\Component\ComponentManager.cpp">
       <Filter>src\Core\ECS\Component</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\ECS\Component\TransformHelper.cpp">
-      <Filter>src\Core\ECS\Component</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\ECS\Entity\Entity.cpp">
       <Filter>src\Core\ECS\Entity</Filter>
     </ClCompile>
@@ -1734,5 +1728,6 @@
     <ClCompile Include="src\Core\ECS\Job\InputJob.cpp" />
     <ClCompile Include="src\Core\Scene\Scene.cpp" />
     <ClCompile Include="src\Core\Scene\SceneManager.cpp" />
+    <ClCompile Include="src\Core\ECS\Component\TransformComponent.cpp" />
   </ItemGroup>
 </Project>
