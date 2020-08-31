@@ -52,7 +52,10 @@ namespace Muse
         }
 
         operator bool() const { return m_EntityHandle != entt::null; }
+        operator uint32_t() const { return (uint32_t)m_EntityHandle; }
 
+        bool operator ==(const Entity& a_Other) const { return m_EntityHandle == a_Other.m_EntityHandle; }
+        bool operator !=(const Entity& a_Other) const { return !(*this == a_Other); }
 	private:
         entt::entity m_EntityHandle{ entt::null };
 		

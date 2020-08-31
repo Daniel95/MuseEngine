@@ -23,11 +23,28 @@ namespace Muse
         m_Context->m_Registry.each([&](auto a_EntityId)
         {
             Entity entity = { a_EntityId };
-
-            auto& tagComponent = entity.GetComponent<TagComponent>();
-            ImGui::Text("%s", tagComponent.m_Tag.c_str());
+            DrawEntityNode(entity);
         });
 
         ImGui::End();
+    }
+
+    void SceneHierarchyPanel::DrawEntityNode(Entity a_Entity)
+    {
+        std::string& tag = a_Entity.GetComponent<TagComponent>().m_Tag;
+
+        ImGuiTreeNodeFlags flags = ((m_SelectionContext == a_Entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
+
+        bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)a_Entity, flags, tag.c_str());
+
+        if (ImGui::IsItemClicked())
+        {
+            m_SelectionContext = a_Entity;
+        }
+
+        if (opened)
+        {
+            ImGui::TreePop();
+        }
     }
 }

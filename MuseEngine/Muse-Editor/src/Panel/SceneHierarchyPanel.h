@@ -20,6 +20,9 @@ namespace Muse
         void OnImGuiRender();
 
     private:
+        void DrawEntityNode(Entity a_Entity);
+
         std::shared_ptr<Scene> m_Context;
+        Entity m_SelectionContext;
     };
 }
