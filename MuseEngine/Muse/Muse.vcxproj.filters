@@ -1500,6 +1500,8 @@
     <ClInclude Include="src\Core\ECS\Job\InputJob.h" />
     <ClInclude Include="src\Core\Scene\Scene.h" />
     <ClInclude Include="src\Core\Scene\SceneManager.h" />
+    <ClInclude Include="src\Core\ECS\Component\NativeScriptComponent.h" />
+    <ClInclude Include="src\Core\ECS\Component\ScriptableEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Core\Application.cpp">

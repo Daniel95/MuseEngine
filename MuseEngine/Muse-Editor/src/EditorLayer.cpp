@@ -12,6 +12,9 @@
 
 #include "imgui.h"
 #include "Core/ECS/Job/Render2DJob.h"
+#include "Core/Input/Input.h"
+#include "Core/Input/KeyCodes.h"
+#include "Core/Input/MouseButtonCodes.h"
 
 namespace Muse
 {
@@ -49,6 +52,50 @@ namespace Muse
 
             Render2DComponent& render2DComponent = entity.AddComponent<Render2DComponent>();
             render2DComponent.texture = m_TreeTexture->GetTexture();
+
+            class PlayerController : public ScriptableEntity
+            {
+            public:
+                void OnCreate()
+                {
+                    LOG_TRACE("OnCreate");
+                }
+
+                void OnDestroy()
+                {
+                    LOG_TRACE("OnDestroy");
+                }
+
+                void OnUpdate(float a_DeltaTime)
+                {
+                    auto& transform = GetComponent<TransformComponent>();
+                    float speed = 0.5f;
+
+                    if (Input::GetKeyDown(Key::Right))
+                    {
+                        transform.TranslateLocal({ 1 * speed, 0 });
+                    }
+                    if (Input::GetKeyDown(Key::Left))
+                    {
+                        transform.TranslateLocal({ -1 * speed, 0 });
+                    }
+                    if (Input::GetKeyDown(Key::Up))
+                    {
+                        transform.TranslateLocal({ 0,  1 * speed });
+                    }
+                    if (Input::GetKeyDown(Key::Down))
+                    {
+                        transform.TranslateLocal({ 0,  -1 * speed });
+                    }
+
+                    LOG_TRACE("OnUpdate {0}", a_DeltaTime);
+                }
+
+            private:
+
+            };
+
+            entity.AddComponent<NativeScriptComponent>().Bind<PlayerController>();
         }
 
         Muse::RenderCommand::Init();

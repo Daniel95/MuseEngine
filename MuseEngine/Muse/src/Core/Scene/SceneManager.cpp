@@ -36,6 +36,11 @@ namespace Muse
             SwitchSceneImmediate(m_SceneToSwitchTo);
             m_SceneToSwitchTo = nullptr;
         }
+
+        if (m_ActiveScene != nullptr)
+        {
+            m_ActiveScene->OnUpdate(a_DeltaTime);
+        }
     }
 
     void SceneManager::SwitchScene(std::shared_ptr<Scene> a_NextScene)

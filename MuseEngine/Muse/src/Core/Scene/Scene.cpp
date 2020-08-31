@@ -1,12 +1,14 @@
 #include "MusePCH.h"
 #include "Scene.h"
+
+#include "cereal\archives\json.hpp"
+
 #include "Core\ECS\Component\TransformComponent.h"
 #include "Core\ECS\Component\Collider2DComponent.h"
 #include "Core/Instrumentor.h"
 #include "Core/ECS/Entity/Entity.h"
-
-#include "cereal\archives\json.hpp"
 #include "..\..\Muse-Editor\src\Camera\CameraComponent.h"
+#include "Core/ECS/Component/NativeScriptComponent.h"
 
 namespace Muse
 {
@@ -49,6 +51,24 @@ namespace Muse
         fs.close();
 
         return scene;
+    }
+
+    void Scene::OnUpdate(float a_DeltaTime)
+    {
+        // Update script
+        {
+            m_Registry.view<NativeScriptComponent>().each([=](Entity a_Entity, NativeScriptComponent& a_NCS)
+            {
+                if (a_NCS.Instance == nullptr)
+                {
+                    a_NCS.InstantiateFunction();
+                    a_NCS.Instance->m_Entity = Entity{ a_Entity };
+                    a_NCS.OnCreateFunction(a_NCS.Instance);
+                }
+
+                a_NCS.OnUpdateFunction(a_NCS.Instance, a_DeltaTime);
+            });
+        }
     }
 
     void Scene::OnViewportResize(uint32_t a_Width, uint32_t a_Height)

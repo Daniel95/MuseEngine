@@ -25,6 +25,7 @@ namespace Muse
         static std::shared_ptr<Scene> Create() { return std::make_shared<Scene>(); }
         static std::shared_ptr<Scene> Load(const std::string& a_FilePath);
 
+        void OnUpdate(float a_DeltaTime);
         void OnViewportResize(uint32_t a_Width, uint32_t a_Height);
         void SetName(const std::string& a_Name) { m_Name = a_Name; }
         void Save() { Save(m_Path); }

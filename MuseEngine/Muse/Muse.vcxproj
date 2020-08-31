@@ -150,6 +150,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Core\ECS\Component\NativeScriptComponent.h" />
+    <ClInclude Include="src\Core\ECS\Component\ScriptableEntity.h" />
     <ClInclude Include="src\Core\Scene\SceneManager.h" />
     <ClInclude Include="src\Core\Scene\Scene.h" />
     <ClInclude Include="src\Core\ECS\Job\InputJob.h" />

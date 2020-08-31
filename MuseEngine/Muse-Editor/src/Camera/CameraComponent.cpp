@@ -4,6 +4,11 @@
 
 namespace Muse
 {
+    CameraComponent::CameraComponent()
+    {
+        RecalculateProjection();
+    }
+
     const glm::mat4& CameraComponent::GetProjectionViewMatrix(TransformComponent& a_TransformComponent)
     {
         if (m_IsDirty || a_TransformComponent.GetDirty())

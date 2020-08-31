@@ -10,6 +10,9 @@ namespace Muse
     class CameraComponent
     {
     public:
+        CameraComponent();
+        ~CameraComponent() = default;
+
         void SetProjection(float a_AspectRatio, float a_ZoomLevel);
         void SetProjectionMatrix(float a_Left, float a_Right, float a_Bottom, float a_Top, float a_Near = -1.0, float a_Far = 1.0);
         const glm::mat4& GetProjectionViewMatrix(TransformComponent& a_TransformComponent);

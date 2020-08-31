@@ -2,13 +2,16 @@
 
 #include <glm/glm.hpp>
 
+#include "Core/Input/KeyCodes.h"
+#include "Core/Input/MouseButtonCodes.h"
+
 namespace Muse
 {
     class Input
     {
     public:
-        static bool GetKeyDown(int a_Keycode);
-        static bool GetMouseButtonDown(int a_Button);
+        static bool GetKeyDown(KeyCode a_Keycode);
+        static bool GetMouseButtonDown(MouseCode a_Button);
         static glm::vec2 GetMousePosition();
         static float GetMouseX();
         static float GetMouseY();
