@@ -8,6 +8,7 @@
 
 #include <vector>
 #include <memory>
+#include <string>
 
 namespace Muse
 {
@@ -20,8 +21,8 @@ namespace Muse
         Entity(entt::entity handle);
         Entity(const Entity & other) = default;
 
-        static Entity Create();
-        static Entity Create(TransformComponent& a_TransformComponent);
+        static Entity Create(const std::string& a_Name);
+        static Entity Create(const std::string& a_Name, TransformComponent& a_TransformComponent);
 
         template<typename T, typename... Args>
         T& AddComponent(Args&&... args)

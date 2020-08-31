@@ -8,29 +8,15 @@ namespace Muse
     {
     }
 
-	Entity Entity::Create()
+	Entity Entity::Create(const std::string& a_Name)
 	{
-		Entity entity = SceneManager::GetActiveScene()->CreateEntity();
+		Entity entity = SceneManager::GetActiveScene()->CreateEntity(a_Name);
 		return entity;
 	}
 
-	Entity Entity::Create(TransformComponent& a_TransformComponent)
+	Entity Entity::Create(const std::string& a_Name, TransformComponent& a_TransformComponent)
 	{
-        Entity entity = SceneManager::GetActiveScene()->CreateEntity(a_TransformComponent);
+        Entity entity = SceneManager::GetActiveScene()->CreateEntity(a_Name, a_TransformComponent);
         return entity;
 	}
-
-	/*
-	std::string Entity::GetName() const
-	{
-        if (Muse::EntityDebugger::HasEntityName(m_Id))
-        {
-            return Muse::EntityDebugger::GetEntityName(m_Id);
-		}
-		else
-		{
-			return std::to_string(m_Id);
-		}
-	}
-	*/
 }

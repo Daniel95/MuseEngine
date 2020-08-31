@@ -4,7 +4,9 @@
 #include "Core/ECS/Entity/Entity.h"
 
 #include "entt.hpp"
+
 #include <cereal/cereal.hpp>
+#include <string>
 
 namespace Muse
 {
@@ -14,13 +16,13 @@ namespace Muse
     class Scene : public Resource
     {
     public:
-        Scene();
+        Scene() = default;
         ~Scene() = default;
 
         entt::registry& GetRegistry() { return m_Registry; }
 
-        Entity CreateEntity();
-        Entity CreateEntity(TransformComponent& a_TransformComponent);
+        Entity CreateEntity(const std::string& a_Name);
+        Entity CreateEntity(const std::string& a_Name, TransformComponent& a_TransformComponent);
 
         static std::shared_ptr<Scene> Create() { return std::make_shared<Scene>(); }
         static std::shared_ptr<Scene> Load(const std::string& a_FilePath);
@@ -36,5 +38,7 @@ namespace Muse
         entt::registry m_Registry;
         uint32_t m_ViewportWidth = 0, m_ViewportHeight = 0;
 
+
+        friend class SceneHierarchyPanel;
     };
 }

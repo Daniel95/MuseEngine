@@ -1,3 +1,4 @@
+#include "MusePCH.h"
 #include "CameraComponent.h"
 #include "Core/Instrumentor.h"
 #include "Core/ECS/Component/TransformComponent.h"

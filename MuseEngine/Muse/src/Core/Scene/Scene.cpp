@@ -3,36 +3,31 @@
 
 #include "cereal\archives\json.hpp"
 
-#include "Core\ECS\Component\TransformComponent.h"
-#include "Core\ECS\Component\Collider2DComponent.h"
+#include "Core/ECS/Component/TransformComponent.h"
+#include "Core/ECS/Component/Collider2DComponent.h"
 #include "Core/Instrumentor.h"
 #include "Core/ECS/Entity/Entity.h"
-#include "..\..\Muse-Editor\src\Camera\CameraComponent.h"
 #include "Core/ECS/Component/NativeScriptComponent.h"
+#include "Core/ECS/Component/TagComponent.h"
+#include "Core/ECS/Component/CameraComponent.h"
 
 namespace Muse
 {
-    Scene::Scene()
-    {
-        entt::entity entity = m_Registry.create();
-
-        m_Registry.emplace<TransformComponent>(entity);
-
-        m_Registry.view<TransformComponent, Collider2DComponent>();
-
-    }
-
-    Entity Scene::CreateEntity()
+    Entity Scene::CreateEntity(const std::string& a_Name)
     {
         Entity entity = { m_Registry.create() };
         entity.AddComponent<TransformComponent>();
+        auto& tag = entity.AddComponent<TagComponent>();
+        tag.m_Tag = a_Name.empty() ? "Entity" : a_Name;
         return entity;
     }
 
-    Entity Scene::CreateEntity(TransformComponent& a_TransformComponent)
+    Entity Scene::CreateEntity(const std::string& a_Name, TransformComponent& a_TransformComponent)
     {
         Entity entity = { m_Registry.create() };
         entity.AddComponent<TransformComponent>(a_TransformComponent);
+        auto& tag = entity.AddComponent<TagComponent>();
+        tag.m_Tag = a_Name.empty() ? "Entity" : a_Name;
         return entity;
     }
 

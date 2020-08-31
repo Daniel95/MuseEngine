@@ -1,6 +1,8 @@
+#include "MusePCH.h"
 #include "OrthographicEditorCameraControllerJob.h"
-#include "OrthographicEditorCameraControllerComponent.h"
-#include "CameraComponent.h"
+
+#include "Core/ECS/Component/OrthographicEditorCameraControllerComponent.h"
+#include "Core/ECS/Component/CameraComponent.h"
 #include "Core/Input/KeyCodes.h"
 #include "Core/Input/Input.h"
 #include "Core/Application.h"

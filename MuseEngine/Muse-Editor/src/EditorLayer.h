@@ -1,9 +1,12 @@
 #include "Muse.h"
 
+#include "Panel/SceneHierarchyPanel.h"
+
 namespace Muse
 {
     class Entity;
     class CameraComponent;
+    class SceneHierarchyPanel;
 
     class EditorLayer : public Layer
     {
@@ -31,5 +34,8 @@ namespace Muse
         Entity m_CameraEntity;
         CameraComponent* m_CameraComponent;
         bool m_ViewportFocused = false, m_ViewportHovered = false;
+
+        // Panels
+        SceneHierarchyPanel m_SceneHierarchyPanel;
     };
 }

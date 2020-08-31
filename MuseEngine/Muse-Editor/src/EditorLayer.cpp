@@ -4,9 +4,9 @@
 #include "Core/Scene/Scene.h"
 #include "Editor.h"
 #include "FileBrowser.h"
-#include "Camera/CameraComponent.h"
-#include "Camera/OrthographicEditorCameraControllerComponent.h"
-#include "Camera/OrthographicEditorCameraControllerJob.h"
+#include "Core/ECS/Component/CameraComponent.h"
+#include "Core/ECS/Component/OrthographicEditorCameraControllerComponent.h"
+#include "Core/ECS/Job/OrthographicEditorCameraControllerJob.h"
 #include "Core/ECS/Entity/Entity.h"
 #include "Core/ECS/Component/Render2DComponent.h"
 
@@ -37,7 +37,7 @@ namespace Muse
 
         //Make Camera
         {
-            m_CameraEntity = Entity::Create();
+            m_CameraEntity = Entity::Create("Camera");
 
             m_CameraComponent = &m_CameraEntity.AddComponent<CameraComponent>();
             m_CameraComponent->SetZoomLevel(5);
@@ -48,7 +48,7 @@ namespace Muse
         {
             TransformComponent transformComponent;
             transformComponent.SetLocalPosition({ 0, 2, 0 });
-            auto entity = Entity::Create(transformComponent);
+            auto entity = Entity::Create("Squad", transformComponent);
 
             Render2DComponent& render2DComponent = entity.AddComponent<Render2DComponent>();
             render2DComponent.texture = m_TreeTexture->GetTexture();
@@ -104,6 +104,8 @@ namespace Muse
 
         Application::Get().GetJobManager()->Add<Render2DJob>(Muse::JobType::Renderer);
         Application::Get().GetJobManager()->Add<OrthographicEditorCameraControllerJob>(Muse::JobType::Gameplay);
+
+        m_SceneHierarchyPanel.SetContext(Muse::SceneManager::GetActiveScene());
     }
 
     void EditorLayer::OnDetach()
@@ -147,6 +149,8 @@ namespace Muse
         Editor::StartDockSpace();
 
         FileBrowser::Render();
+
+        m_SceneHierarchyPanel.OnImGuiRender();
 
         //ViewPort
         {
