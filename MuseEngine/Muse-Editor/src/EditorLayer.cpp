@@ -69,23 +69,23 @@ namespace Muse
                 void OnUpdate(float a_DeltaTime)
                 {
                     auto& transform = GetComponent<TransformComponent>();
-                    float speed = 0.5f;
+                    float speed = 0.01f;
 
                     if (Input::GetKeyDown(Key::Right))
                     {
-                        transform.TranslateLocal({ 1 * speed, 0 });
+                        transform.TranslateLocal({ 1.0f * speed, 0 });
                     }
                     if (Input::GetKeyDown(Key::Left))
                     {
-                        transform.TranslateLocal({ -1 * speed, 0 });
+                        transform.TranslateLocal({ -1.0f * speed, 0 });
                     }
                     if (Input::GetKeyDown(Key::Up))
                     {
-                        transform.TranslateLocal({ 0,  1 * speed });
+                        transform.TranslateLocal({ 0,  1.0f * speed });
                     }
                     if (Input::GetKeyDown(Key::Down))
                     {
-                        transform.TranslateLocal({ 0,  -1 * speed });
+                        transform.TranslateLocal({ 0,  -1.0f * speed });
                     }
 
                     LOG_TRACE("OnUpdate {0}", a_DeltaTime);
@@ -95,6 +95,7 @@ namespace Muse
 
             };
 
+            //Maybe use specialized template
             entity.AddComponent<NativeScriptComponent>().Bind<PlayerController>();
         }
 

@@ -59,14 +59,15 @@ namespace Muse
         {
             m_Registry.view<NativeScriptComponent>().each([=](Entity a_Entity, NativeScriptComponent& a_NCS)
             {
+                // TODO: Move to Scene::OnScenePlay
                 if (a_NCS.Instance == nullptr)
                 {
-                    a_NCS.InstantiateFunction();
+                    a_NCS.Instance = a_NCS.InstantiateScript();
                     a_NCS.Instance->m_Entity = Entity{ a_Entity };
-                    a_NCS.OnCreateFunction(a_NCS.Instance);
+                    a_NCS.Instance->OnCreate();
                 }
 
-                a_NCS.OnUpdateFunction(a_NCS.Instance, a_DeltaTime);
+                a_NCS.Instance->OnUpdate(a_DeltaTime);
             });
         }
     }
