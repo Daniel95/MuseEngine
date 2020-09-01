@@ -123,9 +123,6 @@
     <ClInclude Include="src\Core\ECS\Component\Collider2DComponent.h">
       <Filter>src\Core\ECS\Component</Filter>
     </ClInclude>
-    <ClInclude Include="src\Core\ECS\Component\ComponentHelper.h">
-      <Filter>src\Core\ECS\Component</Filter>
-    </ClInclude>
     <ClInclude Include="src\Core\ECS\Component\ComponentManager.h">
       <Filter>src\Core\ECS\Component</Filter>
     </ClInclude>
@@ -1511,9 +1508,6 @@
     <ClCompile Include="src\Core\Application.cpp">
       <Filter>src\Core</Filter>
     </ClCompile>
-    <ClCompile Include="src\Core\ECS\Component\ComponentHelper.cpp">
-      <Filter>src\Core\ECS\Component</Filter>
-    </ClCompile>
     <ClCompile Include="src\Core\ECS\Component\ComponentManager.cpp">
       <Filter>src\Core\ECS\Component</Filter>
     </ClCompile>
@@ -1737,5 +1731,6 @@
     <ClCompile Include="src\Core\ECS\Component\TransformComponent.cpp" />
     <ClCompile Include="src\Core\ECS\Job\OrthographicEditorCameraControllerJob.cpp" />
     <ClCompile Include="src\Core\ECS\Component\CameraComponent.cpp" />
+    <ClCompile Include="src\Core\ECS\Job\Job.cpp" />
   </ItemGroup>
 </Project>

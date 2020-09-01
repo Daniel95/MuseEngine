@@ -7,6 +7,7 @@
 #include "Core/Renderer/RayTracer/Shape/Plane.h"
 #include "Core/Renderer/RayTracer/Shape/Box.h"
 
+/*
 void SceneLibraryRT::MakeRTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 {
 	std::shared_ptr<Muse::AmbientLightSource> ambientLight = std::make_shared<Muse::AmbientLightSource>(glm::vec3(1.0f), 0.25f);
@@ -17,12 +18,6 @@ void SceneLibraryRT::MakeRTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 		std::shared_ptr<Muse::LightSource> lightSource = std::make_shared<Muse::LightSource>(glm::vec3(-2, 3, 0), glm::vec3(0.1f, 0.f, 1), 1.5f, 10);
 		a_Scene->AddLightSource(lightSource);
 	}
-
-	{
-		//std::shared_ptr<Muse::LightSource> lightSource = std::make_shared<Muse::LightSource>(glm::vec3(2, 3, 0), glm::vec3(0.3f, 0.6f, 0.9f), 1.5f, 10);
-		//a_Scene->AddLightSource(lightSource);
-	}
-
 
 	Muse::Material diffuseMaterial = { Muse::MaterialType::Diffuse, glm::vec3(0.8f, 0.3f, 0.5f) };
 	Muse::Material speculairMaterial = { Muse::MaterialType::Specular};
@@ -89,7 +84,9 @@ void SceneLibraryRT::MakeRTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 		renderComponent->SetShape(boxComponent);
 	}
 }
+*/
 
+/*
 void SceneLibraryRT::MakePTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 {
 	std::shared_ptr<Muse::AmbientLightSource> ambientLight = std::make_shared<Muse::AmbientLightSource>(glm::vec3(1.0f), 0.25f);
@@ -135,22 +132,13 @@ void SceneLibraryRT::MakePTBenchmarkScene(std::shared_ptr<Muse::Scene> a_Scene)
 		renderComponent->SetShape(sphereComponent);
 	}
 
-	/*
-	{
-		auto planeGameObject = a_Scene->AddGameObject(glm::vec3(2, 0, 0), glm::vec3(0.5f, 1.f, 1.5f));
-		planeGameObject->GetTransform()->RotateLocal(glm::vec3(23, 5, 88));
-		auto boxComponent = planeGameObject->AddComponent<Muse::Box>();
 
-		auto renderComponent = planeGameObject->AddComponent<Muse::RenderComponent>();
-
-		renderComponent->SetMaterial(blinnPhongMaterialComponent);
-		renderComponent->SetShape(boxComponent);
-	}
-    */
 
 	MakePtSkyBox(a_Scene, 15, 3, 15);
 }
+*/
 
+/*
 void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_Width, float a_Height, float a_Length)
 {
 	//float x = a_Width / 2;
@@ -180,17 +168,6 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 		renderComponent->SetShape(boxComponent);
 	}
 
-	/*
-	{
-		auto boxGameObject = a_Scene->AddGameObject(glm::vec3(-4, 0, -3), glm::vec3(3, 5, 1));
-		auto boxComponent = boxGameObject->AddComponent<Muse::Box>();
-
-		auto renderComponent = boxGameObject->AddComponent<Muse::RenderComponent>();
-
-		renderComponent->SetMaterial(whiteDiffuseMaterialComponent);
-		renderComponent->SetShape(boxComponent);
-	}
-    */
 
 	{
 		auto planeGameObject = a_Scene->AddGameObject(glm::vec3(0, -3, 0), glm::vec3(15));
@@ -203,3 +180,5 @@ void SceneLibraryRT::MakePtSkyBox(std::shared_ptr<Muse::Scene> a_Scene, float a_
 		renderComponent->SetShape(planeComponent);
 	}
 }
+
+*/

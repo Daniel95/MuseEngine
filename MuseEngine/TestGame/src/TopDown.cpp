@@ -10,7 +10,7 @@
 #include "Core/ECS/Job/Render2DJob.h"
 #include "Core/ECS/Component/Render2DComponent.h"
 #include "Core/ECS/Component/TransformComponent.h"
-#include "Core/Gameplay/Component/CameraComponent.cpp"
+#include "Core/ECS/Component/CameraComponent.cpp"
 #include "Core/Renderer/SubTexture2D.h"
 #include "Core/ECS/Entity/EntityDebugger.h"
 
@@ -33,18 +33,25 @@ Muse::Application* Muse::CreateApplication()
     return new TopDown();
 }
 #endif
+#include "Core/ECS/Component/CameraComponent.h"
 
 void TopDown::OnStart()
 {
     Muse::RenderCommand::Init();
     Muse::Renderer2D::Init();
 
-    std::shared_ptr<Muse::SceneOld> scene = Muse::SceneOld::Create();
+    std::shared_ptr<Muse::Scene> scene = Muse::Scene::Create();
     Muse::ResourceManager::Add("Game2DTestScene", scene);
-    Muse::SceneManagerOld::SwitchScene(scene);
+    Muse::SceneManager::SwitchScene(scene);
 
-    Muse::CameraComponent* cameraComponent = Muse::CameraComponent::GetMain();
-    cameraComponent->SetZoomLevel(5);
+    //Make Camera
+    {
+        m_CameraEntity = Muse::Entity::Create("Camera");
+
+        m_CameraComponent = &m_CameraEntity.AddComponent<Muse::CameraComponent>();
+        m_CameraComponent->SetZoomLevel(5);
+        m_CameraEntity.AddComponent<Muse::OrthographicEditorCameraControllerComponent>();
+    }
 
     m_SpriteSheet = Muse::ResourceManager::Load<Muse::Texture2D>("assets/topdown/kenneyrpgpack/Spritesheet/RPGpack_sheet_2X.png");
 
@@ -59,8 +66,9 @@ void TopDown::OnStart()
 
 void TopDown::OnRender()
 {
-    Muse::Renderer2D::BeginScene(*Muse::CameraComponent::GetMain());
+    const glm::mat4& projectionViewMatrix = m_CameraComponent->GetProjectionViewMatrix(m_CameraEntity.GetComponent<Muse::TransformComponent>());
 
+    Muse::Renderer2D::BeginScene(projectionViewMatrix);
 
     Muse::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
     Muse::RenderCommand::Clear();
@@ -85,7 +93,6 @@ void TopDown::OnRender()
     Muse::Renderer2D::ResetStatistics();
 
     Muse::Renderer2D::EndScene();
-
 }
 
 void TopDown::OnImGuiRender()

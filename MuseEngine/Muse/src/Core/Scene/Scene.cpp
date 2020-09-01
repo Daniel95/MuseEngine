@@ -31,6 +31,11 @@ namespace Muse
         return entity;
     }
 
+    void Scene::DestroyEntity(Entity a_Entity)
+    {
+
+    }
+
     std::shared_ptr<Scene> Scene::Load(const std::string& a_FilePath)
     {
         std::filesystem::path path{ a_FilePath }; //creates TestingFolder object on C:
@@ -65,6 +70,12 @@ namespace Muse
                 a_NCS.Instance->OnUpdate(a_DeltaTime);
             });
         }
+
+        for (auto entity : m_EntitiesToRemove)
+        {
+            m_Registry.remove(entity.GetEntityHandle());
+        }
+        m_EntitiesToRemove.clear();
     }
 
     void Scene::OnViewportResize(uint32_t a_Width, uint32_t a_Height)
@@ -83,6 +94,10 @@ namespace Muse
                 camera.SetViewportSize(a_Width, a_Height);
             }
         }
+
+        const entt::entity* entities = view.data();
+
+        auto test = view.data();
     }
 
     void Scene::Save(const std::string& a_FilePath)

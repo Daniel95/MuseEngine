@@ -1,9 +1,9 @@
 #include "ScrollingJob.h"
 
 #include "Core/ECS/Component/TransformComponent.h"
-#include "Core/ECS/Component/TransformHelper.h"
 
 #include "BulletHell/Component/Components.h"
+#include "Core/Application.h"
 
 void ScrollingJob::OnUpdate()
 {
@@ -15,9 +15,7 @@ void ScrollingJob::OnUpdate()
         ScrollingComponent& a_ScrollingComponent
         )
     {
-        glm::vec3 newPosition = a_TransformComponent.localPosition + glm::vec3(0, -a_ScrollingComponent.speed * deltaTime , 0);
-
-        Muse::TransformHelper::SetLocalPosition(a_TransformComponent, newPosition);
+        a_TransformComponent.TranslateLocal(glm::vec3(0, -a_ScrollingComponent.speed * deltaTime, 0));
     };
 
     Run<Muse::TransformComponent, ScrollingComponent>(scrollJob);

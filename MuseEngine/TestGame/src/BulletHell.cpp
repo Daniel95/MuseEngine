@@ -5,20 +5,11 @@
 #include "Muse.h"
 #include "Mode.h"
 
-#include "Core/ECS/Job/Job.h"
-#include "Core/ECS/Job/JobManager.h"
-#include "Core/ECS/Job/Render2DJob.h"
-#include "Core/ECS/Component/Render2DComponent.h"
-#include "Core/ECS/Component/TransformComponent.h"
-#include "Core/Gameplay/Component/CameraComponent.cpp"
-#include "Core/ECS/Entity/EntityDebugger.h"
-
 #include "BulletHell/Job/PlayerJob.h"
 #include "BulletHell/Job/EnemyJob.h"
 #include "BulletHell/Job/DestroyOutOfBoundsJob.h"
 #include "BulletHell/Job/ProjectileJob.h"
 #include "BulletHell/Job/ObstacleCollisionJob.h"
-#include "BulletHell/Job/HealthJob.h"
 #include "BulletHell/Job/ScrollingJob.h"
 #include "BulletHell/Job/ObstacleSpawnerJob.h"
 #include "BulletHell/Job/BackgroundParticleSpawner.h"
@@ -31,15 +22,16 @@ Muse::Application* Muse::CreateApplication()
     return new BulletHell();
 }
 #endif
+#include "Core/ECS/Component/Collider2DComponent.h"
 
-std::shared_ptr<Muse::Texture> BulletHell::s_PlayerTexture = nullptr;
-std::shared_ptr<Muse::Texture> BulletHell::s_EnemyTexture = nullptr;
-std::shared_ptr<Muse::Texture> BulletHell::s_ProjectileRedTexture = nullptr;
-std::shared_ptr<Muse::Texture> BulletHell::s_ProjectileBlueTexture = nullptr;
-std::shared_ptr<Muse::Texture> BulletHell::s_MeteorTexture = nullptr;
-std::shared_ptr<Muse::Texture> BulletHell::s_Star1 = nullptr;
-std::shared_ptr<Muse::Texture> BulletHell::s_Star2 = nullptr;
-std::shared_ptr<Muse::Texture> BulletHell::s_Star3 = nullptr;
+std::shared_ptr<Muse::Texture2D> BulletHell::s_PlayerTexture = nullptr;
+std::shared_ptr<Muse::Texture2D> BulletHell::s_EnemyTexture = nullptr;
+std::shared_ptr<Muse::Texture2D> BulletHell::s_ProjectileRedTexture = nullptr;
+std::shared_ptr<Muse::Texture2D> BulletHell::s_ProjectileBlueTexture = nullptr;
+std::shared_ptr<Muse::Texture2D> BulletHell::s_MeteorTexture = nullptr;
+std::shared_ptr<Muse::Texture2D> BulletHell::s_Star1 = nullptr;
+std::shared_ptr<Muse::Texture2D> BulletHell::s_Star2 = nullptr;
+std::shared_ptr<Muse::Texture2D> BulletHell::s_Star3 = nullptr;
 
 void BulletHell::OnStart()
 {
@@ -53,26 +45,17 @@ void BulletHell::OnStart()
     Muse::CameraComponent* cameraComponent = Muse::CameraComponent::GetMain();
     cameraComponent->SetZoomLevel(5);
 
-    s_PlayerTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/playerShip3_blue.png");
-    s_EnemyTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Enemies/enemyBlack3.png");
-    s_MeteorTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Meteors/meteorBrown_med1.png");
-    s_ProjectileRedTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Lasers/laserRed04.png");
-    s_ProjectileBlueTexture = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Lasers/laserBlue04.png");
-    s_Star1 = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Effects/star1.png");
-    s_Star2 = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Effects/star2.png");
-    s_Star3 = Muse::ResourceManager::Load<Muse::Texture>("assets/textures/Effects/star3.png");
-
-    //BulletHell
-    Muse::ComponentManager<PlayerComponent>::Register("PlayerComponent");
-    Muse::ComponentManager<ObstacleComponent>::Register("ObstacleComponent");
-    Muse::ComponentManager<ProjectileComponent>::Register("ProjectileComponent");
-    Muse::ComponentManager<DestroyOutOfBoundsComponent>::Register("DestroyOutOfBoundsComponent");
-    Muse::ComponentManager<EnemyComponent>::Register("EnemyComponent");
-    Muse::ComponentManager<ScrollingComponent>::Register("ScrollingComponent");
+    s_PlayerTexture = Muse::ResourceManager::Load<Muse::Texture2D>("assets/textures/playerShip3_blue.png");
+    s_EnemyTexture = Muse::ResourceManager::Load<Muse::Texture2D>("assets/textures/Enemies/enemyBlack3.png");
+    s_MeteorTexture = Muse::ResourceManager::Load<Muse::Texture2D>("assets/textures/Meteors/meteorBrown_med1.png");
+    s_ProjectileRedTexture = Muse::ResourceManager::Load<Muse::Texture2D>("assets/textures/Lasers/laserRed04.png");
+    s_ProjectileBlueTexture = Muse::ResourceManager::Load<Muse::Texture2D>("assets/textures/Lasers/laserBlue04.png");
+    s_Star1 = Muse::ResourceManager::Load<Muse::Texture2D>("assets/textures/Effects/star1.png");
+    s_Star2 = Muse::ResourceManager::Load<Muse::Texture2D>("assets/textures/Effects/star2.png");
+    s_Star3 = Muse::ResourceManager::Load<Muse::Texture2D>("assets/textures/Effects/star3.png");
 
     GetJobManager()->Add<Muse::Render2DJob>(Muse::JobType::Renderer);
     GetJobManager()->Add<PlayerJob>(Muse::JobType::Gameplay);
-    GetJobManager()->Add<HealthJob>(Muse::JobType::Gameplay);
     GetJobManager()->Add<ProjectileJob>(Muse::JobType::Gameplay);
     GetJobManager()->Add<DestroyOutOfBoundsJob>(Muse::JobType::Gameplay);
     GetJobManager()->Add<ObstacleCollisionJob>(Muse::JobType::Gameplay);
@@ -159,11 +142,11 @@ int BulletHell::CreatePlayer(const glm::vec2& a_Position)
         glm::vec3(0.5f, 0.5f, 0.5f),
     };
 
-    Muse::ComponentManager<Muse::Render2DComponent>::Add(playerEntity, render2DComponent);
-    Muse::ComponentManager<Muse::TransformComponent>::Add(playerEntity, transformComponent);
-    Muse::ComponentManager<Muse::Collider2DComponent>::Add(playerEntity, { });
+    playerEntity.AddComponent<Muse::Render2DComponent>(render2DComponent);
+    playerEntity.AddComponent<Muse::TransformComponent>(transformComponent);
+    playerEntity.AddComponent<Muse::Collider2DComponent>();
 
-    Muse::ComponentManager<PlayerComponent>::Add(playerEntity, { });
+    playerEntity.AddComponent<PlayerComponent>();
 
     return playerEntity;
 }
@@ -183,14 +166,14 @@ int BulletHell::CreateMeteor(const glm::vec2& a_Position, const glm::vec2& a_Sca
         glm::vec3(a_Scale.x, a_Scale.y, 0)
     };
 
-    Muse::ComponentManager<Muse::Render2DComponent>::Add(meteorEntity, render2DComponent);
-    Muse::ComponentManager<Muse::TransformComponent>::Add(meteorEntity, transformComponent);
-    Muse::ComponentManager<Muse::Collider2DComponent>::Add(meteorEntity, { });
+    meteorEntity.AddComponent<Muse::Render2DComponent>(render2DComponent);
+    meteorEntity.AddComponent<Muse::TransformComponent>(transformComponent);
+    meteorEntity.AddComponent<Muse::Collider2DComponent>();
 
-    Muse::ComponentManager<MeteorComponent>::Add(meteorEntity, { });
-    Muse::ComponentManager<ObstacleComponent>::Add(meteorEntity, { });
-    Muse::ComponentManager<ScrollingComponent>::Add(meteorEntity, { });
-    Muse::ComponentManager<DestroyOutOfBoundsComponent>::Add(meteorEntity, { });
+    //meteorEntity.AddComponent<MeteorComponent>();
+    meteorEntity.AddComponent<ObstacleComponent>();
+    meteorEntity.AddComponent<ScrollingComponent>();
+    meteorEntity.AddComponent<DestroyOutOfBoundsComponent>();
 
     return meteorEntity;
 }
@@ -211,19 +194,19 @@ int BulletHell::CreateEnemy(const glm::vec2& a_Position, const glm::vec2& a_Scal
         glm::vec3(0, 0, glm::radians(180.0f))
     };
 
-    Muse::ComponentManager<Muse::Render2DComponent>::Add(enemyEntity, render2DComponent);
-    Muse::ComponentManager<Muse::TransformComponent>::Add(enemyEntity, transformComponent);
-    Muse::ComponentManager<Muse::Collider2DComponent>::Add(enemyEntity, { });
-
-    Muse::ComponentManager<ObstacleComponent>::Add(enemyEntity, { });
-    Muse::ComponentManager<EnemyComponent>::Add(enemyEntity, { });
-    Muse::ComponentManager<DestroyOutOfBoundsComponent>::Add(enemyEntity, { });
-    Muse::ComponentManager<ScrollingComponent>::Add(enemyEntity, { });
+    enemyEntity.AddComponent<Muse::Render2DComponent>(render2DComponent);
+    enemyEntity.AddComponent<Muse::TransformComponent>(transformComponent);
+    enemyEntity.AddComponent<Muse::Collider2DComponent>();
+    
+    enemyEntity.AddComponent<ObstacleComponent>();
+    enemyEntity.AddComponent<EnemyComponent>();
+    enemyEntity.AddComponent<DestroyOutOfBoundsComponent>();
+    enemyEntity.AddComponent<ScrollingComponent>();
 
     return enemyEntity;
 }
 
-int BulletHell::CreateProjectile(Muse::TransformComponent& a_TransformComponent, const std::shared_ptr<Muse::Texture> a_Texture, float a_Speed)
+int BulletHell::CreateProjectile(Muse::TransformComponent& a_TransformComponent, const std::shared_ptr<Muse::Texture2D> a_Texture, float a_Speed)
 {
     auto projectileEntity = Muse::Entity::Create("Projectile");
 
@@ -232,14 +215,14 @@ int BulletHell::CreateProjectile(Muse::TransformComponent& a_TransformComponent,
         a_Texture,
     };
 
-    Muse::ComponentManager<Muse::Render2DComponent>::Add(projectileEntity, render2DComponent);
-    Muse::ComponentManager<Muse::TransformComponent>::Add(projectileEntity, a_TransformComponent);
-    Muse::ComponentManager<Muse::Collider2DComponent>::Add(projectileEntity, { });
-
-    Muse::ComponentManager<ObstacleComponent>::Add(projectileEntity, { });
-    Muse::ComponentManager<ProjectileComponent>::Add(projectileEntity, { a_Speed });
-    Muse::ComponentManager<DestroyOutOfBoundsComponent>::Add(projectileEntity, { });
-    Muse::ComponentManager<ScrollingComponent>::Add(projectileEntity, { });
+    projectileEntity.AddComponent<Muse::Render2DComponent>(render2DComponent);
+    projectileEntity.AddComponent<Muse::TransformComponent>(a_TransformComponent);
+    projectileEntity.AddComponent<Muse::Collider2DComponent>();
+    
+    projectileEntity.AddComponent<ObstacleComponent>();
+    projectileEntity.AddComponent<ProjectileComponent>();
+    projectileEntity.AddComponent<DestroyOutOfBoundsComponent>();
+    projectileEntity.AddComponent<ScrollingComponent>();
 
     return projectileEntity;
 }
@@ -277,7 +260,7 @@ int BulletHell::CreateBackgroundParticle3(const glm::vec2& a_Position)
     return CreateBackgroundParticle(transformComponent, s_Star3, 1);
 }
 
-int BulletHell::CreateBackgroundParticle(Muse::TransformComponent& a_TransformComponent, const std::shared_ptr<Muse::Texture>& a_Texture, float a_ScrollingSpeed)
+int BulletHell::CreateBackgroundParticle(Muse::TransformComponent& a_TransformComponent, const std::shared_ptr<Muse::Texture2D>& a_Texture, float a_ScrollingSpeed)
 {
     auto particleEntity = Muse::Entity::Create("Particle");
 
@@ -286,11 +269,11 @@ int BulletHell::CreateBackgroundParticle(Muse::TransformComponent& a_TransformCo
         a_Texture,
     };
 
-    Muse::ComponentManager<Muse::Render2DComponent>::Add(particleEntity, render2DComponent);
-    Muse::ComponentManager<Muse::TransformComponent>::Add(particleEntity, a_TransformComponent);
+    particleEntity.AddComponent<Muse::Render2DComponent>(render2DComponent);
+    particleEntity.AddComponent<Muse::TransformComponent>(a_TransformComponent);
 
-    Muse::ComponentManager<DestroyOutOfBoundsComponent>::Add(particleEntity, { });
-    Muse::ComponentManager<ScrollingComponent>::Add(particleEntity, { a_ScrollingSpeed });
+    particleEntity.AddComponent<DestroyOutOfBoundsComponent>();
+    particleEntity.AddComponent<ScrollingComponent>();
 
     return particleEntity;
 }

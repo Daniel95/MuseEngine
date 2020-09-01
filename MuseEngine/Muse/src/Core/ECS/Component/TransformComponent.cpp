@@ -14,7 +14,22 @@
 
 namespace Muse
 {
-	void TransformComponent::SetLocalPosition(const glm::vec3& a_Position)
+    TransformComponent::TransformComponent(const glm::vec3& a_LocalPosition)
+		: m_LocalPosition(a_LocalPosition)
+    {
+    }
+
+    TransformComponent::TransformComponent(const glm::vec3& a_LocalPosition, const glm::vec3& a_LocalScale)
+        : m_LocalPosition(a_LocalPosition), m_LocalScale(a_LocalScale)
+    {
+    }
+
+    TransformComponent::TransformComponent(const glm::vec3& a_LocalPosition, const glm::vec3& a_LocalScale, const glm::vec3& a_LocalRotation)
+        : m_LocalPosition(a_LocalPosition), m_LocalScale(a_LocalScale), m_LocalRotation(a_LocalRotation)
+    {
+    }
+
+    void TransformComponent::SetLocalPosition(const glm::vec3& a_Position)
 	{
 		MUSE_PROFILE_FUNCTION();
 
@@ -70,7 +85,19 @@ namespace Muse
 		m_LocalRotation = a_Rotation;
 	}
 
-	void TransformComponent::SetLookAt(glm::vec3 a_Target)
+    const glm::vec3& TransformComponent::GetWorldRotation()
+    {
+        MUSE_PROFILE_FUNCTION();
+
+        //if (parent == nullptr)
+        //{
+        return m_LocalRotation;
+        //}
+
+        //return TransformSOmethingIdk(*parent, m_LocalPosition);
+    }
+
+    void TransformComponent::SetLookAt(glm::vec3 a_Target)
 	{
 		MUSE_PROFILE_FUNCTION();
 

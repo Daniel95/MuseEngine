@@ -19,4 +19,9 @@ namespace Muse
         Entity entity = SceneManager::GetActiveScene()->CreateEntity(a_Name, a_TransformComponent);
         return entity;
 	}
+
+	void Entity::Destroy()
+	{
+		SceneManager::GetActiveScene()->DestroyEntity(*this);
+	}
 }

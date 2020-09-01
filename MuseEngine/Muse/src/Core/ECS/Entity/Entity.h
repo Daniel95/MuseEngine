@@ -24,6 +24,9 @@ namespace Muse
         static Entity Create(const std::string& a_Name);
         static Entity Create(const std::string& a_Name, TransformComponent& a_TransformComponent);
 
+        void Destroy();
+        entt::entity GetEntityHandle() { return m_EntityHandle; }
+
         template<typename T, typename... Args>
         T& AddComponent(Args&&... args)
         {
@@ -43,6 +46,26 @@ namespace Muse
         {
             return SceneManager::GetActiveScene()->GetRegistry().has<T>(m_EntityHandle);
         }
+
+        /*
+        //Maybe use get and check nullptr!
+        template<typename T>
+        bool HasComponent(T* a_Component)
+        {
+            std::shared_ptr<Scene> scene = SceneManager::GetActiveScene();
+
+            bool hasComponent = scene->GetRegistry().has<T>(m_EntityHandle);
+            if (hasComponent)
+            {
+                a_Component = &scene->GetRegistry().get<T>(m_EntityHandle);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        */
 
         template<typename T>
         void RemoveComponent()

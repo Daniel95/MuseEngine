@@ -23,9 +23,9 @@ void EnemyJob::OnUpdate()
 
             Muse::TransformComponent projectileTransformComponent
             {
-                a_TransformComponent.localPosition + Muse::TransformHelper::GetUp(a_TransformComponent),
+                a_TransformComponent.GetWorldPosition() + a_TransformComponent.GetUp(),
                 glm::vec3(0.25f),
-                a_TransformComponent.localRotation,
+                a_TransformComponent.GetWorldRotation(),
             };
 
             BulletHell::CreateProjectileRed(projectileTransformComponent, 7);

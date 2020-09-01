@@ -2,83 +2,68 @@
 
 #include "Core/ECS/Entity/Entity.h"
 #include "Core/Utilities/Utilities.h"
+#include "Core/ECS/Component/TransformComponent.h"
 
 #include "ObstacleCollisionJob.h"
 #include "BulletHell/Component/Components.h"
 #include "BulletHell.h"
+#include "Core/Scene/SceneManager.h"
 
 void ObstacleCollisionJob::OnUpdate()
 {
     auto playerCollision = [](
-        int playerEntitiy,
-        PlayerComponent& a_PlayerComponent,
-        int obstacleEntitiy,
-        ObstacleComponent& a_ObstacleComponent
+        Muse::Entity playerEntitiy,
+        Muse::Entity obstacleEntitiy
         )
     {
-        //Player
-        a_PlayerComponent.health -= a_ObstacleComponent.damage;
-
-        if (a_PlayerComponent.health < 0)
+        if (playerEntitiy.HasComponent<PlayerComponent>() && obstacleEntitiy.HasComponent<ObstacleComponent>())
         {
-            Muse::Entity::DestroyAll();
-            BulletHell::CreatePlayer();
-        }
+            PlayerComponent& playerComponent = playerEntitiy.GetComponent<PlayerComponent>();
+            ObstacleComponent& obstacleComponent = obstacleEntitiy.GetComponent<ObstacleComponent>();
+
+            //Player
+            playerComponent.health -= obstacleComponent.damage;
+
+            if (playerComponent.health < 0)
+            {
+                Muse::SceneManager::GetActiveScene()->Clear();
+                BulletHell::CreatePlayer();
+            }
    
-        //Obstacle
-        Muse::Entity::Destroy(obstacleEntitiy);
+            //Obstacle
+            obstacleEntitiy.Destroy();
+        }
     };
 
-    RunCollision<PlayerComponent, ObstacleComponent>(playerCollision);
+    RunCollision(playerCollision);
 
     auto obstacleOnObstacleCollision = [](
-        int obstacleEntitiy1,
-        ObstacleComponent& a_ObstacleComponent1,
-        int obstacleEntitiy2,
-        ObstacleComponent& a_ObstacleComponent2
+        Muse::Entity obstacleEntitiy1,
+        Muse::Entity obstacleEntitiy2
         )
     {
-        Muse::Entity::Destroy(obstacleEntitiy1);
-        Muse::Entity::Destroy(obstacleEntitiy2);
+        if (obstacleEntitiy1.HasComponent<ObstacleComponent>() && obstacleEntitiy2.HasComponent<ObstacleComponent>())
+        {
+            obstacleEntitiy1.Destroy();
+            obstacleEntitiy2.Destroy();
+        }
     };
 
-    RunCollision<ObstacleComponent, ObstacleComponent>(obstacleOnObstacleCollision);
+    RunCollision(obstacleOnObstacleCollision);
 
     auto projectileOnEnemyCollision = [](
-        int a_EnemyEntitiy,
-        EnemyComponent& a_EnemyComponent,
-        Muse::TransformComponent& a_TransformComponent1,
-        int a_ProjectileEntitiy,
-        ProjectileComponent& a_ProjectileComponent,
-        Muse::TransformComponent& a_TransformComponent2
+        Muse::Entity a_EnemyEntitiy,
+        Muse::Entity a_ProjectileEntitiy
         )
     {
-        Muse::Entity::Destroy(a_EnemyEntitiy);
-        Muse::Entity::Destroy(a_ProjectileEntitiy);
+        if (a_EnemyEntitiy.HasComponent<EnemyComponent>() && a_ProjectileEntitiy.HasComponent<ProjectileComponent>())
+        {
+            a_EnemyEntitiy.Destroy();
+            a_ProjectileEntitiy.Destroy();
 
-        SpawnBullets(a_TransformComponent1.localPosition);
+            SpawnBullets(a_EnemyEntitiy.GetComponent<Muse::TransformComponent>().GetWorldPosition());
+        }
     };
-
-    /*
-    RunCollision<EnemyComponent, ProjectileComponent>(projectileOnEnemyCollision);
-
-    auto projectileOnMeteorCollision = [](
-        int a_EnemyEntitiy,
-        MeteorComponent& a_MeteorComponent,
-        Muse::TransformComponent& a_TransformComponent1,
-        int a_ProjectileEntitiy,
-        ProjectileComponent& a_ProjectileComponent,
-        Muse::TransformComponent& a_TransformComponent2
-        )
-    {
-        Muse::Entity::Destroy(a_EnemyEntitiy);
-        Muse::Entity::Destroy(a_ProjectileEntitiy);
-
-        SpawnBullets(a_TransformComponent1.localPosition);
-    };
-
-    RunCollision<MeteorComponent, ProjectileComponent>(projectileOnMeteorCollision);
-    */
 }
 
 void ObstacleCollisionJob::SpawnBullets(glm::vec2 a_Position, float a_ProjectileSpeed)

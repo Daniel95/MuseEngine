@@ -5,6 +5,8 @@
 #include "glm/glm.hpp"
 #include <vector>
 
+#include "Muse.h"
+
 namespace Muse
 {
     class Texture2D;
@@ -31,5 +33,6 @@ private:
     uint32_t m_MapWidth, m_MapHeight;
 
     std::unordered_map<char, std::shared_ptr<Muse::SubTexture2D>> m_TextureMap;
-
+    Muse::Entity m_CameraEntity;
+    Muse::CameraComponent* m_CameraComponent;
 };

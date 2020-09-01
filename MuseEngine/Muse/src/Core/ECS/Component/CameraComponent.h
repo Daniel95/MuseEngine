@@ -31,6 +31,9 @@ namespace Muse
         void SetOrthographicSize(float a_Size);
         float GetOrthographicSize() const { return m_OrthographicSize; }
 
+        static CameraComponent* GetMain() { return s_MainCamera; };
+        static void SetMain(CameraComponent* a_CameraComponent) { s_MainCamera = a_CameraComponent; };
+
     private:
         void RecalculateProjection();
 

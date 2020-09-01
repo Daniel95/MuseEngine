@@ -11,6 +11,11 @@ namespace Muse
     class TransformComponent
     {
     public:
+        TransformComponent() = default;
+        TransformComponent(const glm::vec3& a_LocalPosition);
+        TransformComponent(const glm::vec3& a_LocalPosition, const glm::vec3& a_LocalScale);
+        TransformComponent(const glm::vec3& a_LocalPosition, const glm::vec3& a_LocalScale, const glm::vec3& a_LocalRotation);
+        ~TransformComponent() = default;
         void SetLocalPosition(const glm::vec3& a_Position);
         void SetLocalPosition(const glm::vec2& a_Position);
         void TranslateLocal(const glm::vec3& a_Movement);
@@ -20,6 +25,7 @@ namespace Muse
         void ScaleLocal(const glm::vec3& a_Scaling);
 
         void SetLocalRotation(const glm::vec3& a_Rotation);
+        const glm::vec3& GetWorldRotation();
 
         void SetLookAt(glm::vec3 a_Target);
 

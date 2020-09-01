@@ -53,17 +53,16 @@
 #include "Core/ECS/Job/Job.h"
 #include "Core/ECS/Job/JobManager.h"
 #include "Core/ECS/Job/Render2DJob.h"
+#include "Core/ECS/Entity/EntityDebugger.h"
 #include "Core/ECS/Component/Render2DComponent.h"
 #include "Core/ECS/Component/TransformComponent.h"
+#include "Core/ECS/Component/CameraComponent.h"
 #include "Core/ECS/Component/ScriptableEntity.h"
 #include "Core/ECS/Component/NativeScriptComponent.h"
-
-//Camera
-
+#include "Core/ECS/Component/OrthographicEditorCameraControllerComponent.h"
 
 //Todo:
 /////Engine:
-//Fix Crash in Game2D
 //Translate Rasterizer to its own folder in Renderer
 //Fix warnings
 //Model loading

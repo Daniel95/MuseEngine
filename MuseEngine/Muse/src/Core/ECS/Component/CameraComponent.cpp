@@ -5,8 +5,15 @@
 
 namespace Muse
 {
+    CameraComponent* CameraComponent::s_MainCamera = nullptr;
+
     CameraComponent::CameraComponent()
     {
+        if (s_MainCamera == nullptr)
+        {
+            s_MainCamera = this;
+        }
+
         RecalculateProjection();
     }
 

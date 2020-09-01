@@ -8,14 +8,12 @@
 #include "Core/Window.h"
 
 #include "Mode.h"
-#include "Editor/ViewPort.h"
 #include "Core/Renderer/Buffer/FrameBuffer.h"
 #include "Core/Renderer/RayTracer/RayHitData.h"
 #include "Core/Renderer/RayTracer/GetColorParameters.h"
 #include "Core/Renderer/RayTracer/BVH/BVH.h"
 #include "Core/Renderer/RayTracer/Ray.h"
 #include "RayTracer/SceneLibraryRT.h"
-#include "Core/Gameplay/Component/CameraComponent.h"
 #include "Core/Renderer/RayTracer/RendererRT.h"
 
 #if GAME_RT
@@ -150,6 +148,7 @@ void GameRT::OnRender()
 
 void GameRT::OnImGuiRender()
 {
+    /*
     ImGui::Begin("Info");
 
     ImGui::Text("FPS: %f", 1 / GetDeltaTime());
@@ -173,6 +172,7 @@ void GameRT::OnImGuiRender()
     scene->ResetRaysSend();
 
     ImGui::End();
+    */
 }
 
 void GameRT::Resize(unsigned a_Width, unsigned a_Height)

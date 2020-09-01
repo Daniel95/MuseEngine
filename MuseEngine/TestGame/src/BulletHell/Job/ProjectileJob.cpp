@@ -2,7 +2,6 @@
 
 #include "Core/Application.h"
 #include "Core/ECS/Component/TransformComponent.h"
-#include "Core/ECS/Component/TransformHelper.h"
 #include "BulletHell/Component/Components.h"
 
 void ProjectileJob::OnUpdate()
@@ -16,7 +15,7 @@ void ProjectileJob::OnUpdate()
         )
     {
         float movement = a_MoveforwardComponent.speed * deltaTime;
-        Muse::TransformHelper::TranslateLocal(a_TransformComponent, Muse::TransformHelper::GetUp(a_TransformComponent) * movement);
+        a_TransformComponent.TranslateLocal(a_TransformComponent.GetUp() * movement);
     };
 
     Run<ProjectileComponent, Muse::TransformComponent>(moveForward);

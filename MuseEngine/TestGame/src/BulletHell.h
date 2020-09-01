@@ -7,7 +7,7 @@
 
 namespace Muse
 {
-    class Texture;
+    class Texture2D;
     class TransformComponent;
 }
 
@@ -22,11 +22,11 @@ public:
     static int CreateEnemy(const glm::vec2& a_Position, const glm::vec2& a_Scale = glm::vec2(0.5f, 0.5f));
     static int CreateProjectileRed(Muse::TransformComponent& a_TransformComponent, float a_Speed = 7) { return CreateProjectile(a_TransformComponent, s_ProjectileRedTexture, a_Speed); }
     static int CreateProjectileBlue(Muse::TransformComponent& a_TransformComponent, float a_Speed = 5) { return CreateProjectile(a_TransformComponent, s_ProjectileBlueTexture, a_Speed); }
-    static int CreateProjectile(Muse::TransformComponent& a_TransformComponent, const std::shared_ptr<Muse::Texture> a_Texture, float a_Speed = 5);
+    static int CreateProjectile(Muse::TransformComponent& a_TransformComponent, const std::shared_ptr<Muse::Texture2D> a_Texture, float a_Speed = 5);
     static int CreateBackgroundParticle1(const glm::vec2& a_Position);
     static int CreateBackgroundParticle2(const glm::vec2& a_Position);
     static int CreateBackgroundParticle3(const glm::vec2& a_Position);
-    static int CreateBackgroundParticle(Muse::TransformComponent& a_TransformComponent, const std::shared_ptr<Muse::Texture>& a_Texture, float a_ScrollingSpeed);
+    static int CreateBackgroundParticle(Muse::TransformComponent& a_TransformComponent, const std::shared_ptr<Muse::Texture2D>& a_Texture, float a_ScrollingSpeed);
 
 protected:
     virtual void OnStart() override;
@@ -36,13 +36,13 @@ protected:
     virtual void OnImGuiRender() override;
 
 private:
-    static std::shared_ptr<Muse::Texture> s_PlayerTexture;
-    static std::shared_ptr<Muse::Texture> s_EnemyTexture;
-    static std::shared_ptr<Muse::Texture> s_ProjectileBlueTexture;
-    static std::shared_ptr<Muse::Texture> s_ProjectileRedTexture;
-    static std::shared_ptr<Muse::Texture> s_MeteorTexture;
-    static std::shared_ptr<Muse::Texture> s_Star1;
-    static std::shared_ptr<Muse::Texture> s_Star2;
-    static std::shared_ptr<Muse::Texture> s_Star3;
+    static std::shared_ptr<Muse::Texture2D> s_PlayerTexture;
+    static std::shared_ptr<Muse::Texture2D> s_EnemyTexture;
+    static std::shared_ptr<Muse::Texture2D> s_ProjectileBlueTexture;
+    static std::shared_ptr<Muse::Texture2D> s_ProjectileRedTexture;
+    static std::shared_ptr<Muse::Texture2D> s_MeteorTexture;
+    static std::shared_ptr<Muse::Texture2D> s_Star1;
+    static std::shared_ptr<Muse::Texture2D> s_Star2;
+    static std::shared_ptr<Muse::Texture2D> s_Star3;
 
 };

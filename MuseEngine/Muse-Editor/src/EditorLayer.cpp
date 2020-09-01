@@ -128,7 +128,7 @@ namespace Muse
         //Rendering:
         m_Framebuffer->Bind();
 
-        const glm::mat4& projectionViewMatrix = m_CameraEntity.GetComponent<CameraComponent>().GetProjectionViewMatrix(m_CameraEntity.GetComponent<TransformComponent>());
+        const glm::mat4& projectionViewMatrix = m_CameraComponent->GetProjectionViewMatrix(m_CameraEntity.GetComponent<TransformComponent>());
 
         Muse::Renderer2D::BeginScene(projectionViewMatrix);
 

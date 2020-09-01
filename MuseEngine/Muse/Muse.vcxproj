@@ -161,7 +161,6 @@
     <ClInclude Include="src\Core\ECS\Job\InputJob.h" />
     <ClInclude Include="src\Core\Application.h" />
     <ClInclude Include="src\Core\ECS\Component\Collider2DComponent.h" />
-    <ClInclude Include="src\Core\ECS\Component\ComponentHelper.h" />
     <ClInclude Include="src\Core\ECS\Component\ComponentManager.h" />
     <ClInclude Include="src\Core\ECS\Component\ComponentType.h" />
     <ClInclude Include="src\Core\ECS\Component\Render2DComponent.h" />
@@ -623,12 +622,12 @@
   <ItemGroup>
     <ClCompile Include="src\Core\ECS\Component\CameraComponent.cpp" />
     <ClCompile Include="src\Core\ECS\Component\TransformComponent.cpp" />
+    <ClCompile Include="src\Core\ECS\Job\Job.cpp" />
     <ClCompile Include="src\Core\ECS\Job\OrthographicEditorCameraControllerJob.cpp" />
     <ClCompile Include="src\Core\Scene\SceneManager.cpp" />
     <ClCompile Include="src\Core\Scene\Scene.cpp" />
     <ClCompile Include="src\Core\ECS\Job\InputJob.cpp" />
     <ClCompile Include="src\Core\Application.cpp" />
-    <ClCompile Include="src\Core\ECS\Component\ComponentHelper.cpp" />
     <ClCompile Include="src\Core\ECS\Component\ComponentManager.cpp" />
     <ClCompile Include="src\Core\ECS\Entity\Entity.cpp" />
     <ClCompile Include="src\Core\ECS\Entity\EntityDebugger.cpp" />

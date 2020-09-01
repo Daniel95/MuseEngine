@@ -6,6 +6,7 @@
 #include "Core/Input/KeyCodes.h"
 #include "Core/Input/Input.h"
 #include "Core/Application.h"
+#include "Core/ECS/Component/TransformComponent.h"
 
 namespace Muse
 {

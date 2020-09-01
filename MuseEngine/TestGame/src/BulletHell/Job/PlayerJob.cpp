@@ -40,7 +40,7 @@ void PlayerJob::OnUpdate()
             const glm::vec2 direction = glm::normalize(inputDirection);
             const glm::vec2 movement = inputDirection * a_PlayerComponent.speed * deltaTime;
 
-            Muse::TransformHelper::TranslateLocal(a_TransformComponent, glm::vec3(movement.x, movement.y, 0));
+            a_TransformComponent.TranslateLocal(glm::vec3(movement.x, movement.y, 0));
         }
 
         a_PlayerComponent.fireTimer += deltaTime;
@@ -57,7 +57,7 @@ void PlayerJob::OnUpdate()
             {
                 Muse::TransformComponent projectileTransformComponent
                 {
-                    glm::vec3(a_TransformComponent.localPosition.x, a_TransformComponent.localPosition.y + offsetY, 0),
+                    glm::vec3(a_TransformComponent.GetWorldPosition().x, a_TransformComponent.GetWorldPosition().y + offsetY, 0),
                     glm::vec3(0.25f),
                 };
 
@@ -67,7 +67,7 @@ void PlayerJob::OnUpdate()
             {
                 Muse::TransformComponent projectileTransformComponent
                 {
-                    glm::vec3(a_TransformComponent.localPosition.x - offsetX, a_TransformComponent.localPosition.y + offsetY, 0),
+                    glm::vec3(a_TransformComponent.GetWorldPosition().x - offsetX, a_TransformComponent.GetWorldPosition().y + offsetY, 0),
                     glm::vec3(0.25f),
                     glm::vec3(0, 0, glm::radians(15.0f)),
                 };
@@ -78,7 +78,7 @@ void PlayerJob::OnUpdate()
             {
                 Muse::TransformComponent projectileTransformComponent
                 {
-                    glm::vec3(a_TransformComponent.localPosition.x + offsetX, a_TransformComponent.localPosition.y + offsetY, 0),
+                    glm::vec3(a_TransformComponent.GetWorldPosition().x + offsetX, a_TransformComponent.GetWorldPosition().y + offsetY, 0),
                     glm::vec3(0.25f),
                     glm::vec3(0, 0, glm::radians(-15.0f))
                 };
