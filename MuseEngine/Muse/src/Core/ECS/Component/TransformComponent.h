@@ -30,6 +30,7 @@ namespace Muse
         void SetLookAt(glm::vec3 a_Target);
 
         bool GetDirty() { return m_Dirty; }
+        void SetDirty(bool a_Dirty) { m_Dirty = a_Dirty; }
 
         glm::vec3 InverseTransformPoint(const glm::mat4& a_Model, const glm::vec3& a_WorldPoint); //World to local point 
         glm::vec3 InverseTransformVector(const glm::mat4& a_Model, const glm::vec3& a_WorldVector); //World to local vector

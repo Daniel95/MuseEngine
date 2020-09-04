@@ -5,6 +5,7 @@
 #include "Core/ECS/Entity/Entity.h"
 #include <memory>
 #include "imgui_entt_entity_editor.h"
+#include "Panel/EntityEditor.h"
 
 namespace Muse
 {
@@ -21,7 +22,8 @@ namespace Muse
     private:
         std::shared_ptr<Scene> m_Context;
         Entity m_SelectionContext;
-        MM::EntityEditor<entt::entity> m_EntityEditor;
+        //MM::EntityEditor<entt::entity> m_EntityEditor;
+        EntityEditor m_EntityEditor;
 
     };
 }

@@ -1,5 +1,6 @@
-// for the license, see the end of the file
 #pragma once
+
+#include "Core/ECS/Entity/Entity.h"
 
 #include <map>
 #include <set>
@@ -7,32 +8,31 @@
 #include <entt.hpp>
 #include <imgui.h>
 
-namespace MM
+namespace Muse
 {
-    template <class Component, class EntityType>
-    void ComponentEditorWidget(entt::basic_registry<EntityType>& registry, EntityType entity) {}
+    template <class Component>
+    void ComponentEditorWidget(entt::basic_registry<entt::entity>& registry, entt::entity entity) {}
 
-    template <class Component, class EntityType>
-    void ComponentAddAction(entt::basic_registry<EntityType>& registry, EntityType entity)
+    template <class Component>
+    void ComponentAddAction(entt::basic_registry<entt::entity>& registry, entt::entity entity)
     {
         registry.template emplace<Component>(entity);
     }
 
-    template <class Component, class EntityType>
-    void ComponentRemoveAction(entt::basic_registry<EntityType>& registry, EntityType entity)
+    template <class Component>
+    void ComponentRemoveAction(entt::basic_registry<entt::entity>& registry, entt::entity entity)
     {
         registry.template remove<Component>(entity);
     }
 
-    template <class EntityType>
     class EntityEditor
     {
     public:
-        using Registry = entt::basic_registry<EntityType>;
+        using Registry = entt::basic_registry<entt::entity>;
 
         struct ComponentInfo
         {
-            using Callback = std::function<void(Registry&, EntityType)>;
+            using Callback = std::function<void(Registry&, entt::entity)>;
             std::string name;
             Callback widget, create, destroy;
         };
@@ -44,7 +44,7 @@ namespace MM
 
         std::map<ComponentTypeID, ComponentInfo> component_infos;
 
-        bool entityHasComponent(Registry& registry, EntityType& entity, ComponentTypeID type_id)
+        bool entityHasComponent(Registry& registry, entt::entity& entity, ComponentTypeID type_id)
         {
             ComponentTypeID type[] = { type_id };
             return registry.runtime_view(std::cbegin(type), std::cend(type)).contains(entity);
@@ -66,18 +66,18 @@ namespace MM
             return registerComponent<Component>(ComponentInfo{
                 name,
                 widget,
-                ComponentAddAction<Component, EntityType>,
-                ComponentRemoveAction<Component, EntityType>,
+                ComponentAddAction<Component>,
+                ComponentRemoveAction<Component>,
                 });
         }
 
         template <class Component>
         ComponentInfo& registerComponent(const std::string& name)
         {
-            return registerComponent<Component>(name, ComponentEditorWidget<Component, EntityType>);
+            return registerComponent<Component>(name, ComponentEditorWidget<Component>);
         }
 
-        void render(Registry& registry, EntityType& e)
+        void render(Registry& registry, entt::entity& e)
         {
             if (show_window)
             {
@@ -97,7 +97,7 @@ namespace MM
 
                     if (ImGui::Button("New Entity"))
                     {
-                        e = registry.create();
+                        e = Entity::Create("New Entity").GetEntityHandle();
                     }
 
                     ImGui::Separator();
@@ -170,8 +170,7 @@ namespace MM
         }
     };
 
-} // MM
-
+} 
 // MIT License
 
 // Copyright (c) 2020 Erik Scholz, Gnik Droy
