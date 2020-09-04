@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Core/Utilities/Defines.h"
 #include "Core/Scene/Scene.h"
 #include "Core/ECS/Entity/Entity.h"
 #include "Core/Utilities/Log.h"
@@ -14,10 +13,13 @@ namespace Muse
     public:
         SceneHierarchyPanel() = default;
         SceneHierarchyPanel(const std::shared_ptr<Scene>& a_Scene);
+        ~SceneHierarchyPanel() = default;
 
         void SetContext(const std::shared_ptr<Scene>& a_Scene);
 
         void OnImGuiRender();
+
+        const Entity* GetSelectedEntity() const;
 
     private:
         void DrawEntityNode(Entity a_Entity);

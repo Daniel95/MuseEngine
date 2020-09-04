@@ -1,6 +1,7 @@
 #include "SceneHierarchyPanel.h"
 
 #include "Core/ECS/Component/TagComponent.h"
+#include "Core/Utilities/Defines.h"
 
 #include <imgui/imgui.h>
 
@@ -27,6 +28,18 @@ namespace Muse
         });
 
         ImGui::End();
+    }
+
+    const Entity* SceneHierarchyPanel::GetSelectedEntity() const
+    {
+        if (m_SelectionContext.GetEntityHandle() != entt::null)
+        {
+            return &m_SelectionContext;
+        }
+        else
+        {
+            return nullptr;
+        }
     }
 
     void SceneHierarchyPanel::DrawEntityNode(Entity a_Entity)

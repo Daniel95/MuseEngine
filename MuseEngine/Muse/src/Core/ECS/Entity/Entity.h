@@ -14,35 +14,35 @@ namespace Muse
 {
     class TransformComponent;
 
-	class Entity
-	{
-	public:
+    class Entity
+    {
+    public:
         Entity() = default;
         Entity(entt::entity handle);
-        Entity(const Entity & other) = default;
+        Entity(const Entity& other) = default;
 
         static Entity Create(const std::string& a_Name);
         static Entity Create(const std::string& a_Name, TransformComponent& a_TransformComponent);
 
         void Destroy();
-        entt::entity GetEntityHandle() { return m_EntityHandle; }
+        entt::entity GetEntityHandle() const { return m_EntityHandle; }
 
         template<typename T, typename... Args>
-        T& AddComponent(Args&&... args)
+        T& AddComponent(Args&&... args) const
         {
             ASSERT_ENGINE(!HasComponent<T>(), "Entity already has component!");
             return SceneManager::GetActiveScene()->GetRegistry().emplace<T>(m_EntityHandle, std::forward<Args>(args)...);
         }
 
         template<typename T>
-        T& GetComponent()
+        T& GetComponent() const
         {
             ASSERT_ENGINE(HasComponent<T>(), "Entity does not have component!");
             return SceneManager::GetActiveScene()->GetRegistry().get<T>(m_EntityHandle);
         }
 
         template<typename T>
-        bool HasComponent()
+        bool HasComponent()  const
         {
             return SceneManager::GetActiveScene()->GetRegistry().has<T>(m_EntityHandle);
         }
@@ -79,8 +79,8 @@ namespace Muse
 
         bool operator ==(const Entity& a_Other) const { return m_EntityHandle == a_Other.m_EntityHandle; }
         bool operator !=(const Entity& a_Other) const { return !(*this == a_Other); }
-	private:
+    private:
         entt::entity m_EntityHandle{ entt::null };
-		
-	};
+
+    };
 }

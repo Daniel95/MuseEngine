@@ -1,6 +1,7 @@
 #include "Muse.h"
 
 #include "Panel/SceneHierarchyPanel.h"
+#include "Panel/InspectorPanel.h"
 
 namespace Muse
 {
@@ -37,5 +38,6 @@ namespace Muse
 
         // Panels
         SceneHierarchyPanel m_SceneHierarchyPanel;
+        InspectorPanel m_InspectorPanel;
     };
 }

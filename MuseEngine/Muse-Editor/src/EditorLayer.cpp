@@ -3,7 +3,7 @@
 #include "Core/Scene/SceneManager.h"
 #include "Core/Scene/Scene.h"
 #include "Editor.h"
-#include "FileBrowser.h"
+#include "Panel/FileBrowser.h"
 #include "Core/ECS/Component/CameraComponent.h"
 #include "Core/ECS/Component/OrthographicEditorCameraControllerComponent.h"
 #include "Core/ECS/Job/OrthographicEditorCameraControllerJob.h"
@@ -106,6 +106,7 @@ namespace Muse
         Application::Get().GetJobManager()->Add<OrthographicEditorCameraControllerJob>(Muse::JobType::Gameplay);
 
         m_SceneHierarchyPanel.SetContext(Muse::SceneManager::GetActiveScene());
+        m_InspectorPanel.SetContext(Muse::SceneManager::GetActiveScene());
     }
 
     void EditorLayer::OnDetach()
@@ -151,6 +152,9 @@ namespace Muse
         FileBrowser::Render();
 
         m_SceneHierarchyPanel.OnImGuiRender();
+
+        const Entity* selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity();
+        m_InspectorPanel.OnImGuiRender(selectedEntity);
 
         //ViewPort
         {

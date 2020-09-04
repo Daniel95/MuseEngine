@@ -45,9 +45,9 @@ namespace Muse
         glm::mat4 CalculateWorldRotationMatrix();
 
         const glm::mat4& GetWorldModelMatrix();
+        glm::vec3 m_LocalPosition = glm::vec3(0);
 
     private:
-        glm::vec3 m_LocalPosition = glm::vec3(0);
         glm::vec3 m_LocalScale = glm::vec3(1);
         //Radians
         glm::vec3 m_LocalRotation = glm::vec3(0);
